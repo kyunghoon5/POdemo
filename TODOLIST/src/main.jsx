@@ -28,7 +28,7 @@ const authLink = new ApolloLink((operation, forward) => {
   // Call the next link in the middleware chain.
   return forward(operation);
 });
-
+asd;
 // apollo client setup with auth
 const client = new ApolloClient({
   link: authLink.concat(httpLink), // Chain it with the HttpLink
