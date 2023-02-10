@@ -1,15 +1,9 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Hello } from './components/hello';
-import { Search } from './components/search';
-function App() {
-  
- 
+import { SearchPage } from './components/SearchPage';
 
+function App() {
   return (
     <div className="App">
-      <Search/>
+      <SearchPage />
     </div>
   );
 }
