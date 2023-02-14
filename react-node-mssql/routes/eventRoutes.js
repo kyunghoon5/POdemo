@@ -10,6 +10,7 @@ router.post('/event', eventControll.addEvent);
 router.put('/event/:id', eventControll.updatEvent);
 router.delete('/event/:id', eventControll.deleteEvent);
 
+
 module.exports = {
   routes: router,
 };
