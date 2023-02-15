@@ -1,5 +1,6 @@
 /****** Script for SelectTopNRows command from SSMS  ******/
-SELECT  top 3600 [descrip]
+SELECT top 5000
+     [descrip]
 	  ,[cost]
     ,[itemkey2]
 	  ,[weight]

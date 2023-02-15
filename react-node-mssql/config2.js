@@ -6,29 +6,29 @@ const assert = require('assert');
 dotenv.config();
 
 const {
-  PORT,
-  HOST,
-  HOST_URL,
-  SQL_USER,
-  SQL_PASSWORD,
-  SQL_DATABASE,
-  SQL_SERVER,
+  PORT2,
+  HOST2,
+  HOST_URL2,
+  SQL_USER2,
+  SQL_PASSWORD2,
+  SQL_DATABASE2,
+  SQL_SERVER2,
 } = process.env;
 
 const sqlEncrypt = process.env.SQL_ENCRYPT === 'true';
 
-assert(PORT, 'PORT is require');
-assert(HOST, 'PORT is require');
+assert(PORT2, 'PORT is require');
+assert(HOST2, 'HOST is required');
 
 module.exports = {
-  port: PORT,
-  host: HOST,
-  url: HOST_URL,
+  port: PORT2,
+  host: HOST2,
+  url: HOST_URL2,
   sql: {
-    server: SQL_SERVER,
-    database: SQL_DATABASE,
-    user: SQL_USER,
-    password: SQL_PASSWORD,
+    server: SQL_SERVER2,
+    database: SQL_DATABASE2,
+    user: SQL_USER2,
+    password: SQL_PASSWORD2,
     options: {
       encrypt: sqlEncrypt,
       enableArithAbort: true,

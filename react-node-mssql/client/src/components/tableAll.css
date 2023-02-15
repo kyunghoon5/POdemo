@@ -40,4 +40,9 @@
   height: 32px;
   border: 1px solid black;
   font-size: 13px;
+  text-align: center;
+}
+
+.colorList td {
+  background-color: #88bef2;
 }
