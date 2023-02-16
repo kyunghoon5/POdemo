@@ -8,11 +8,17 @@ export const SearchPage = () => {
   const [record, setRecord] = useState([]);
 
   const itemData = async () => {
-    return await axios
-
-      .get('http://localhost:8080/api/events')
-      .then((response) => setSearch(response.data))
-      .catch((err) => console.log(err));
+    try {
+      const res = await Promise.all([
+        axios.get('http://localhost:8080'),
+        axios.get('http://localhost:8090/'),
+      ]);
+      const data = res.map((res) => res.data.recordsets);
+      console.log(data);
+      setSearch(data);
+    } catch {
+      throw Error('Promise failed');
+    }
   };
 
   useEffect(() => {
@@ -20,11 +26,12 @@ export const SearchPage = () => {
   }, []);
   //console.log('data',data) data 확인
 
-  const searchRecords = () => {
+  const searchRecords = (e) => {
     axios.get(`http://localhost:8080/api/event/${record}`).then((response) => {
       setSearch(response.data);
     });
   };
+  
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -34,6 +41,8 @@ export const SearchPage = () => {
       </td>
     );
   };
+
+  // const imgSrc = `http://localhost:8080/api/img/${name}.jpg`;
 
   return (
     <div className="search">
@@ -68,7 +77,9 @@ export const SearchPage = () => {
                   SUBMIT
                 </button>
               </td>
-              <td colSpan="3" rowSpan="10" className="prodImg"></td>
+              <td colSpan="3" rowSpan="10" className="prodImg">
+                {/* <img src={imgSrc} className="max-w-[500px]" /> */}
+              </td>
               <td className="convST1">MONTH</td>
               <td className="convST2">FORECAST</td>
             </tr>
@@ -104,9 +115,7 @@ export const SearchPage = () => {
                     textAlign: 'center',
                     paddingLeft: '3px',
                   }}
-                >
-                  {search.map((item) => <div> {item.weight}</div>)[6]}
-                </span>
+                ></span>
 
                 <span
                   className="weight_po"
@@ -174,26 +183,20 @@ export const SearchPage = () => {
             </tr>
             <tr className="row10">
               <InfoItemOb className="infoCol1" name="ST_DATE" />
-              <td className="stDate" colSpan="2">
-                {
-                  search.map((item, i) => {
-                    return <h4>{item.start_dte}</h4>;
-                  })[6]
-                }
-              </td>
+              <td className="stDate" colSpan="2"></td>
             </tr>
             <tr className="row11">
               <td className="cost">RPL: </td>
-              <td colspan="2" class="price"></td>
+              <td colSpan="2" className="price"></td>
               <td id="diffDays"></td>
-              <td id="recDte" class="recDateSel_cal"></td>
+              <td id="recDte" className="recDateSel_cal"></td>
               <td colSpan="2">
                 <input
                   type="text"
                   id="boStdate"
                   style={{ textAlign: 'center' }}
                   placeholder="BO StDate"
-                  value="11/17/2022"
+                  //value="11-11-2022"
                   className="hasDatepicker"
                 />
               </td>
@@ -229,7 +232,7 @@ export const SearchPage = () => {
             </tr>
           </tbody>
           {/* body table */}
-          <tbody id className="fistBody">
+          <tbody className="fistBody">
             <tr>
               <td></td>
               <td></td>
@@ -878,16 +881,12 @@ export const SearchPage = () => {
               <td></td>
               <td></td>
             </tr>
-            
           </tbody>
         </table>
       </div>
       <h1>Non-New item</h1>
-
       {search.map((item) => (
-        <h4>
-          <h4>{item.descrip}</h4>
-        </h4>
+        <h4>{item.descrip}</h4>
       ))}
     </div>
   );

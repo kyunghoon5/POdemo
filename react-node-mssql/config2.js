@@ -21,18 +21,15 @@ assert(PORT2, 'PORT is require');
 assert(HOST2, 'HOST is required');
 
 module.exports = {
-  port: PORT2,
-  host: HOST2,
-  url: HOST_URL2,
-  sql: {
-    server: SQL_SERVER2,
-    database: SQL_DATABASE2,
-    user: SQL_USER2,
-    password: SQL_PASSWORD2,
-    options: {
-      encrypt: sqlEncrypt,
-      enableArithAbort: true,
-      truestConnection: true,
-    },
+
+  server: SQL_SERVER2,
+  database: SQL_DATABASE2,
+  user: SQL_USER2,
+  password: SQL_PASSWORD2,
+  options: {
+    encrypt: sqlEncrypt,
+    enableArithAbort: true,
+    truestConnection: true,
   },
+  
 };
