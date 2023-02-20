@@ -8,6 +8,10 @@ const router = express.Router();
 
 router.get('/events', eventControll.getAllEvents);
 router.get('/event/:id', eventControll.getEvent);
+
+router.get('/event/:id', eventControll.getEvent2);
+
+
 router.post('/event', eventControll.addEvent);
 router.put('/event/:id', eventControll.updatEvent);
 router.delete('/event/:id', eventControll.deleteEvent);

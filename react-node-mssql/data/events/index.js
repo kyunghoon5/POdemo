@@ -28,7 +28,21 @@ const getById = async (eventId) => {
   }
 };
 
+const getById2 = async (eventId) => {
+  try {
+    let pool = await sql.connect(config2.sql);
+    const sqlQueries = await utils.loadSqlQueries('events');
+    const event = await pool
+      .request()
+      .input('descrip', sql.Char, eventId)
+      .query(sqlQueries.specialE);
+    return event.recordset;
+  } catch (error) {
+    return error.message;
+  }
+};
 
 
 
-module.exports = { getEvents, getById};
+
+module.exports = { getEvents, getById, getById2 };

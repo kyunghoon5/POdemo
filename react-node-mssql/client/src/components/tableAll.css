@@ -21,6 +21,13 @@
   cursor: pointer;
 }
 
+.bottomSearchResults {
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  gap: 2px;
+}
+
 @media all and (max-width: 30em) {
   .btn1name {
     display: block;

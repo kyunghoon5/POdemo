@@ -3,8 +3,8 @@ var app = express();
 var cors = require('cors');
 
 const config = require('./config');
-const utils = require('./data/utils');
 
+const utils = require('./data/utils');
 const sql = require('mssql');
 const eventData = require('./data/events');
 const eventControll = require('./controllers/eventController');
@@ -43,6 +43,7 @@ app.get('/', function (req, res) {
   });
 });
 
+//search decscrip
 const getById = async (eventId) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -72,6 +73,6 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use('/api', eventRoutes.routes);
 
-var server2 = app.listen((PORT=8080), function () {
+var server2 = app.listen((PORT = 8080), function () {
   console.log(`app listening on url http://localhost: ${PORT}`);
 });

@@ -21,6 +21,16 @@ const getEvent = async (req, res, next) => {
   }
 };
 
+const getEvent2 = async (req, res, next) => {
+  try {
+    const eventId = req.params.id;
+    const event = await eventData.getById(eventId);
+    res.send(event);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 const addEvent = async (req, res, next) => {
   try {
     const data = req.body;
@@ -55,7 +65,9 @@ const deleteEvent = async (req, res, next) => {
 module.exports = {
   getAllEvents,
   getEvent,
+  getEvent2,
   addEvent,
   updatEvent,
   deleteEvent,
+
 };
