@@ -3,6 +3,7 @@ const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
 
+
 const getEvents = async () => {
   try {
     let pool = await sql.connect(config.sql);

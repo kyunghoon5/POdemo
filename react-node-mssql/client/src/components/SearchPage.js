@@ -5,6 +5,7 @@ import BlankPage from './BlankPage';
 
 export const SearchPage = () => {
   const [productData, setProductData] = useState([]);
+  console.log(productData);
   const [search, setSearch] = useState([]);
   const [record, setRecord] = useState([]);
 
@@ -29,10 +30,6 @@ export const SearchPage = () => {
       });
   };
 
-  // {
-  //   search.map((item) => <td>{item.itemkey}</td>);
-  // }
-
   //className & table-text
   const InfoItemOb = (props) => {
     return (
@@ -45,6 +42,12 @@ export const SearchPage = () => {
   // const imgSrc = `http://localhost:8080/api/img/${name}.jpg`;
 
   console.log(search);
+
+  //total
+
+  const sum2 = async () => {
+    return await search.map((item) => item.sold30).reduce((a, b) => a + b);
+  };
 
   return (
     <div className="search">
@@ -88,7 +91,13 @@ export const SearchPage = () => {
 
             <tr className="row2">
               <InfoItemOb className="infoCol1" name="ITEM NO:" />
-              <td colSpan="3" className="smpNo"></td>
+              <td colSpan="3" className="smpNo">
+                {search.map((item, idx) => (
+                  <div className="test2" key={idx}>
+                    {item.original}
+                  </div>
+                ))}
+              </td>
             </tr>
             <tr className="row3">
               <InfoItemOb className="infoCol1" name="ORIGINAL:" />
@@ -185,7 +194,15 @@ export const SearchPage = () => {
             </tr>
             <tr className="row10">
               <InfoItemOb className="infoCol1" name="ST_DATE" />
-              <td className="stDate" colSpan="2"></td>
+              <td className="stDate" colSpan="2">
+                {
+                  search.map((item, idx) => (
+                    <tr className="test2" key={idx}>
+                      {item.start_dte}
+                    </tr>
+                  ))[0]
+                }
+              </td>
             </tr>
             <tr className="row11">
               <td className="cost">RPL: </td>
@@ -212,8 +229,36 @@ export const SearchPage = () => {
               <td className="poctn">6</td>
               <td className="poctn">6</td>
             </tr>
+
+            <tr className="row12">
+              <td className="cost"> </td>
+              <td colSpan="2" className="price">
+                
+              </td>
+              <td id="diffDays"></td>
+              <td id="recDte" className="recDateSel_cal"></td>
+              <td colSpan="2">
+                <input
+                  type="text"
+                  id="boStdate"
+                  style={{ textAlign: 'center' }}
+                  placeholder="BO StDate"
+                  //value="11-11-2022"
+                  className="hasDatepicker"
+                />
+              </td>
+              <td className="prv30">01/16/2023</td>
+              <td className="prv30">01/16/2023</td>
+              <td className="prv30">01/16/2023</td>
+              <td className="poctn">6</td>
+              <td className="poctn">6</td>
+              <td className="poctn">6</td>
+              <td className="poctn">6</td>
+              <td className="poctn">6</td>
+              <td className="poctn">6</td>
+            </tr>
           </tbody>
-          <tbody id="tb2" className="colorList">
+          <tbody id="tb2" className="table2">
             <tr>
               <td></td>
               <td>OH</td>
@@ -222,8 +267,8 @@ export const SearchPage = () => {
               <td>SOLD</td>
               <td colSpan={2}>N days</td>
               <td>SOLD30</td>
-              <td></td>
-              <td></td>
+              <td>SOLD90</td>
+              <td>SOLD365</td>
               <td>C</td>
               <td>C</td>
               <td>C</td>
@@ -234,20 +279,90 @@ export const SearchPage = () => {
           </tbody>
           {/* body table */}
 
-          {search.length > 0 ? (
-            <>
-              <tbody className="firstBody">
+          {search.length > 40 ? (
+            <tbody id="tt" className="buttomSearch">
+              <td>
                 {search.map((item, idx) => (
-                  <tr key={idx}>{item.itemkey2}</tr>
+                  <tr
+                    className="row1"
+                    style={{ textAlign: 'left', color: 'blue' }}
+                    key={idx}
+                  >
+                    {item.itemkey2}
+                  </tr>
                 ))}
+              </td>
 
-                <tr>kweofwk</tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-              </tbody>
-            </>
+              <td>
+                {search.map((item, idx) => (
+                  <tr className="test2" key={idx}>
+                    {item.onhand}
+                  </tr>
+                ))}
+              </td>
+
+              <td>
+                <tr>d</tr>
+              </td>
+
+              <td>
+                <tr>d</tr>
+              </td>
+
+              <td>
+                <tr>d</tr>
+              </td>
+              <td>
+                <tr>d</tr>
+              </td>
+
+              <td>
+                <tr>d</tr>
+              </td>
+
+              <td>
+                {search.map((item, idx) => (
+                  <tr className="test2" key={idx}>
+                    {item.sold30}
+                  </tr>
+                ))}
+              </td>
+
+              <td>
+                {search.map((item, idx) => (
+                  <tr className="test2" key={idx}>
+                    {item.sold90}
+                  </tr>
+                ))}
+              </td>
+
+              <td>
+                {search.map((item, idx) => (
+                  <tr className="test2" key={idx}>
+                    {item.sold365}
+                  </tr>
+                ))}
+              </td>
+
+              <td>
+                <tr>d</tr>
+              </td>
+              <td>
+                <tr>d</tr>
+              </td>
+              <td>
+                <tr>d</tr>
+              </td>
+              <td>
+                <tr>d</tr>
+              </td>
+              <td>
+                <tr>d</tr>
+              </td>
+              <td>
+                <tr>d</tr>
+              </td>
+            </tbody>
           ) : (
             <>
               <BlankPage />
@@ -256,11 +371,7 @@ export const SearchPage = () => {
         </table>
       </div>
       <h1>Non-New item</h1>
-      <div className="bottomSearchResults">
-        {search.map((item, idx) => (
-          <div key={idx}>{item.itemkey2}</div>
-        ))}
-      </div>
+      <div className="bottomSearchResults"></div>
     </div>
   );
 };

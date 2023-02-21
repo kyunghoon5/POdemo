@@ -8,7 +8,6 @@ app.use(cors());
 
 // Configuration for the two SQL servers
 const configServer1 = require('./config');
-
 const configServer2 = require('./config2');
 
 // Define an endpoint for merging data from both servers
@@ -19,77 +18,19 @@ app.get('/mergeData', async (req, res) => {
     let request1 = new sql.Request(sqlPool);
 
     // Query the two servers for data
-    const result1 = await request1.query(`SELECT TOP (1000) [item]
-      ,[itemkey1]
-      ,[itemkey2]
-      ,[class]
-      ,[descrip]
-      ,[cost]
-      ,[onhand]
-      ,[onorder]
-      ,[aloc]
-      ,[wip]
+    const result1 = await request1.query(`SELECT TOP (1000) [bono]
+      ,[custno]
+      ,[invdte]
+      ,[salesmn]
+      ,[item]    
+      ,[qtyord]
+      ,[qtyshp]
+      ,[qtybo]
       ,[price]
-      ,[price2]
-      ,[level2]
-      ,[price3]
-      ,[level3]
-      ,[ptdqty]
-      ,[ytdqty]
-      ,[ptdsls]
-      ,[ytdsls]
-      ,[discrate]
-      ,[unitms]
-      ,[code]
-      ,[seq]
-      ,[ldate]
-      ,[lastordr]
-      ,[orderpt]
-      ,[orderqty]
-      ,[supplier]
-      ,[vpartno]
-      ,[lead]
-      ,[gllink]
-      ,[decnum]
-      ,[taxcode]
-      ,[stkcode]
-      ,[history]
-      ,[weight]
-      ,[podate1]
-      ,[poqty1]
-      ,[podate2]
-      ,[poqty2]
-      ,[podate3]
-      ,[poqty3]
-      ,[podate4]
-      ,[poqty4]
-      ,[podate5]
-      ,[poqty5]
-      ,[podate6]
-      ,[poqty6]
-      ,[signature]
-      ,[memo]
-      ,[crossitem1]
-      ,[crossitem2]
-      ,[crossitem3]
-      ,[crossitem4]
-      ,[crossitem5]
-      ,[crossitem6]
-      ,[crossitem7]
-      ,[crossitem8]
-      ,[crossitem9]
-      ,[crossitem10]
-      ,[barcode]
-      ,[samplecode]
-      ,[boflag]
-      ,[oldprice]
-      ,[marching]
-      ,[pollflag]
-      ,[start_dte]
-  FROM [BYT_LEG_TEST].[dbo].[arinvt10]
+      ,[invno]
+      ,[descrip]
+  FROM [BYT_LEG_TEST].[dbo].[BOTran]
   `);
-    // Sort the merged results by ID
-
     // Connect to both servers
     const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
     let request2 = new sql.Request(sqlPool2);
@@ -119,7 +60,7 @@ SELECT TOP (5000) [vendno]
   FROM [BYT_LEG].[dbo].[arsold365]`);
 
     // Combine the two results into a single array
-    const mergedResults = [...result1.recordset, ...result2.recordset];
+    const mergedResults = [...result2.recordset, ...result1.recordset];
 
     // Sort the merged results by ID
 

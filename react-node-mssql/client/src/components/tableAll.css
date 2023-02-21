@@ -21,13 +21,6 @@
   cursor: pointer;
 }
 
-.bottomSearchResults {
-  display: flex;
-  justify-items: flex-start;
-  align-items: center;
-  gap: 2px;
-}
-
 @media all and (max-width: 30em) {
   .btn1name {
     display: block;
@@ -35,11 +28,9 @@
   }
 }
 
-.row1 {
-  text-align: center;
-}
 
-.search #tb1 tbody tr td {
+
+.table1 tbody tr td {
   padding: 0;
   padding-left: 2px;
   margin: 0;
@@ -50,6 +41,25 @@
   text-align: center;
 }
 
-.colorList td {
+.table2 td {
   background-color: #88bef2;
 }
+
+
+
+.buttomSearch tr{
+  display:block;
+  border: 1px solid black;
+  padding: 0;
+  padding-left: 2px;
+  margin: 0;
+  min-width: 80px;
+  height: 32px;
+  font-size: 13px;
+  text-align: right;
+  
+  
+}
+
+
+
