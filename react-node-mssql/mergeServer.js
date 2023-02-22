@@ -18,12 +18,12 @@ app.get('/mergeData', async (req, res) => {
     let request1 = new sql.Request(sqlPool);
 
     // Query the two servers for data
-    const result1 = await request1.query(`SELECT TOP (1000) [bono]
+    const result1 = await request1.query(`SELECT TOP (2) [bono]
       ,[custno]
       ,[invdte]
       ,[salesmn]
-      ,[item]    
-      ,[qtyord]
+      ,[item] 
+      
       ,[qtyshp]
       ,[qtybo]
       ,[price]
@@ -31,6 +31,14 @@ app.get('/mergeData', async (req, res) => {
       ,[descrip]
   FROM [BYT_LEG_TEST].[dbo].[BOTran]
   `);
+
+    const result11 = await request1.query(`SELECT top(2)   
+      [descrip]      
+      ,[price]   
+	  ,[weight]
+      ,[start_dte]
+  FROM [BYT_LEG_TEST].[dbo].[arinvt10]`);
+
     // Connect to both servers
     const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
     let request2 = new sql.Request(sqlPool2);
@@ -39,7 +47,7 @@ app.get('/mergeData', async (req, res) => {
 
     const result2 =
       await request2.query(`/****** Script for SelectTopNRows command from SSMS  ******/
-SELECT TOP (5000) [vendno]
+SELECT TOP (2) [vendno]
       ,[class]
       ,[descrip]
       ,[itemkey2]
@@ -55,19 +63,36 @@ SELECT TOP (5000) [vendno]
       ,[sold180]
       ,[sold240]
       ,[sold365]
-      ,[soldTotal]
-      ,[start_dte]
+      ,[soldTotal]      
   FROM [BYT_LEG].[dbo].[arsold365]`);
 
+    const result21 = await request2.query(`SELECT  [purno]      
+      ,[item]      
+      ,[itemkey2]
+      ,[descrip]         
+      ,[qtyord]
+      ,[qtyrec]
+      ,[purdate]      
+      ,[recdate]
+      ,[reqdate]            
+      ,[shpdate]
+      ,[invno]      
+  FROM [BYT_LEG].[dbo].[potran10c]`);
+
     // Combine the two results into a single array
-    const mergedResults = [...result2.recordset, ...result1.recordset];
+    const mergedResults = [
+      ...result2.recordset,
+      ...result1.recordset,
+      ...result11.recordset,
+      ...result21.recordset,
+    ];
 
     // Sort the merged results by ID
 
     if (req.query.descrip) {
       const descrips = req.query.descrip;
       const result = mergedResults.filter(
-        (obj) => obj.descrip.trim().toLowerCase() === descrips
+        (obj) => obj.descrip?.trim().toLowerCase() === descrips
       );
 
       if (result) {
