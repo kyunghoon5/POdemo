@@ -1,3 +1,19 @@
+// Load the full build.
+var _= require('lodash')
+// Load the core build.
+var _ = require('lodash/core');
+// Load the FP build for immutable auto-curried iteratee-first data-last methods.
+var fp = require('lodash/fp');
+
+// Load method categories.
+var array = require('lodash/array');
+var object = require('lodash/fp/object');
+
+// Cherry-pick methods for smaller browserify/rollup/webpack bundles.
+var at = require('lodash/at');
+var curryN = require('lodash/fp/curryN');
+
+//express
 var express = require('express');
 var app = express();
 const sql = require('mssql');
@@ -18,7 +34,7 @@ app.get('/mergeData', async (req, res) => {
     let request1 = new sql.Request(sqlPool);
 
     // Query the two servers for data
-    const result1 = await request1.query(`SELECT TOP (2) [bono]
+    const result1 = await request1.query(`SELECT TOP (5) [bono]
       ,[custno]
       ,[invdte]
       ,[salesmn]
@@ -32,7 +48,7 @@ app.get('/mergeData', async (req, res) => {
   FROM [BYT_LEG_TEST].[dbo].[BOTran]
   `);
 
-    const result11 = await request1.query(`SELECT top(2)   
+    const result11 = await request1.query(`SELECT top(5)   
       [descrip]      
       ,[price]   
 	  ,[weight]
@@ -47,7 +63,7 @@ app.get('/mergeData', async (req, res) => {
 
     const result2 =
       await request2.query(`/****** Script for SelectTopNRows command from SSMS  ******/
-SELECT TOP (2) [vendno]
+SELECT TOP (5000) [vendno]
       ,[class]
       ,[descrip]
       ,[itemkey2]
@@ -64,20 +80,33 @@ SELECT TOP (2) [vendno]
       ,[sold240]
       ,[sold365]
       ,[soldTotal]      
-  FROM [BYT_LEG].[dbo].[arsold365]`);
+  FROM [BYT_LEG].[dbo].[arsold365]
+  where descrip='${req.query.descrip}'`);
 
-    const result21 = await request2.query(`SELECT  [purno]      
-      ,[item]      
-      ,[itemkey2]
-      ,[descrip]         
-      ,[qtyord]
-      ,[qtyrec]
-      ,[purdate]      
-      ,[recdate]
-      ,[reqdate]            
-      ,[shpdate]
-      ,[invno]      
-  FROM [BYT_LEG].[dbo].[potran10c]`);
+    //Seach value parsing into query
+    const result21 = await request2.query(`select * 
+
+from(SELECT  A.purno      
+      ,A.itemkey2
+      ,A.descrip 
+      ,A.qtyord
+      ,a.[qtyrec]
+      ,a.[purdate]  
+	  ,a.[shpdate]
+	  ,a.[reqdate]
+      ,a.[recdate]
+	  ,DENSE_RANK() OVER (ORDER BY purdate desc) as portn
+           
+      
+  FROM [BYT_LEG].[dbo].[potran10c] A
+  where convert(date, a.purdate) between '01/01/2005' and '02/22/2023' and descrip='${req.query.descrip}' 
+  
+  ) b
+  where portn in ('1')
+  order by purdate desc, itemkey2 asc
+
+  
+  `);
 
     // Combine the two results into a single array
     const mergedResults = [
@@ -86,6 +115,23 @@ SELECT TOP (2) [vendno]
       ...result11.recordset,
       ...result21.recordset,
     ];
+
+    if (req.query.descrip){
+      const mergeById = (a1, a2) =>
+        a1.map((itm) => ({
+          ...a2.find((item) => item.itemkey2 === itm.itemkey2 && item),
+          ...itm,
+        }));
+         console.log(mergeById(result2.recordset, result21.recordset));
+      }
+
+     var array = [1,2,3];
+
+     _.fill(array, 'a')
+     console.log(array)
+      
+     
+    
 
     // Sort the merged results by ID
 

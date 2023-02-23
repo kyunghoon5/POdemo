@@ -58,11 +58,6 @@ export const SearchPage = () => {
   console.log(search);
 
   //buttonSearch console
-  const bc = search
-    .filter((item) => typeof item.onhand === 'number')
-
-    .map((item) => item.onhand);
-  console.log(bc);
 
   return (
     <div className="search">
@@ -363,6 +358,26 @@ export const SearchPage = () => {
                   .map((item) => (
                     <tr>{item.sold365}</tr>
                   ))}
+              </td>
+
+              <td>
+                <tr></tr>
+              </td>
+
+              <td>
+                <tr></tr>
+              </td>
+
+              <td>
+                <tr></tr>
+              </td>
+
+              <td>
+                <tr></tr>
+              </td>
+
+              <td>
+                <tr></tr>
               </td>
 
               <td>
