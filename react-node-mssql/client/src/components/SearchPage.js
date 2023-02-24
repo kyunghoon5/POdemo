@@ -4,6 +4,7 @@ import './tableAll.css';
 import BlankPage from './BlankPage';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+var _ = require('lodash');
 
 export const SearchPage = () => {
   const [productData, setProductData] = useState([]);
@@ -32,6 +33,8 @@ export const SearchPage = () => {
       .then((response) => setProductData(response.data))
       .catch((err) => console.log(err));
   };
+  
+
 
   const searchRecords = (e) => {
     const searchedRecord = record.toLowerCase();
@@ -106,12 +109,18 @@ export const SearchPage = () => {
                       src={`http://img.vanessahair.com/sales/${record}.jpg`}
                       className="mainImage"
                       style={{ height: '320px', widows: '240px' }}
-                      onerror="prodImgError(this)"
                     />
                   )}
                 </div>
               </td>
               <td className="convST1">MONTH</td>
+              <td className="convST2">FORECAST</td>
+              <td className="convST2">FORECAST</td>
+              <td className="convST2">FORECAST</td>
+              <td className="convST2">FORECAST</td>
+              <td className="convST2">FORECAST</td>
+              <td className="convST2">FORECAST</td>
+              <td className="convST2">FORECAST</td>
               <td className="convST2">FORECAST</td>
             </tr>
 
@@ -124,6 +133,15 @@ export const SearchPage = () => {
                   </div>
                 ))}
               </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr className="row3">
               <InfoItemOb className="infoCol1" name="ORIGINAL:" />
@@ -137,10 +155,29 @@ export const SearchPage = () => {
                   style={{ float: 'right', paddingRight: '3px' }}
                 ></span>
               </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr className="row4">
               <InfoItemOb className="infoCol1" name="SMP DTE:" />
               <td colSpan="3" className="smpDte"></td>
+
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr className="row5">
               <InfoItemOb className="infoCol1" name="WEIGHT:" />
@@ -163,6 +200,15 @@ export const SearchPage = () => {
                   }}
                 ></span>
               </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr className="row6">
               <InfoItemOb className="infoCol1" name="LENGTH:" />
@@ -185,6 +231,16 @@ export const SearchPage = () => {
                   </span>
                 </div>
               </td>
+
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr className="row7">
               <InfoItemOb className="infoCol1" name="FIBER:" />
@@ -206,10 +262,29 @@ export const SearchPage = () => {
                   }}
                 ></span>
               </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr className="row8">
               <InfoItemOb className="infoCol1" name="DGN DTE:" />
               <td colSpan="3" className="dgnDte"></td>
+
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr className="row9">
               <InfoItemOb className="infoCol1" name="PO's 2" />
@@ -294,7 +369,10 @@ export const SearchPage = () => {
               <td>C</td>
               <td>C</td>
               <td>C</td>
-              <td>C</td>
+              {search.map(
+                (item) =>
+                  item.first.map((item) => {for (let i=0; i <item.purno; i++){<td>i+1</td>}})
+              )}
             </tr>
           </tbody>
           {/* body table */}
@@ -361,31 +439,63 @@ export const SearchPage = () => {
               </td>
 
               <td>
-                <tr></tr>
+                {search.map((item) =>
+                  item.sixth.length ? (
+                    item.sixth.map((item2) => <tr>{item2.qtyord}</tr>)
+                  ) : (
+                    <tr></tr>
+                  )
+                )}
               </td>
 
               <td>
-                <tr></tr>
+                {search.map((item) =>
+                  item.fifth.length ? (
+                    item.fifth.map((item2) => <tr>{item2.qtyord}</tr>)
+                  ) : (
+                    <tr></tr>
+                  )
+                )}
               </td>
 
               <td>
-                <tr></tr>
+                {search.map((item) =>
+                  item.fourth.length ? (
+                    item.fourth.map((item2) => <tr>{item2.qtyord}</tr>)
+                  ) : (
+                    <tr></tr>
+                  )
+                )}
               </td>
 
               <td>
-                <tr></tr>
+                {search.map((item) =>
+                  item.third.length ? (
+                    item.third.map((item2) => <tr>{item2.qtyord}</tr>)
+                  ) : (
+                    <tr></tr>
+                  )
+                )}
               </td>
 
               <td>
-                <tr></tr>
+                {search.map((item) =>
+                  item.second.length ? (
+                    item.second.map((item2) => <tr>{item2.qtyord}</tr>)
+                  ) : (
+                    <tr></tr>
+                  )
+                )}
               </td>
 
               <td>
-                {search
-                  .filter((item) => typeof item.qtyord === 'number')
-                  .map((item) => (
-                    <tr>{item.qtyord}</tr>
-                  ))}
+                {search.map((item) =>
+                  item.first.length ? (
+                    item.first.map((item2) => <tr>{item2.qtyord}</tr>)
+                  ) : (
+                    <tr></tr>
+                  )
+                )}
               </td>
             </tbody>
           ) : (
