@@ -81,7 +81,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
-	  ,DENSE_RANK() OVER (ORDER BY purdate desc) as portn
+	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
@@ -103,7 +103,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
-	  ,DENSE_RANK() OVER (ORDER BY purdate desc) as portn
+	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
@@ -124,7 +124,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
-	  ,DENSE_RANK() OVER (ORDER BY purdate desc) as portn
+	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
@@ -145,7 +145,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
-	  ,DENSE_RANK() OVER (ORDER BY purdate desc) as portn
+	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
@@ -166,7 +166,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
-	  ,DENSE_RANK() OVER (ORDER BY purdate desc) as portn
+	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
@@ -187,7 +187,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
-	  ,DENSE_RANK() OVER (ORDER BY purdate desc) as portn
+	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A

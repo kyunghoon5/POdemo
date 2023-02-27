@@ -33,8 +33,6 @@ export const SearchPage = () => {
       .then((response) => setProductData(response.data))
       .catch((err) => console.log(err));
   };
-  
-
 
   const searchRecords = (e) => {
     const searchedRecord = record.toLowerCase();
@@ -262,16 +260,29 @@ export const SearchPage = () => {
                   }}
                 ></span>
               </td>
+
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+
+              {/*purchased date*/}
+              {
+                search
+                  .flatMap((item) => [item].concat(item.sixth ?? []))
+                  .filter((item) => item.purdate)
+                  .map((item, idx) => (
+                    <td key={idx}>
+                      {new Date(item.purdate).toISOString().split('T')[0]}
+                    </td>
+                  ))[0]
+              }
               <td></td>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
             </tr>
+
             <tr className="row8">
               <InfoItemOb className="infoCol1" name="DGN DTE:" />
               <td colSpan="3" className="dgnDte"></td>
@@ -279,7 +290,17 @@ export const SearchPage = () => {
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              {/*shipping date*/}
+              {
+                search
+                  .flatMap((item) => [item].concat(item.sixth ?? []))
+                  .filter((item) => item.shpdate)
+                  .map((item, idx) => (
+                    <td key={idx}>
+                      {new Date(item.shpdate).toISOString().split('T')[0]}
+                    </td>
+                  ))[0]
+              }
               <td></td>
               <td></td>
               <td></td>
@@ -292,6 +313,26 @@ export const SearchPage = () => {
                 <span className="pctn" style={{ float: 'left' }}></span>
                 <span className="dimension" style={{ float: 'right' }}></span>
               </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              {/*expected rec date*/}
+              {
+                search
+                  .flatMap((item) => [item].concat(item.sixth ?? []))
+                  .filter((item) => item.reqdate)
+                  .map((item) => (
+                    <button>
+                      {new Date(item.reqdate).toISOString().split('T')[0]}
+                    </button>
+                  ))[0]
+              }
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr className="row10">
               <InfoItemOb className="infoCol1" name="ST_DATE" />
@@ -299,9 +340,21 @@ export const SearchPage = () => {
                 {
                   search
                     .filter((item) => item.start_dte)
-                    .map((item) => <div>{item.start_dte}</div>)[0]
+                    .map((item, idx) => (
+                      <div key={idx}>{item.start_dte}</div>
+                    ))[0]
                 }
               </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr className="row11">
               <td className="cost">RPL: </td>
@@ -309,7 +362,9 @@ export const SearchPage = () => {
                 {
                   search
                     .filter((item) => typeof item.price === 'number')
-                    .map((item) => <div>PRICE: ${item.price}</div>)[0]
+                    .map((item, idx) => (
+                      <div key={idx}>PRICE: ${item.price}</div>
+                    ))[0]
                 }
               </td>
               <td id="diffDays"></td>
@@ -364,15 +419,44 @@ export const SearchPage = () => {
               <td>SOLD30</td>
               <td>SOLD90</td>
               <td>SOLD365</td>
-              <td>C</td>
-              <td>C</td>
-              <td>C</td>
-              <td>C</td>
-              <td>C</td>
-              {search.map(
-                (item) =>
-                  item.first.map((item) => {for (let i=0; i <item.purno; i++){<td>i+1</td>}})
-              )}
+              {
+                search
+                  .flatMap((item) => [item].concat(item.sixth ?? []))
+                  .filter((item) => item.purno)
+                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
+              }
+              {
+                search
+                  .flatMap((item) => [item].concat(item.fifth ?? []))
+                  .filter((item) => item.purno)
+                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
+              }
+              {
+                search
+                  .flatMap((item) => [item].concat(item.fourth ?? []))
+                  .filter((item) => item.purno)
+                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
+              }
+              {
+                search
+                  .flatMap((item) => [item].concat(item.third ?? []))
+                  .filter((item) => item.purno)
+                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
+              }
+
+              {
+                search
+                  .flatMap((item) => [item].concat(item.second ?? []))
+                  .filter((item) => item.purno)
+                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
+              }
+
+              {
+                search
+                  .flatMap((item) => [item].concat(item.first ?? []))
+                  .filter((item) => item.purno)
+                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
+              }
             </tr>
           </tbody>
           {/* body table */}
@@ -382,16 +466,16 @@ export const SearchPage = () => {
               <td>
                 {search
                   .filter((item) => item.itemkey2)
-                  .map((item) => (
-                    <tr>{item.itemkey2}</tr>
+                  .map((item, idx) => (
+                    <tr key={idx}>{item.itemkey2}</tr>
                   ))}
               </td>
 
               <td>
                 {search
                   .filter((item) => typeof item.onhand === 'number')
-                  .map((item) => (
-                    <tr>{item.onhand}</tr>
+                  .map((item, idx) => (
+                    <tr key={idx}>{item.onhand}</tr>
                   ))}
               </td>
               <td>
@@ -406,8 +490,8 @@ export const SearchPage = () => {
               <td>
                 {search
                   .filter((item) => typeof item.soldTotal === 'number')
-                  .map((item) => (
-                    <tr>{item.soldTotal}</tr>
+                  .map((item, idx) => (
+                    <tr key={idx}>{item.soldTotal}</tr>
                   ))}
               </td>
               <td>
@@ -417,31 +501,33 @@ export const SearchPage = () => {
               <td>
                 {search
                   .filter((item) => typeof item.sold30 === 'number')
-                  .map((item) => (
-                    <tr>{item.sold30}</tr>
+                  .map((item, idx) => (
+                    <tr key={idx}>{item.sold30}</tr>
                   ))}
               </td>
 
               <td>
                 {search
                   .filter((item) => typeof item.sold90 === 'number')
-                  .map((item) => (
-                    <tr>{item.sold90}</tr>
+                  .map((item, idx) => (
+                    <tr key={idx}>{item.sold90}</tr>
                   ))}
               </td>
 
               <td>
                 {search
                   .filter((item) => typeof item.sold365 === 'number')
-                  .map((item) => (
-                    <tr>{item.sold365}</tr>
+                  .map((item, idx) => (
+                    <tr key={idx}>{item.sold365}</tr>
                   ))}
               </td>
 
               <td>
                 {search.map((item) =>
                   item.sixth.length ? (
-                    item.sixth.map((item2) => <tr>{item2.qtyord}</tr>)
+                    item.sixth.map((item2, idx) => (
+                      <tr key={idx}>{item2.qtyord}</tr>
+                    ))
                   ) : (
                     <tr></tr>
                   )
@@ -451,7 +537,9 @@ export const SearchPage = () => {
               <td>
                 {search.map((item) =>
                   item.fifth.length ? (
-                    item.fifth.map((item2) => <tr>{item2.qtyord}</tr>)
+                    item.fifth.map((item2, idx) => (
+                      <tr key={idx}>{item2.qtyord}</tr>
+                    ))
                   ) : (
                     <tr></tr>
                   )
