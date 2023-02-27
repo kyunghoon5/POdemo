@@ -6,6 +6,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 var _ = require('lodash');
 
+
+
 export const SearchPage = () => {
   const [productData, setProductData] = useState([]);
   console.log(productData);
@@ -14,6 +16,7 @@ export const SearchPage = () => {
   const [imageClicked, setImageClicked] = useState({ first: false });
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  
 
   //image handler
   const onClickImageHandler = (item) => {
@@ -59,6 +62,15 @@ export const SearchPage = () => {
   console.log(search);
 
   //buttonSearch console
+  const date = new Date();
+   const curDate = date.toLocaleDateString()
+   const past30 = new Date()
+   past30.setDate(past30.getDate()-30)
+   const past30c = past30.toLocaleDateString();
+
+    
+  
+   
 
   return (
     <div className="search">
@@ -263,24 +275,75 @@ export const SearchPage = () => {
 
               <td></td>
               <td></td>
-              <td></td>
+              <td style={{ background: '#f0e68c' }}>PUR_date</td>
 
               {/*purchased date*/}
-              {
-                search
-                  .flatMap((item) => [item].concat(item.sixth ?? []))
-                  .filter((item) => item.purdate)
-                  .map((item, idx) => (
-                    <td key={idx}>
-                      {new Date(item.purdate).toISOString().split('T')[0]}
-                    </td>
-                  ))[0]
-              }
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.sixth ?? []))
+                    .filter((item) => item.purdate)
+                    .map(
+                      (item) =>
+                        new Date(item.purdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fifth ?? []))
+                    .filter((item) => item.purdate)
+                    .map(
+                      (item) =>
+                        new Date(item.purdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fourth ?? []))
+                    .filter((item) => item.purdate)
+                    .map(
+                      (item) =>
+                        new Date(item.purdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.third ?? []))
+                    .filter((item) => item.purdate)
+                    .map(
+                      (item) =>
+                        new Date(item.purdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.second ?? []))
+                    .filter((item) => item.purdate)
+                    .map(
+                      (item) =>
+                        new Date(item.purdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.first ?? []))
+                    .filter((item) => item.purdate)
+                    .map(
+                      (item) =>
+                        new Date(item.purdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
             </tr>
 
             <tr className="row8">
@@ -289,24 +352,76 @@ export const SearchPage = () => {
 
               <td></td>
               <td></td>
-              <td></td>
+              <td style={{ background: '#f0e68c' }}>SHP_date</td>
               {/*shipping date*/}
-              {
-                search
-                  .flatMap((item) => [item].concat(item.sixth ?? []))
-                  .filter((item) => item.shpdate)
-                  .map((item, idx) => (
-                    <td key={idx}>
-                      {new Date(item.shpdate).toISOString().split('T')[0]}
-                    </td>
-                  ))[0]
-              }
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.sixth ?? []))
+                    .filter((item) => item.shpdate)
+                    .map(
+                      (item) =>
+                        new Date(item.shpdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fifth ?? []))
+                    .filter((item) => item.shpdate)
+                    .map(
+                      (item) =>
+                        new Date(item.shpdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fourth ?? []))
+                    .filter((item) => item.shpdate)
+                    .map(
+                      (item) =>
+                        new Date(item.shpdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.third ?? []))
+                    .filter((item) => item.shpdate)
+                    .map(
+                      (item) =>
+                        new Date(item.shpdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.second ?? []))
+                    .filter((item) => item.shpdate)
+                    .map(
+                      (item) =>
+                        new Date(item.shpdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.first ?? []))
+                    .filter((item) => item.shpdate)
+                    .map(
+                      (item) =>
+                        new Date(item.shpdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
             </tr>
+
             <tr className="row9">
               <InfoItemOb className="infoCol1" name="PO's 2" />
               <td colSpan="2">
@@ -316,23 +431,80 @@ export const SearchPage = () => {
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              <td style={{ background: '#f0e68c' }}>EXP_date</td>
               {/*expected rec date*/}
-              {
-                search
-                  .flatMap((item) => [item].concat(item.sixth ?? []))
-                  .filter((item) => item.reqdate)
-                  .map((item) => (
-                    <button>
-                      {new Date(item.reqdate).toISOString().split('T')[0]}
-                    </button>
-                  ))[0]
-              }
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.sixth ?? []))
+                    .filter((item) => item.reqdate)
+                    .map((item, idx) => (
+                      <button key={idx}>
+                        {new Date(item.reqdate).toISOString().split('T')[0]}
+                      </button>
+                    ))[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fifth ?? []))
+                    .filter((item) => item.reqdate)
+                    .map((item, idx) => (
+                      <button key={idx}>
+                        {new Date(item.reqdate).toISOString().split('T')[0]}
+                      </button>
+                    ))[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fourth ?? []))
+                    .filter((item) => item.reqdate)
+                    .map((item, idx) => (
+                      <button key={idx}>
+                        {new Date(item.reqdate).toISOString().split('T')[0]}
+                      </button>
+                    ))[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.third ?? []))
+                    .filter((item) => item.reqdate)
+                    .map((item, idx) => (
+                      <button key={idx}>
+                        {new Date(item.reqdate).toISOString().split('T')[0]}
+                      </button>
+                    ))[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.second ?? []))
+                    .filter((item) => item.reqdate)
+                    .map((item, idx) => (
+                      <button key={idx}>
+                        {new Date(item.reqdate).toISOString().split('T')[0]}
+                      </button>
+                    ))[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.first ?? []))
+                    .filter((item) => item.reqdate)
+                    .map((item, idx) => (
+                      <button key={idx}>
+                        {new Date(item.reqdate).toISOString().split('T')[0]}
+                      </button>
+                    ))[0]
+                }
+              </td>
             </tr>
             <tr className="row10">
               <InfoItemOb className="infoCol1" name="ST_DATE" />
@@ -340,22 +512,83 @@ export const SearchPage = () => {
                 {
                   search
                     .filter((item) => item.start_dte)
-                    .map((item, idx) => (
-                      <div key={idx}>{item.start_dte}</div>
-                    ))[0]
+                    .map((item, idx) => <td key={idx}>{item.start_dte}</td>)[0]
                 }
               </td>
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td style={{ background: '#f0e68c' }}>RCV_date</td>
+
+              {/*Actual rec date*/}
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.sixth ?? []))
+                    .filter((item) => item.recdate)
+                    .map(
+                      (item) =>
+                        new Date(item.recdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fifth ?? []))
+                    .filter((item) => item.recdate)
+                    .map(
+                      (item) =>
+                        new Date(item.recdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fourth ?? []))
+                    .filter((item) => item.recdate)
+                    .map(
+                      (item) =>
+                        new Date(item.recdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.third ?? []))
+                    .filter((item) => item.recdate)
+                    .map(
+                      (item) =>
+                        new Date(item.recdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.second ?? []))
+                    .filter((item) => item.recdate)
+                    .map(
+                      (item) =>
+                        new Date(item.recdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.first ?? []))
+                    .filter((item) => item.recdate)
+                    .map(
+                      (item) =>
+                        new Date(item.recdate).toISOString().split('T')[0]
+                    )[0]
+                }
+              </td>
             </tr>
+
             <tr className="row11">
               <td className="cost">RPL: </td>
               <td colSpan="2" className="price">
@@ -375,39 +608,128 @@ export const SearchPage = () => {
                   onChange={(date) => setStartDate(date)}
                 />
               </td>
+              <td className="prv30">{past30c}</td>
               <td className="prv30">01/16/2023</td>
               <td className="prv30">01/16/2023</td>
-              <td className="prv30">01/16/2023</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
+              {/*purno No*/}
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.sixth ?? []))
+                    .filter((item) => item.portn)
+                    .map((item) => item.portn)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fifth ?? []))
+                    .filter((item) => item.portn)
+                    .map((item) => item.portn)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fourth ?? []))
+                    .filter((item) => item.portn)
+                    .map((item) => item.portn)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.third ?? []))
+                    .filter((item) => item.portn)
+                    .map((item) => item.portn)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.second ?? []))
+                    .filter((item) => item.portn)
+                    .map((item) => item.portn)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.first ?? []))
+                    .filter((item) => item.portn)
+                    .map((item) => item.portn)[0]
+                }
+              </td>
             </tr>
 
             <tr className="row12">
               <td className="cost"> </td>
               <td colSpan="2" className="price"></td>
               <td id="diffDays"></td>
-              <td id="recDte" className="recDateSel_cal"></td>
+              <td id="recDte" className="recDateSel_cal">
+                {curDate}
+              </td>
               <td colSpan="2">
                 <DatePicker
                   selected={endDate}
                   onChange={(date) => setEndDate(date)}
                 />
               </td>
+              <td className="prv30">{curDate}</td>
               <td className="prv30">01/16/2023</td>
               <td className="prv30">01/16/2023</td>
-              <td className="prv30">01/16/2023</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
-              <td className="poctn">6</td>
+              {/*invoice No */}
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.sixth ?? []))
+                    .filter((item) => item.invno)
+                    .map((item) => item.invno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fifth ?? []))
+                    .filter((item) => item.invno)
+                    .map((item) => item.invno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fourth ?? []))
+                    .filter((item) => item.invno)
+                    .map((item) => item.invno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.third ?? []))
+                    .filter((item) => item.invno)
+                    .map((item) => item.invno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.second ?? []))
+                    .filter((item) => item.invno)
+                    .map((item) => item.invno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.first ?? []))
+                    .filter((item) => item.invno)
+                    .map((item) => item.invno)[0]
+                }
+              </td>
             </tr>
           </tbody>
+
           <tbody id="tb2" className="table2">
             <tr>
               <td></td>
@@ -419,46 +741,57 @@ export const SearchPage = () => {
               <td>SOLD30</td>
               <td>SOLD90</td>
               <td>SOLD365</td>
-              {
-                search
-                  .flatMap((item) => [item].concat(item.sixth ?? []))
-                  .filter((item) => item.purno)
-                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
-              }
-              {
-                search
-                  .flatMap((item) => [item].concat(item.fifth ?? []))
-                  .filter((item) => item.purno)
-                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
-              }
-              {
-                search
-                  .flatMap((item) => [item].concat(item.fourth ?? []))
-                  .filter((item) => item.purno)
-                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
-              }
-              {
-                search
-                  .flatMap((item) => [item].concat(item.third ?? []))
-                  .filter((item) => item.purno)
-                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
-              }
-
-              {
-                search
-                  .flatMap((item) => [item].concat(item.second ?? []))
-                  .filter((item) => item.purno)
-                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
-              }
-
-              {
-                search
-                  .flatMap((item) => [item].concat(item.first ?? []))
-                  .filter((item) => item.purno)
-                  .map((item, idx) => <td key={idx}>{item.purno}</td>)[0]
-              }
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.sixth ?? []))
+                    .filter((item) => item.purno)
+                    .map((item) => item.purno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fifth ?? []))
+                    .filter((item) => item.purno)
+                    .map((item) => item.purno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.fourth ?? []))
+                    .filter((item) => item.purno)
+                    .map((item) => item.purno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.third ?? []))
+                    .filter((item) => item.purno)
+                    .map((item) => item.purno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.second ?? []))
+                    .filter((item) => item.purno)
+                    .map((item) => item.purno)[0]
+                }
+              </td>
+              <td>
+                {
+                  search
+                    .flatMap((item) => [item].concat(item.first ?? []))
+                    .filter((item) => item.purno)
+                    .map((item) => item.purno)[0]
+                }
+              </td>
             </tr>
           </tbody>
+
           {/* body table */}
 
           {search.length > 0 ? (
@@ -523,65 +856,73 @@ export const SearchPage = () => {
               </td>
 
               <td>
-                {search.map((item) =>
+                {search.map((item, idx) =>
                   item.sixth.length ? (
-                    item.sixth.map((item2, idx) => (
-                      <tr key={idx}>{item2.qtyord}</tr>
+                    item.sixth.map((item2, idx2) => (
+                      <tr key={idx2}>{item2.qtyord}</tr>
                     ))
                   ) : (
-                    <tr></tr>
+                    <tr key={idx}></tr>
                   )
                 )}
               </td>
 
               <td>
-                {search.map((item) =>
+                {search.map((item, idx) =>
                   item.fifth.length ? (
-                    item.fifth.map((item2, idx) => (
-                      <tr key={idx}>{item2.qtyord}</tr>
+                    item.fifth.map((item2, idx2) => (
+                      <tr key={idx2}>{item2.qtyord}</tr>
                     ))
                   ) : (
-                    <tr></tr>
+                    <tr key={idx}></tr>
                   )
                 )}
               </td>
 
               <td>
-                {search.map((item) =>
+                {search.map((item, idx) =>
                   item.fourth.length ? (
-                    item.fourth.map((item2) => <tr>{item2.qtyord}</tr>)
+                    item.fourth.map((item2, idx2) => (
+                      <tr key={idx2}>{item2.qtyord}</tr>
+                    ))
                   ) : (
-                    <tr></tr>
+                    <tr key={idx}></tr>
                   )
                 )}
               </td>
 
               <td>
-                {search.map((item) =>
+                {search.map((item, idx) =>
                   item.third.length ? (
-                    item.third.map((item2) => <tr>{item2.qtyord}</tr>)
+                    item.third.map((item2, idx2) => (
+                      <tr key={idx2}>{item2.qtyord}</tr>
+                    ))
                   ) : (
-                    <tr></tr>
+                    <tr key={idx}></tr>
                   )
                 )}
               </td>
 
               <td>
-                {search.map((item) =>
+                {search.map((item, idx) =>
                   item.second.length ? (
-                    item.second.map((item2) => <tr>{item2.qtyord}</tr>)
+                    item.second.map((item2, idx2) => (
+                      <tr key={idx2}>{item2.qtyord}</tr>
+                    ))
                   ) : (
-                    <tr></tr>
+                    <tr key={idx}></tr>
                   )
                 )}
               </td>
 
               <td>
-                {search.map((item) =>
+                {search.map((item, idx) =>
                   item.first.length ? (
-                    item.first.map((item2) => <tr>{item2.qtyord}</tr>)
+                    item.first.map((item2, idx2) => (
+                      <tr key={idx2}>{item2.qtyord}</tr>
+                    ))
                   ) : (
-                    <tr></tr>
+                    <tr key={idx}></tr>
                   )
                 )}
               </td>

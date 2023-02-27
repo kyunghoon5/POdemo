@@ -49,14 +49,10 @@ app.get('/mergeData', async (req, res) => {
 
     const result2 =
       await request2.query(`/****** Script for SelectTopNRows command from SSMS  ******/
-SELECT TOP (5000) [vendno]
-      ,[class]
-      ,[descrip]
-      ,[itemkey2]
-      ,[base_dte]
-      ,[last_sold_dte]
-      ,[last_rcv_dte]
-      ,[upd_date]
+SELECT TOP 
+      
+      [descrip]
+      ,[itemkey2]     
       ,[onhand]
       ,[sold30]
       ,[sold60]
@@ -81,6 +77,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
+      ,a.[invno]
 	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
@@ -103,6 +100,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
+      ,a.[invno]
 	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
@@ -124,6 +122,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
+      ,a.[invno]
 	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
@@ -145,6 +144,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
+      ,a.[invno]
 	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
@@ -166,6 +166,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
+      ,a.[invno]
 	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
@@ -187,6 +188,7 @@ from(SELECT  A.purno
 	  ,a.[shpdate]
 	  ,a.[reqdate]
       ,a.[recdate]
+      ,a.[invno]
 	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
            
       
@@ -229,6 +231,7 @@ from(SELECT  A.purno
           shpdate: num.shpdate,
           reqdate: num.reqdate,
           recdate: num.recdate,
+          invno: num.invno,
         }));
         obj.second = numbers2.map((num) => ({
           purno: num.purno,
@@ -238,6 +241,7 @@ from(SELECT  A.purno
           shpdate: num.shpdate,
           reqdate: num.reqdate,
           recdate: num.recdate,
+          invno: num.invno,
         }));
         obj.third = numbers3.map((num) => ({
           purno: num.purno,
@@ -247,6 +251,7 @@ from(SELECT  A.purno
           shpdate: num.shpdate,
           reqdate: num.reqdate,
           recdate: num.recdate,
+          invno: num.invno,
         }));
         obj.fourth = numbers4.map((num) => ({
           purno: num.purno,
@@ -256,6 +261,7 @@ from(SELECT  A.purno
           shpdate: num.shpdate,
           reqdate: num.reqdate,
           recdate: num.recdate,
+          invno: num.invno,
         }));
         obj.fifth = numbers5.map((num) => ({
           purno: num.purno,
@@ -265,6 +271,7 @@ from(SELECT  A.purno
           shpdate: num.shpdate,
           reqdate: num.reqdate,
           recdate: num.recdate,
+          invno: num.invno,
         }));
         obj.sixth = numbers6.map((num) => ({
           purno: num.purno,
@@ -274,6 +281,7 @@ from(SELECT  A.purno
           shpdate: num.shpdate,
           reqdate: num.reqdate,
           recdate: num.recdate,
+          invno: num.invno,
         }));
         return obj;
       });
