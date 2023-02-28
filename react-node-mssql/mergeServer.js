@@ -46,24 +46,127 @@ app.get('/mergeData', async (req, res) => {
     let request2 = new sql.Request(sqlPool2);
 
     // Query the two servers for data
+    //main query
+    const result2 = await request2.query(`WITH BOTranTmp as (
+  SELECT 
+    * 
+  FROM 
+    BOTran 
+  WHERE invdte >= Dateadd(day, -365, Getdate())
+) 
+SELECT
+	A.vendno,
+  A.class, 
+  A.itemkey2, 
+  A.descrip,
+  A.onhand,
+  A.qtyshp, 
+  A.qtybo,
+  A.price,
+  A.start_dte
+  
+FROM 
+  (
+    SELECT	
+	(SELECT supplier
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
+      A.class, 
+      A.itemkey2, 
+      A.descrip,
+	   (SELECT sum(onhand)
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
+	  
+      sum(A.qtyshp) as qtyshp, 
+	  Isnull((SELECT Sum(qtybo)
+                      FROM   Botrantmp
+                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
+					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
+					  (SELECT start_dte
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
+			   
 
-    const result2 =
-      await request2.query(`/****** Script for SelectTopNRows command from SSMS  ******/
-SELECT TOP 
-      
-      [descrip]
-      ,[itemkey2]     
-      ,[onhand]
-      ,[sold30]
-      ,[sold60]
-      ,[sold90]
-      ,[sold120]
-      ,[sold180]
-      ,[sold240]
-      ,[sold365]
-      ,[soldTotal]      
-  FROM [BYT_LEG].[dbo].[arsold365]
-  where descrip='${req.query.descrip}'`);
+
+    FROM 
+      artran10c A 
+    WHERE invdte >= Dateadd(day, -365, Getdate())
+      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 
+      and A.descrip='${req.query.descrip}'
+      --and A.class in ('RB')
+      --Exclude RB
+      --and A.class not in ('RB', 'AA', 'Z')
+    group by 
+      A.class, 
+      A.itemkey2, 
+      A.descrip
+	  
+  ) A 
+ORDER BY 
+  itemkey2 asc
+
+`);
+
+const result2Sold30 = await request2.query(`WITH BOTranTmp as (
+  SELECT 
+    * 
+  FROM 
+    BOTran 
+  WHERE invdte >= Dateadd(day, -30, Getdate())
+) 
+SELECT
+	 
+  A.itemkey2, 
+  A.descrip,
+  
+  A.qtyshp 
+  
+  
+FROM 
+  (
+    SELECT	
+	(SELECT supplier
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
+      A.class, 
+      A.itemkey2, 
+      A.descrip,
+	   (SELECT sum(onhand)
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
+	  
+      sum(A.qtyshp) as qtyshp, 
+	  Isnull((SELECT Sum(qtybo)
+                      FROM   Botrantmp
+                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
+					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
+					  (SELECT start_dte
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
+			   
+
+
+    FROM 
+      artran10c A 
+    WHERE invdte >= Dateadd(day, -30, Getdate())
+      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 
+      and A.descrip='${req.query.descrip}'
+      --and A.class in ('RB')
+      --Exclude RB
+      --and A.class not in ('RB', 'AA', 'Z')
+    group by 
+      A.class, 
+      A.itemkey2, 
+      A.descrip
+	  
+  ) A 
+ORDER BY 
+  itemkey2 asc
+
+`);
 
     //Seach value parsing into query
     const result21 = await request2.query(`select * 
@@ -206,7 +309,7 @@ from(SELECT  A.purno
     //   console.log(result2.recordset[i].itemkey2)}
 
     //obj recursive merge + POorder
-    const mergeArrays = (arr1, arr2, arr3, arr4, arr5, arr6, arr7) => {
+    const mergeArrays = (arr1, arr2, arr3, arr4, arr5, arr6, arr7,sold30) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
         const numbers2 = arr3.filter((item) => item.itemkey2 === obj.itemkey2);
@@ -214,6 +317,7 @@ from(SELECT  A.purno
         const numbers4 = arr5.filter((item) => item.itemkey2 === obj.itemkey2);
         const numbers5 = arr6.filter((item) => item.itemkey2 === obj.itemkey2);
         const numbers6 = arr7.filter((item) => item.itemkey2 === obj.itemkey2);
+        const numbers7 = sold30.filter((item) => item.itemkey2 === obj.itemkey2)
         if (!numbers.length) {
           obj.first = numbers;
           obj.second = numbers2;
@@ -221,6 +325,7 @@ from(SELECT  A.purno
           obj.fourth = numbers4;
           obj.fifth = numbers5;
           obj.sixth = numbers6;
+          obj.sold30= numbers7;
           return obj;
         }
         obj.first = numbers.map((num) => ({
@@ -283,6 +388,10 @@ from(SELECT  A.purno
           recdate: num.recdate,
           invno: num.invno,
         }));
+
+        obj.sold30 = numbers7.map((num) => ({
+          qtyshp: num.qtyshp
+        }))
         return obj;
       });
     };
@@ -294,7 +403,8 @@ from(SELECT  A.purno
       result23.recordset,
       result24.recordset,
       result25.recordset,
-      result26.recordset
+      result26.recordset,
+      result2Sold30.recordset
     );
     //console.log(result);
     // Sort the merged results by ID

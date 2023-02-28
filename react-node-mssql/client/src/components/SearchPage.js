@@ -4,7 +4,11 @@ import './tableAll.css';
 import BlankPage from './BlankPage';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'semantic-ui-css/semantic.min.css';
+
 var _ = require('lodash');
+// or less ideally
+
 
 
 
@@ -16,6 +20,18 @@ export const SearchPage = () => {
   const [imageClicked, setImageClicked] = useState({ first: false });
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+  //POS select Strinf to Array 
+  const [selectedItem, setSelectedItem] = useState([]);
+  const handleChange = (e) => {
+    let value = e.target.value    
+    setSelectedItem(value.split(","));
+    
+  }; 
+
+  useEffect(() => {   
+    console.log(selectedItem)
+  }, [selectedItem]);
   
 
   //image handler
@@ -63,14 +79,14 @@ export const SearchPage = () => {
 
   //buttonSearch console
   const date = new Date();
-   const curDate = date.toLocaleDateString()
-   const past30 = new Date()
-   past30.setDate(past30.getDate()-30)
-   const past30c = past30.toLocaleDateString();
+  const curDate = date.toLocaleDateString();
+  const past30 = new Date();
+  past30.setDate(past30.getDate() - 30);
+  const past30c = past30.toLocaleDateString();
 
-    
   
-   
+
+  
 
   return (
     <div className="search">
@@ -512,7 +528,11 @@ export const SearchPage = () => {
                 {
                   search
                     .filter((item) => item.start_dte)
-                    .map((item, idx) => <td key={idx}>{item.start_dte}</td>)[0]
+
+                    .map(
+                      (item) =>
+                        new Date(item.start_dte).toISOString().split('T')[0]
+                    )[0]
                 }
               </td>
               <td></td>
@@ -735,7 +755,41 @@ export const SearchPage = () => {
               <td></td>
               <td>OH</td>
               <td>REORDER</td>
-              <td>POS</td>
+              <td>
+                <div className="App">
+                  <select name="item-selected" onChange={handleChange}>
+                    <option>POS_</option>
+                    <option
+                      value={search.map((item) =>
+                        item.sixth.length
+                          ? item.sixth.map((item2) => item2.qtyord)
+                          : 0
+                      )}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.sixth ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+                    <option
+                      value={search.map((item) =>
+                        item.fifth.length
+                          ? item.fifth.map((item2) => item2.qtyord)
+                          : 0
+                      )}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.fifth ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+                  </select>
+                </div>
+              </td>
               <td>SOLD</td>
               <td colSpan={2}>N days</td>
               <td>SOLD30</td>
@@ -792,7 +846,7 @@ export const SearchPage = () => {
             </tr>
           </tbody>
 
-          {/* body table */}
+          {/* body table3 */}
 
           {search.length > 0 ? (
             <tbody id="tt" className="buttomSearch">
@@ -815,46 +869,52 @@ export const SearchPage = () => {
                 <tr></tr>
               </td>
               <td>
-                <tr></tr>
+                {selectedItem.map((item, idx) => (
+                  <tr key={idx}>{item}</tr>
+                ))}
               </td>
               <td>
                 <tr></tr>
               </td>
               <td>
                 {search
-                  .filter((item) => typeof item.soldTotal === 'number')
+                  .filter((item) => typeof item.qtyshp === 'number')
                   .map((item, idx) => (
-                    <tr key={idx}>{item.soldTotal}</tr>
+                    <tr key={idx}>{item.qtyshp}</tr>
                   ))}
               </td>
               <td>
                 <tr></tr>
               </td>
+              {/*column table with nested array */}
+              <td>
+                {search.map((item, idx) =>
+                  item.sold30.length ? (
+                    item.sold30.map((item2, idx2) => (
+                      <tr key={idx2}>{item2.qtyshp}</tr>
+                    ))
+                  ) : (
+                    <tr key={idx}></tr>
+                  )
+                )}
+              </td>
 
               <td>
                 {search
-                  .filter((item) => typeof item.sold30 === 'number')
+                  .filter((item) => typeof item.qtyshp === 'number')
                   .map((item, idx) => (
-                    <tr key={idx}>{item.sold30}</tr>
+                    <tr key={idx}>{item.qtyshp}</tr>
                   ))}
               </td>
 
               <td>
                 {search
-                  .filter((item) => typeof item.sold90 === 'number')
+                  .filter((item) => typeof item.qtyshp === 'number')
                   .map((item, idx) => (
-                    <tr key={idx}>{item.sold90}</tr>
+                    <tr key={idx}>{item.qtyshp}</tr>
                   ))}
               </td>
-
-              <td>
-                {search
-                  .filter((item) => typeof item.sold365 === 'number')
-                  .map((item, idx) => (
-                    <tr key={idx}>{item.sold365}</tr>
-                  ))}
-              </td>
-
+              {/*column table with nested array */}
               <td>
                 {search.map((item, idx) =>
                   item.sixth.length ? (
@@ -866,7 +926,7 @@ export const SearchPage = () => {
                   )
                 )}
               </td>
-
+              {/*column table with nested array */}
               <td>
                 {search.map((item, idx) =>
                   item.fifth.length ? (
@@ -878,7 +938,7 @@ export const SearchPage = () => {
                   )
                 )}
               </td>
-
+              {/*column table with nested array */}
               <td>
                 {search.map((item, idx) =>
                   item.fourth.length ? (
@@ -890,7 +950,7 @@ export const SearchPage = () => {
                   )
                 )}
               </td>
-
+              {/*column table with nested array */}
               <td>
                 {search.map((item, idx) =>
                   item.third.length ? (
@@ -902,7 +962,7 @@ export const SearchPage = () => {
                   )
                 )}
               </td>
-
+              {/*column table with nested array */}
               <td>
                 {search.map((item, idx) =>
                   item.second.length ? (
@@ -914,7 +974,7 @@ export const SearchPage = () => {
                   )
                 )}
               </td>
-
+              {/*column table with nested array */}
               <td>
                 {search.map((item, idx) =>
                   item.first.length ? (

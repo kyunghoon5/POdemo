@@ -652,6 +652,24 @@ const BlankPage = () => {
           <td></td>
           <td></td>
         </tr>
+        <tr>
+          <td style={{textAlign: 'left'}}>TOTAL</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
       </tbody>
     </>
   );
