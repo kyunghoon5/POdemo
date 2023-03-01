@@ -9,9 +9,6 @@ import 'semantic-ui-css/semantic.min.css';
 var _ = require('lodash');
 // or less ideally
 
-
-
-
 export const SearchPage = () => {
   const [productData, setProductData] = useState([]);
   console.log(productData);
@@ -21,18 +18,24 @@ export const SearchPage = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  //POS select Strinf to Array 
-  const [selectedItem, setSelectedItem] = useState([]);
-  const handleChange = (e) => {
-    let value = e.target.value    
-    setSelectedItem(value.split(","));
-    
-  }; 
-
-  useEffect(() => {   
-    console.log(selectedItem)
-  }, [selectedItem]);
   
+var obj = JSON.parse(JSON.stringify(search.map((item) => (
+                  
+                    item.first[3]
+                  ))));
+console.log(obj.purno)
+
+  //POS select Strinf to Array
+  const [selectedItem, setSelectedItem] = useState([]);
+
+  const handleChange = (e) => {
+    let value = e.target.value;
+    setSelectedItem(value.split(','));
+  };
+
+  useEffect(() => {
+    console.log(selectedItem);
+  }, [selectedItem]);
 
   //image handler
   const onClickImageHandler = (item) => {
@@ -83,10 +86,6 @@ export const SearchPage = () => {
   const past30 = new Date();
   past30.setDate(past30.getDate() - 30);
   const past30c = past30.toLocaleDateString();
-
-  
-
-  
 
   return (
     <div className="search">
@@ -758,31 +757,102 @@ export const SearchPage = () => {
               <td>
                 <div className="App">
                   <select name="item-selected" onChange={handleChange}>
-                    <option>POS_</option>
+                    {/*POS initial */}
                     <option
                       value={search.map((item) =>
-                        item.sixth.length
-                          ? item.sixth.map((item2) => item2.qtyord)
-                          : 0
+                        item.first.length
+                          ? item.first.map((item2) => item2.qtyord)
+                          : null
+                      )}
+                    >
+                      POS_
+                    </option>
+
+                    <option
+                      value={search.map((item) =>
+                        item.first.length
+                          ? item.first.map((item2) => item2.qtyord)
+                          : null
                       )}
                     >
                       {
                         search
-                          .flatMap((item) => [item].concat(item.sixth ?? []))
+                          .flatMap((item) => [item].concat(item.first ?? []))
                           .filter((item) => item.purno)
                           .map((item) => item.purno)[0]
                       }
                     </option>
+
+                    <option
+                      value={search.map((item) =>
+                        item.second.length
+                          ? item.second.map((item2) => item2.qtyord)
+                          : null
+                      )}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.second ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+
+                    <option
+                      value={search.map((item) =>
+                        item.third.length
+                          ? item.third.map((item2) => item2.qtyord)
+                          : null
+                      )}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.third ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+
+                    <option
+                      value={search.map((item) =>
+                        item.fourth.length
+                          ? item.fourth.map((item2) => item2.qtyord)
+                          : null
+                      )}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.fourth ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+
                     <option
                       value={search.map((item) =>
                         item.fifth.length
                           ? item.fifth.map((item2) => item2.qtyord)
-                          : 0
+                          : null
                       )}
                     >
                       {
                         search
                           .flatMap((item) => [item].concat(item.fifth ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+
+                    <option
+                      value={search.map((item) =>
+                        item.sixth.length
+                          ? item.sixth.map((item2) => item2.qtyord)
+                          : null
+                      )}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.sixth ?? []))
                           .filter((item) => item.purno)
                           .map((item) => item.purno)[0]
                       }
@@ -846,6 +916,8 @@ export const SearchPage = () => {
             </tr>
           </tbody>
 
+          {}
+
           {/* body table3 */}
 
           {search.length > 0 ? (
@@ -868,11 +940,25 @@ export const SearchPage = () => {
               <td>
                 <tr></tr>
               </td>
-              <td>
-                {selectedItem.map((item, idx) => (
-                  <tr key={idx}>{item}</tr>
-                ))}
-              </td>
+              {selectedItem.length > 0 ? (
+                <td>
+                  {selectedItem.map((item, idx) => (
+                    <tr key={idx}>{item}</tr>
+                  ))}
+                </td>
+              ) : (
+                <td>
+                  {search.map((item, idx) =>
+                    item.first.length ? (
+                      item.first.map((item2, idx2) => (
+                        <tr key={idx2}>{item2.qtyord}</tr>
+                      ))
+                    ) : (
+                      <tr key={idx}></tr>
+                    )
+                  )}
+                </td>
+              )}
               <td>
                 <tr></tr>
               </td>

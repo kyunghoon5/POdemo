@@ -109,7 +109,7 @@ ORDER BY
 
 `);
 
-const result2Sold30 = await request2.query(`WITH BOTranTmp as (
+    const result2Sold30 = await request2.query(`WITH BOTranTmp as (
   SELECT 
     * 
   FROM 
@@ -309,7 +309,7 @@ from(SELECT  A.purno
     //   console.log(result2.recordset[i].itemkey2)}
 
     //obj recursive merge + POorder
-    const mergeArrays = (arr1, arr2, arr3, arr4, arr5, arr6, arr7,sold30) => {
+    const mergeArrays = (arr1, arr2, arr3, arr4, arr5, arr6, arr7, sold30) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
         const numbers2 = arr3.filter((item) => item.itemkey2 === obj.itemkey2);
@@ -317,7 +317,9 @@ from(SELECT  A.purno
         const numbers4 = arr5.filter((item) => item.itemkey2 === obj.itemkey2);
         const numbers5 = arr6.filter((item) => item.itemkey2 === obj.itemkey2);
         const numbers6 = arr7.filter((item) => item.itemkey2 === obj.itemkey2);
-        const numbers7 = sold30.filter((item) => item.itemkey2 === obj.itemkey2)
+        const numbers7 = sold30.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
         if (!numbers.length) {
           obj.first = numbers;
           obj.second = numbers2;
@@ -325,7 +327,7 @@ from(SELECT  A.purno
           obj.fourth = numbers4;
           obj.fifth = numbers5;
           obj.sixth = numbers6;
-          obj.sold30= numbers7;
+          obj.sold30 = numbers7;
           return obj;
         }
         obj.first = numbers.map((num) => ({
@@ -390,8 +392,8 @@ from(SELECT  A.purno
         }));
 
         obj.sold30 = numbers7.map((num) => ({
-          qtyshp: num.qtyshp
-        }))
+          qtyshp: num.qtyshp,
+        }));
         return obj;
       });
     };
