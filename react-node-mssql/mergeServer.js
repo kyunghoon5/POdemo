@@ -302,6 +302,21 @@ from(SELECT  A.purno
   where portn in ('6')
   order by purdate desc, itemkey2 asc`);
 
+    //po reorder total
+    const result27 = await request2.query(`SELECT 
+     
+      [itemkey2]
+      ,[descrip]
+      
+      ,sum([qtyord]) as total
+     
+      
+    
+  FROM [BYT_LEG].[dbo].[potran10c]
+
+  where descrip='${req.query.descrip}'  and purdate >= Dateadd(day, -365, Getdate())
+  group by descrip,itemkey2`);
+
     // Combine the two results into a single array
     const mergedResults = [...result2.recordset];
 
@@ -309,7 +324,17 @@ from(SELECT  A.purno
     //   console.log(result2.recordset[i].itemkey2)}
 
     //obj recursive merge + POorder
-    const mergeArrays = (arr1, arr2, arr3, arr4, arr5, arr6, arr7, sold30) => {
+    const mergeArrays = (
+      arr1,
+      arr2,
+      arr3,
+      arr4,
+      arr5,
+      arr6,
+      arr7,
+      sold30,
+      poreorder
+    ) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
         const numbers2 = arr3.filter((item) => item.itemkey2 === obj.itemkey2);
@@ -320,6 +345,9 @@ from(SELECT  A.purno
         const numbers7 = sold30.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
+        const numbers8 = poreorder.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
         if (!numbers.length) {
           obj.first = numbers;
           obj.second = numbers2;
@@ -328,6 +356,7 @@ from(SELECT  A.purno
           obj.fifth = numbers5;
           obj.sixth = numbers6;
           obj.sold30 = numbers7;
+          obj.poreorder = numbers8;
           return obj;
         }
         obj.first = numbers.map((num) => ({
@@ -394,6 +423,8 @@ from(SELECT  A.purno
         obj.sold30 = numbers7.map((num) => ({
           qtyshp: num.qtyshp,
         }));
+
+        obj.poreorder = numbers8.map((num) => ({ total: num.total }));
         return obj;
       });
     };
@@ -406,7 +437,8 @@ from(SELECT  A.purno
       result24.recordset,
       result25.recordset,
       result26.recordset,
-      result2Sold30.recordset
+      result2Sold30.recordset,
+      result27.recordset
     );
     //console.log(result);
     // Sort the merged results by ID
@@ -427,12 +459,15 @@ from(SELECT  A.purno
     } else {
       // If no eventId query parameter is provided, return the merged results array
       res.send(mergedResults);
+
     }
+    
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal server error');
   }
 });
+
 
 // Start the server on port 3000
 app.listen(8082, () => {

@@ -11,19 +11,12 @@ var _ = require('lodash');
 
 export const SearchPage = () => {
   const [productData, setProductData] = useState([]);
-  console.log(productData);
+
   const [search, setSearch] = useState([]);
   const [record, setRecord] = useState([]);
   const [imageClicked, setImageClicked] = useState({ first: false });
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-
-  
-var obj = JSON.parse(JSON.stringify(search.map((item) => (
-                  
-                    item.first[3]
-                  ))));
-console.log(obj.purno)
 
   //POS select Strinf to Array
   const [selectedItem, setSelectedItem] = useState([]);
@@ -78,14 +71,20 @@ console.log(obj.purno)
   //img.vanessahair.com/sales/MIST%20AILYN.jpg
   // const imgSrc = `http://localhost:8080/api/img/${name}.jpg`;
 
-  console.log(search);
+  //console.log(search);
 
-  //buttonSearch console
+  //DATE buttonSearch console
   const date = new Date();
-  const curDate = date.toLocaleDateString();
+  const curDate = [date.toISOString().split('T')[0]];
   const past30 = new Date();
   past30.setDate(past30.getDate() - 30);
-  const past30c = past30.toLocaleDateString();
+  const past30c = past30.toISOString().split('T')[0];
+
+  const amountsDate = selectedItem.map((item) => item).slice(0, 1)
+  
+
+  
+  
 
   return (
     <div className="search">
@@ -443,7 +442,13 @@ console.log(obj.purno)
                 <span className="pctn" style={{ float: 'left' }}></span>
                 <span className="dimension" style={{ float: 'right' }}></span>
               </td>
-              <td></td>
+              {selectedItem.length > 0 ? (
+                selectedItem
+                  .map((item, idx) => <td key={idx}>{item}</td>)
+                  .slice(0, 1)
+              ) : (
+                <td></td>
+              )}
               <td></td>
               <td></td>
               <td style={{ background: '#f0e68c' }}>EXP_date</td>
@@ -534,7 +539,13 @@ console.log(obj.purno)
                     )[0]
                 }
               </td>
-              <td></td>
+              {selectedItem.length > 0 ? (
+                selectedItem
+                  .map((item, idx) => <td key={idx}>{item}</td>)
+                  .slice(1, 2)
+              ) : (
+                <td></td>
+              )}
               <td></td>
               <td></td>
               <td style={{ background: '#f0e68c' }}>RCV_date</td>
@@ -619,8 +630,15 @@ console.log(obj.purno)
                     ))[0]
                 }
               </td>
-              <td id="diffDays"></td>
-              <td id="recDte" className="recDateSel_cal"></td>
+              <td id="diffDays">1</td>
+              {selectedItem.length > 0 ? (
+                selectedItem
+                  .map((item, idx) => <td key={idx}>{item}</td>)
+                  .slice(1, 2)
+              ) : (
+                <td></td>
+              )}
+
               <td colSpan="2">
                 <DatePicker
                   selected={startDate}
@@ -686,7 +704,7 @@ console.log(obj.purno)
               <td colSpan="2" className="price"></td>
               <td id="diffDays"></td>
               <td id="recDte" className="recDateSel_cal">
-                {curDate}
+                {new Date().toISOString().split('T')[0]}
               </td>
               <td colSpan="2">
                 <DatePicker
@@ -694,7 +712,9 @@ console.log(obj.purno)
                   onChange={(date) => setEndDate(date)}
                 />
               </td>
-              <td className="prv30">{curDate}</td>
+              <td className="prv30">
+                {new Date().toISOString().split('T')[0]}
+              </td>
               <td className="prv30">01/16/2023</td>
               <td className="prv30">01/16/2023</td>
               {/*invoice No */}
@@ -753,27 +773,65 @@ console.log(obj.purno)
             <tr>
               <td></td>
               <td>OH</td>
-              <td>REORDER</td>
+              {/*PO reorder */}
+              <td style={{ background: '#f4a460' }}>REORDER(1yr)</td>
               <td>
                 <div className="App">
                   <select name="item-selected" onChange={handleChange}>
                     {/*POS initial */}
+
                     <option
-                      value={search.map((item) =>
-                        item.first.length
-                          ? item.first.map((item2) => item2.qtyord)
-                          : null
-                      )}
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.first ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.first ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.first.length
+                            ? item.first.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
                     >
                       POS_
                     </option>
 
                     <option
-                      value={search.map((item) =>
-                        item.first.length
-                          ? item.first.map((item2) => item2.qtyord)
-                          : null
-                      )}
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.first ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.first ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.first.length
+                            ? item.first.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
                     >
                       {
                         search
@@ -784,71 +842,29 @@ console.log(obj.purno)
                     </option>
 
                     <option
-                      value={search.map((item) =>
-                        item.second.length
-                          ? item.second.map((item2) => item2.qtyord)
-                          : null
-                      )}
-                    >
-                      {
+                      value={[
                         search
-                          .flatMap((item) => [item].concat(item.second ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
+                          .flatMap((item) => [item].concat(item.sixth ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
 
-                    <option
-                      value={search.map((item) =>
-                        item.third.length
-                          ? item.third.map((item2) => item2.qtyord)
-                          : null
-                      )}
-                    >
-                      {
                         search
-                          .flatMap((item) => [item].concat(item.third ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
+                          .flatMap((item) => [item].concat(item.sixth ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
 
-                    <option
-                      value={search.map((item) =>
-                        item.fourth.length
-                          ? item.fourth.map((item2) => item2.qtyord)
-                          : null
-                      )}
-                    >
-                      {
-                        search
-                          .flatMap((item) => [item].concat(item.fourth ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
-
-                    <option
-                      value={search.map((item) =>
-                        item.fifth.length
-                          ? item.fifth.map((item2) => item2.qtyord)
-                          : null
-                      )}
-                    >
-                      {
-                        search
-                          .flatMap((item) => [item].concat(item.fifth ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
-
-                    <option
-                      value={search.map((item) =>
-                        item.sixth.length
-                          ? item.sixth.map((item2) => item2.qtyord)
-                          : null
-                      )}
+                        search.map((item) =>
+                          item.sixth.length
+                            ? item.sixth.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
                     >
                       {
                         search
@@ -938,13 +954,21 @@ console.log(obj.purno)
                   ))}
               </td>
               <td>
-                <tr></tr>
+                {search.map((item, idx) =>
+                  item.poreorder.length ? (
+                    item.poreorder.map((item2, idx2) => (
+                      <tr key={idx2}>{item2.total}</tr>
+                    ))
+                  ) : (
+                    <tr key={idx}></tr>
+                  )
+                )}
               </td>
               {selectedItem.length > 0 ? (
                 <td>
-                  {selectedItem.map((item, idx) => (
-                    <tr key={idx}>{item}</tr>
-                  ))}
+                  {selectedItem
+                    .map((item, idx) => <tr key={idx}>{item}</tr>)
+                    .slice(2)}
                 </td>
               ) : (
                 <td>
@@ -960,7 +984,9 @@ console.log(obj.purno)
                 </td>
               )}
               <td>
-                <tr></tr>
+                {search.map((item) => (
+                  <tr>{item.purno}</tr>
+                ))}
               </td>
               <td>
                 {search
@@ -972,6 +998,7 @@ console.log(obj.purno)
               <td>
                 <tr></tr>
               </td>
+
               {/*column table with nested array */}
               <td>
                 {search.map((item, idx) =>
