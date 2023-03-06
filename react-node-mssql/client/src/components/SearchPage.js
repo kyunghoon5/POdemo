@@ -5,6 +5,7 @@ import BlankPage from './BlankPage';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
+import { values } from 'lodash';
 
 var _ = require('lodash');
 // or less ideally
@@ -14,7 +15,7 @@ export const SearchPage = () => {
 
   const [search, setSearch] = useState([]);
   const [record, setRecord] = useState([]);
-  const [imageClicked, setImageClicked] = useState({ first: false });
+  const [imageClicked, setImageClicked] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
@@ -30,13 +31,17 @@ export const SearchPage = () => {
     console.log(selectedItem);
   }, [selectedItem]);
 
+    const reset = () => {
+      setSelectedItem([]);
+    };
+
+
+  console.log(search)
+
   //image handler
-  const onClickImageHandler = (item) => {
-    setImageClicked((prevState) => ({
-      ...prevState,
-      [item]: !prevState[item],
-    }));
-  };
+  const onClickImageHandler = () =>{
+  setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`)}
+  
 
   useEffect(() => {
     itemData();
@@ -80,11 +85,33 @@ export const SearchPage = () => {
   past30.setDate(past30.getDate() - 30);
   const past30c = past30.toISOString().split('T')[0];
 
-  const amountsDate = selectedItem.map((item) => item).slice(0, 1)
+  //Calculating the numbers of days between two dates
+  const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
+  const date2 = new Date();
+  const Difference_In_Time = date2.getTime() - date1.getTime();
+  const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   
 
+ 
+ //ranknonRB
+ 
+ 
+                    
+  if (
+    search
+      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+      .filter((item) => item.rankNum)
+      .map((item) => item.rankNum)[0] < 5
+  )
+    {const qac = "A"}
+  else {
+    <div>B</div>;
+  }           
+      
+    
   
-  
+
+ 
 
   return (
     <div className="search">
@@ -112,7 +139,8 @@ export const SearchPage = () => {
                 <button
                   onClick={() => {
                     searchRecords();
-                    onClickImageHandler('first');
+                    onClickImageHandler();
+                    reset();
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -128,13 +156,13 @@ export const SearchPage = () => {
                 style={{ height: '320px', widows: '240px' }}
               >
                 <div>
-                  {imageClicked.first && (
+                  {
                     <img
-                      src={`http://img.vanessahair.com/sales/${record}.jpg`}
+                      src={imageClicked}
                       className="mainImage"
                       style={{ height: '320px', widows: '240px' }}
                     />
-                  )}
+                  }
                 </div>
               </td>
               <td className="convST1">MONTH</td>
@@ -630,14 +658,20 @@ export const SearchPage = () => {
                     ))[0]
                 }
               </td>
-              <td id="diffDays">1</td>
-              {selectedItem.length > 0 ? (
-                selectedItem
-                  .map((item, idx) => <td key={idx}>{item}</td>)
-                  .slice(1, 2)
-              ) : (
-                <td></td>
-              )}
+
+              <td>
+                {selectedItem.map((item) => item).slice(1, 2) == ''
+                  ? null
+                  : selectedItem
+                      .map((item, idx) => (
+                        <div key={idx}>
+                          {Math.floor(Difference_In_Days)} days
+                        </div>
+                      ))
+                      .slice(1, 2)}
+              </td>
+
+              <td>{selectedItem.map((item) => item).slice(1, 2)}</td>
 
               <td colSpan="2">
                 <DatePicker
@@ -701,8 +735,20 @@ export const SearchPage = () => {
 
             <tr className="row12">
               <td className="cost"> </td>
-              <td colSpan="2" className="price"></td>
-              <td id="diffDays"></td>
+              <td>GRADE</td>
+              <td>{qac}</td>
+
+              {/* waiting & rcvd table  */}
+              {selectedItem.length > 0 ? (
+                selectedItem.map((item) => item).slice(1, 2) == '' ? (
+                  <td style={{ color: 'red' }}>WAITING</td>
+                ) : (
+                  <td style={{ color: 'green' }}>RCVD</td>
+                )
+              ) : (
+                <td></td>
+              )}
+
               <td id="recDte" className="recDateSel_cal">
                 {new Date().toISOString().split('T')[0]}
               </td>
@@ -782,21 +828,9 @@ export const SearchPage = () => {
 
                     <option
                       value={[
-                        search
-                          .flatMap((item) => [item].concat(item.first ?? []))
-                          .filter((item) => item.reqdate)
-                          .map(
-                            (item) =>
-                              new Date(item.reqdate).toISOString().split('T')[0]
-                          )[0],
+                        '',
 
-                        search
-                          .flatMap((item) => [item].concat(item.first ?? []))
-                          .filter((item) => item.recdate)
-                          .map(
-                            (item) =>
-                              new Date(item.recdate).toISOString().split('T')[0]
-                          )[0],
+                        '',
 
                         search.map((item) =>
                           item.first.length
@@ -836,6 +870,138 @@ export const SearchPage = () => {
                       {
                         search
                           .flatMap((item) => [item].concat(item.first ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.second ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.second ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.second.length
+                            ? item.second.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.second ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.third ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.third ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.third.length
+                            ? item.third.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.third ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.fourth ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.fourth ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.fourth.length
+                            ? item.fourth.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.fourth ?? []))
+                          .filter((item) => item.purno)
+                          .map((item) => item.purno)[0]
+                      }
+                    </option>
+
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.fifth ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.fifth ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.fifth.length
+                            ? item.fifth.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
+                      {
+                        search
+                          .flatMap((item) => [item].concat(item.fifth ?? []))
                           .filter((item) => item.purno)
                           .map((item) => item.purno)[0]
                       }
@@ -932,8 +1098,6 @@ export const SearchPage = () => {
             </tr>
           </tbody>
 
-          {}
-
           {/* body table3 */}
 
           {search.length > 0 ? (
@@ -964,6 +1128,7 @@ export const SearchPage = () => {
                   )
                 )}
               </td>
+
               {selectedItem.length > 0 ? (
                 <td>
                   {selectedItem
@@ -983,9 +1148,10 @@ export const SearchPage = () => {
                   )}
                 </td>
               )}
+
               <td>
-                {search.map((item) => (
-                  <tr>{item.purno}</tr>
+                {search.map((item, idx) => (
+                  <tr key={idx}>{item.purno}</tr>
                 ))}
               </td>
               <td>

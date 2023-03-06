@@ -168,6 +168,70 @@ ORDER BY
 
 `);
 
+    // rank non RB
+
+    const resultRank = await request1.query(`
+WITH BOTranTmp as (
+  SELECT 
+    * 
+  FROM 
+    BOTran 
+  WHERE invdte >= Dateadd(day, -365, Getdate())
+) 
+SELECT
+	 
+  A.rankNum, 
+  A.descrip,
+  
+  A.qtyshp 
+  
+  
+FROM 
+  (
+    SELECT	
+	(SELECT supplier
+               FROM   arinvt10
+               WHERE  descrip = A.descrip)            AS vendno,
+			   RANK() OVER (order by SUM(A.qtyshp) desc) as rankNum,
+      A.class, 
+       
+      A.descrip,
+	   (SELECT sum(onhand)
+               FROM   arinvt10
+               WHERE  descrip = A.descrip)            AS onhand,
+	  
+      sum(A.qtyshp) as qtyshp, 
+	  Isnull((SELECT Sum(qtybo)
+                      FROM   Botrantmp
+                      WHERE  descrip = A.descrip), 0) AS qtybo,
+					  (SELECT MIN(price) FROM arinvt10 WHERE descrip = A.descrip) as price,
+					  (SELECT start_dte
+               FROM   arinvt10
+               WHERE  descrip = A.descrip)            AS start_dte
+			   
+
+
+    FROM 
+      artran10c A 
+    WHERE invdte >= Dateadd(day, -365, Getdate())
+      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 
+      
+      --and A.class in ('RB')
+      --Exclude RB
+      and A.class not in ('RB', 'AA', 'Z')
+    group by 
+      A.class, 
+      
+      A.descrip
+	  
+  ) A 
+  WHERE A.qtyshp > 0  and descrip='${req.query.descrip}'
+ORDER BY 
+  qtyshp desc
+
+`);
+
     //Seach value parsing into query
     const result21 = await request2.query(`select * 
 
@@ -185,13 +249,13 @@ from(SELECT  A.purno
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
-  where convert(date, a.purdate) between '01/01/2005' and '02/22/2023' and descrip='${req.query.descrip}' 
+  where  descrip='${req.query.descrip}' 
   
   ) b
   where portn in ('1')
   order by purdate desc, itemkey2 asc  
   `);
-
+    //Seach value parsing into query
     const result22 = await request2.query(`select *
 
 from(SELECT  A.purno      
@@ -208,12 +272,12 @@ from(SELECT  A.purno
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
-  where convert(date, a.purdate) between '01/01/2005' and '02/22/2023' and descrip='${req.query.descrip}' 
+  where  descrip='${req.query.descrip}' 
   
   ) b
   where portn in ('2')
   order by purdate desc, itemkey2 asc`);
-
+    //Seach value parsing into query
     const result23 = await request2.query(`select *
 
 from(SELECT  A.purno      
@@ -230,12 +294,12 @@ from(SELECT  A.purno
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
-  where convert(date, a.purdate) between '01/01/2005' and '02/22/2023' and descrip='${req.query.descrip}' 
+  where  descrip='${req.query.descrip}' 
   
   ) b
   where portn in ('3')
   order by purdate desc, itemkey2 asc`);
-
+    //Seach value parsing into query
     const result24 = await request2.query(`select *
 
 from(SELECT  A.purno      
@@ -252,12 +316,12 @@ from(SELECT  A.purno
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
-  where convert(date, a.purdate) between '01/01/2005' and '02/22/2023' and descrip='${req.query.descrip}' 
+  where  descrip='${req.query.descrip}' 
   
   ) b
   where portn in ('4')
   order by purdate desc, itemkey2 asc`);
-
+    //Seach value parsing into query
     const result25 = await request2.query(`select *
 
 from(SELECT  A.purno      
@@ -274,12 +338,12 @@ from(SELECT  A.purno
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
-  where convert(date, a.purdate) between '01/01/2005' and '02/22/2023' and descrip='${req.query.descrip}' 
+  where  descrip='${req.query.descrip}' 
   
   ) b
   where portn in ('5')
   order by purdate desc, itemkey2 asc`);
-
+    //Seach value parsing into query
     const result26 = await request2.query(`select *
 
 from(SELECT  A.purno      
@@ -296,7 +360,7 @@ from(SELECT  A.purno
            
       
   FROM [BYT_LEG].[dbo].[potran10c] A
-  where convert(date, a.purdate) between '01/01/2005' and '02/22/2023' and descrip='${req.query.descrip}' 
+  where  descrip='${req.query.descrip}' 
   
   ) b
   where portn in ('6')
@@ -317,6 +381,15 @@ from(SELECT  A.purno
   where descrip='${req.query.descrip}'  and purdate >= Dateadd(day, -365, Getdate())
   group by descrip,itemkey2`);
 
+    //item start_dte
+    const result28 = await request2.query(`SELECT 
+      [descrip]
+      ,[itemkey2]      
+      ,[start_dte]
+  FROM [BYT_LEG].[dbo].[arsold365]
+  where descrip='${req.query.descrip}'
+  `);
+
     // Combine the two results into a single array
     const mergedResults = [...result2.recordset];
 
@@ -333,7 +406,9 @@ from(SELECT  A.purno
       arr6,
       arr7,
       sold30,
-      poreorder
+      poreorder,
+      stdDate,
+      ranknonRB
     ) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
@@ -348,6 +423,13 @@ from(SELECT  A.purno
         const numbers8 = poreorder.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
+        const numbers9 = stdDate.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
+        const numbers10 = ranknonRB.filter(
+          (item) => item.descrip === obj.descrip
+        );
+
         if (!numbers.length) {
           obj.first = numbers;
           obj.second = numbers2;
@@ -357,6 +439,8 @@ from(SELECT  A.purno
           obj.sixth = numbers6;
           obj.sold30 = numbers7;
           obj.poreorder = numbers8;
+          obj.stdDate = numbers9;
+          obj.ranknonRB = numbers10;
           return obj;
         }
         obj.first = numbers.map((num) => ({
@@ -425,6 +509,14 @@ from(SELECT  A.purno
         }));
 
         obj.poreorder = numbers8.map((num) => ({ total: num.total }));
+
+        obj.stdDate = numbers9.map((num) => ({ start_dte: num.start_dte }));
+
+        obj.ranknonRB = numbers10.map((num) => ({
+          rank: num.rankNum,
+          descrip: num.descrip,
+          qtyshp: num.qtyshp,
+        }));
         return obj;
       });
     };
@@ -438,7 +530,9 @@ from(SELECT  A.purno
       result25.recordset,
       result26.recordset,
       result2Sold30.recordset,
-      result27.recordset
+      result27.recordset,
+      result28.recordset,
+      resultRank.recordset
     );
     //console.log(result);
     // Sort the merged results by ID
@@ -459,15 +553,12 @@ from(SELECT  A.purno
     } else {
       // If no eventId query parameter is provided, return the merged results array
       res.send(mergedResults);
-
     }
-    
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal server error');
   }
 });
-
 
 // Start the server on port 3000
 app.listen(8082, () => {
