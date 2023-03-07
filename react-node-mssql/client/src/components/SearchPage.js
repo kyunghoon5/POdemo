@@ -109,8 +109,23 @@ console.log(PRLmin, PRLmax)
 
 
   return (
-    <div className="search">
-      <div>
+    <div
+      className="search"
+      style={{
+        width: '1800px',
+        marginLeft: '-15',
+        marginRight: '15',
+        height: '1651px',
+      }}
+    >
+      <div
+        style={{
+          width: '1400px',
+          paddingLeft: '15px',
+          paddingRight: '15px',
+          height: '1651px',
+        }}
+      >
         <table id="tb1" className="table1">
           <tbody>
             <tr className="row1">
@@ -1233,166 +1248,167 @@ console.log(PRLmin, PRLmax)
           {search.length > 0 ? (
             loading === false ? (
               <tbody id="tt" className="buttomSearch">
-                <td>
+                <td style={{ padding: '0' }}>
                   {search
                     .filter((item) => item.itemkey2)
                     .map((item, idx) => (
-                      <tr key={idx}>{item.itemkey2}</tr>
-                    ))}
+                      <div key={idx} style={{textAlign: 'left', color:'blue'}}>{item.itemkey2}</div>
+                      
+                    ))}                   
                 </td>
 
-                <td>
+                <td style={{ padding: '0' }}>
                   {search
                     .filter((item) => typeof item.onhand === 'number')
                     .map((item, idx) => (
-                      <tr key={idx}>{item.onhand}</tr>
+                      <div key={idx}>{item.onhand}</div>
                     ))}
                 </td>
-                <td>
+                <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.poreorder.length ? (
                       item.poreorder.map((item2, idx2) => (
-                        <tr key={idx2}>{item2.total}</tr>
+                        <div key={idx2}>{item2.total}</div>
                       ))
                     ) : (
-                      <tr key={idx}></tr>
+                      <div key={idx}></div>
                     )
                   )}
                 </td>
 
                 {selectedItem.length > 0 ? (
-                  <td>
+                  <td style={{ padding: '0' }}>
                     {selectedItem
-                      .map((item, idx) => <tr key={idx}>{item}</tr>)
+                      .map((item, idx) => <div key={idx}>{item}</div>)
                       .slice(2)}
                   </td>
                 ) : (
-                  <td>
+                  <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
                       item.first.length ? (
                         item.first.map((item2, idx2) => (
-                          <tr key={idx2}>{item2.qtyord}</tr>
+                          <div key={idx2}>{item2.qtyord}</div>
                         ))
                       ) : (
-                        <tr key={idx}></tr>
+                        <div key={idx}></div>
                       )
                     )}
                   </td>
                 )}
 
-                <td>
+                <td style={{ padding: '0' }}>
                   {search.map((item, idx) => (
-                    <tr key={idx}>{item.purno}</tr>
+                    <div key={idx}>{item.purno}</div>
                   ))}
                 </td>
-                <td>
+                <td style={{ padding: '0' }}>
                   {search
                     .filter((item) => typeof item.qtyshp === 'number')
                     .map((item, idx) => (
-                      <tr key={idx}>{item.qtyshp}</tr>
+                      <div key={idx}>{item.qtyshp}</div>
                     ))}
                 </td>
-                <td>
-                  <tr></tr>
+                <td style={{ padding: '0' }}>
+                  <div></div>
                 </td>
 
                 {/*column table with nested array */}
-                <td>
+                <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.sold30.length ? (
                       item.sold30.map((item2, idx2) => (
-                        <tr key={idx2}>{item2.qtyshp}</tr>
+                        <div key={idx2}>{item2.qtyshp}</div>
                       ))
                     ) : (
-                      <tr key={idx}></tr>
+                      <div key={idx}></div>
                     )
                   )}
                 </td>
 
-                <td>
+                <td style={{ padding: '0' }}>
                   {search
                     .filter((item) => typeof item.qtyshp === 'number')
                     .map((item, idx) => (
-                      <tr key={idx}>{item.qtyshp}</tr>
+                      <div key={idx}>{item.qtyshp}</div>
                     ))}
                 </td>
 
-                <td>
+                <td style={{ padding: '0' }}>
                   {search
                     .filter((item) => typeof item.qtyshp === 'number')
                     .map((item, idx) => (
-                      <tr key={idx}>{item.qtyshp}</tr>
+                      <div key={idx}>{item.qtyshp}</div>
                     ))}
                 </td>
                 {/*column table with nested array */}
-                <td>
+                <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.sixth.length ? (
                       item.sixth.map((item2, idx2) => (
-                        <tr key={idx2}>{item2.qtyord}</tr>
+                        <div key={idx2}>{item2.qtyord}</div>
                       ))
                     ) : (
-                      <tr key={idx}></tr>
+                      <div key={idx}></div>
                     )
                   )}
                 </td>
                 {/*column table with nested array */}
-                <td>
+                <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.fifth.length ? (
                       item.fifth.map((item2, idx2) => (
-                        <tr key={idx2}>{item2.qtyord}</tr>
+                        <div key={idx2}>{item2.qtyord}</div>
                       ))
                     ) : (
-                      <tr key={idx}></tr>
+                      <div key={idx}></div>
                     )
                   )}
                 </td>
                 {/*column table with nested array */}
-                <td>
+                <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.fourth.length ? (
                       item.fourth.map((item2, idx2) => (
-                        <tr key={idx2}>{item2.qtyord}</tr>
+                        <div key={idx2}>{item2.qtyord}</div>
                       ))
                     ) : (
-                      <tr key={idx}></tr>
+                      <div key={idx}></div>
                     )
                   )}
                 </td>
                 {/*column table with nested array */}
-                <td>
+                <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.third.length ? (
                       item.third.map((item2, idx2) => (
-                        <tr key={idx2}>{item2.qtyord}</tr>
+                        <div key={idx2}>{item2.qtyord}</div>
                       ))
                     ) : (
-                      <tr key={idx}></tr>
+                      <div key={idx}></div>
                     )
                   )}
                 </td>
                 {/*column table with nested array */}
-                <td>
+                <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.second.length ? (
                       item.second.map((item2, idx2) => (
-                        <tr key={idx2}>{item2.qtyord}</tr>
+                        <div key={idx2}>{item2.qtyord}</div>
                       ))
                     ) : (
-                      <tr key={idx}></tr>
+                      <div key={idx}></div>
                     )
                   )}
                 </td>
                 {/*column table with nested array */}
-                <td>
+                <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.first.length ? (
                       item.first.map((item2, idx2) => (
-                        <tr key={idx2}>{item2.qtyord}</tr>
+                        <div key={idx2}>{item2.qtyord}</div>
                       ))
                     ) : (
-                      <tr key={idx}></tr>
+                      <div key={idx}></div>
                     )
                   )}
                 </td>
@@ -1406,7 +1422,6 @@ console.log(PRLmin, PRLmax)
             </>
           )}
         </table>
-        
       </div>
     </div>
   );

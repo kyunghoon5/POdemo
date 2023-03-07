@@ -50,17 +50,20 @@
 
 
 
-.buttomSearch tr{
+.buttomSearch div{
    display:block;
   border: 1px solid black;
   padding: 0;
-  padding-left: 2px;
+  padding-left: 0px;
   margin: 0;
   min-width: 80px;
   height: 32px;
   font-size: 13px;
-  text-align: right;
+  text-align: right; 
+  
+  
 }
+
 
 
 
