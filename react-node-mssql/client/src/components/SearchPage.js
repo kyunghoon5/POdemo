@@ -11,8 +11,6 @@ var _ = require('lodash');
 // or less ideally
 
 export const SearchPage = () => {
-  const [productData, setProductData] = useState([]);
-
   const [search, setSearch] = useState([]);
   const [record, setRecord] = useState([]);
   const [imageClicked, setImageClicked] = useState();
@@ -31,39 +29,43 @@ export const SearchPage = () => {
     console.log(selectedItem);
   }, [selectedItem]);
 
-    const reset = () => {
-      setSelectedItem([]);
-    };
-
-
-  console.log(search)
-
-  //image handler
-  const onClickImageHandler = () =>{
-  setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`)}
-  
-
-  useEffect(() => {
-    itemData();
-  }, []);
-
-  const itemData = async () => {
-    return await axios
-      .get('http://localhost:8082/mergeData')
-      .then((response) => setProductData(response.data))
-      .catch((err) => console.log(err));
+  const reset = () => {
+    setSelectedItem([]);
   };
 
+  console.log(search);
+
+  //image handler
+  const onClickImageHandler = () => {
+    setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`);
+  };
+
+  // const [productData, setProductData] = useState([]);
+  //   const itemData = async () => {
+  //     return await axios
+  //       .get('http://localhost:8082/mergeData')
+  //       .then((response) => setProductData(response.data))
+  //       .catch((err) => console.log(err));
+  //   };
+
+  //    useEffect(() => {
+  //      itemData();
+  //    }, [productData]);
+
+  const [loading, setLoading] = useState(false);
   const searchRecords = (e) => {
     const searchedRecord = record.toLowerCase();
-
+    setLoading(true);
     axios
       .get(`http://localhost:8082/mergeData?descrip=${searchedRecord}`)
 
       .then((response) => {
         setSearch(response.data);
+         setLoading(false);
       });
   };
+
+  useEffect(() => {}, [search]);
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -90,28 +92,21 @@ export const SearchPage = () => {
   const date2 = new Date();
   const Difference_In_Time = date2.getTime() - date1.getTime();
   const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  
 
- 
- //ranknonRB
- 
- 
-                    
-  if (
-    search
-      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-      .filter((item) => item.rankNum)
-      .map((item) => item.rankNum)[0] < 5
-  )
-    {const qac = "A"}
-  else {
-    <div>B</div>;
-  }           
-      
-    
-  
+//total clr  
+const filteredItems = search.filter((item) => item.itemkey2);
+const totalItems = filteredItems.length;
 
- 
+//PRL
+const filteredItemsP = search.map((item) => item.cost);
+const PRLmin = Math.min(...filteredItemsP)
+const PRLmax = Math.max(...filteredItemsP);
+
+console.log(PRLmin, PRLmax)
+
+
+
+
 
   return (
     <div className="search">
@@ -648,7 +643,14 @@ export const SearchPage = () => {
             </tr>
 
             <tr className="row11">
-              <td className="cost">RPL: </td>
+              {search.length > 0 ? (
+                <td className="PRL">
+                  {PRLmin} - {PRLmax}
+                </td>
+              ) : (
+                <td></td>
+              )}
+
               <td colSpan="2" className="price">
                 {
                   search
@@ -734,9 +736,138 @@ export const SearchPage = () => {
             </tr>
 
             <tr className="row12">
-              <td className="cost"> </td>
+              <td className="cost"></td>
+              {/* grading https://www.wane.com/news/sacs-approves-new-grading-scale/*/}
               <td>GRADE</td>
-              <td>{qac}</td>
+              {search
+                .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                .filter((item) => item.percentile)
+                .map((item) => item.percentile * 100)[0] > 98 ||
+              search
+                .flatMap((item) => [item].concat(item.rankRB ?? []))
+                .filter((item) => item.percentile)
+                .map((item) => item.percentile * 100)[0] > 98 ? (
+                <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
+                  A+
+                </td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 93 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 93 ? (
+                <td style={{ background: '#90ee90', fontWeight: 'bold' }}>A</td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 90 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 90 ? (
+                <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
+                  A-
+                </td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 87 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 87 ? (
+                <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
+                  B+
+                </td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 83 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 83 ? (
+                <td style={{ background: '#87cefa', fontWeight: 'bold' }}>B</td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 80 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 80 ? (
+                <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
+                  B-
+                </td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 77 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 77 ? (
+                <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
+                  C+
+                </td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 73 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 73 ? (
+                <td style={{ background: '#ffa500', fontWeight: 'bold' }}>C</td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 70 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 70 ? (
+                <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
+                  C-
+                </td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 67 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 67 ? (
+                <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
+                  D+
+                </td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 63 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 63 ? (
+                <td style={{ background: '#ff4500', fontWeight: 'bold' }}>D</td>
+              ) : search
+                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 60 ||
+                search
+                  .flatMap((item) => [item].concat(item.rankRB ?? []))
+                  .filter((item) => item.percentile)
+                  .map((item) => item.percentile * 100)[0] > 60 ? (
+                <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
+                  D-
+                </td>
+              ) : search.length > 0 ? (
+                <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>F</td>
+              ) : (
+                <td></td>
+              )}
 
               {/* waiting & rcvd table  */}
               {selectedItem.length > 0 ? (
@@ -817,7 +948,7 @@ export const SearchPage = () => {
 
           <tbody id="tb2" className="table2">
             <tr>
-              <td></td>
+              <td>CLRS:{totalItems}</td>
               <td>OH</td>
               {/*PO reorder */}
               <td style={{ background: '#f4a460' }}>REORDER(1yr)</td>
@@ -1099,43 +1230,161 @@ export const SearchPage = () => {
           </tbody>
 
           {/* body table3 */}
-
           {search.length > 0 ? (
-            <tbody id="tt" className="buttomSearch">
-              <td>
-                {search
-                  .filter((item) => item.itemkey2)
-                  .map((item, idx) => (
-                    <tr key={idx}>{item.itemkey2}</tr>
-                  ))}
-              </td>
-
-              <td>
-                {search
-                  .filter((item) => typeof item.onhand === 'number')
-                  .map((item, idx) => (
-                    <tr key={idx}>{item.onhand}</tr>
-                  ))}
-              </td>
-              <td>
-                {search.map((item, idx) =>
-                  item.poreorder.length ? (
-                    item.poreorder.map((item2, idx2) => (
-                      <tr key={idx2}>{item2.total}</tr>
-                    ))
-                  ) : (
-                    <tr key={idx}></tr>
-                  )
-                )}
-              </td>
-
-              {selectedItem.length > 0 ? (
+            loading === false ? (
+              <tbody id="tt" className="buttomSearch">
                 <td>
-                  {selectedItem
-                    .map((item, idx) => <tr key={idx}>{item}</tr>)
-                    .slice(2)}
+                  {search
+                    .filter((item) => item.itemkey2)
+                    .map((item, idx) => (
+                      <tr key={idx}>{item.itemkey2}</tr>
+                    ))}
                 </td>
-              ) : (
+
+                <td>
+                  {search
+                    .filter((item) => typeof item.onhand === 'number')
+                    .map((item, idx) => (
+                      <tr key={idx}>{item.onhand}</tr>
+                    ))}
+                </td>
+                <td>
+                  {search.map((item, idx) =>
+                    item.poreorder.length ? (
+                      item.poreorder.map((item2, idx2) => (
+                        <tr key={idx2}>{item2.total}</tr>
+                      ))
+                    ) : (
+                      <tr key={idx}></tr>
+                    )
+                  )}
+                </td>
+
+                {selectedItem.length > 0 ? (
+                  <td>
+                    {selectedItem
+                      .map((item, idx) => <tr key={idx}>{item}</tr>)
+                      .slice(2)}
+                  </td>
+                ) : (
+                  <td>
+                    {search.map((item, idx) =>
+                      item.first.length ? (
+                        item.first.map((item2, idx2) => (
+                          <tr key={idx2}>{item2.qtyord}</tr>
+                        ))
+                      ) : (
+                        <tr key={idx}></tr>
+                      )
+                    )}
+                  </td>
+                )}
+
+                <td>
+                  {search.map((item, idx) => (
+                    <tr key={idx}>{item.purno}</tr>
+                  ))}
+                </td>
+                <td>
+                  {search
+                    .filter((item) => typeof item.qtyshp === 'number')
+                    .map((item, idx) => (
+                      <tr key={idx}>{item.qtyshp}</tr>
+                    ))}
+                </td>
+                <td>
+                  <tr></tr>
+                </td>
+
+                {/*column table with nested array */}
+                <td>
+                  {search.map((item, idx) =>
+                    item.sold30.length ? (
+                      item.sold30.map((item2, idx2) => (
+                        <tr key={idx2}>{item2.qtyshp}</tr>
+                      ))
+                    ) : (
+                      <tr key={idx}></tr>
+                    )
+                  )}
+                </td>
+
+                <td>
+                  {search
+                    .filter((item) => typeof item.qtyshp === 'number')
+                    .map((item, idx) => (
+                      <tr key={idx}>{item.qtyshp}</tr>
+                    ))}
+                </td>
+
+                <td>
+                  {search
+                    .filter((item) => typeof item.qtyshp === 'number')
+                    .map((item, idx) => (
+                      <tr key={idx}>{item.qtyshp}</tr>
+                    ))}
+                </td>
+                {/*column table with nested array */}
+                <td>
+                  {search.map((item, idx) =>
+                    item.sixth.length ? (
+                      item.sixth.map((item2, idx2) => (
+                        <tr key={idx2}>{item2.qtyord}</tr>
+                      ))
+                    ) : (
+                      <tr key={idx}></tr>
+                    )
+                  )}
+                </td>
+                {/*column table with nested array */}
+                <td>
+                  {search.map((item, idx) =>
+                    item.fifth.length ? (
+                      item.fifth.map((item2, idx2) => (
+                        <tr key={idx2}>{item2.qtyord}</tr>
+                      ))
+                    ) : (
+                      <tr key={idx}></tr>
+                    )
+                  )}
+                </td>
+                {/*column table with nested array */}
+                <td>
+                  {search.map((item, idx) =>
+                    item.fourth.length ? (
+                      item.fourth.map((item2, idx2) => (
+                        <tr key={idx2}>{item2.qtyord}</tr>
+                      ))
+                    ) : (
+                      <tr key={idx}></tr>
+                    )
+                  )}
+                </td>
+                {/*column table with nested array */}
+                <td>
+                  {search.map((item, idx) =>
+                    item.third.length ? (
+                      item.third.map((item2, idx2) => (
+                        <tr key={idx2}>{item2.qtyord}</tr>
+                      ))
+                    ) : (
+                      <tr key={idx}></tr>
+                    )
+                  )}
+                </td>
+                {/*column table with nested array */}
+                <td>
+                  {search.map((item, idx) =>
+                    item.second.length ? (
+                      item.second.map((item2, idx2) => (
+                        <tr key={idx2}>{item2.qtyord}</tr>
+                      ))
+                    ) : (
+                      <tr key={idx}></tr>
+                    )
+                  )}
+                </td>
+                {/*column table with nested array */}
                 <td>
                   {search.map((item, idx) =>
                     item.first.length ? (
@@ -1147,134 +1396,18 @@ export const SearchPage = () => {
                     )
                   )}
                 </td>
-              )}
-
-              <td>
-                {search.map((item, idx) => (
-                  <tr key={idx}>{item.purno}</tr>
-                ))}
-              </td>
-              <td>
-                {search
-                  .filter((item) => typeof item.qtyshp === 'number')
-                  .map((item, idx) => (
-                    <tr key={idx}>{item.qtyshp}</tr>
-                  ))}
-              </td>
-              <td>
-                <tr></tr>
-              </td>
-
-              {/*column table with nested array */}
-              <td>
-                {search.map((item, idx) =>
-                  item.sold30.length ? (
-                    item.sold30.map((item2, idx2) => (
-                      <tr key={idx2}>{item2.qtyshp}</tr>
-                    ))
-                  ) : (
-                    <tr key={idx}></tr>
-                  )
-                )}
-              </td>
-
-              <td>
-                {search
-                  .filter((item) => typeof item.qtyshp === 'number')
-                  .map((item, idx) => (
-                    <tr key={idx}>{item.qtyshp}</tr>
-                  ))}
-              </td>
-
-              <td>
-                {search
-                  .filter((item) => typeof item.qtyshp === 'number')
-                  .map((item, idx) => (
-                    <tr key={idx}>{item.qtyshp}</tr>
-                  ))}
-              </td>
-              {/*column table with nested array */}
-              <td>
-                {search.map((item, idx) =>
-                  item.sixth.length ? (
-                    item.sixth.map((item2, idx2) => (
-                      <tr key={idx2}>{item2.qtyord}</tr>
-                    ))
-                  ) : (
-                    <tr key={idx}></tr>
-                  )
-                )}
-              </td>
-              {/*column table with nested array */}
-              <td>
-                {search.map((item, idx) =>
-                  item.fifth.length ? (
-                    item.fifth.map((item2, idx2) => (
-                      <tr key={idx2}>{item2.qtyord}</tr>
-                    ))
-                  ) : (
-                    <tr key={idx}></tr>
-                  )
-                )}
-              </td>
-              {/*column table with nested array */}
-              <td>
-                {search.map((item, idx) =>
-                  item.fourth.length ? (
-                    item.fourth.map((item2, idx2) => (
-                      <tr key={idx2}>{item2.qtyord}</tr>
-                    ))
-                  ) : (
-                    <tr key={idx}></tr>
-                  )
-                )}
-              </td>
-              {/*column table with nested array */}
-              <td>
-                {search.map((item, idx) =>
-                  item.third.length ? (
-                    item.third.map((item2, idx2) => (
-                      <tr key={idx2}>{item2.qtyord}</tr>
-                    ))
-                  ) : (
-                    <tr key={idx}></tr>
-                  )
-                )}
-              </td>
-              {/*column table with nested array */}
-              <td>
-                {search.map((item, idx) =>
-                  item.second.length ? (
-                    item.second.map((item2, idx2) => (
-                      <tr key={idx2}>{item2.qtyord}</tr>
-                    ))
-                  ) : (
-                    <tr key={idx}></tr>
-                  )
-                )}
-              </td>
-              {/*column table with nested array */}
-              <td>
-                {search.map((item, idx) =>
-                  item.first.length ? (
-                    item.first.map((item2, idx2) => (
-                      <tr key={idx2}>{item2.qtyord}</tr>
-                    ))
-                  ) : (
-                    <tr key={idx}></tr>
-                  )
-                )}
-              </td>
-            </tbody>
+              </tbody>
+            ) : (
+              <>Loading...</>
+            )
           ) : (
             <>
               <BlankPage />
             </>
           )}
         </table>
+        
       </div>
-      <h1>Non-New item</h1>
-      <div className="bottomSearchResults"></div>
     </div>
   );
 };

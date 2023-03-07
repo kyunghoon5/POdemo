@@ -62,8 +62,10 @@ SELECT
   A.onhand,
   A.qtyshp, 
   A.qtybo,
+  A.cost,
   A.price,
   A.start_dte
+  
   
 FROM 
   (
@@ -83,6 +85,7 @@ FROM
                       FROM   Botrantmp
                       WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
 					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
+					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost,
 					  (SELECT start_dte
                FROM   arinvt10
                WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
@@ -104,6 +107,7 @@ FROM
       A.descrip
 	  
   ) A 
+  WHERE A.qtyshp > -1
 ORDER BY 
   itemkey2 asc
 
@@ -163,6 +167,7 @@ FROM
       A.descrip
 	  
   ) A 
+  WHERE A.qtyshp > -1
 ORDER BY 
   itemkey2 asc
 
@@ -171,65 +176,70 @@ ORDER BY
     // rank non RB
 
     const resultRank = await request1.query(`
-WITH BOTranTmp as (
-  SELECT 
-    * 
-  FROM 
-    BOTran 
-  WHERE invdte >= Dateadd(day, -365, Getdate())
-) 
-SELECT
-	 
-  A.rankNum, 
-  A.descrip,
-  
-  A.qtyshp 
-  
-  
-FROM 
+
+SELECT	 
+
+ A.percentile,
+  A.class,
+  A.descrip,  
+  A.qtyshp  
+FROM
+
   (
-    SELECT	
-	(SELECT supplier
-               FROM   arinvt10
-               WHERE  descrip = A.descrip)            AS vendno,
-			   RANK() OVER (order by SUM(A.qtyshp) desc) as rankNum,
-      A.class, 
-       
-      A.descrip,
-	   (SELECT sum(onhand)
-               FROM   arinvt10
-               WHERE  descrip = A.descrip)            AS onhand,
-	  
-      sum(A.qtyshp) as qtyshp, 
-	  Isnull((SELECT Sum(qtybo)
-                      FROM   Botrantmp
-                      WHERE  descrip = A.descrip), 0) AS qtybo,
-					  (SELECT MIN(price) FROM arinvt10 WHERE descrip = A.descrip) as price,
-					  (SELECT start_dte
-               FROM   arinvt10
-               WHERE  descrip = A.descrip)            AS start_dte
-			   
-
-
+    SELECT		
+		PERCENT_RANK() OVER (order by sum(qtyshp) ) as percentile,	  
+      A.class,      
+      A.descrip,	  
+      sum(A.qtyshp) as qtyshp					  
     FROM 
       artran10c A 
     WHERE invdte >= Dateadd(day, -365, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
-      and A.itemkey2 not in ('_MANUAL_INVOICE') 
-      
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
       --and A.class in ('RB')
       --Exclude RB
-      and A.class not in ('RB', 'AA', 'Z')
-    group by 
-      A.class, 
-      
-      A.descrip
-	  
+      and A.class not in ('RB', 'AA', 'Z') 
+    group by
+	
+	A.class,
+      A.descrip	  
   ) A 
-  WHERE A.qtyshp > 0  and descrip='${req.query.descrip}'
-ORDER BY 
-  qtyshp desc
+  WHERE A.qtyshp > 0  and descrip='${req.query.descrip}' 
+  ORDER BY qtyshp desc
 
+
+`);
+
+    const resultRank2 = await request1.query(`
+SELECT	 
+
+ A.percentile,
+  A.class,
+  A.descrip,  
+  A.qtyshp  
+FROM
+
+  (
+    SELECT		
+		PERCENT_RANK() OVER (order by sum(qtyshp) ) as percentile,	  
+      A.class,      
+      A.descrip,	  
+      sum(A.qtyshp) as qtyshp					  
+    FROM 
+      artran10c A 
+    WHERE invdte >= Dateadd(day, -365, Getdate())
+      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
+      and A.class in ('RB')
+      --Exclude RB
+      --and A.class not in ('RB', 'AA', 'Z') 
+    group by
+	
+	A.class,
+      A.descrip	  
+  ) A 
+  WHERE A.qtyshp > 0 and descrip='${req.query.descrip}'
+  ORDER BY qtyshp desc
 `);
 
     //Seach value parsing into query
@@ -408,7 +418,8 @@ from(SELECT  A.purno
       sold30,
       poreorder,
       stdDate,
-      ranknonRB
+      ranknonRB,
+      rankRB
     ) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
@@ -429,6 +440,7 @@ from(SELECT  A.purno
         const numbers10 = ranknonRB.filter(
           (item) => item.descrip === obj.descrip
         );
+        const numbers11 = rankRB.filter((item) => item.descrip === obj.descrip);
 
         if (!numbers.length) {
           obj.first = numbers;
@@ -441,6 +453,7 @@ from(SELECT  A.purno
           obj.poreorder = numbers8;
           obj.stdDate = numbers9;
           obj.ranknonRB = numbers10;
+          obj.rankRB = numbers11
           return obj;
         }
         obj.first = numbers.map((num) => ({
@@ -513,7 +526,13 @@ from(SELECT  A.purno
         obj.stdDate = numbers9.map((num) => ({ start_dte: num.start_dte }));
 
         obj.ranknonRB = numbers10.map((num) => ({
-          rank: num.rankNum,
+          percentile: num.percentile,
+          descrip: num.descrip,
+          qtyshp: num.qtyshp,
+        }));
+
+        obj.rankRB = numbers11.map((num) => ({
+          percentile: num.percentile,
           descrip: num.descrip,
           qtyshp: num.qtyshp,
         }));
@@ -532,7 +551,8 @@ from(SELECT  A.purno
       result2Sold30.recordset,
       result27.recordset,
       result28.recordset,
-      resultRank.recordset
+      resultRank.recordset,
+      resultRank2.recordset
     );
     //console.log(result);
     // Sort the merged results by ID

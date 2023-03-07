@@ -653,7 +653,7 @@ const BlankPage = () => {
           <td></td>
         </tr>
         <tr>
-          <td style={{textAlign: 'left'}}>TOTAL</td>
+          <td style={{ textAlign: 'left' }}>TOTAL</td>
           <td></td>
           <td></td>
           <td></td>
@@ -669,7 +669,7 @@ const BlankPage = () => {
           <td></td>
           <td></td>
           <td></td>
-        </tr>
+        </tr>       
       </tbody>
     </>
   );
