@@ -45,6 +45,8 @@ app.get('/mergeData', async (req, res) => {
     const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
     let request2 = new sql.Request(sqlPool2);
 
+    
+
     // Query the two servers for data
     //main query
     const result2 = await request2.query(`WITH BOTranTmp as (
@@ -52,7 +54,7 @@ app.get('/mergeData', async (req, res) => {
     * 
   FROM 
     BOTran 
-  WHERE invdte >= Dateadd(day, -365, Getdate())
+  WHERE invdte >= Dateadd(YEAR, -100, Getdate())
 ) 
 SELECT
 	A.vendno,
@@ -94,7 +96,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(day, -365, Getdate())
+    WHERE invdte >= Dateadd(YEAR, -100, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -172,6 +174,122 @@ ORDER BY
   itemkey2 asc
 
 `);
+
+    const result2Sold90 = await request2.query(`WITH BOTranTmp as (
+  SELECT 
+    * 
+  FROM 
+    BOTran 
+  WHERE invdte >= Dateadd(day, -90, Getdate())
+) 
+SELECT
+	 
+  A.itemkey2, 
+  A.descrip,
+  
+  A.qtyshp 
+  
+  
+FROM 
+  (
+    SELECT	
+	(SELECT supplier
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
+      A.class, 
+      A.itemkey2, 
+      A.descrip,
+	   (SELECT sum(onhand)
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
+	  
+      sum(A.qtyshp) as qtyshp, 
+	  Isnull((SELECT Sum(qtybo)
+                      FROM   Botrantmp
+                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
+					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
+					  (SELECT start_dte
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
+			   
+
+
+    FROM 
+      artran10c A 
+    WHERE invdte >= Dateadd(day, -90, Getdate())
+      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 
+      and descrip='${req.query.descrip}'
+      --and A.class in ('RB')
+      --Exclude RB
+      --and A.class not in ('RB', 'AA', 'Z')
+    group by 
+      A.class, 
+      A.itemkey2, 
+      A.descrip
+	  
+  ) A 
+  WHERE A.qtyshp > -1
+ORDER BY 
+  itemkey2 asc`);
+
+    const result2Sold365 = await request2.query(`WITH BOTranTmp as (
+  SELECT 
+    * 
+  FROM 
+    BOTran 
+  WHERE invdte >= Dateadd(day, -365, Getdate())
+) 
+SELECT
+	 
+  A.itemkey2, 
+  A.descrip,
+  
+  A.qtyshp 
+  
+  
+FROM 
+  (
+    SELECT	
+	(SELECT supplier
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
+      A.class, 
+      A.itemkey2, 
+      A.descrip,
+	   (SELECT sum(onhand)
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
+	  
+      sum(A.qtyshp) as qtyshp, 
+	  Isnull((SELECT Sum(qtybo)
+                      FROM   Botrantmp
+                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
+					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
+					  (SELECT start_dte
+               FROM   arinvt10
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
+			   
+
+
+    FROM 
+      artran10c A 
+    WHERE invdte >= Dateadd(day, -365, Getdate())
+      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 
+      and descrip='${req.query.descrip}'
+      --and A.class in ('RB')
+      --Exclude RB
+      --and A.class not in ('RB', 'AA', 'Z')
+    group by 
+      A.class, 
+      A.itemkey2, 
+      A.descrip
+	  
+  ) A 
+  WHERE A.qtyshp > -1
+ORDER BY 
+  itemkey2 asc`);
 
     // rank non RB
 
@@ -416,6 +534,8 @@ from(SELECT  A.purno
       arr6,
       arr7,
       sold30,
+      sold90,
+      sold365,
       poreorder,
       stdDate,
       ranknonRB,
@@ -441,6 +561,10 @@ from(SELECT  A.purno
           (item) => item.descrip === obj.descrip
         );
         const numbers11 = rankRB.filter((item) => item.descrip === obj.descrip);
+        const numbers12 = sold90.filter((item)=> item.itemkey2 === obj.itemkey2)
+        const numbers13 = sold365.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
 
         if (!numbers.length) {
           obj.first = numbers;
@@ -453,7 +577,9 @@ from(SELECT  A.purno
           obj.poreorder = numbers8;
           obj.stdDate = numbers9;
           obj.ranknonRB = numbers10;
-          obj.rankRB = numbers11
+          obj.rankRB = numbers11;
+          obj.sold90 = numbers12
+          obj.sold365 = numbers13
           return obj;
         }
         obj.first = numbers.map((num) => ({
@@ -520,6 +646,12 @@ from(SELECT  A.purno
         obj.sold30 = numbers7.map((num) => ({
           qtyshp: num.qtyshp,
         }));
+         obj.sold90 = numbers12.map((num) => ({
+           qtyshp: num.qtyshp,
+         }));
+         obj.sold365 = numbers13.map((num) => ({
+           qtyshp: num.qtyshp,
+         }));
 
         obj.poreorder = numbers8.map((num) => ({ total: num.total }));
 
@@ -549,10 +681,13 @@ from(SELECT  A.purno
       result25.recordset,
       result26.recordset,
       result2Sold30.recordset,
+      result2Sold90.recordset,
+      result2Sold365.recordset,
       result27.recordset,
       result28.recordset,
       resultRank.recordset,
       resultRank2.recordset
+      
     );
     //console.log(result);
     // Sort the merged results by ID

@@ -26,7 +26,7 @@ export const SearchPage = () => {
   };
 
   useEffect(() => {
-    console.log(selectedItem);
+    //console.log(selectedItem);
   }, [selectedItem]);
 
   const reset = () => {
@@ -55,17 +55,20 @@ export const SearchPage = () => {
   const [loading, setLoading] = useState(false);
   const searchRecords = (e) => {
     const searchedRecord = record.toLowerCase();
-    setLoading(true);
+    setLoading(true);    
     axios
-      .get(`http://localhost:8082/mergeData?descrip=${searchedRecord}`)
+      .get(
+        `http://localhost:8082/mergeData?descrip=${searchedRecord}`
+      )
 
       .then((response) => {
         setSearch(response.data);
-         setLoading(false);
+        setLoading(false);
       });
   };
-
   useEffect(() => {}, [search]);
+
+
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -86,6 +89,12 @@ export const SearchPage = () => {
   const past30 = new Date();
   past30.setDate(past30.getDate() - 30);
   const past30c = past30.toISOString().split('T')[0];
+  const past90 = new Date();
+  past90.setDate(past90.getDate() - 90);
+  const past90c = past90.toISOString().split('T')[0];
+  const past365 = new Date();
+  past365.setDate(past365.getDate() - 365);
+  const past365c = past365.toISOString().split('T')[0];
 
   //Calculating the numbers of days between two dates
   const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
@@ -93,20 +102,61 @@ export const SearchPage = () => {
   const Difference_In_Time = date2.getTime() - date1.getTime();
   const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-//total clr  
-const filteredItems = search.filter((item) => item.itemkey2);
-const totalItems = filteredItems.length;
+  //PRL
+  const filteredItemsP = search.map((item) => item.cost);
+  const PRLmin = Math.min(...filteredItemsP);
+  const PRLmax = Math.max(...filteredItemsP);
 
-//PRL
-const filteredItemsP = search.map((item) => item.cost);
-const PRLmin = Math.min(...filteredItemsP)
-const PRLmax = Math.max(...filteredItemsP);
+  //total CLRS
+  const filteredItems = search.filter((item) => item.itemkey2);
+  const totalItems = filteredItems.length;
 
-console.log(PRLmin, PRLmax)
+  //total REORDER
+  const totalItems1 = _.sumBy(
+    search.map((item) => _.sumBy(item.poreorder, 'total'))
+  );
+
+  //total OH
+  const filteredItems2 = search.map((item) => item.onhand);
+  const totalItems2 = _.sum(filteredItems2);
+
+  //total POS_
+  const filteredItems3 = selectedItem.map((item) => Number(item)).slice(2);
+  const totalItems3 = _.sum(filteredItems3);
+
+  //total Sold30, 90 365
+  const totalItems4 = _.sumBy(
+    search.map((item) => _.sumBy(item.sold30, 'qtyshp'))
+  );
+
+  const totalItems5 = _.sumBy(
+    search.map((item) => _.sumBy(item.sold90, 'qtyshp'))
+  );
+
+  const totalItems6 = _.sumBy(
+    search.map((item) => _.sumBy(item.sold365, 'qtyshp'))
+  );
+
+  //total PO qty
+  const totalItems7 = _.sumBy(search.map((item) => _.sumBy(item.sixth, 'qtyord')))
+  const totalItems8 = _.sumBy(
+    search.map((item) => _.sumBy(item.fifth, 'qtyord'))
+  );
+  const totalItems9 = _.sumBy(
+    search.map((item) => _.sumBy(item.fourth, 'qtyord'))
+  );
+  const totalItems10 = _.sumBy(
+    search.map((item) => _.sumBy(item.third, 'qtyord'))
+  );
+  const totalItems11 = _.sumBy(
+    search.map((item) => _.sumBy(item.second, 'qtyord'))
+  );
+  const totalItems12 = _.sumBy(
+    search.map((item) => _.sumBy(item.first, 'qtyord'))
+  );
 
 
-
-
+  
 
   return (
     <div
@@ -697,8 +747,8 @@ console.log(PRLmin, PRLmax)
                 />
               </td>
               <td className="prv30">{past30c}</td>
-              <td className="prv30">01/16/2023</td>
-              <td className="prv30">01/16/2023</td>
+              <td className="prv30">{past90c}</td>
+              <td className="prv30">{past365c}</td>
               {/*purno No*/}
               <td>
                 {
@@ -907,8 +957,12 @@ console.log(PRLmin, PRLmax)
               <td className="prv30">
                 {new Date().toISOString().split('T')[0]}
               </td>
-              <td className="prv30">01/16/2023</td>
-              <td className="prv30">01/16/2023</td>
+              <td className="prv90">
+                {new Date().toISOString().split('T')[0]}
+              </td>
+              <td className="prv365">
+                {new Date().toISOString().split('T')[0]}
+              </td>
               {/*invoice No */}
               <td>
                 {
@@ -979,9 +1033,11 @@ console.log(PRLmin, PRLmax)
                         '',
 
                         search.map((item) =>
-                          item.first.length
-                            ? item.first.map((item2) => item2.qtyord)
-                            : null
+                          item.first.length ? (
+                            item.first.map((item2) => item2.qtyord)
+                          ) : 
+                            null
+                          
                         ),
                       ]}
                     >
@@ -1247,14 +1303,19 @@ console.log(PRLmin, PRLmax)
           {/* body table3 */}
           {search.length > 0 ? (
             loading === false ? (
-              <tbody id="tt" className="buttomSearch">
+              <tbody id="tt" className="bottomSearch">
                 <td style={{ padding: '0' }}>
                   {search
                     .filter((item) => item.itemkey2)
                     .map((item, idx) => (
-                      <div key={idx} style={{textAlign: 'left', color:'blue'}}>{item.itemkey2}</div>
-                      
-                    ))}                   
+                      <div
+                        key={idx}
+                        style={{ textAlign: 'left', color: 'blue' }}
+                      >
+                        {item.itemkey2}
+                      </div>
+                    ))}
+                  <div style={{ textAlign: 'left' }}>TOTAL</div>
                 </td>
 
                 <td style={{ padding: '0' }}>
@@ -1263,6 +1324,7 @@ console.log(PRLmin, PRLmax)
                     .map((item, idx) => (
                       <div key={idx}>{item.onhand}</div>
                     ))}
+                  <div>{totalItems2}</div>
                 </td>
                 <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
@@ -1274,6 +1336,7 @@ console.log(PRLmin, PRLmax)
                       <div key={idx}></div>
                     )
                   )}
+                  <div>{totalItems1}</div>
                 </td>
 
                 {selectedItem.length > 0 ? (
@@ -1281,6 +1344,7 @@ console.log(PRLmin, PRLmax)
                     {selectedItem
                       .map((item, idx) => <div key={idx}>{item}</div>)
                       .slice(2)}
+                    <div>{totalItems3}</div>
                   </td>
                 ) : (
                   <td style={{ padding: '0' }}>
@@ -1293,6 +1357,8 @@ console.log(PRLmin, PRLmax)
                         <div key={idx}></div>
                       )
                     )}
+
+                    <div>{totalItems12}</div>
                   </td>
                 )}
 
@@ -1323,22 +1389,33 @@ console.log(PRLmin, PRLmax)
                       <div key={idx}></div>
                     )
                   )}
+                  <div>{totalItems4}</div>
                 </td>
 
                 <td style={{ padding: '0' }}>
-                  {search
-                    .filter((item) => typeof item.qtyshp === 'number')
-                    .map((item, idx) => (
-                      <div key={idx}>{item.qtyshp}</div>
-                    ))}
+                  {search.map((item, idx) =>
+                    item.sold90.length ? (
+                      item.sold90.map((item2, idx2) => (
+                        <div key={idx2}>{item2.qtyshp}</div>
+                      ))
+                    ) : (
+                      <div key={idx}></div>
+                    )
+                  )}
+                  <div>{totalItems5}</div>
                 </td>
 
                 <td style={{ padding: '0' }}>
-                  {search
-                    .filter((item) => typeof item.qtyshp === 'number')
-                    .map((item, idx) => (
-                      <div key={idx}>{item.qtyshp}</div>
-                    ))}
+                  {search.map((item, idx) =>
+                    item.sold365.length ? (
+                      item.sold365.map((item2, idx2) => (
+                        <div key={idx2}>{item2.qtyshp}</div>
+                      ))
+                    ) : (
+                      <div key={idx}></div>
+                    )
+                  )}
+                  <div>{totalItems6}</div>
                 </td>
                 {/*column table with nested array */}
                 <td style={{ padding: '0' }}>
@@ -1351,6 +1428,7 @@ console.log(PRLmin, PRLmax)
                       <div key={idx}></div>
                     )
                   )}
+                  <div>{totalItems7}</div>
                 </td>
                 {/*column table with nested array */}
                 <td style={{ padding: '0' }}>
@@ -1363,6 +1441,7 @@ console.log(PRLmin, PRLmax)
                       <div key={idx}></div>
                     )
                   )}
+                  <div>{totalItems8}</div>
                 </td>
                 {/*column table with nested array */}
                 <td style={{ padding: '0' }}>
@@ -1375,6 +1454,7 @@ console.log(PRLmin, PRLmax)
                       <div key={idx}></div>
                     )
                   )}
+                  <div>{totalItems9}</div>
                 </td>
                 {/*column table with nested array */}
                 <td style={{ padding: '0' }}>
@@ -1387,6 +1467,7 @@ console.log(PRLmin, PRLmax)
                       <div key={idx}></div>
                     )
                   )}
+                  <div>{totalItems10}</div>
                 </td>
                 {/*column table with nested array */}
                 <td style={{ padding: '0' }}>
@@ -1399,29 +1480,45 @@ console.log(PRLmin, PRLmax)
                       <div key={idx}></div>
                     )
                   )}
+                  <div>{totalItems11}</div>
                 </td>
                 {/*column table with nested array */}
                 <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.first.length ? (
                       item.first.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyord}</div>
+                        <div key={idx2} style={{ borderRightWidth: '1px' }}>
+                          {item2.qtyord}
+                        </div>
                       ))
                     ) : (
-                      <div key={idx}></div>
+                      <div key={idx} style={{ borderRightWidth: '1px' }}></div>
                     )
                   )}
+                  <div style={{ borderRightWidth: '1px' }}>{totalItems12}</div>
                 </td>
               </tbody>
             ) : (
               <>Loading...</>
             )
-          ) : (
+          ) : loading === false ? (
             <>
               <BlankPage />
             </>
+          ) : (
+            <td>Loading...</td>
           )}
         </table>
+        {/* <table className="test5">
+          <tr>
+            <td>22</td>
+            <td>44</td>
+          </tr>
+          <tr>
+            <td>33</td>
+            <td>66</td>
+          </tr>
+        </table> */}
       </div>
     </div>
   );
