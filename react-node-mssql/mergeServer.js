@@ -13,7 +13,9 @@ var _ = require('lodash');
 const configServer1 = require('./config');
 const configServer2 = require('./config2');
 const dataPick = require('./routes/dataPick')
+const datePicker = require('./routes/datePicker')
 app.use('/dataPick', dataPick)
+app.use('/datePicker', datePicker)
 
 
 // Define an endpoint for merging data from both servers
@@ -59,7 +61,7 @@ app.get('/mergeData', async (req, res) => {
     * 
   FROM 
     BOTran 
-  WHERE invdte >= Dateadd(day, -365, Getdate())
+  WHERE invdte >= Dateadd(year, -100, Getdate())
 ) 
 SELECT
 	A.vendno,
@@ -101,7 +103,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(day, -365, Getdate())
+    WHERE invdte >= Dateadd(year, -100, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'

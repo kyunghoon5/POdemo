@@ -14,20 +14,17 @@ var _ = require('lodash');
 const configServer1 = require('../config');
 const configServer2 = require('../config2');
 
-
-
-router.get('/', async(req, res) => {
-
+router.get('/', async (req, res) => {
   const startDate = req.query.startDate;
-    const endDate = req.query.endDate;
-    // Connect to both servers
-    const sqlPool =  await mssql.GetCreateIfNotExistPool(configServer1);
-    let request1 = new sql.Request(sqlPool);
+  const endDate = req.query.endDate;
+  // Connect to both servers
+  const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
+  let request1 = new sql.Request(sqlPool);
 
-    const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
-    let request2 = new sql.Request(sqlPool2);
+  const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
+  let request2 = new sql.Request(sqlPool2);
 
-    const result2 = await request2.query(`WITH BOTranTmp as (
+  const result2 = await request2.query(`WITH BOTranTmp as (
   SELECT 
     * 
   FROM 
@@ -93,7 +90,7 @@ ORDER BY
 
 `);
 
-    const result21 = await request2.query(`WITH BOTranTmp as (
+  const result21 = await request2.query(`WITH BOTranTmp as (
   SELECT 
     * 
   FROM 
@@ -158,54 +155,44 @@ ORDER BY
   itemkey2 asc
 
 `);
- const mergedResults = [...result2.recordset];
+  const mergedResults = [...result2.recordset];
 
- const mergeArrays = (
-   arr1,
-   arr2
-   
- ) => {
-   return arr1.map((obj) => {
-     const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);     
+  const mergeArrays = (arr1, arr2) => {
+    return arr1.map((obj) => {
+      const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
 
-     if (!numbers.length) {
-       obj.new = numbers;       
+      if (!numbers.length) {
+        obj.new = numbers;
 
-       return obj;
-     }
-     obj.new = numbers.map((num) => ({
-       qtyshp: num.qtyshp,       
-     }));
-     
-
-     return obj;
-   });
- };
-
- const result = mergeArrays(
-      result2.recordset,
-      result21.recordset)
-
-if (req.query.descrip) {
-      const descrips = req.query.descrip;
-      const result = mergedResults.filter(
-        (obj) => obj.descrip?.trim().toLowerCase() === descrips
-      );
-
-      if (result) {
-        // Return the matching object to the client
-        res.send(result);
-      } else {
-        // If no object with the specified ID is found, return a 404 error
-        res.status(404).send('Object not found');
+        return obj;
       }
-    } else {
-      // If no eventId query parameter is provided, return the merged results array
-      res.send(mergedResults);
-    }
-  
+      obj.new = numbers.map((num) => ({
+        qtyshp: num.qtyshp,
+      }));
 
- 
+      return obj;
+    });
+  };
+
+  const result = mergeArrays(result2.recordset, result21.recordset);
+
+  if (req.query.descrip) {
+    const descrips = req.query.descrip;
+    const result = mergedResults.filter(
+      (obj) => obj.descrip?.trim().toLowerCase() === descrips
+    );
+
+    if (result) {
+      // Return the matching object to the client
+      res.send(result);
+    } else {
+      // If no object with the specified ID is found, return a 404 error
+      res.status(404).send('Object not found');
+    }
+  } else {
+    // If no eventId query parameter is provided, return the merged results array
+    res.send(mergedResults);
+  }
 });
 
 module.exports = router;

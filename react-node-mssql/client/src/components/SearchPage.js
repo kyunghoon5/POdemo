@@ -14,7 +14,7 @@ export const SearchPage = () => {
   const [search, setSearch] = useState([]);
   const [record, setRecord] = useState([]);
   const [imageClicked, setImageClicked] = useState();
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date('2022/09/08'));
   const [endDate, setEndDate] = useState(new Date());
 
   //DATE buttonSearch console
@@ -30,48 +30,71 @@ export const SearchPage = () => {
   past365.setDate(past365.getDate() - 365);
   const past365c = past365.toISOString().split('T')[0];
 
-
   //POS select String to Array
   const [selectedItem, setSelectedItem] = useState([]);
-  const [selectedData, setSelectedData] = useState([])
+  const [selectedData, setSelectedData] = useState([]);
   const handleChange = (e) => {
-    const past365 = new Date();
-    past365.setDate(past365.getDate() - 365);
-    const past365c = past365.toISOString().split('T')[0];
-    const startDate = past365c;
-
-    const curDate = new Date().toISOString().split('T')[0];
-    const endDate = curDate;
     let value = e.target.value;
-    
-    axios
-      .get(
-        `http://localhost:8082/dataPick?descrip=${record}&startDate=${
-          search
-            .flatMap((item) => [item].concat(item.sixth ?? []))
-            .filter((item) => item.recdate)
-            .map(
-              (item) => new Date(item.recdate).toISOString().split('T')[0]
-            )[0]
-        }&endDate=${endDate}`
-      )
-      .then((response) => {
-        setSelectedData(response.data);
-      });
-
     setSelectedItem(value.split(','));
   };
 
+  //data from dropdown list
+  //console.log(selectedItem)
+
+  //DataPick regarding option value
+  const [loadingDatapick, setLoadingDatapick] = useState(false);
   useEffect(() => {
-    //console.log(selectedItem);
+    const fetchData = async () => {
+      const curDate = new Date().toISOString().split('T')[0];
+      const endDate = curDate;
+      const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
+      const startDate = date1.toISOString().split('T')[0];
+      setLoadingDatapick(true);
+      const response = await axios.get(
+        `http://localhost:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
+      );
+      setSelectedData(response.data);
+      setLoadingDatapick(false);
+    };
+
+    fetchData();
   }, [selectedItem]);
-  console.log(selectedData)
+
+  //data from dataPick
+  //console.log(selectedData)
 
   const reset = () => {
     setSelectedItem([]);
+    setSelectedData([]);
   };
 
+  //all data
   //console.log(search);
+
+  //datepicker between two dates
+  const [selectedDatePicker, setSelectedDatePicker] = useState([]);
+  useEffect(() => {       
+
+       const fetchData2 = async () => {
+         const curDate = new Date().toISOString().split('T')[0];
+         const endDate = curDate;
+         
+         const startDate = date1.toISOString().split('T')[0];
+        
+         const response = await axios.get(
+           `http://localhost:8082/datePicker?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
+         );
+         setSelectedDatePicker(response.data);
+         
+       };    
+    fetchData2();
+  }, []);
+
+  console.log(selectedDatePicker)
+  console.log(startDate)
+ 
+
+ 
 
   //image handler
   const onClickImageHandler = () => {
@@ -89,18 +112,14 @@ export const SearchPage = () => {
   //    useEffect(() => {
   //      itemData();
   //    }, [productData]);
-  
 
   const [loading, setLoading] = useState(false);
   const searchRecords = (e) => {
-    const searchedRecord = record.toLowerCase();    
-    
- 
+    const searchedRecord = record.toLowerCase();
+
     setLoading(true);
     axios
-      .get(
-        `http://localhost:8082/mergeData?descrip=${searchedRecord}`
-      )
+      .get(`http://localhost:8082/mergeData?descrip=${searchedRecord}`)
 
       .then((response) => {
         setSearch(response.data);
@@ -110,20 +129,9 @@ export const SearchPage = () => {
 
   useEffect(() => {}, [search]);
 
-  // const [searchDate, setSearchDate] = useState([]);
-  // const searchDatePick = (e) => {
-  //   const startDate = '2022/01/01';
-  //   const endDate = '2022/03/31';
-  //   axios
-  //     .get(
-  //       `http://localhost:8082/mergeData?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
-  //     )
+  
 
-  //     .then((response) => {
-  //       setSearchDate(response.data);
-  //     });
-  // };
-  // console.log(searchDate);
+
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -137,8 +145,6 @@ export const SearchPage = () => {
   // const imgSrc = `http://localhost:8080/api/img/${name}.jpg`;
 
   //console.log(search);
-
-
 
   //Calculating the numbers of days between two dates
   const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
@@ -199,6 +205,10 @@ export const SearchPage = () => {
   );
   const totalItems12 = _.sumBy(
     search.map((item) => _.sumBy(item.first, 'qtyord'))
+  );
+
+  const totalItemsFromRCVD = _.sumBy(
+    selectedData.map((item) => _.sumBy(item.new, 'qtyshp'))
   );
 
   return (
@@ -785,10 +795,13 @@ export const SearchPage = () => {
 
               <td colSpan="2">
                 <DatePicker
+                  showIcon
                   selected={startDate}
-                  onChange={(date) => setStartDate(date)}
+                  onChange={(date)=>setStartDate(date)}                  
                 />
+                
               </td>
+              
               <td className="prv30">{past30c}</td>
               <td className="prv30">{past90c}</td>
               <td className="prv30">{past365c}</td>
@@ -993,6 +1006,7 @@ export const SearchPage = () => {
               </td>
               <td colSpan="2">
                 <DatePicker
+                  showIcon
                   selected={endDate}
                   onChange={(date) => setEndDate(date)}
                 />
@@ -1066,7 +1080,12 @@ export const SearchPage = () => {
               <td style={{ background: '#f4a460' }}>REORDER(1yr)</td>
               <td>
                 <div className="App">
-                  <select name="item-selected" onChange={handleChange}>
+                  <select
+                    name="item-selected"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  >
                     {/*POS initial */}
 
                     <option
@@ -1402,18 +1421,37 @@ export const SearchPage = () => {
                     <div>{totalItems12}</div>
                   </td>
                 )}
-
+                {/*sold amount regarding RCVD date //loading && render table cell */}
                 <td style={{ padding: '0' }}>
-                  {search.map((item, idx) => (
-                    <div key={idx}>{item.purno}</div>
-                  ))}
+                  {selectedData.length
+                    ? loadingDatapick === false
+                      ? selectedData.map((item, idx) =>
+                          item.new.length ? (
+                            item.new.map((item, idx2) => (
+                              <div key={idx2}>{item.qtyshp}</div>
+                            ))
+                          ) : (
+                            <div key={idx}></div>
+                          )
+                        )
+                      : search.map((item, idx) => (
+                          <div key={idx}>Loading...</div>
+                        ))
+                    : loadingDatapick === false
+                    ? search.map((item, idx) => (
+                        <div key={idx}>{item.purno}</div>
+                      ))
+                    : search.map((item, idx) => <div key={idx}>Loading</div>)}
+                  <div>{totalItemsFromRCVD}</div>
                 </td>
+
                 <td style={{ padding: '0' }}>
                   {search
                     .filter((item) => typeof item.qtyshp === 'number')
                     .map((item, idx) => (
                       <div key={idx}>{item.qtyshp}</div>
                     ))}
+                  <div></div>
                 </td>
                 <td style={{ padding: '0' }}>
                   <div></div>
@@ -1547,19 +1585,9 @@ export const SearchPage = () => {
               <BlankPage />
             </>
           ) : (
-            <td>Loading...</td>
+            <>Loading...</>
           )}
         </table>
-        {/* <table className="test5">
-          <tr>
-            <td>22</td>
-            <td>44</td>
-          </tr>
-          <tr>
-            <td>33</td>
-            <td>66</td>
-          </tr>
-        </table> */}
       </div>
     </div>
   );
