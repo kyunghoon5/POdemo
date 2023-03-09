@@ -4,6 +4,7 @@ var app = express();
 const sql = require('mssql');
 let mssql = require('./mssql-connection-pooling');
 
+
 var cors = require('cors');
 app.use(cors());
 var _ = require('lodash');
@@ -11,10 +12,14 @@ var _ = require('lodash');
 // Configuration for the two SQL servers
 const configServer1 = require('./config');
 const configServer2 = require('./config2');
+const dataPick = require('./routes/dataPick')
+app.use('/dataPick', dataPick)
+
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
   try {
+    
     // Connect to both servers
     const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
     let request1 = new sql.Request(sqlPool);
@@ -48,13 +53,13 @@ app.get('/mergeData', async (req, res) => {
     
 
     // Query the two servers for data
-    //main query
+    //main query    
     const result2 = await request2.query(`WITH BOTranTmp as (
   SELECT 
     * 
   FROM 
     BOTran 
-  WHERE invdte >= Dateadd(YEAR, -100, Getdate())
+  WHERE invdte >= Dateadd(day, -365, Getdate())
 ) 
 SELECT
 	A.vendno,
@@ -96,7 +101,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(YEAR, -100, Getdate())
+    WHERE invdte >= Dateadd(day, -365, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -114,6 +119,10 @@ ORDER BY
   itemkey2 asc
 
 `);
+
+
+
+  
 
     const result2Sold30 = await request2.query(`WITH BOTranTmp as (
   SELECT 
@@ -539,7 +548,8 @@ from(SELECT  A.purno
       poreorder,
       stdDate,
       ranknonRB,
-      rankRB
+      rankRB,
+      
     ) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
@@ -565,6 +575,7 @@ from(SELECT  A.purno
         const numbers13 = sold365.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
+        
 
         if (!numbers.length) {
           obj.first = numbers;
@@ -580,6 +591,7 @@ from(SELECT  A.purno
           obj.rankRB = numbers11;
           obj.sold90 = numbers12
           obj.sold365 = numbers13
+          
           return obj;
         }
         obj.first = numbers.map((num) => ({
@@ -668,6 +680,7 @@ from(SELECT  A.purno
           descrip: num.descrip,
           qtyshp: num.qtyshp,
         }));
+        
         return obj;
       });
     };
@@ -686,7 +699,8 @@ from(SELECT  A.purno
       result27.recordset,
       result28.recordset,
       resultRank.recordset,
-      resultRank2.recordset
+      resultRank2.recordset,
+      
       
     );
     //console.log(result);

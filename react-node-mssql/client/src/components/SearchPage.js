@@ -17,23 +17,61 @@ export const SearchPage = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  //POS select Strinf to Array
-  const [selectedItem, setSelectedItem] = useState([]);
+  //DATE buttonSearch console
+  const date = new Date();
+  const curDate = date.toISOString().split('T')[0];
+  const past30 = new Date();
+  past30.setDate(past30.getDate() - 30);
+  const past30c = past30.toISOString().split('T')[0];
+  const past90 = new Date();
+  past90.setDate(past90.getDate() - 90);
+  const past90c = past90.toISOString().split('T')[0];
+  const past365 = new Date();
+  past365.setDate(past365.getDate() - 365);
+  const past365c = past365.toISOString().split('T')[0];
 
+
+  //POS select String to Array
+  const [selectedItem, setSelectedItem] = useState([]);
+  const [selectedData, setSelectedData] = useState([])
   const handleChange = (e) => {
+    const past365 = new Date();
+    past365.setDate(past365.getDate() - 365);
+    const past365c = past365.toISOString().split('T')[0];
+    const startDate = past365c;
+
+    const curDate = new Date().toISOString().split('T')[0];
+    const endDate = curDate;
     let value = e.target.value;
+    
+    axios
+      .get(
+        `http://localhost:8082/dataPick?descrip=${record}&startDate=${
+          search
+            .flatMap((item) => [item].concat(item.sixth ?? []))
+            .filter((item) => item.recdate)
+            .map(
+              (item) => new Date(item.recdate).toISOString().split('T')[0]
+            )[0]
+        }&endDate=${endDate}`
+      )
+      .then((response) => {
+        setSelectedData(response.data);
+      });
+
     setSelectedItem(value.split(','));
   };
 
   useEffect(() => {
     //console.log(selectedItem);
   }, [selectedItem]);
+  console.log(selectedData)
 
   const reset = () => {
     setSelectedItem([]);
   };
 
-  console.log(search);
+  //console.log(search);
 
   //image handler
   const onClickImageHandler = () => {
@@ -51,11 +89,14 @@ export const SearchPage = () => {
   //    useEffect(() => {
   //      itemData();
   //    }, [productData]);
+  
 
   const [loading, setLoading] = useState(false);
   const searchRecords = (e) => {
-    const searchedRecord = record.toLowerCase();
-    setLoading(true);    
+    const searchedRecord = record.toLowerCase();    
+    
+ 
+    setLoading(true);
     axios
       .get(
         `http://localhost:8082/mergeData?descrip=${searchedRecord}`
@@ -66,9 +107,23 @@ export const SearchPage = () => {
         setLoading(false);
       });
   };
+
   useEffect(() => {}, [search]);
 
+  // const [searchDate, setSearchDate] = useState([]);
+  // const searchDatePick = (e) => {
+  //   const startDate = '2022/01/01';
+  //   const endDate = '2022/03/31';
+  //   axios
+  //     .get(
+  //       `http://localhost:8082/mergeData?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
+  //     )
 
+  //     .then((response) => {
+  //       setSearchDate(response.data);
+  //     });
+  // };
+  // console.log(searchDate);
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -83,18 +138,7 @@ export const SearchPage = () => {
 
   //console.log(search);
 
-  //DATE buttonSearch console
-  const date = new Date();
-  const curDate = [date.toISOString().split('T')[0]];
-  const past30 = new Date();
-  past30.setDate(past30.getDate() - 30);
-  const past30c = past30.toISOString().split('T')[0];
-  const past90 = new Date();
-  past90.setDate(past90.getDate() - 90);
-  const past90c = past90.toISOString().split('T')[0];
-  const past365 = new Date();
-  past365.setDate(past365.getDate() - 365);
-  const past365c = past365.toISOString().split('T')[0];
+
 
   //Calculating the numbers of days between two dates
   const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
@@ -138,7 +182,9 @@ export const SearchPage = () => {
   );
 
   //total PO qty
-  const totalItems7 = _.sumBy(search.map((item) => _.sumBy(item.sixth, 'qtyord')))
+  const totalItems7 = _.sumBy(
+    search.map((item) => _.sumBy(item.sixth, 'qtyord'))
+  );
   const totalItems8 = _.sumBy(
     search.map((item) => _.sumBy(item.fifth, 'qtyord'))
   );
@@ -154,9 +200,6 @@ export const SearchPage = () => {
   const totalItems12 = _.sumBy(
     search.map((item) => _.sumBy(item.first, 'qtyord'))
   );
-
-
-  
 
   return (
     <div
@@ -1033,11 +1076,9 @@ export const SearchPage = () => {
                         '',
 
                         search.map((item) =>
-                          item.first.length ? (
-                            item.first.map((item2) => item2.qtyord)
-                          ) : 
-                            null
-                          
+                          item.first.length
+                            ? item.first.map((item2) => item2.qtyord)
+                            : null
                         ),
                       ]}
                     >
