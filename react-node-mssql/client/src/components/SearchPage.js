@@ -14,8 +14,10 @@ export const SearchPage = () => {
   const [search, setSearch] = useState([]);
   const [record, setRecord] = useState([]);
   const [imageClicked, setImageClicked] = useState();
-  const [startDate, setStartDate] = useState(new Date('2022/09/08'));
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDatePicker, setStartDatePicker] = useState(
+    new Date('2022-09-09')
+  );
+  const [endDatePicker, setEndDatePicker] = useState(new Date());
 
   //DATE buttonSearch console
   const date = new Date();
@@ -33,6 +35,7 @@ export const SearchPage = () => {
   //POS select String to Array
   const [selectedItem, setSelectedItem] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
+
   const handleChange = (e) => {
     let value = e.target.value;
     setSelectedItem(value.split(','));
@@ -43,22 +46,29 @@ export const SearchPage = () => {
 
   //DataPick regarding option value
   const [loadingDatapick, setLoadingDatapick] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      const curDate = new Date().toISOString().split('T')[0];
-      const endDate = curDate;
-      const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
-      const startDate = date1.toISOString().split('T')[0];
-      setLoadingDatapick(true);
-      const response = await axios.get(
-        `http://localhost:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
-      );
-      setSelectedData(response.data);
-      setLoadingDatapick(false);
-    };
+  
 
-    fetchData();
-  }, [selectedItem]);
+ useEffect(() => {
+   if (selectedItem.length === 0) {
+     return 
+   }
+   const fetchData = async () => {
+     const curDate = new Date().toISOString().split('T')[0];
+     const endDate = curDate;
+     
+     const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
+     
+     const startDate = date1.toISOString().split('T')[0];
+     setLoadingDatapick(true);
+     const response = await axios.get(
+       `http://localhost:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
+     );
+     setSelectedData(response.data);
+     setLoadingDatapick(false);
+   };
+
+   fetchData();
+ }, [selectedItem]);
 
   //data from dataPick
   //console.log(selectedData)
@@ -73,28 +83,26 @@ export const SearchPage = () => {
 
   //datepicker between two dates
   const [selectedDatePicker, setSelectedDatePicker] = useState([]);
-  useEffect(() => {       
-
-       const fetchData2 = async () => {
-         const curDate = new Date().toISOString().split('T')[0];
-         const endDate = curDate;
-         
-         const startDate = date1.toISOString().split('T')[0];
-        
-         const response = await axios.get(
-           `http://localhost:8082/datePicker?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
-         );
-         setSelectedDatePicker(response.data);
-         
-       };    
-    fetchData2();
-  }, []);
-
-  console.log(selectedDatePicker)
-  console.log(startDate)
- 
 
  
+  const fetchData2 = async () => {
+     if (search.length === 0) {
+    return;
+  }
+    const endDate = endDatePicker.toISOString().split('T')[0];
+
+    const startDate = startDatePicker.toISOString().split('T')[0];
+ 
+    const response = await axios.get(
+      `http://localhost:8082/datePicker?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
+    );
+    setSelectedDatePicker(response.data);
+  };
+  
+
+
+console.log(selectedDatePicker);
+  
 
   //image handler
   const onClickImageHandler = () => {
@@ -114,7 +122,7 @@ export const SearchPage = () => {
   //    }, [productData]);
 
   const [loading, setLoading] = useState(false);
-  const searchRecords = (e) => {
+  const searchRecords = () => {
     const searchedRecord = record.toLowerCase();
 
     setLoading(true);
@@ -126,11 +134,6 @@ export const SearchPage = () => {
         setLoading(false);
       });
   };
-
-  useEffect(() => {}, [search]);
-
-  
-
 
 
   //className & table-text
@@ -253,7 +256,9 @@ export const SearchPage = () => {
                   onClick={() => {
                     searchRecords();
                     onClickImageHandler();
-                    reset();
+                    reset();                    
+
+                    
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -796,12 +801,11 @@ export const SearchPage = () => {
               <td colSpan="2">
                 <DatePicker
                   showIcon
-                  selected={startDate}
-                  onChange={(date)=>setStartDate(date)}                  
+                  selected={startDatePicker}
+                  onChange={(date) => setStartDatePicker(date)}
                 />
-                
               </td>
-              
+
               <td className="prv30">{past30c}</td>
               <td className="prv30">{past90c}</td>
               <td className="prv30">{past365c}</td>
@@ -1007,8 +1011,8 @@ export const SearchPage = () => {
               <td colSpan="2">
                 <DatePicker
                   showIcon
-                  selected={endDate}
-                  onChange={(date) => setEndDate(date)}
+                  selected={endDatePicker}
+                  onChange={(date) => setEndDatePicker(date)}
                 />
               </td>
               <td className="prv30">
