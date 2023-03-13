@@ -4,7 +4,6 @@ var app = express();
 const sql = require('mssql');
 let mssql = require('./mssql-connection-pooling');
 
-
 var cors = require('cors');
 app.use(cors());
 var _ = require('lodash');
@@ -12,16 +11,14 @@ var _ = require('lodash');
 // Configuration for the two SQL servers
 const configServer1 = require('./config');
 const configServer2 = require('./config2');
-const dataPick = require('./routes/dataPick')
-const datePicker = require('./routes/datePicker')
-app.use('/dataPick', dataPick)
-app.use('/datePicker', datePicker)
-
+const dataPick = require('./routes/dataPick');
+const datePicker = require('./routes/datePicker');
+app.use('/dataPick', dataPick);
+app.use('/datePicker', datePicker);
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
   try {
-    
     // Connect to both servers
     const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
     let request1 = new sql.Request(sqlPool);
@@ -52,25 +49,17 @@ app.get('/mergeData', async (req, res) => {
     const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
     let request2 = new sql.Request(sqlPool2);
 
-    
-
     // Query the two servers for data
-    //main query    
-    const result2 = await request2.query(`WITH BOTranTmp as (
-  SELECT 
-    * 
-  FROM 
-    BOTran 
-  WHERE invdte >= Dateadd(year, -100, Getdate())
-) 
+    //main query
+    const result2 = await request2.query(`
+
 SELECT
-	A.vendno,
-  A.class, 
+
   A.itemkey2, 
   A.descrip,
   A.onhand,
-  A.qtyshp, 
-  A.qtybo,
+  
+  
   A.cost,
   A.price,
   A.start_dte
@@ -78,21 +67,15 @@ SELECT
   
 FROM 
   (
-    SELECT	
-	(SELECT supplier
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
-      A.class, 
+    SELECT		
       A.itemkey2, 
       A.descrip,
 	   (SELECT sum(onhand)
                FROM   arinvt10
                WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
 	  
-      sum(A.qtyshp) as qtyshp, 
-	  Isnull((SELECT Sum(qtybo)
-                      FROM   Botrantmp
-                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
+      
+	 
 					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
 					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost,
 					  (SELECT start_dte
@@ -103,7 +86,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(year, -100, Getdate())
+    WHERE invdte >= Dateadd(year, -50, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -116,23 +99,13 @@ FROM
       A.descrip
 	  
   ) A 
-  WHERE A.qtyshp > -1
+  
 ORDER BY 
   itemkey2 asc
 
 `);
 
-
-
-  
-
-    const result2Sold30 = await request2.query(`WITH BOTranTmp as (
-  SELECT 
-    * 
-  FROM 
-    BOTran 
-  WHERE invdte >= Dateadd(day, -30, Getdate())
-) 
+    const result2Sold30 = await request2.query(`
 SELECT
 	 
   A.itemkey2, 
@@ -143,25 +116,13 @@ SELECT
   
 FROM 
   (
-    SELECT	
-	(SELECT supplier
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
+    SELECT		
       A.class, 
       A.itemkey2, 
       A.descrip,
-	   (SELECT sum(onhand)
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
 	  
-      sum(A.qtyshp) as qtyshp, 
-	  Isnull((SELECT Sum(qtybo)
-                      FROM   Botrantmp
-                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
-					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
-					  (SELECT start_dte
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
+      sum(A.qtyshp) as qtyshp 
+	 
 			   
 
 
@@ -186,14 +147,7 @@ ORDER BY
 
 `);
 
-    const result2Sold90 = await request2.query(`WITH BOTranTmp as (
-  SELECT 
-    * 
-  FROM 
-    BOTran 
-  WHERE invdte >= Dateadd(day, -90, Getdate())
-) 
-SELECT
+    const result2Sold90 = await request2.query(`SELECT
 	 
   A.itemkey2, 
   A.descrip,
@@ -203,25 +157,13 @@ SELECT
   
 FROM 
   (
-    SELECT	
-	(SELECT supplier
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
+    SELECT		
       A.class, 
       A.itemkey2, 
       A.descrip,
-	   (SELECT sum(onhand)
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
 	  
-      sum(A.qtyshp) as qtyshp, 
-	  Isnull((SELECT Sum(qtybo)
-                      FROM   Botrantmp
-                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
-					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
-					  (SELECT start_dte
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
+      sum(A.qtyshp) as qtyshp 
+	 
 			   
 
 
@@ -230,7 +172,7 @@ FROM
     WHERE invdte >= Dateadd(day, -90, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
-      and descrip='${req.query.descrip}'
+      and A.descrip='${req.query.descrip}'
       --and A.class in ('RB')
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
@@ -244,14 +186,7 @@ FROM
 ORDER BY 
   itemkey2 asc`);
 
-    const result2Sold365 = await request2.query(`WITH BOTranTmp as (
-  SELECT 
-    * 
-  FROM 
-    BOTran 
-  WHERE invdte >= Dateadd(day, -365, Getdate())
-) 
-SELECT
+    const result2Sold365 = await request2.query(`SELECT
 	 
   A.itemkey2, 
   A.descrip,
@@ -261,25 +196,13 @@ SELECT
   
 FROM 
   (
-    SELECT	
-	(SELECT supplier
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
+    SELECT		
       A.class, 
       A.itemkey2, 
       A.descrip,
-	   (SELECT sum(onhand)
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
 	  
-      sum(A.qtyshp) as qtyshp, 
-	  Isnull((SELECT Sum(qtybo)
-                      FROM   Botrantmp
-                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
-					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
-					  (SELECT start_dte
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
+      sum(A.qtyshp) as qtyshp 
+	 
 			   
 
 
@@ -288,7 +211,7 @@ FROM
     WHERE invdte >= Dateadd(day, -365, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
-      and descrip='${req.query.descrip}'
+      and A.descrip='${req.query.descrip}'
       --and A.class in ('RB')
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
@@ -550,8 +473,7 @@ from(SELECT  A.purno
       poreorder,
       stdDate,
       ranknonRB,
-      rankRB,
-      
+      rankRB
     ) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
@@ -573,11 +495,12 @@ from(SELECT  A.purno
           (item) => item.descrip === obj.descrip
         );
         const numbers11 = rankRB.filter((item) => item.descrip === obj.descrip);
-        const numbers12 = sold90.filter((item)=> item.itemkey2 === obj.itemkey2)
+        const numbers12 = sold90.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
         const numbers13 = sold365.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
-        
 
         if (!numbers.length) {
           obj.first = numbers;
@@ -591,9 +514,9 @@ from(SELECT  A.purno
           obj.stdDate = numbers9;
           obj.ranknonRB = numbers10;
           obj.rankRB = numbers11;
-          obj.sold90 = numbers12
-          obj.sold365 = numbers13
-          
+          obj.sold90 = numbers12;
+          obj.sold365 = numbers13;
+
           return obj;
         }
         obj.first = numbers.map((num) => ({
@@ -660,12 +583,12 @@ from(SELECT  A.purno
         obj.sold30 = numbers7.map((num) => ({
           qtyshp: num.qtyshp,
         }));
-         obj.sold90 = numbers12.map((num) => ({
-           qtyshp: num.qtyshp,
-         }));
-         obj.sold365 = numbers13.map((num) => ({
-           qtyshp: num.qtyshp,
-         }));
+        obj.sold90 = numbers12.map((num) => ({
+          qtyshp: num.qtyshp,
+        }));
+        obj.sold365 = numbers13.map((num) => ({
+          qtyshp: num.qtyshp,
+        }));
 
         obj.poreorder = numbers8.map((num) => ({ total: num.total }));
 
@@ -682,7 +605,7 @@ from(SELECT  A.purno
           descrip: num.descrip,
           qtyshp: num.qtyshp,
         }));
-        
+
         return obj;
       });
     };
@@ -701,9 +624,7 @@ from(SELECT  A.purno
       result27.recordset,
       result28.recordset,
       resultRank.recordset,
-      resultRank2.recordset,
-      
-      
+      resultRank2.recordset
     );
     //console.log(result);
     // Sort the merged results by ID

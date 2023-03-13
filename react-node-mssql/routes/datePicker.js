@@ -37,7 +37,7 @@ SELECT
   A.itemkey2, 
   A.descrip,
   A.onhand,
-  A.qtyshp, 
+  
   A.qtybo,
   A.cost,
   A.price,
@@ -57,7 +57,7 @@ FROM
                FROM   arinvt10
                WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
 	  
-      sum(A.qtyshp) as qtyshp, 
+       
 	  Isnull((SELECT Sum(qtybo)
                       FROM   Botrantmp
                       WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
@@ -84,7 +84,7 @@ FROM
       A.descrip
 	  
   ) A 
-  WHERE A.qtyshp > -1
+  
 ORDER BY 
   itemkey2 asc
 
