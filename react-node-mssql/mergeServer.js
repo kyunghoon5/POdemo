@@ -13,8 +13,12 @@ const configServer1 = require('./config');
 const configServer2 = require('./config2');
 const dataPick = require('./routes/dataPick');
 const datePicker = require('./routes/datePicker');
+const itemRank = require('./routes/itemRank')
+const soldPercentage = require('./routes/soldPercentage')
 app.use('/dataPick', dataPick);
 app.use('/datePicker', datePicker);
+app.use('/itemRank', itemRank);
+app.use('/soldPercentage', soldPercentage);
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
@@ -227,72 +231,7 @@ ORDER BY
 
     // rank non RB
 
-    const resultRank = await request1.query(`
-
-SELECT	 
-
- A.percentile,
-  A.class,
-  A.descrip,  
-  A.qtyshp  
-FROM
-
-  (
-    SELECT		
-		PERCENT_RANK() OVER (order by sum(qtyshp) ) as percentile,	  
-      A.class,      
-      A.descrip,	  
-      sum(A.qtyshp) as qtyshp					  
-    FROM 
-      artran10c A 
-    WHERE invdte >= Dateadd(day, -365, Getdate())
-      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
-      and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
-      --and A.class in ('RB')
-      --Exclude RB
-      and A.class not in ('RB', 'AA', 'Z') 
-    group by
-	
-	A.class,
-      A.descrip	  
-  ) A 
-  WHERE A.qtyshp > 0  and descrip='${req.query.descrip}' 
-  ORDER BY qtyshp desc
-
-
-`);
-
-    const resultRank2 = await request1.query(`
-SELECT	 
-
- A.percentile,
-  A.class,
-  A.descrip,  
-  A.qtyshp  
-FROM
-
-  (
-    SELECT		
-		PERCENT_RANK() OVER (order by sum(qtyshp) ) as percentile,	  
-      A.class,      
-      A.descrip,	  
-      sum(A.qtyshp) as qtyshp					  
-    FROM 
-      artran10c A 
-    WHERE invdte >= Dateadd(day, -365, Getdate())
-      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
-      and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
-      and A.class in ('RB')
-      --Exclude RB
-      --and A.class not in ('RB', 'AA', 'Z') 
-    group by
-	
-	A.class,
-      A.descrip	  
-  ) A 
-  WHERE A.qtyshp > 0 and descrip='${req.query.descrip}'
-  ORDER BY qtyshp desc
-`);
+    
 
     //Seach value parsing into query
     const result21 = await request2.query(`select * 
@@ -471,9 +410,8 @@ from(SELECT  A.purno
       sold90,
       sold365,
       poreorder,
-      stdDate,
-      ranknonRB,
-      rankRB
+      stdDate
+      
     ) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
@@ -491,10 +429,7 @@ from(SELECT  A.purno
         const numbers9 = stdDate.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
-        const numbers10 = ranknonRB.filter(
-          (item) => item.descrip === obj.descrip
-        );
-        const numbers11 = rankRB.filter((item) => item.descrip === obj.descrip);
+       
         const numbers12 = sold90.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
@@ -512,8 +447,7 @@ from(SELECT  A.purno
           obj.sold30 = numbers7;
           obj.poreorder = numbers8;
           obj.stdDate = numbers9;
-          obj.ranknonRB = numbers10;
-          obj.rankRB = numbers11;
+        
           obj.sold90 = numbers12;
           obj.sold365 = numbers13;
 
@@ -593,18 +527,7 @@ from(SELECT  A.purno
         obj.poreorder = numbers8.map((num) => ({ total: num.total }));
 
         obj.stdDate = numbers9.map((num) => ({ start_dte: num.start_dte }));
-
-        obj.ranknonRB = numbers10.map((num) => ({
-          percentile: num.percentile,
-          descrip: num.descrip,
-          qtyshp: num.qtyshp,
-        }));
-
-        obj.rankRB = numbers11.map((num) => ({
-          percentile: num.percentile,
-          descrip: num.descrip,
-          qtyshp: num.qtyshp,
-        }));
+       
 
         return obj;
       });
@@ -622,9 +545,8 @@ from(SELECT  A.purno
       result2Sold90.recordset,
       result2Sold365.recordset,
       result27.recordset,
-      result28.recordset,
-      resultRank.recordset,
-      resultRank2.recordset
+      result28.recordset
+      
     );
     //console.log(result);
     // Sort the merged results by ID

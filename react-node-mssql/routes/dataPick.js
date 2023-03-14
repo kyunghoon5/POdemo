@@ -27,54 +27,24 @@ router.get('/', async(req, res) => {
     const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
     let request2 = new sql.Request(sqlPool2);
 
-    const result2 = await request2.query(`WITH BOTranTmp as (
-  SELECT 
-    * 
-  FROM 
-    BOTran 
-  WHERE invdte >= Dateadd(year, -100, Getdate())
-) 
+    const result2 = await request2.query(`
 SELECT
-	A.vendno,
-  A.class, 
+	
   A.itemkey2, 
-  A.descrip,
-  A.onhand,
-  A.qtyshp, 
-  A.qtybo,
-  A.cost,
-  A.price,
-  A.start_dte
+  A.descrip  
   
   
 FROM 
   (
     SELECT	
-	(SELECT supplier
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
-      A.class, 
-      A.itemkey2, 
-      A.descrip,
-	   (SELECT sum(onhand)
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
-	  
-      sum(A.qtyshp) as qtyshp, 
-	  Isnull((SELECT Sum(qtybo)
-                      FROM   Botrantmp
-                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
-					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
-					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost,
-					  (SELECT start_dte
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
-			   
 
+     
+      A.itemkey2, 
+      A.descrip
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(year, -100, Getdate())
+    WHERE invdte >= Dateadd(year, -50, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -82,59 +52,42 @@ FROM
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
     group by 
-      A.class, 
+       
       A.itemkey2, 
       A.descrip
 	  
-  ) A 
-  WHERE A.qtyshp > -1
+  ) A  
 ORDER BY 
   itemkey2 asc
 
 `);
 
-    const result21 = await request2.query(`WITH BOTranTmp as (
-  SELECT 
-    * 
-  FROM 
-    BOTran 
-  WHERE invdte >= '${startDate}' AND invdte <= '${endDate}'
-) 
+    const result21 = await request2.query(`
 SELECT
-	A.vendno,
-  A.class, 
+
   A.itemkey2, 
   A.descrip,
-  A.onhand,
-  A.qtyshp, 
-  A.qtybo,
-  A.cost,
-  A.price,
-  A.start_dte
+  
+  A.qtyshp
+ 
+ 
+
   
   
 FROM 
   (
     SELECT	
-	(SELECT supplier
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS vendno,
-      A.class, 
+	
+     
       A.itemkey2, 
       A.descrip,
 	   (SELECT sum(onhand)
                FROM   arinvt10
                WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
 	  
-      sum(A.qtyshp) as qtyshp, 
-	  Isnull((SELECT Sum(qtybo)
-                      FROM   Botrantmp
-                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo,
-					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
-					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost,
-					  (SELECT start_dte
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
+      sum(A.qtyshp) as qtyshp 
+					 
+				
 			   
 
 
@@ -148,7 +101,7 @@ FROM
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
     group by 
-      A.class, 
+     
       A.itemkey2, 
       A.descrip
 	  

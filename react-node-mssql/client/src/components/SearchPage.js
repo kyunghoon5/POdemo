@@ -5,7 +5,6 @@ import BlankPage from './BlankPage';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
-import { values } from 'lodash';
 
 var _ = require('lodash');
 // or less ideally
@@ -14,9 +13,7 @@ export const SearchPage = () => {
   const [search, setSearch] = useState([]);
   const [record, setRecord] = useState([]);
   const [imageClicked, setImageClicked] = useState();
-  const [startDatePicker, setStartDatePicker] = useState(
-    new Date('2022-09-09')
-  );
+  const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
 
   //DATE buttonSearch console
@@ -46,36 +43,58 @@ export const SearchPage = () => {
 
   //DataPick regarding option value
   const [loadingDatapick, setLoadingDatapick] = useState(false);
-  
 
- useEffect(() => {
-   if (selectedItem.length === 0) {
-     return 
-   }
-   const fetchData = async () => {
-     const curDate = new Date().toISOString().split('T')[0];
-     const endDate = curDate;
-     
-     const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
-     
-     const startDate = date1.toISOString().split('T')[0];
-     setLoadingDatapick(true);
-     const response = await axios.get(
-       `http://localhost:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
-     );
-     setSelectedData(response.data);
-     setLoadingDatapick(false);
-   };
+  useEffect(() => {
+    if (selectedItem.length === 0) {
+      return;
+    }
+    const fetchData = async () => {
+      const curDate = new Date().toISOString().split('T')[0];
+      const endDate = curDate;
 
-   fetchData();
- }, [selectedItem]);
+      const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
+
+      const startDate = date1.toISOString().split('T')[0];
+      setLoadingDatapick(true);
+      const response = await axios.get(
+        `http://localhost:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
+      );
+      setSelectedData(response.data);
+      setLoadingDatapick(false);
+    };
+
+    fetchData();
+  }, [selectedItem]);
 
   //data from dataPick
-  //console.log(selectedData)
+  //console.log(selectedData);
+
+  //select & option dropdown soldPercentage
+  const [selectedSoldPercentage, setSelectedSoldPercentage] = useState([]);
+  const [loadingsoldP, setloadingsoldP] = useState(false);
+
+  const fetchData3 = async () => {
+    const searchedRecord = record.toLowerCase();
+    setloadingsoldP(true);
+    await axios
+      .get(`http://localhost:8082/soldPercentage?descrip=${searchedRecord}`)
+
+      .then((response) => {
+        setSelectedSoldPercentage(response.data);
+        setloadingsoldP(false);
+      });
+  };
+  console.log(selectedSoldPercentage);
+  const [selectedSold, setSelectedSold] = useState([]);
+  const soldPercentageHandler = (e) => {
+    const value = e.target.value;
+    setSelectedSold(value);
+  };
 
   const reset = () => {
     setSelectedItem([]);
     setSelectedData([]);
+    setSelectedSold([]);
   };
 
   //all data
@@ -83,26 +102,27 @@ export const SearchPage = () => {
 
   //datepicker between two dates
   const [selectedDatePicker, setSelectedDatePicker] = useState([]);
+  const [loadingDatePicker, setloadingDatePicker] = useState(false);
+  useEffect(() => {
+    const fetchData2 = async () => {
+      if (search.length === 0) {
+        return;
+      }
 
- 
-  const fetchData2 = async () => {
-     if (search.length === 0) {
-    return;
-  }
-    const endDate = endDatePicker.toISOString().split('T')[0];
+      const searchedRecord = record.toLowerCase();
+      const endDate = endDatePicker.toISOString().split('T')[0];
 
-    const startDate = startDatePicker.toISOString().split('T')[0];
- 
-    const response = await axios.get(
-      `http://localhost:8082/datePicker?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
-    );
-    setSelectedDatePicker(response.data);
-  };
-  
+      const startDate = startDatePicker.toISOString().split('T')[0];
 
-
-console.log(selectedDatePicker);
-  
+      setloadingDatePicker(true);
+      const response = await axios.get(
+        `http://localhost:8082/datePicker?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
+      );
+      setSelectedDatePicker(response.data);
+      setloadingDatePicker(false);
+    };
+    fetchData2();
+  }, [startDatePicker, endDatePicker, search]);
 
   //image handler
   const onClickImageHandler = () => {
@@ -135,6 +155,21 @@ console.log(selectedDatePicker);
       });
   };
 
+  //itemrank
+  const [itemRank, setitemRank] = useState([]);
+  const [itemLoading, setitemLoading] = useState(false);
+
+  const itemRecords = async () => {
+    const searchedRecord = record.toLowerCase();
+    setitemLoading(true);
+    await axios
+      .get(`http://localhost:8082/itemRank?descrip=${searchedRecord}`)
+
+      .then((response) => {
+        setitemRank(response.data);
+        setitemLoading(false);
+      });
+  };
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -144,16 +179,18 @@ console.log(selectedDatePicker);
       </td>
     );
   };
-  //img.vanessahair.com/sales/MIST%20AILYN.jpg
-  // const imgSrc = `http://localhost:8080/api/img/${name}.jpg`;
-
-  //console.log(search);
 
   //Calculating the numbers of days between two dates
   const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
   const date2 = new Date();
   const Difference_In_Time = date2.getTime() - date1.getTime();
   const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  //Calculating the numbers of days between two dates for datepicker
+  const date3 = endDatePicker;
+  const date4 = startDatePicker;
+
+  const Difference_In_Time2 = date4.getTime() - date3.getTime();
+  const Difference_In_Days2 = Difference_In_Time2 / (1000 * 3600 * 24);
 
   //PRL
   const filteredItemsP = search.map((item) => item.cost);
@@ -214,6 +251,14 @@ console.log(selectedDatePicker);
     selectedData.map((item) => _.sumBy(item.new, 'qtyshp'))
   );
 
+  const totalDatePickerqty = _.sumBy(
+    selectedDatePicker.map((item) => _.sumBy(item.datepicker, 'qtyshp'))
+  );
+
+  const totalDatePickerbo = _.sumBy(
+    selectedDatePicker.map((item) => _.sumBy(item.datepicker, 'qtybo'))
+  );
+
   return (
     <div
       className="search"
@@ -256,9 +301,9 @@ console.log(selectedDatePicker);
                   onClick={() => {
                     searchRecords();
                     onClickImageHandler();
-                    reset();                    
-
-                    
+                    reset();
+                    itemRecords();
+                    fetchData3();
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -509,9 +554,116 @@ console.log(selectedDatePicker);
             <tr className="row8">
               <InfoItemOb className="infoCol1" name="DGN DTE:" />
               <td colSpan="3" className="dgnDte"></td>
+              {/*Sold percentage */}
+              <td style={{ textAlign: 'left' }}>
+                SOLD
+                <select
+                  onChange={(e) => {
+                    soldPercentageHandler(e);
+                  }}
+                >
+                  <option
+                    value={
+                      selectedSoldPercentage.map((item) =>
+                        item.soldPercentage.map(
+                          (item) => item.soldtotal_percentage
+                        )
+                      )[0]
+                    }
+                  >
+                    All
+                  </option>
+                  <option
+                    value={
+                      selectedSoldPercentage.map((item) =>
+                        item.soldPercentage.map((item) => item.sold7_percentage)
+                      )[0]
+                    }
+                  >
+                    7
+                  </option>
+                  <option
+                    value={
+                      selectedSoldPercentage.map((item) =>
+                        item.soldPercentage.map(
+                          (item) => item.sold30_percentage
+                        )
+                      )[0]
+                    }
+                  >
+                    30
+                  </option>
+                  <option
+                    value={
+                      selectedSoldPercentage.map((item) =>
+                        item.soldPercentage.map(
+                          (item) => item.sold60_percentage
+                        )
+                      )[0]
+                    }
+                  >
+                    60
+                  </option>
+                  <option
+                    value={
+                      selectedSoldPercentage.map((item) =>
+                        item.soldPercentage.map(
+                          (item) => item.sold90_percentage
+                        )
+                      )[0]
+                    }
+                  >
+                    90
+                  </option>
+                  <option
+                    value={
+                      selectedSoldPercentage.map((item) =>
+                        item.soldPercentage.map(
+                          (item) => item.sold6M_percentage
+                        )
+                      )[0]
+                    }
+                  >
+                    6M
+                  </option>
+                  <option
+                    value={
+                      selectedSoldPercentage.map((item) =>
+                        item.soldPercentage.map(
+                          (item) => item.sold365_percentage
+                        )
+                      )[0]
+                    }
+                  >
+                    1Y
+                  </option>
+                </select>
+              </td>
+              {selectedSold.length ? (
+                loadingsoldP === false ? (
+                  selectedSold.length ? (
+                    <td>{Math.floor(selectedSold)} %</td>
+                  ) : (
+                    <td></td>
+                  )
+                ) : (
+                  <>Loading...</>
+                )
+              ) : loadingsoldP === false ? (
+                <td>
+                  {Math.floor(
+                    selectedSoldPercentage.map((item) =>
+                      item.soldPercentage.map(
+                        (item) => item.soldtotal_percentage
+                      )
+                    )[0]
+                  )}{' '}
+                  %
+                </td>
+              ) : (
+                <>Loading...</>
+              )}
 
-              <td></td>
-              <td></td>
               <td style={{ background: '#f0e68c' }}>SHP_date</td>
               {/*shipping date*/}
               <td>
@@ -864,134 +1016,152 @@ console.log(selectedDatePicker);
               <td className="cost"></td>
               {/* grading https://www.wane.com/news/sacs-approves-new-grading-scale/*/}
               <td>GRADE</td>
-              {search
-                .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                .filter((item) => item.percentile)
-                .map((item) => item.percentile * 100)[0] > 98 ||
-              search
-                .flatMap((item) => [item].concat(item.rankRB ?? []))
-                .filter((item) => item.percentile)
-                .map((item) => item.percentile * 100)[0] > 98 ? (
-                <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
-                  A+
-                </td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 93 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 93 ? (
-                <td style={{ background: '#90ee90', fontWeight: 'bold' }}>A</td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 90 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 90 ? (
-                <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
-                  A-
-                </td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 87 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 87 ? (
-                <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
-                  B+
-                </td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 83 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 83 ? (
-                <td style={{ background: '#87cefa', fontWeight: 'bold' }}>B</td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 80 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 80 ? (
-                <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
-                  B-
-                </td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 77 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 77 ? (
-                <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
-                  C+
-                </td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 73 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 73 ? (
-                <td style={{ background: '#ffa500', fontWeight: 'bold' }}>C</td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 70 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 70 ? (
-                <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
-                  C-
-                </td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 67 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 67 ? (
-                <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
-                  D+
-                </td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 63 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 63 ? (
-                <td style={{ background: '#ff4500', fontWeight: 'bold' }}>D</td>
-              ) : search
-                  .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 60 ||
-                search
-                  .flatMap((item) => [item].concat(item.rankRB ?? []))
-                  .filter((item) => item.percentile)
-                  .map((item) => item.percentile * 100)[0] > 60 ? (
-                <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
-                  D-
-                </td>
-              ) : search.length > 0 ? (
-                <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>F</td>
-              ) : (
+              {itemRank.length ? (
+                itemLoading === false ? (
+                  itemRank
+                    .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                    .filter((item) => item.percentile)
+                    .map((item) => item.percentile * 100)[0] > 98 ||
+                  itemRank
+                    .flatMap((item) => [item].concat(item.rankRB ?? []))
+                    .filter((item) => item.percentile)
+                    .map((item) => item.percentile * 100)[0] > 98 ? (
+                    <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
+                      A+
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 93 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 93 ? (
+                    <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
+                      A
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 90 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 90 ? (
+                    <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
+                      A-
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 87 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 87 ? (
+                    <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
+                      B+
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 83 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 83 ? (
+                    <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
+                      B
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 80 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 80 ? (
+                    <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
+                      B-
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 77 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 77 ? (
+                    <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
+                      C+
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 73 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 73 ? (
+                    <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
+                      C
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 70 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 70 ? (
+                    <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
+                      C-
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 67 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 67 ? (
+                    <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
+                      D+
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 63 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 63 ? (
+                    <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
+                      D
+                    </td>
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 60 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 60 ? (
+                    <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
+                      D-
+                    </td>
+                  ) : (
+                    <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>
+                      F
+                    </td>
+                  )
+                ) : (
+                  <>Loading...</>
+                )
+              ) : itemLoading === false ? (
                 <td></td>
+              ) : (
+                <>Loading...</>
               )}
 
               {/* waiting & rcvd table  */}
@@ -1309,7 +1479,7 @@ console.log(selectedDatePicker);
                 </div>
               </td>
               <td>SOLD</td>
-              <td colSpan={2}>N days</td>
+              <td colSpan={2}>{Math.floor(Difference_In_Days2)} days</td>
               <td>SOLD30</td>
               <td>SOLD90</td>
               <td>SOLD365</td>
@@ -1450,15 +1620,49 @@ console.log(selectedDatePicker);
                 </td>
 
                 <td style={{ padding: '0' }}>
-                  {search
-                    .filter((item) => typeof item.qtyshp === 'number')
-                    .map((item, idx) => (
-                      <div key={idx}>{item.qtyshp}</div>
-                    ))}
-                  <div></div>
+                  {selectedDatePicker.length
+                    ? loadingDatePicker === false
+                      ? selectedDatePicker.map((item, idx) =>
+                          item.datepicker.length ? (
+                            item.datepicker.map((item2, idx2) => (
+                              <div key={idx2}>{item2.qtyshp}</div>
+                            ))
+                          ) : (
+                            <div key={idx}>0</div>
+                          )
+                        )
+                      : search.map((item, idx) => (
+                          <div key={idx}>Loading...</div>
+                        ))
+                    : loadingDatePicker === false
+                    ? search.map((item, idx) => (
+                        <div key={idx}>{item.purno}</div>
+                      ))
+                    : search.map((item, idx) => <div key={idx}>Loading</div>)}
+                  <div>{totalDatePickerqty}</div>
                 </td>
+
                 <td style={{ padding: '0' }}>
-                  <div></div>
+                  {selectedDatePicker.length
+                    ? loadingDatePicker === false
+                      ? selectedDatePicker.map((item, idx) =>
+                          item.datepicker.length ? (
+                            item.datepicker.map((item2, idx2) => (
+                              <div key={idx2}>{item2.qtybo}</div>
+                            ))
+                          ) : (
+                            <div key={idx}>0</div>
+                          )
+                        )
+                      : search.map((item, idx) => (
+                          <div key={idx}>Loading...</div>
+                        ))
+                    : loadingDatePicker === false
+                    ? search.map((item, idx) => (
+                        <div key={idx}>{item.purno}</div>
+                      ))
+                    : search.map((item, idx) => <div key={idx}>Loading</div>)}
+                  <div>{totalDatePickerbo}</div>
                 </td>
 
                 {/*column table with nested array */}
@@ -1469,7 +1673,7 @@ console.log(selectedDatePicker);
                         <div key={idx2}>{item2.qtyshp}</div>
                       ))
                     ) : (
-                      <div key={idx}></div>
+                      <div key={idx}>0</div>
                     )
                   )}
                   <div>{totalItems4}</div>
@@ -1482,7 +1686,7 @@ console.log(selectedDatePicker);
                         <div key={idx2}>{item2.qtyshp}</div>
                       ))
                     ) : (
-                      <div key={idx}></div>
+                      <div key={idx}>0</div>
                     )
                   )}
                   <div>{totalItems5}</div>
@@ -1495,7 +1699,7 @@ console.log(selectedDatePicker);
                         <div key={idx2}>{item2.qtyshp}</div>
                       ))
                     ) : (
-                      <div key={idx}></div>
+                      <div key={idx}>0</div>
                     )
                   )}
                   <div>{totalItems6}</div>

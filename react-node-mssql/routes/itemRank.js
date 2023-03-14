@@ -24,9 +24,10 @@ router.get('/', async (req, res) => {
   const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
   let request2 = new sql.Request(sqlPool2);
 
-  const result2 = await request2.query(`SELECT
+  const result2 = await request2.query(`
+SELECT
 	
-  A.itemkey2, 
+  
   A.descrip  
   
   
@@ -35,109 +36,128 @@ FROM
     SELECT	
 
      
-      A.itemkey2, 
+     
       A.descrip
 
     FROM 
       artran10c A 
     WHERE invdte >= Dateadd(year, -50, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
-      and A.itemkey2 not in ('_MANUAL_INVOICE') 
+      
       and A.descrip='${req.query.descrip}'
       --and A.class in ('RB')
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
     group by 
        
-      A.itemkey2, 
+       
       A.descrip
 	  
   ) A  
-ORDER BY 
-  itemkey2 asc
+
 
 `);
 
-  const result21 = await request2.query(`WITH BOTranTmp as (
-  SELECT 
-    * 
-  FROM 
-    BOTran 
-  WHERE invdte >= '${startDate}' AND invdte <= '${endDate}'
-) 
-SELECT
-	
-  A.itemkey2, 
-  A.descrip,
+  const resultRank = await request1.query(`
 
-  A.qtyshp, 
-  A.qtybo
- 
- 
+SELECT	 
+
+ A.percentile,
   
+  A.descrip 
   
-FROM 
+FROM
+
   (
-    SELECT	
-	
-    
-      A.itemkey2, 
-      A.descrip,
-	  
-	  
-      sum(A.qtyshp) as qtyshp, 
-	  Isnull((SELECT Sum(qtybo)
-                      FROM   Botrantmp
-                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo
-					  
-					 
-              
-			   
-
-
+    SELECT		
+		PERCENT_RANK() OVER (order by sum(qtyshp) ) as percentile,	  
+            
+      A.descrip,	  
+      sum(A.qtyshp) as qtyshp					  
     FROM 
       artran10c A 
-    WHERE invdte >= '${startDate}' AND invdte <= '${endDate}'
+    WHERE invdte >= Dateadd(day, -365, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
-      and A.itemkey2 not in ('_MANUAL_INVOICE') 
-	  and A.descrip='${req.query.descrip}'
-      
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
       --and A.class in ('RB')
       --Exclude RB
-      --and A.class not in ('RB', 'AA', 'Z')
-    group by 
-      
-      A.itemkey2, 
-      A.descrip
-	  
+      and A.class not in ('RB', 'AA', 'Z') 
+    group by
+	
+	A.class,
+      A.descrip	  
   ) A 
-  WHERE A.qtyshp > -1
-ORDER BY 
-  itemkey2 asc
+  WHERE A.qtyshp > 0  and descrip='${req.query.descrip}' 
+  ORDER BY qtyshp desc
 
+
+`);
+
+  const resultRank2 = await request1.query(`
+SELECT	 
+
+ A.percentile,
+  
+  A.descrip  
+  
+FROM
+
+  (
+    SELECT		
+		PERCENT_RANK() OVER (order by sum(qtyshp) ) as percentile,	  
+            
+      A.descrip,	  
+      sum(A.qtyshp) as qtyshp					  
+    FROM 
+      artran10c A 
+    WHERE invdte >= Dateadd(day, -365, Getdate())
+      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
+      and A.class in ('RB')
+      --Exclude RB
+      --and A.class not in ('RB', 'AA', 'Z') 
+    group by
+	
+	A.class,
+      A.descrip	  
+  ) A 
+  WHERE A.qtyshp > 0 and descrip='${req.query.descrip}'
+  ORDER BY qtyshp desc
 `);
   const mergedResults = [...result2.recordset];
 
-  const mergeArrays = (arr1, arr2) => {
+  const mergeArrays = (arr1, ranknonRB, rankRB) => {
     return arr1.map((obj) => {
-      const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
+      const numbers = ranknonRB.filter((item) => item.descrip === obj.descrip);
+      const numbers2 = rankRB.filter((item) => item.descrip === obj.descrip);
 
       if (!numbers.length) {
-        obj.datepicker = numbers;
+        obj.ranknonRB = numbers;
+        obj.rankRB = numbers2;
 
         return obj;
       }
-      obj.datepicker = numbers.map((num) => ({
+      obj.ranknonRB = numbers.map((num) => ({
+        percentile: num.percentile,
         descrip: num.descrip,
         qtyshp: num.qtyshp,
-        qtybo: num.qtybo,
+      }));
+
+      obj.rankRB = numbers2.map((num) => ({
+        percentile: num.percentile,
+        descrip: num.descrip,
+        qtyshp: num.qtyshp,
       }));
 
       return obj;
     });
   };
 
-  const result = mergeArrays(result2.recordset, result21.recordset);
+  const result = mergeArrays(
+    result2.recordset,
+    resultRank.recordset,
+    resultRank2.recordset
+  );
 
   if (req.query.descrip) {
     const descrips = req.query.descrip;
