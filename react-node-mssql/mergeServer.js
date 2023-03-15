@@ -15,10 +15,12 @@ const dataPick = require('./routes/dataPick');
 const datePicker = require('./routes/datePicker');
 const itemRank = require('./routes/itemRank')
 const soldPercentage = require('./routes/soldPercentage')
+const graph = require('./routes/graph')
 app.use('/dataPick', dataPick);
 app.use('/datePicker', datePicker);
 app.use('/itemRank', itemRank);
 app.use('/soldPercentage', soldPercentage);
+app.use('/graph', graph)
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {

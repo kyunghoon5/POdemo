@@ -6,6 +6,18 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
 
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+
+
 var _ = require('lodash');
 // or less ideally
 
@@ -83,9 +95,10 @@ export const SearchPage = () => {
         setSelectedSoldPercentage(response.data);
         setloadingsoldP(false);
       });
-  };
-  console.log(selectedSoldPercentage);
-  const [selectedSold, setSelectedSold] = useState([]);
+  };  
+
+  const [selectedSold, setSelectedSold] = useState('');
+
   const soldPercentageHandler = (e) => {
     const value = e.target.value;
     setSelectedSold(value);
@@ -170,6 +183,59 @@ export const SearchPage = () => {
         setitemLoading(false);
       });
   };
+
+  const [graphLine, setGraphLine] = useState([])
+  const graphLineF = async () => {
+    const searchedRecord = record.toLowerCase();
+    await axios
+      .get(`http://localhost:8082/graph?descrip=${searchedRecord}`)
+
+      .then((response) => {
+        setGraphLine(response.data);
+        
+      });
+    
+  }
+
+  // console.log(graphLine)
+  
+
+  const data4 = [
+    {
+      descrip: 'a',
+      use: 50,
+    },
+    { descrip: 'cali', use: 400 },
+  ];
+
+   const data = [
+     {
+       name: 'Page C',
+       uv: 4000,
+       pv: 2400,
+       amt: 2400,
+     },
+     {
+       name: 'Page B',
+       uv: 3000,
+       pv: 1398,
+       amt: 2210,
+     },
+     {
+       name: 'Page C',
+       uv: 3000,
+       pv: 1398,
+       amt: 2210,
+     },
+     {
+       name: 'Page D',
+       uv: 3000,
+       pv: 1398,
+       amt: 2210,
+     },
+   ];
+
+  
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -304,6 +370,7 @@ export const SearchPage = () => {
                     reset();
                     itemRecords();
                     fetchData3();
+                    graphLineF();
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -558,6 +625,7 @@ export const SearchPage = () => {
               <td style={{ textAlign: 'left' }}>
                 SOLD
                 <select
+                  value={selectedSold}
                   onChange={(e) => {
                     soldPercentageHandler(e);
                   }}
@@ -1256,6 +1324,7 @@ export const SearchPage = () => {
                 <div className="App">
                   <select
                     name="item-selected"
+                    value={selectedItem}
                     onChange={(e) => {
                       handleChange(e);
                     }}
@@ -1797,6 +1866,32 @@ export const SearchPage = () => {
           )}
         </table>
       </div>
+      <ResponsiveContainer width="50%" height="14%">
+        <LineChart
+          width={500}
+          height={300}
+          data={graphLine}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="year" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="qtyshp"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+          <Line type="monotone" dataKey="qtyshp" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 };

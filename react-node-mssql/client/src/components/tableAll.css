@@ -3,6 +3,9 @@
 .infoCol1 {
   background-color: #88bef2;
 }
+.search {
+  display: flex;
+}
 
 .btn1name {
   display: inline-block;
@@ -68,6 +71,15 @@ body {-webkit-print-color-adjust: exact;}
   font-size: 13px;
   text-align: right;   
 }
+
+.control_panel {
+  background-color: #4c4d4f;  
+border: 1px solid black;
+box-sizing: border-box;
+width: 415px;
+height: 938px;
+}
+
 
 
 
