@@ -17,7 +17,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-
 var _ = require('lodash');
 // or less ideally
 
@@ -95,7 +94,7 @@ export const SearchPage = () => {
         setSelectedSoldPercentage(response.data);
         setloadingsoldP(false);
       });
-  };  
+  };
 
   const [selectedSold, setSelectedSold] = useState('');
 
@@ -184,58 +183,50 @@ export const SearchPage = () => {
       });
   };
 
-  const [graphLine, setGraphLine] = useState([])
+  const [graphLoading2, setGraphLoading2] = useState(false);
+  const [graphLine, setGraphLine] = useState([]);
   const graphLineF = async () => {
     const searchedRecord = record.toLowerCase();
+    setGraphLoading2(true)
     await axios
       .get(`http://localhost:8082/graph?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphLine(response.data);
-        
+        setGraphLoading2(false)
       });
-    
-  }
+  };
 
-  // console.log(graphLine)
-  
+ 
+ 
 
-  const data4 = [
-    {
-      descrip: 'a',
-      use: 50,
-    },
-    { descrip: 'cali', use: 400 },
-  ];
 
-   const data = [
-     {
-       name: 'Page C',
-       uv: 4000,
-       pv: 2400,
-       amt: 2400,
-     },
-     {
-       name: 'Page B',
-       uv: 3000,
-       pv: 1398,
-       amt: 2210,
-     },
-     {
-       name: 'Page C',
-       uv: 3000,
-       pv: 1398,
-       amt: 2210,
-     },
-     {
-       name: 'Page D',
-       uv: 3000,
-       pv: 1398,
-       amt: 2210,
-     },
-   ];
+   const [graphLineByMonth, setGraphLineByMonth] = useState([]);
+   const [graphLoading, setGraphLoading] = useState(false);
+   const graphLineByMonthF = async () => {
+     const searchedRecord = record.toLowerCase();
+     setGraphLoading(true)
+     await axios
+       .get(`http://localhost:8082/graphbymonth?descrip=${searchedRecord}`)
 
-  
+       .then((response) => {
+         setGraphLineByMonth(response.data);
+         setGraphLoading(false)
+       });
+   };
+
+
+const[value2, setValue2] = useState('')
+const handleChangeGraphByMonth =(e) => {
+  const selectedMonth = e.target.value;
+  setValue2(selectedMonth); // update the value of value2
+}   
+const test1 = graphLineByMonth.filter((item) => item.year === Number(value2));
+
+
+
+
+
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -325,6 +316,35 @@ export const SearchPage = () => {
     selectedDatePicker.map((item) => _.sumBy(item.datepicker, 'qtybo'))
   );
 
+  const graphYearlyTotal = _.sum(graphLine.map((item)=>item.qtyshp))
+
+  const graphMonthlyTotal = _.sum(test1.map((item)=>item.qtyshp))
+
+  
+
+  console.log(graphYearlyTotal);
+ 
+  
+
+  //new or old item
+  const newOrOld = () => {
+    if (search.length === 0) {
+      return;
+    }
+    if (
+      search
+        .filter((item) => item.start_dte)
+
+        .map(
+          (item) => new Date(item.start_dte).toISOString().split('T')[0]
+        )[0] > past365c
+    ) {
+      return 'NEW';
+    } else {
+      return 'OLD';
+    }
+  };
+
   return (
     <div
       className="search"
@@ -371,6 +391,7 @@ export const SearchPage = () => {
                     itemRecords();
                     fetchData3();
                     graphLineF();
+                    graphLineByMonthF();
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -395,15 +416,47 @@ export const SearchPage = () => {
                   }
                 </div>
               </td>
-              <td className="convST1">MONTH</td>
-              <td className="convST2">FORECAST</td>
-              <td className="convST2">FORECAST</td>
-              <td className="convST2">FORECAST</td>
-              <td className="convST2">FORECAST</td>
-              <td className="convST2">FORECAST</td>
-              <td className="convST2">FORECAST</td>
-              <td className="convST2">FORECAST</td>
-              <td className="convST2">FORECAST</td>
+              <td
+                colSpan="9"
+                rowSpan="6"
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  paddingBottom: '250px',
+                }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    top: 0,
+                  }}
+                >
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart
+                      width={500}
+                      height={300}
+                      data={graphLine}
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="year" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+
+                      <Line type="monotone" dataKey="qtyshp" stroke="#82ca9d" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </td>
             </tr>
 
             <tr className="row2">
@@ -415,16 +468,8 @@ export const SearchPage = () => {
                   </div>
                 ))}
               </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
+
             <tr className="row3">
               <InfoItemOb className="infoCol1" name="ORIGINAL:" />
               <td colSpan="3">
@@ -437,29 +482,10 @@ export const SearchPage = () => {
                   style={{ float: 'right', paddingRight: '3px' }}
                 ></span>
               </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr className="row4">
               <InfoItemOb className="infoCol1" name="SMP DTE:" />
               <td colSpan="3" className="smpDte"></td>
-
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr className="row5">
               <InfoItemOb className="infoCol1" name="WEIGHT:" />
@@ -482,15 +508,6 @@ export const SearchPage = () => {
                   }}
                 ></span>
               </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr className="row6">
               <InfoItemOb className="infoCol1" name="LENGTH:" />
@@ -513,16 +530,6 @@ export const SearchPage = () => {
                   </span>
                 </div>
               </td>
-
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr className="row7">
               <InfoItemOb className="infoCol1" name="FIBER:" />
@@ -545,8 +552,41 @@ export const SearchPage = () => {
                 ></span>
               </td>
 
-              <td></td>
-              <td></td>
+              <td>
+                GRAPH
+                <select
+                  value={value2}
+                  onChange={(e) => {
+                    handleChangeGraphByMonth(e);
+                  }}
+                >
+                  <option>YEAR</option>
+                  {graphLine.map((item2, idx) => (
+                    <option key={idx}>{item2.year}</option>
+                  ))}
+                </select>
+              </td>
+
+              {value2.length ? (
+                graphLoading2 === false ? (
+                  value2.length ? (
+                    <td>
+                      {value2 === 'YEAR' ? graphYearlyTotal : graphMonthlyTotal}
+                    </td>
+                  ) : (
+                    <td></td>
+                  )
+                ) : (
+                  <>Loading...</>
+                )
+              ) : graphLoading2 === false ? (
+                <td>
+                  {value2 === 'YEAR' ? graphYearlyTotal : graphMonthlyTotal}
+                </td>
+              ) : (
+                <>Loading...</>
+              )}
+
               <td style={{ background: '#f0e68c' }}>PUR_date</td>
 
               {/*purchased date*/}
@@ -715,7 +755,7 @@ export const SearchPage = () => {
                     <td></td>
                   )
                 ) : (
-                  <>Loading...</>
+                  <td>Loading...</td>
                 )
               ) : loadingsoldP === false ? (
                 <td>
@@ -725,11 +765,11 @@ export const SearchPage = () => {
                         (item) => item.soldtotal_percentage
                       )
                     )[0]
-                  )}{' '}
+                  )}
                   %
                 </td>
               ) : (
-                <>Loading...</>
+                <td>Loading...</td>
               )}
 
               <td style={{ background: '#f0e68c' }}>SHP_date</td>
@@ -1081,7 +1121,7 @@ export const SearchPage = () => {
             </tr>
 
             <tr className="row12">
-              <td className="cost"></td>
+              <td className="newOrOld">{newOrOld()}</td>
               {/* grading https://www.wane.com/news/sacs-approves-new-grading-scale/*/}
               <td>GRADE</td>
               {itemRank.length ? (
@@ -1866,11 +1906,11 @@ export const SearchPage = () => {
           )}
         </table>
       </div>
-      <ResponsiveContainer width="50%" height="14%">
+      <ResponsiveContainer width="20%" height="14%">
         <LineChart
           width={500}
           height={300}
-          data={graphLine}
+          data={test1}
           margin={{
             top: 5,
             right: 30,
@@ -1879,16 +1919,11 @@ export const SearchPage = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="year" />
+          <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line
-            type="monotone"
-            dataKey="qtyshp"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
+
           <Line type="monotone" dataKey="qtyshp" stroke="#82ca9d" />
         </LineChart>
       </ResponsiveContainer>

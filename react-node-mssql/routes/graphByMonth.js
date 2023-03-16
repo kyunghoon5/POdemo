@@ -24,12 +24,11 @@ router.get('/', async (req, res) => {
   const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
   let request2 = new sql.Request(sqlPool2);
 
- 
-
   const result2 = await request2.query(`SELECT
 A.class,
 A.descrip,
 YEAR(A.invdte) AS year,
+MONTH(A.invdte) AS month,
 SUM(A.qtyshp) AS qtyshp
 FROM
 artran10c A
@@ -43,6 +42,7 @@ WHERE
 descrip NOT IN ('SHIP', 'CALENDAR', 'BROCHURE')
 AND itemkey2 NOT IN ('_MANUAL_INVOICE')
 AND descrip='${req.query.descrip}'
+
 --RB only
 --AND class IN ('RB')
 --Exclude RB
@@ -52,20 +52,19 @@ class,
 descrip
 ) B ON A.class = B.class AND A.descrip = B.descrip
 WHERE
-CONVERT(DATE, A.invdte) BETWEEN (select min(recdate) from potran10c where descrip = a.descrip) AND '2023-01-22'
+CONVERT(DATE, A.invdte) BETWEEN (select min(recdate) from potran10c where descrip = a.descrip) AND GETDATE()
 GROUP BY
 A.class,
 A.descrip,
-YEAR(A.invdte)
+YEAR(A.invdte),
+MONTH(A.invdte)
 HAVING
 SUM(A.qtyshp) > 0
 ORDER BY
-year asc;
+year DESC, month asc;
 
 `);
   const mergedResults = [...result2.recordset];
-
- 
 
   if (req.query.descrip) {
     const descrips = req.query.descrip;

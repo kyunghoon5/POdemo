@@ -13,14 +13,16 @@ const configServer1 = require('./config');
 const configServer2 = require('./config2');
 const dataPick = require('./routes/dataPick');
 const datePicker = require('./routes/datePicker');
-const itemRank = require('./routes/itemRank')
-const soldPercentage = require('./routes/soldPercentage')
-const graph = require('./routes/graph')
+const itemRank = require('./routes/itemRank');
+const soldPercentage = require('./routes/soldPercentage');
+const graph = require('./routes/graph');
+const graphByMonth = require('./routes/graphByMonth')
 app.use('/dataPick', dataPick);
 app.use('/datePicker', datePicker);
 app.use('/itemRank', itemRank);
 app.use('/soldPercentage', soldPercentage);
-app.use('/graph', graph)
+app.use('/graph', graph);
+app.use('/graphbymonth', graphByMonth)
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
@@ -79,14 +81,13 @@ FROM
 	   (SELECT sum(onhand)
                FROM   arinvt10
                WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
+			   (select min(recdate) from potran10c where descrip = a.descrip) as start_dte,
 	  
       
 	 
 					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
-					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost,
-					  (SELECT start_dte
-               FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS start_dte
+					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost
+				
 			   
 
 
@@ -232,8 +233,6 @@ ORDER BY
   itemkey2 asc`);
 
     // rank non RB
-
-    
 
     //Seach value parsing into query
     const result21 = await request2.query(`select * 
@@ -413,7 +412,6 @@ from(SELECT  A.purno
       sold365,
       poreorder,
       stdDate
-      
     ) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
@@ -431,7 +429,7 @@ from(SELECT  A.purno
         const numbers9 = stdDate.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
-       
+
         const numbers12 = sold90.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
@@ -449,7 +447,7 @@ from(SELECT  A.purno
           obj.sold30 = numbers7;
           obj.poreorder = numbers8;
           obj.stdDate = numbers9;
-        
+
           obj.sold90 = numbers12;
           obj.sold365 = numbers13;
 
@@ -529,7 +527,6 @@ from(SELECT  A.purno
         obj.poreorder = numbers8.map((num) => ({ total: num.total }));
 
         obj.stdDate = numbers9.map((num) => ({ start_dte: num.start_dte }));
-       
 
         return obj;
       });
@@ -548,7 +545,6 @@ from(SELECT  A.purno
       result2Sold365.recordset,
       result27.recordset,
       result28.recordset
-      
     );
     //console.log(result);
     // Sort the merged results by ID
