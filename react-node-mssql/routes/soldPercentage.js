@@ -40,7 +40,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(year, -50, Getdate())
+    WHERE convert(date,invdte) >= Dateadd(year, -50, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -59,7 +59,7 @@ ORDER BY
 `);
 
   const result21 = await request2.query(`SELECT --D.rank,
-D.class,
+
 D.descrip,
 
 Round(( D.sold7 / ( D.onhand + sold7 ) ) * 100, 2)           AS 
@@ -79,7 +79,7 @@ total_percentage
 FROM   (SELECT --A.ranknum
        --AS
        --rank,
-       A.class,
+      
        A.descrip,
        A.sold365,
        (SELECT Sum(onhand)
@@ -96,48 +96,48 @@ FROM   (SELECT --A.ranknum
          FROM   potran10c
          WHERE  descrip = A.descrip
                 AND qtyrec NOT IN ( '0' )
-                AND recdate >= Dateadd(day, -365, Cast(Getdate() AS DATE
+                AND convert(date,recdate) >= Dateadd(day, -365, Cast(Getdate() AS DATE
                                                    ))) AS
        total_rec,*/
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND invdte >= Dateadd(year, -50, Cast(Getdate() AS DATE))) AS
+               AND convert(date,invdte) >= Dateadd(year, -50, Cast(Getdate() AS DATE))) AS
        sold_total
        ,
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND invdte >= Dateadd(month, -6, Cast(Getdate() AS DATE))) AS
+               AND convert(date,invdte) >= Dateadd(month, -6, Cast(Getdate() AS DATE))) AS
        sold120,
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND invdte >= Dateadd(day, -90, Cast(Getdate() AS DATE)))  AS
+               AND convert(date,invdte) >= Dateadd(day, -90, Cast(Getdate() AS DATE)))  AS
        sold90,
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND invdte >= Dateadd(day, -60, Cast(Getdate() AS DATE)))  AS
+               AND convert(date,invdte) >= Dateadd(day, -60, Cast(Getdate() AS DATE)))  AS
        sold60,
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND invdte >= Dateadd(day, -30, Cast(Getdate() AS DATE)))  AS
+               AND convert(date,invdte) >= Dateadd(day, -30, Cast(Getdate() AS DATE)))  AS
        sold30,
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND invdte >= Dateadd(day, -7, Cast(Getdate() AS DATE)))   AS
+               AND convert(date,invdte) >= Dateadd(day, -7, Cast(Getdate() AS DATE)))   AS
        sold7
         FROM   (SELECT --Rank()
                --OVER (
                --ORDER BY Sum(A.qtyshp) DESC ) AS rankNum,
-               A.class,
+               
                A.descrip,
                Sum(A.qtyshp) AS sold365
                 FROM   artran10c A
-                WHERE  invdte >= Dateadd(day, -365, Cast(Getdate() AS DATE))
+                WHERE  convert(date,invdte) >= Dateadd(day, -365, Cast(Getdate() AS DATE))
                        AND A.descrip NOT IN ( 'SHIP', 'CALENDAR', 'BROCHURE' )
                        AND A.itemkey2 NOT IN ( '_MANUAL_INVOICE' )
 					   and descrip='${req.query.descrip}'
@@ -145,7 +145,7 @@ FROM   (SELECT --A.ranknum
                 --AND A.class IN ('RB')
                 --Exclude RB
                 --AND A.class NOT IN ('RB', 'AA', 'Z')
-                GROUP  BY A.class,
+                GROUP  BY 
                           A.descrip)A
         WHERE  A.sold365 > 0)D 
 WHERE  D.sold7 > 0

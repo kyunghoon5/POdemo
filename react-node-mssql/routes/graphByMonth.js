@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
   let request2 = new sql.Request(sqlPool2);
 
   const result2 = await request2.query(`SELECT
-A.class,
+
 A.descrip,
 YEAR(A.invdte) AS year,
 MONTH(A.invdte) AS month,
@@ -34,7 +34,7 @@ FROM
 artran10c A
 INNER JOIN (
 SELECT
-class,
+
 descrip
 FROM
 artran10c
@@ -48,13 +48,13 @@ AND descrip='${req.query.descrip}'
 --Exclude RB
 --AND class NOT IN ('RB', 'AA', 'Z')
 GROUP BY
-class,
+
 descrip
-) B ON A.class = B.class AND A.descrip = B.descrip
+) B ON  A.descrip = B.descrip
 WHERE
 CONVERT(DATE, A.invdte) BETWEEN (select min(recdate) from potran10c where descrip = a.descrip) AND GETDATE()
 GROUP BY
-A.class,
+
 A.descrip,
 YEAR(A.invdte),
 MONTH(A.invdte)

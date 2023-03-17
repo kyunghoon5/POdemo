@@ -63,7 +63,7 @@ ORDER BY
     * 
   FROM 
     BOTran 
-  WHERE invdte >= '${startDate}' AND invdte <= '${endDate}'
+  WHERE convert(date,invdte)between '${startDate}' AND '${endDate}'
 ) 
 SELECT
 	
@@ -97,7 +97,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= '${startDate}' AND invdte <= '${endDate}'
+    WHERE convert(date,invdte)between '${startDate}' AND  '${endDate}'
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
 	  and A.descrip='${req.query.descrip}'
@@ -111,7 +111,7 @@ FROM
       A.descrip
 	  
   ) A 
-  WHERE A.qtyshp > -1
+  WHERE A.qtyshp > 0
 ORDER BY 
   itemkey2 asc
 

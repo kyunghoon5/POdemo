@@ -16,13 +16,13 @@ const datePicker = require('./routes/datePicker');
 const itemRank = require('./routes/itemRank');
 const soldPercentage = require('./routes/soldPercentage');
 const graph = require('./routes/graph');
-const graphByMonth = require('./routes/graphByMonth')
+const graphByMonth = require('./routes/graphByMonth');
 app.use('/dataPick', dataPick);
 app.use('/datePicker', datePicker);
 app.use('/itemRank', itemRank);
 app.use('/soldPercentage', soldPercentage);
 app.use('/graph', graph);
-app.use('/graphbymonth', graphByMonth)
+app.use('/graphbymonth', graphByMonth);
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
@@ -71,6 +71,7 @@ SELECT
   A.cost,
   A.price,
   A.start_dte
+ 
   
   
 FROM 
@@ -87,6 +88,7 @@ FROM
 	 
 					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
 					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost
+					 
 				
 			   
 
@@ -101,7 +103,7 @@ FROM
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
     group by 
-      A.class, 
+    
       A.itemkey2, 
       A.descrip
 	  
@@ -124,7 +126,7 @@ SELECT
 FROM 
   (
     SELECT		
-      A.class, 
+      
       A.itemkey2, 
       A.descrip,
 	  
@@ -135,7 +137,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(day, -30, Getdate())
+    WHERE convert(date,a.invdte) >= Dateadd(day, -30, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -143,12 +145,12 @@ FROM
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
     group by 
-      A.class, 
+     
       A.itemkey2, 
       A.descrip
 	  
   ) A 
-  WHERE A.qtyshp > -1
+  
 ORDER BY 
   itemkey2 asc
 
@@ -165,7 +167,7 @@ ORDER BY
 FROM 
   (
     SELECT		
-      A.class, 
+      
       A.itemkey2, 
       A.descrip,
 	  
@@ -176,7 +178,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(day, -90, Getdate())
+    WHERE convert(date,a.invdte) >= Dateadd(day, -90, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -184,12 +186,12 @@ FROM
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
     group by 
-      A.class, 
+     
       A.itemkey2, 
       A.descrip
 	  
   ) A 
-  WHERE A.qtyshp > -1
+  
 ORDER BY 
   itemkey2 asc`);
 
@@ -204,7 +206,7 @@ ORDER BY
 FROM 
   (
     SELECT		
-      A.class, 
+      
       A.itemkey2, 
       A.descrip,
 	  
@@ -215,7 +217,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(day, -365, Getdate())
+    WHERE convert(date,a.invdte) >= Dateadd(day, -365, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -223,12 +225,12 @@ FROM
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
     group by 
-      A.class, 
+     
       A.itemkey2, 
       A.descrip
 	  
   ) A 
-  WHERE A.qtyshp > -1
+  
 ORDER BY 
   itemkey2 asc`);
 
@@ -380,7 +382,7 @@ from(SELECT  A.purno
     
   FROM [BYT_LEG].[dbo].[potran10c]
 
-  where descrip='${req.query.descrip}'  and purdate >= Dateadd(day, -365, Getdate())
+  where descrip='${req.query.descrip}'  and convert(date,purdate) >= Dateadd(day, -365, Getdate())
   group by descrip,itemkey2`);
 
     //item start_dte

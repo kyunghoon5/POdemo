@@ -41,7 +41,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(year, -50, Getdate())
+    WHERE convert(date,invdte) >= Dateadd(year, -50, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       
       and A.descrip='${req.query.descrip}'
@@ -76,7 +76,7 @@ FROM
       sum(A.qtyshp) as qtyshp					  
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(day, -365, Getdate())
+    WHERE convert(date,invdte) >= Dateadd(day, -365, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
       --and A.class in ('RB')
@@ -84,7 +84,7 @@ FROM
       and A.class not in ('RB', 'AA', 'Z') 
     group by
 	
-	A.class,
+	
       A.descrip	  
   ) A 
   WHERE A.qtyshp > 0  and descrip='${req.query.descrip}' 
@@ -110,7 +110,7 @@ FROM
       sum(A.qtyshp) as qtyshp					  
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(day, -365, Getdate())
+    WHERE convert(date,invdte) >= Dateadd(day, -365, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
       and A.class in ('RB')
@@ -118,7 +118,7 @@ FROM
       --and A.class not in ('RB', 'AA', 'Z') 
     group by
 	
-	A.class,
+	
       A.descrip	  
   ) A 
   WHERE A.qtyshp > 0 and descrip='${req.query.descrip}'

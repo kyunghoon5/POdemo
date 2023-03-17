@@ -16,7 +16,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import ColorTab from './ColorTab';
 
 var _ = require('lodash');
 // or less ideally
@@ -27,9 +26,6 @@ export const SearchPage = () => {
   const [imageClicked, setImageClicked] = useState();
   const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
-
-  // toggle Color Tab
-  const [isOpen, setIsOpen] = useState(false);
 
   //DATE buttonSearch console
   const date = new Date();
@@ -45,70 +41,29 @@ export const SearchPage = () => {
   const past365c = past365.toISOString().split('T')[0];
 
   //POS select String to Array
-  const [selectedItem, setSelectedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState([]);
+  const [selectedData, setSelectedData] = useState([]);
 
   const handleChange = (e) => {
     let value = e.target.value;
-    setSelectedItem(value);
+    setSelectedItem(value.split(','));
   };
 
-  const test2 = search.flatMap((item) =>
-    item.first
-      .filter(
-        (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-      )
-      .concat(
-        item.second.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-      .concat(
-        item.third.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-      .concat(
-        item.fourth.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-      .concat(
-        item.fifth.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-      .concat(
-        item.sixth.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-  );
-
-  console.log(
-    test2.map((item) => new Date(item.recdate).toISOString().split('T')[0])[0]
-  );
-
-  console.log(search);
-
-  //pos_ dropdown data list
+  //data from dropdown list
   //console.log(selectedItem)
 
   //DataPick regarding option value
   const [loadingDatapick, setLoadingDatapick] = useState(false);
-  const [selectedData, setSelectedData] = useState([]);
 
   useEffect(() => {
     if (selectedItem.length === 0) {
       return;
     }
-
     const fetchData = async () => {
       const curDate = new Date().toISOString().split('T')[0];
       const endDate = curDate;
 
-      const date1 = test2.map(
-        (item) => new Date(item.recdate).toISOString().split('T')[0]
-      )[0];
+      const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
 
       const startDate = date1.toISOString().split('T')[0];
       setLoadingDatapick(true);
@@ -148,12 +103,10 @@ export const SearchPage = () => {
     setSelectedSold(value);
   };
 
-  //dropdownlist list reset
   const reset = () => {
     setSelectedItem([]);
     setSelectedData([]);
     setSelectedSold([]);
-    setValue2([]);
   };
 
   //all data
@@ -230,21 +183,22 @@ export const SearchPage = () => {
       });
   };
 
-  const [graphLoading, setGraphLoading] = useState(false);
+  const [graphLoading2, setGraphLoading2] = useState(false);
   const [graphLine, setGraphLine] = useState([]);
   const graphLineF = async () => {
     const searchedRecord = record.toLowerCase();
-    setGraphLoading(true);
+    setGraphLoading2(true);
     await axios
       .get(`http://localhost:8082/graph?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphLine(response.data);
-        setGraphLoading(false);
+        setGraphLoading2(false);
       });
   };
 
   const [graphLineByMonth, setGraphLineByMonth] = useState([]);
+  const [graphLoading, setGraphLoading] = useState(false);
   const graphLineByMonthF = async () => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading(true);
@@ -274,8 +228,7 @@ export const SearchPage = () => {
   };
 
   //Calculating the numbers of days between two dates
-  const dateC = test2.map((item) => item.recdate)[0];
-  const date1 = new Date(dateC);
+  const date1 = new Date(selectedItem.map((item) => item).slice(1, 2));
   const date2 = new Date();
   const Difference_In_Time = date2.getTime() - date1.getTime();
   const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
@@ -305,7 +258,7 @@ export const SearchPage = () => {
   const totalItems2 = _.sum(filteredItems2);
 
   //total POS_
-  const filteredItems3 = 2;
+  const filteredItems3 = selectedItem.map((item) => Number(item)).slice(2);
   const totalItems3 = _.sum(filteredItems3);
 
   //total Sold30, 90 365
@@ -356,6 +309,8 @@ export const SearchPage = () => {
   const graphYearlyTotal = _.sum(graphLine.map((item) => item.qtyshp));
 
   const graphMonthlyTotal = _.sum(test1.map((item) => item.qtyshp));
+
+  console.log(graphYearlyTotal);
 
   //new or old item
   const newOrOld = () => {
@@ -465,97 +420,27 @@ export const SearchPage = () => {
                     top: 0,
                   }}
                 >
-                  {value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        value2 === 'YEAR' ? (
-                          <ResponsiveContainer width="100%" height="100%">
-                            <LineChart
-                              width={500}
-                              height={300}
-                              data={graphLine}
-                              margin={{
-                                top: 5,
-                                right: 30,
-                                left: 20,
-                                bottom: 5,
-                              }}
-                            >
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="year" />
-                              <YAxis />
-                              <Tooltip />
-                              <Legend />
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart
+                      width={500}
+                      height={300}
+                      data={graphLine}
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="year" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
 
-                              <Line
-                                type="monotone"
-                                dataKey="qtyshp"
-                                stroke="#82ca9d"
-                              />
-                            </LineChart>
-                          </ResponsiveContainer>
-                        ) : (
-                          <ResponsiveContainer width="100%" height="100%">
-                            <LineChart
-                              width={500}
-                              height={300}
-                              data={test1}
-                              margin={{
-                                top: 5,
-                                right: 30,
-                                left: 20,
-                                bottom: 5,
-                              }}
-                            >
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="month" />
-                              <YAxis />
-                              <Tooltip />
-                              <Legend />
-
-                              <Line
-                                type="monotone"
-                                dataKey="qtyshp"
-                                stroke="#82ca9d"
-                              />
-                            </LineChart>
-                          </ResponsiveContainer>
-                        )
-                      ) : (
-                        <td></td>
-                      )
-                    ) : (
-                      <td>Loading...</td>
-                    )
-                  ) : graphLoading === false ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        width={500}
-                        height={300}
-                        data={graphLine}
-                        margin={{
-                          top: 5,
-                          right: 30,
-                          left: 20,
-                          bottom: 5,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-
-                        <Line
-                          type="monotone"
-                          dataKey="qtyshp"
-                          stroke="#82ca9d"
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <>Loading...</>
-                  )}
+                      <Line type="monotone" dataKey="qtyshp" stroke="#82ca9d" />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </div>
               </td>
             </tr>
@@ -667,28 +552,25 @@ export const SearchPage = () => {
                   ))}
                 </select>
               </td>
-              {search.length ? (
-                value2.length ? (
-                  graphLoading === false ? (
-                    value2.length ? (
-                      <td>
-                        {value2 === 'YEAR'
-                          ? graphYearlyTotal
-                          : graphMonthlyTotal}
-                      </td>
-                    ) : (
-                      <td></td>
-                    )
+
+              {value2.length ? (
+                graphLoading2 === false ? (
+                  value2.length ? (
+                    <td>
+                      {value2 === 'YEAR' ? graphYearlyTotal : graphMonthlyTotal}
+                    </td>
                   ) : (
-                    <td>Loading...</td>
+                    <td></td>
                   )
-                ) : graphLoading === false ? (
-                  <td>{graphYearlyTotal}</td>
                 ) : (
-                  <td>Loading...</td>
+                  <>Loading...</>
                 )
+              ) : graphLoading2 === false ? (
+                <td>
+                  {value2 === 'YEAR' ? graphYearlyTotal : graphMonthlyTotal}
+                </td>
               ) : (
-                <td></td>
+                <>Loading...</>
               )}
 
               <td style={{ background: '#f0e68c' }}>PUR_date</td>
@@ -705,7 +587,6 @@ export const SearchPage = () => {
                     )[0]
                 }
               </td>
-
               <td>
                 {
                   search
@@ -852,33 +733,29 @@ export const SearchPage = () => {
                   </option>
                 </select>
               </td>
-              {search.length ? (
-                selectedSold.length ? (
-                  loadingsoldP === false ? (
-                    selectedSold.length ? (
-                      <td>{Math.floor(selectedSold)} %</td>
-                    ) : (
-                      <td></td>
-                    )
+              {selectedSold.length ? (
+                loadingsoldP === false ? (
+                  selectedSold.length ? (
+                    <td>{Math.floor(selectedSold)} %</td>
                   ) : (
-                    <td>Loading...</td>
+                    <td></td>
                   )
-                ) : loadingsoldP === false ? (
-                  <td>
-                    {Math.floor(
-                      selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map(
-                          (item) => item.soldtotal_percentage
-                        )
-                      )[0]
-                    )}
-                    %
-                  </td>
                 ) : (
                   <td>Loading...</td>
                 )
+              ) : loadingsoldP === false ? (
+                <td>
+                  {Math.floor(
+                    selectedSoldPercentage.map((item) =>
+                      item.soldPercentage.map(
+                        (item) => item.soldtotal_percentage
+                      )
+                    )[0]
+                  )}
+                  %
+                </td>
               ) : (
-                <td></td>
+                <td>Loading...</td>
               )}
 
               <td style={{ background: '#f0e68c' }}>SHP_date</td>
@@ -957,7 +834,13 @@ export const SearchPage = () => {
                 <span className="pctn" style={{ float: 'left' }}></span>
                 <span className="dimension" style={{ float: 'right' }}></span>
               </td>
-              {selectedItem.length > 0 ? <td></td> : <td></td>}
+              {selectedItem.length > 0 ? (
+                selectedItem
+                  .map((item, idx) => <td key={idx}>{item}</td>)
+                  .slice(0, 1)
+              ) : (
+                <td></td>
+              )}
               <td></td>
               <td></td>
               <td style={{ background: '#f0e68c' }}>EXP_date</td>
@@ -1048,7 +931,13 @@ export const SearchPage = () => {
                     )[0]
                 }
               </td>
-              {selectedItem.length > 0 ? <td></td> : <td></td>}
+              {selectedItem.length > 0 ? (
+                selectedItem
+                  .map((item, idx) => <td key={idx}>{item}</td>)
+                  .slice(1, 2)
+              ) : (
+                <td></td>
+              )}
               <td></td>
               <td></td>
               <td style={{ background: '#f0e68c' }}>RCV_date</td>
@@ -1140,10 +1029,20 @@ export const SearchPage = () => {
                     ))[0]
                 }
               </td>
-              {/* {여기까지} */}
-              <td>{test2.map((item) => item.recdate)}</td>
 
-              <td></td>
+              <td>
+                {selectedItem.map((item) => item).slice(1, 2) == ''
+                  ? null
+                  : selectedItem
+                      .map((item, idx) => (
+                        <div key={idx}>
+                          {Math.floor(Difference_In_Days)} days
+                        </div>
+                      ))
+                      .slice(1, 2)}
+              </td>
+
+              <td>{selectedItem.map((item) => item).slice(1, 2)}</td>
 
               <td colSpan="2">
                 <DatePicker
@@ -1360,6 +1259,15 @@ export const SearchPage = () => {
               )}
 
               {/* waiting & rcvd table  */}
+              {selectedItem.length > 0 ? (
+                selectedItem.map((item) => item).slice(1, 2) == '' ? (
+                  <td style={{ color: 'red' }}>WAITING</td>
+                ) : (
+                  <td style={{ color: 'green' }}>RCVD</td>
+                )
+              ) : (
+                <td></td>
+              )}
 
               <td id="recDte" className="recDateSel_cal">
                 {new Date().toISOString().split('T')[0]}
@@ -1447,7 +1355,7 @@ export const SearchPage = () => {
                       handleChange(e);
                     }}
                   >
-                    {/*POS initial && Warning error*/}
+                    {/*POS initial */}
 
                     <option
                       value={[
@@ -1465,7 +1373,31 @@ export const SearchPage = () => {
                       POS_
                     </option>
 
-                    <option>
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.first ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.first ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.first.length
+                            ? item.first.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
                       {
                         search
                           .flatMap((item) => [item].concat(item.first ?? []))
@@ -1474,7 +1406,31 @@ export const SearchPage = () => {
                       }
                     </option>
 
-                    <option>
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.second ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.second ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.second.length
+                            ? item.second.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
                       {
                         search
                           .flatMap((item) => [item].concat(item.second ?? []))
@@ -1483,7 +1439,31 @@ export const SearchPage = () => {
                       }
                     </option>
 
-                    <option>
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.third ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.third ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.third.length
+                            ? item.third.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
                       {
                         search
                           .flatMap((item) => [item].concat(item.third ?? []))
@@ -1492,7 +1472,31 @@ export const SearchPage = () => {
                       }
                     </option>
 
-                    <option>
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.fourth ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.fourth ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.fourth.length
+                            ? item.fourth.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
                       {
                         search
                           .flatMap((item) => [item].concat(item.fourth ?? []))
@@ -1501,7 +1505,31 @@ export const SearchPage = () => {
                       }
                     </option>
 
-                    <option>
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.fifth ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.fifth ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.fifth.length
+                            ? item.fifth.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
                       {
                         search
                           .flatMap((item) => [item].concat(item.fifth ?? []))
@@ -1510,7 +1538,31 @@ export const SearchPage = () => {
                       }
                     </option>
 
-                    <option>
+                    <option
+                      value={[
+                        search
+                          .flatMap((item) => [item].concat(item.sixth ?? []))
+                          .filter((item) => item.reqdate)
+                          .map(
+                            (item) =>
+                              new Date(item.reqdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search
+                          .flatMap((item) => [item].concat(item.sixth ?? []))
+                          .filter((item) => item.recdate)
+                          .map(
+                            (item) =>
+                              new Date(item.recdate).toISOString().split('T')[0]
+                          )[0],
+
+                        search.map((item) =>
+                          item.sixth.length
+                            ? item.sixth.map((item2) => item2.qtyord)
+                            : null
+                        ),
+                      ]}
+                    >
                       {
                         search
                           .flatMap((item) => [item].concat(item.sixth ?? []))
@@ -1521,7 +1573,6 @@ export const SearchPage = () => {
                   </select>
                 </div>
               </td>
-
               <td>SOLD</td>
               <td colSpan={2}>{Math.floor(Difference_In_Days2)} days</td>
               <td>SOLD30</td>
@@ -1589,16 +1640,8 @@ export const SearchPage = () => {
                       <div
                         key={idx}
                         style={{ textAlign: 'left', color: 'blue' }}
-                        onClick={() => setIsOpen(true)}
                       >
                         {item.itemkey2}
-                        {isOpen && (
-                          <div className="absolute top-0 z-50">
-                            <ColorTab
-                            // setIsOpen={setIsOpen} isOpen={isOpen}
-                            />
-                          </div>
-                        )}
                       </div>
                     ))}
                   <div style={{ textAlign: 'left' }}>TOTAL</div>
@@ -1612,7 +1655,6 @@ export const SearchPage = () => {
                     ))}
                   <div>{totalItems2}</div>
                 </td>
-
                 <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.poreorder.length ? (
@@ -1627,7 +1669,12 @@ export const SearchPage = () => {
                 </td>
 
                 {selectedItem.length > 0 ? (
-                  <td style={{ padding: '0' }}></td>
+                  <td style={{ padding: '0' }}>
+                    {selectedItem
+                      .map((item, idx) => <div key={idx}>{item}</div>)
+                      .slice(2)}
+                    <div>{totalItems3}</div>
+                  </td>
                 ) : (
                   <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
@@ -1845,6 +1892,27 @@ export const SearchPage = () => {
           )}
         </table>
       </div>
+      <ResponsiveContainer width="20%" height="14%">
+        <LineChart
+          width={500}
+          height={300}
+          data={test1}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+
+          <Line type="monotone" dataKey="qtyshp" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 };
