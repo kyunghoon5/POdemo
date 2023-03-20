@@ -17,12 +17,16 @@ const itemRank = require('./routes/itemRank');
 const soldPercentage = require('./routes/soldPercentage');
 const graph = require('./routes/graph');
 const graphByMonth = require('./routes/graphByMonth');
+
+const graphbyitem = require('./routes/graphByitem')
 app.use('/dataPick', dataPick);
 app.use('/datePicker', datePicker);
 app.use('/itemRank', itemRank);
 app.use('/soldPercentage', soldPercentage);
 app.use('/graph', graph);
 app.use('/graphbymonth', graphByMonth);
+
+app.use('/graphByItem', graphbyitem);
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
@@ -456,6 +460,7 @@ from(SELECT  A.purno
           return obj;
         }
         obj.first = numbers.map((num) => ({
+          itemkey2: num.itemkey2,
           purno: num.purno,
           qtyord: num.qtyord,
           portn: num.portn,
@@ -466,6 +471,7 @@ from(SELECT  A.purno
           invno: num.invno,
         }));
         obj.second = numbers2.map((num) => ({
+          itemkey2: num.itemkey2,
           purno: num.purno,
           qtyord: num.qtyord,
           portn: num.portn,
@@ -476,6 +482,7 @@ from(SELECT  A.purno
           invno: num.invno,
         }));
         obj.third = numbers3.map((num) => ({
+          itemkey2: num.itemkey2,
           purno: num.purno,
           qtyord: num.qtyord,
           portn: num.portn,
@@ -486,6 +493,7 @@ from(SELECT  A.purno
           invno: num.invno,
         }));
         obj.fourth = numbers4.map((num) => ({
+          itemkey2: num.itemkey2,
           purno: num.purno,
           qtyord: num.qtyord,
           portn: num.portn,
@@ -496,6 +504,7 @@ from(SELECT  A.purno
           invno: num.invno,
         }));
         obj.fifth = numbers5.map((num) => ({
+          itemkey2: num.itemkey2,
           purno: num.purno,
           qtyord: num.qtyord,
           portn: num.portn,
@@ -506,6 +515,7 @@ from(SELECT  A.purno
           invno: num.invno,
         }));
         obj.sixth = numbers6.map((num) => ({
+          itemkey2: num.itemkey2,
           purno: num.purno,
           qtyord: num.qtyord,
           portn: num.portn,

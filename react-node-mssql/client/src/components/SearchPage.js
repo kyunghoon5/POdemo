@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
 
 import {
-  LineChart,
+  
   Line,
   XAxis,
   YAxis,
@@ -15,6 +15,10 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Bar,
+  
+  ComposedChart,
+  
 } from 'recharts';
 import ColorTab from './ColorTab';
 
@@ -30,6 +34,8 @@ export const SearchPage = () => {
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
+ 
+ 
 
   //DATE buttonSearch console
   const date = new Date();
@@ -84,11 +90,17 @@ export const SearchPage = () => {
       )
   );
 
-  console.log(
-    test2.map((item) => new Date(item.recdate).toISOString().split('T')[0])[0]
-  );
+const mergeByKey = 
+    search.map(itm => ({
+        ...test2.find((item) => (item.itemkey2 === itm.itemkey2) && item),
+        ...itm
+    }));
 
-  console.log(search);
+    
+
+
+  // console.log(test2);
+  // console.log(search)
 
   //pos_ dropdown data list
   //console.log(selectedItem)
@@ -106,11 +118,12 @@ export const SearchPage = () => {
       const curDate = new Date().toISOString().split('T')[0];
       const endDate = curDate;
 
-      const date1 = test2.map(
+      const startDate = test2.map(
         (item) => new Date(item.recdate).toISOString().split('T')[0]
-      )[0];
+      )[0];     
+      
 
-      const startDate = date1.toISOString().split('T')[0];
+      
       setLoadingDatapick(true);
       const response = await axios.get(
         `http://localhost:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
@@ -119,8 +132,10 @@ export const SearchPage = () => {
       setLoadingDatapick(false);
     };
 
-    fetchData();
+    fetchData();     
   }, [selectedItem]);
+
+ 
 
   //data from dataPick
   //console.log(selectedData);
@@ -262,7 +277,26 @@ export const SearchPage = () => {
     const selectedMonth = e.target.value;
     setValue2(selectedMonth); // update the value of value2
   };
-  const test1 = graphLineByMonth.filter((item) => item.year === Number(value2));
+  const monthLine = graphLineByMonth.filter((item) => item.year === Number(value2));
+  const monthLinePrv = graphLineByMonth.filter(
+    (item) => item.year === Number(value2) -1
+  );
+//여기까지
+  const [graphByItem, setGraphByItem] = useState([]);
+  const graphByItemF = async () => {
+    const searchedRecord = record.toLowerCase();
+   
+    await axios
+      .get(`http://localhost:8082/graphByItem?descrip=${searchedRecord}`)
+
+      .then((response) => {
+        setGraphByItem(response.data);
+      });
+  };
+  console.log(graphByItem);
+  
+
+ 
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -305,7 +339,7 @@ export const SearchPage = () => {
   const totalItems2 = _.sum(filteredItems2);
 
   //total POS_
-  const filteredItems3 = 2;
+  const filteredItems3 = mergeByKey.map((item)=>item.qtyord);
   const totalItems3 = _.sum(filteredItems3);
 
   //total Sold30, 90 365
@@ -355,7 +389,7 @@ export const SearchPage = () => {
 
   const graphYearlyTotal = _.sum(graphLine.map((item) => item.qtyshp));
 
-  const graphMonthlyTotal = _.sum(test1.map((item) => item.qtyshp));
+  const graphMonthlyTotal = _.sum(monthLine.map((item) => item.qtyshp));
 
   //new or old item
   const newOrOld = () => {
@@ -423,6 +457,7 @@ export const SearchPage = () => {
                     fetchData3();
                     graphLineF();
                     graphLineByMonthF();
+                    graphByItemF()
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -470,7 +505,7 @@ export const SearchPage = () => {
                       value2.length ? (
                         value2 === 'YEAR' ? (
                           <ResponsiveContainer width="100%" height="100%">
-                            <LineChart
+                            <ComposedChart
                               width={500}
                               height={300}
                               data={graphLine}
@@ -486,20 +521,28 @@ export const SearchPage = () => {
                               <YAxis />
                               <Tooltip />
                               <Legend />
+                              <Bar
+                                name="PO rec"
+                                data={graphLine}
+                                barSize={4}
+                                fill="#ffb366"
+                                dataKey="qtyrec"
+                              />
 
                               <Line
                                 type="monotone"
                                 dataKey="qtyshp"
+                                strokeWidth={3}
                                 stroke="#82ca9d"
                               />
-                            </LineChart>
+                            </ComposedChart>
                           </ResponsiveContainer>
                         ) : (
                           <ResponsiveContainer width="100%" height="100%">
-                            <LineChart
+                            <ComposedChart
+                              data={monthLine}
                               width={500}
                               height={300}
-                              data={test1}
                               margin={{
                                 top: 5,
                                 right: 30,
@@ -508,17 +551,39 @@ export const SearchPage = () => {
                               }}
                             >
                               <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="month" />
+                              <XAxis
+                                dataKey="month"
+                                allowDuplicatedCategory={false}
+                              />
                               <YAxis />
+
                               <Tooltip />
                               <Legend />
+                              <Bar
+                                name="PO rec"
+                                data={monthLine}
+                                barSize={4}
+                                fill="#ffb366"
+                                dataKey="qtyrec"
+                              />
 
                               <Line
+                                name={Number(value2)}
+                                data={monthLine}
                                 type="monotone"
                                 dataKey="qtyshp"
+                                strokeWidth={3}
                                 stroke="#82ca9d"
                               />
-                            </LineChart>
+                              <Line
+                                name={Number(value2) - 1}
+                                data={monthLinePrv}
+                                type="monotone"
+                                dataKey="qtyshp"
+                                strokeWidth={3}
+                                stroke="#8884d8"
+                              />
+                            </ComposedChart>
                           </ResponsiveContainer>
                         )
                       ) : (
@@ -529,7 +594,7 @@ export const SearchPage = () => {
                     )
                   ) : graphLoading === false ? (
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
+                      <ComposedChart
                         width={500}
                         height={300}
                         data={graphLine}
@@ -545,13 +610,21 @@ export const SearchPage = () => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
+                        <Bar
+                          name="PO rec"
+                          data={graphLine}
+                          barSize={4}
+                          fill="#ffb366"
+                          dataKey="qtyrec"
+                        />
 
                         <Line
                           type="monotone"
                           dataKey="qtyshp"
+                          strokeWidth={3}
                           stroke="#82ca9d"
                         />
-                      </LineChart>
+                      </ComposedChart>
                     </ResponsiveContainer>
                   ) : (
                     <>Loading...</>
@@ -656,6 +729,7 @@ export const SearchPage = () => {
               <td>
                 GRAPH
                 <select
+                  className=" border border-zinc-500 "
                   value={value2}
                   onChange={(e) => {
                     handleChangeGraphByMonth(e);
@@ -770,6 +844,7 @@ export const SearchPage = () => {
               <td style={{ textAlign: 'left' }}>
                 SOLD
                 <select
+                  className="border border-zinc-500"
                   value={selectedSold}
                   onChange={(e) => {
                     soldPercentageHandler(e);
@@ -957,7 +1032,18 @@ export const SearchPage = () => {
                 <span className="pctn" style={{ float: 'left' }}></span>
                 <span className="dimension" style={{ float: 'right' }}></span>
               </td>
-              {selectedItem.length > 0 ? <td></td> : <td></td>}
+              {test2.map((item) => item.reqdate)[0] == null ? (
+                <td></td>
+              ) : (
+                <td>
+                  {
+                    test2.map(
+                      (item) =>
+                        new Date(item.reqdate).toISOString().split('T')[0]
+                    )[0]
+                  }
+                </td>
+              )}
               <td></td>
               <td></td>
               <td style={{ background: '#f0e68c' }}>EXP_date</td>
@@ -1048,7 +1134,19 @@ export const SearchPage = () => {
                     )[0]
                 }
               </td>
-              {selectedItem.length > 0 ? <td></td> : <td></td>}
+
+              {test2.map((item) => item.recdate)[0] == null ? (
+                <td></td>
+              ) : (
+                <td>
+                  {
+                    test2.map(
+                      (item) =>
+                        new Date(item.recdate).toISOString().split('T')[0]
+                    )[0]
+                  }
+                </td>
+              )}
               <td></td>
               <td></td>
               <td style={{ background: '#f0e68c' }}>RCV_date</td>
@@ -1140,13 +1238,29 @@ export const SearchPage = () => {
                     ))[0]
                 }
               </td>
-              {/* {여기까지} */}
-              <td>{test2.map((item) => item.recdate)}</td>
 
-              <td></td>
+              {test2.map((item) => item.recdate)[0] == null ? (
+                <td></td>
+              ) : (
+                <td>{Math.floor(Difference_In_Days)} days</td>
+              )}
+
+              {test2.map((item) => item.recdate)[0] == null ? (
+                <td></td>
+              ) : (
+                <td>
+                  {
+                    test2.map(
+                      (item) =>
+                        new Date(item.recdate).toISOString().split('T')[0]
+                    )[0]
+                  }{' '}
+                </td>
+              )}
 
               <td colSpan="2">
                 <DatePicker
+                  className="border-2 border-zinc-500 text-center"
                   showIcon
                   selected={startDatePicker}
                   onChange={(date) => setStartDatePicker(date)}
@@ -1360,12 +1474,22 @@ export const SearchPage = () => {
               )}
 
               {/* waiting & rcvd table  */}
+              {selectedItem.length > 0 ? (
+                test2.map((item) => item.recdate)[0] == null ? (
+                  <td style={{ color: 'red' }}>WAITING</td>
+                ) : (
+                  <td style={{ color: 'green' }}>RCVD</td>
+                )
+              ) : (
+                <td></td>
+              )}
 
               <td id="recDte" className="recDateSel_cal">
                 {new Date().toISOString().split('T')[0]}
               </td>
               <td colSpan="2">
                 <DatePicker
+                  className="border-2 border-zinc-500 text-center"
                   showIcon
                   selected={endDatePicker}
                   onChange={(date) => setEndDatePicker(date)}
@@ -1441,6 +1565,7 @@ export const SearchPage = () => {
               <td>
                 <div className="App">
                   <select
+                    className="border border-zinc-500"
                     name="item-selected"
                     value={selectedItem}
                     onChange={(e) => {
@@ -1448,22 +1573,6 @@ export const SearchPage = () => {
                     }}
                   >
                     {/*POS initial && Warning error*/}
-
-                    <option
-                      value={[
-                        '',
-
-                        '',
-
-                        search.map((item) =>
-                          item.first.length
-                            ? item.first.map((item2) => item2.qtyord)
-                            : null
-                        ),
-                      ]}
-                    >
-                      POS_
-                    </option>
 
                     <option>
                       {
@@ -1592,15 +1701,9 @@ export const SearchPage = () => {
                         onClick={() => setIsOpen(true)}
                       >
                         {item.itemkey2}
-                        {isOpen && (
-                          <div className="absolute top-0 z-50">
-                            <ColorTab
-                            // setIsOpen={setIsOpen} isOpen={isOpen}
-                            />
-                          </div>
-                        )}
                       </div>
                     ))}
+
                   <div style={{ textAlign: 'left' }}>TOTAL</div>
                 </td>
 
@@ -1627,7 +1730,12 @@ export const SearchPage = () => {
                 </td>
 
                 {selectedItem.length > 0 ? (
-                  <td style={{ padding: '0' }}></td>
+                  <td style={{ padding: '0' }}>
+                    {mergeByKey.map((item, idx) => (
+                      <div key={idx}>{item.qtyord}</div>
+                    ))}
+                    <div>{totalItems3}</div>
+                  </td>
                 ) : (
                   <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
@@ -1643,19 +1751,25 @@ export const SearchPage = () => {
                     <div>{totalItems12}</div>
                   </td>
                 )}
+
                 {/*sold amount regarding RCVD date //loading && render table cell */}
+
                 <td style={{ padding: '0' }}>
-                  {selectedData.length
+                  {test2.length
                     ? loadingDatapick === false
-                      ? selectedData.map((item, idx) =>
-                          item.new.length ? (
-                            item.new.map((item, idx2) => (
-                              <div key={idx2}>{item.qtyshp}</div>
-                            ))
-                          ) : (
-                            <div key={idx}></div>
+                      ? test2.map((item) => item.recdate)[0] == null
+                        ? search.map((item, idx) => (
+                            <div key={idx}>{item.purno}</div>
+                          ))
+                        : selectedData.map((item, idx) =>
+                            item.new.length ? (
+                              item.new.map((item, idx2) => (
+                                <div key={idx2}>{item.qtyshp}</div>
+                              ))
+                            ) : (
+                              <div key={idx}></div>
+                            )
                           )
-                        )
                       : search.map((item, idx) => (
                           <div key={idx}>Loading...</div>
                         ))
@@ -1845,6 +1959,12 @@ export const SearchPage = () => {
           )}
         </table>
       </div>
+      {isOpen && (
+        <div className="absolute top-0 z-50">
+          <ColorTab graphLine={graphLine}setIsOpen={setIsOpen} isOpen={isOpen} />
+          
+        </div>
+      )}
     </div>
   );
 };

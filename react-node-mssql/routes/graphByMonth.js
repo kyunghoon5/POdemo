@@ -29,7 +29,8 @@ router.get('/', async (req, res) => {
 A.descrip,
 YEAR(A.invdte) AS year,
 MONTH(A.invdte) AS month,
-SUM(A.qtyshp) AS qtyshp
+SUM(A.qtyshp) AS qtyshp,
+ (SELECT SUM(qtyrec) FROM potran10c WHERE descrip=a.descrip and year(recdate)=year(a.invdte) and MONTH(recdate)=MONTH(a.invdte)) as qtyrec
 FROM
 artran10c A
 INNER JOIN (
