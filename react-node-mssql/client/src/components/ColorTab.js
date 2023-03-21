@@ -1,5 +1,5 @@
 import { MdOutlineClose } from 'react-icons/md';
-
+import React, { useState, useEffect } from 'react';
 import {
   Line,
   XAxis,
@@ -10,22 +10,132 @@ import {
   ResponsiveContainer,
   Bar,
   ComposedChart,
+
 } from 'recharts';
+var _ = require('lodash');
 
+const ColorTab = ({
+  setIsOpen,
+  isOpen,
+  eachItemGraph,
+  
+  eachItemGraphMonth,
+  graphLoading2,
+  search,
+  
+}) => {
+  const [value3, setValue3] = useState('');
+  const handleChangeitemByMonth = (e) => {
+    const selectedMonth = e.target.value;
+    setValue3(selectedMonth); // update the value of value2
+  };
 
+  const monthItemLine = eachItemGraphMonth.filter(
+    (item) => item.year === Number(value3)
+  );
+ 
 
-const ColorTab = ({ setIsOpen, isOpen,graphLine }) => {
+  const eachgraphYearlyTotal = _.sum(eachItemGraph.map((item) => item.qtyshp));
+
+  const eachgraphMonthlyTotal = _.sum(monthItemLine.map((item) => item.qtyshp));
+
+  
+ 
+
   return (
-    <div className="flex justify-start items-center bg-gray-200 text-black w-[500px] border-none">
-      <div className="" onClick={() => setIsOpen(!isOpen)}>
-        <MdOutlineClose className="absolute top-0 right-0 h-8 w-8 ..." />
+    <div className="flex flex-col  bg-gray-200 text-black w-[600px] border-none ">
+      <div className="flex flex-col  items-end">
+        <MdOutlineClose
+          onClick={() => setIsOpen(!isOpen)}
+          className=" top-0 right-0 h-8 w-8 ..."
+        />
       </div>
-      <div className="flex justify-start items-center bg-gray-200 text-black h-[600px] border-none"></div>
-      <div className="flex justify-start items-center bg-gray-200 text-black w-[500px] border-none">
-        {
+      <div>{eachItemGraph.map((item) => <div>{item.descrip}</div>)[0]}</div>
+      <div>{eachItemGraph.map((item) => <div>{item.itemkey2}</div>)[0]}</div>
+
+      <div className=" items-center ">
+        {value3.length ? (
+          graphLoading2 === false ? (
+            value3.length ? (
+              value3 === 'YEAR' ? (
+                <ResponsiveContainer width="99%" aspect={3}>
+                  <ComposedChart
+                    data={eachItemGraph}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="year" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar
+                      name="PO rec"
+                      data={eachItemGraph}
+                      barSize={4}
+                      fill="#ffb366"
+                      dataKey="qtyrec"
+                    />
+
+                    <Line
+                      type="monotone"
+                      dataKey="qtyshp"
+                      strokeWidth={3}
+                      stroke="#82ca9d"
+                    />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              ) : (
+                <ResponsiveContainer width="99%" aspect={3}>
+                  <ComposedChart
+                    data={monthItemLine}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" allowDuplicatedCategory={false} />
+                    <YAxis />
+
+                    <Tooltip />
+                    <Legend />
+                    <Bar
+                      name="PO rec"
+                      data={monthItemLine}
+                      barSize={4}
+                      fill="#ffb366"
+                      dataKey="qtyrec"
+                    />
+
+                    <Line
+                      name={Number(value3)}
+                      data={monthItemLine}
+                      type="monotone"
+                      dataKey="qtyshp"
+                      strokeWidth={3}
+                      stroke="#82ca9d"
+                    />
+                    
+                  </ComposedChart>
+                </ResponsiveContainer>
+              )
+            ) : (
+              <td></td>
+            )
+          ) : (
+            <td>Loading...</td>
+          )
+        ) : graphLoading2 === false ? (
           <ResponsiveContainer width="99%" aspect={3}>
             <ComposedChart
-              data={graphLine}
+              data={eachItemGraph}
               margin={{
                 top: 5,
                 right: 30,
@@ -40,7 +150,7 @@ const ColorTab = ({ setIsOpen, isOpen,graphLine }) => {
               <Legend />
               <Bar
                 name="PO rec"
-                data={graphLine}
+                data={eachItemGraph}
                 barSize={4}
                 fill="#ffb366"
                 dataKey="qtyrec"
@@ -54,7 +164,45 @@ const ColorTab = ({ setIsOpen, isOpen,graphLine }) => {
               />
             </ComposedChart>
           </ResponsiveContainer>
-        }
+        ) : (
+          <>Loading...</>
+        )}
+      </div>
+      <div>
+        <select
+          onChange={(e) => {
+            handleChangeitemByMonth(e);
+          }}
+          className=" border border-zinc-500 "
+        >
+          <option>YEAR</option>
+          {eachItemGraph.map((item2, idx) => (
+            <option key={idx}>{item2.year} </option>
+          ))}
+        </select>
+        TOTAL: {search.length ? (
+          value3.length ? (
+            graphLoading2 === false ? (
+              value3.length ? (
+                
+                  value3 === 'YEAR'
+                    ? eachgraphYearlyTotal
+                    : eachgraphMonthlyTotal
+                
+              ) : (
+                <></>
+              )
+            ) : (
+              <>Loading...</>
+            )
+          ) : graphLoading2 === false ? (
+            <>{eachgraphYearlyTotal}</>
+          ) : (
+            <>Loading...</>
+          )
+        ) : (
+          <div></div>
+        )}
       </div>
     </div>
   );

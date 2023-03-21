@@ -59,7 +59,7 @@ A.descrip,
 a.itemkey2,
 YEAR(A.invdte)
 HAVING
-SUM(A.qtyshp) > 0
+SUM(A.qtyshp) > -1
 ORDER BY
 year asc, itemkey2 asc
 

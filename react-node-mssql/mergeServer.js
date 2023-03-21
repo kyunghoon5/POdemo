@@ -19,6 +19,7 @@ const graph = require('./routes/graph');
 const graphByMonth = require('./routes/graphByMonth');
 
 const graphbyitem = require('./routes/graphByitem')
+const graphbyitemMonth = require('./routes/graphByitemMonth');
 app.use('/dataPick', dataPick);
 app.use('/datePicker', datePicker);
 app.use('/itemRank', itemRank);
@@ -27,6 +28,7 @@ app.use('/graph', graph);
 app.use('/graphbymonth', graphByMonth);
 
 app.use('/graphByItem', graphbyitem);
+app.use('/graphByItemMonth', graphbyitemMonth);
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {

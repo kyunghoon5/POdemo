@@ -7,7 +7,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
 
 import {
-  
   Line,
   XAxis,
   YAxis,
@@ -16,9 +15,7 @@ import {
   Legend,
   ResponsiveContainer,
   Bar,
-  
   ComposedChart,
-  
 } from 'recharts';
 import ColorTab from './ColorTab';
 
@@ -34,8 +31,6 @@ export const SearchPage = () => {
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
- 
- 
 
   //DATE buttonSearch console
   const date = new Date();
@@ -58,46 +53,53 @@ export const SearchPage = () => {
     setSelectedItem(value);
   };
 
-  const test2 = search.flatMap((item) =>
-    item.first
-      .filter(
-        (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-      )
-      .concat(
-        item.second.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-      .concat(
-        item.third.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-      .concat(
-        item.fourth.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-      .concat(
-        item.fifth.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-      .concat(
-        item.sixth.filter(
-          (item2) => item2.purno && item2.purno.trim() === String(selectedItem)
-        )
-      )
-  );
+  const test2 =
+    selectedItem == 'POS_'
+      ? search
+          .flatMap((item) => [item].concat(item.first ?? []))
+          .map((item) => item)
+      : search.flatMap((item) =>
+          item.first
+            .filter(
+              (item2) =>
+                item2.purno && item2.purno.trim() === String(selectedItem)
+            )
+            .concat(
+              item.second.filter(
+                (item2) =>
+                  item2.purno && item2.purno.trim() === String(selectedItem)
+              )
+            )
+            .concat(
+              item.third.filter(
+                (item2) =>
+                  item2.purno && item2.purno.trim() === String(selectedItem)
+              )
+            )
+            .concat(
+              item.fourth.filter(
+                (item2) =>
+                  item2.purno && item2.purno.trim() === String(selectedItem)
+              )
+            )
+            .concat(
+              item.fifth.filter(
+                (item2) =>
+                  item2.purno && item2.purno.trim() === String(selectedItem)
+              )
+            )
+            .concat(
+              item.sixth.filter(
+                (item2) =>
+                  item2.purno && item2.purno.trim() === String(selectedItem)
+              )
+            )
+        );
 
-const mergeByKey = 
-    search.map(itm => ({
-        ...test2.find((item) => (item.itemkey2 === itm.itemkey2) && item),
-        ...itm
-    }));
-
-    
-
+  const mergeByKey = search.map((itm) => ({
+    ...test2.find((item) => item.itemkey2 === itm.itemkey2 && item),
+    ...itm,
+  }));
 
   // console.log(test2);
   // console.log(search)
@@ -120,10 +122,8 @@ const mergeByKey =
 
       const startDate = test2.map(
         (item) => new Date(item.recdate).toISOString().split('T')[0]
-      )[0];     
-      
+      )[0];
 
-      
       setLoadingDatapick(true);
       const response = await axios.get(
         `http://localhost:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
@@ -132,10 +132,8 @@ const mergeByKey =
       setLoadingDatapick(false);
     };
 
-    fetchData();     
+    fetchData();
   }, [selectedItem]);
-
- 
 
   //data from dataPick
   //console.log(selectedData);
@@ -277,26 +275,57 @@ const mergeByKey =
     const selectedMonth = e.target.value;
     setValue2(selectedMonth); // update the value of value2
   };
-  const monthLine = graphLineByMonth.filter((item) => item.year === Number(value2));
-  const monthLinePrv = graphLineByMonth.filter(
-    (item) => item.year === Number(value2) -1
+
+  const monthLine = graphLineByMonth.filter(
+    (item) => item.year === Number(value2)
   );
-//여기까지
+  const monthLinePrv = graphLineByMonth.filter(
+    (item) => item.year === Number(value2) - 1
+  );
+
+  //itemkey2
+  const [graphLoading2, setGraphLoading2] = useState(false);
   const [graphByItem, setGraphByItem] = useState([]);
   const graphByItemF = async () => {
     const searchedRecord = record.toLowerCase();
-   
+    setGraphLoading2(true);
+
     await axios
       .get(`http://localhost:8082/graphByItem?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphByItem(response.data);
+        setGraphLoading2(false);
       });
   };
-  console.log(graphByItem);
-  
+  const [graphByItemMonth, setGraphByItemMonth] = useState([]);
+  const graphByItemMonthF = async () => {
+    const searchedRecord = record.toLowerCase();
+    setGraphLoading2(true);
+    await axios
+      .get(`http://localhost:8082/graphByItemMonth?descrip=${searchedRecord}`)
 
- 
+      .then((response) => {
+        setGraphByItemMonth(response.data);
+        setGraphLoading2(false);
+      });
+  };
+
+  const [eachItemGraph, setEachItemGraph] = useState([]);
+  const [eachItemGraphMonth, setEachItemGraphMonth] = useState([]);
+  const eachItemClick = (clickedItem) => {
+    setIsOpen(true);
+
+    const filteredGraph = graphByItem.filter(
+      (item) => item.itemkey2 === clickedItem
+    );
+    setEachItemGraph(filteredGraph);
+
+    const filteredGraphMonth = graphByItemMonth.filter(
+      (item) => item.itemkey2 === clickedItem
+    );
+    setEachItemGraphMonth(filteredGraphMonth);
+  };
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -339,7 +368,7 @@ const mergeByKey =
   const totalItems2 = _.sum(filteredItems2);
 
   //total POS_
-  const filteredItems3 = mergeByKey.map((item)=>item.qtyord);
+  const filteredItems3 = mergeByKey.map((item) => item.qtyord);
   const totalItems3 = _.sum(filteredItems3);
 
   //total Sold30, 90 365
@@ -391,6 +420,8 @@ const mergeByKey =
 
   const graphMonthlyTotal = _.sum(monthLine.map((item) => item.qtyshp));
 
+  
+
   //new or old item
   const newOrOld = () => {
     if (search.length === 0) {
@@ -434,6 +465,7 @@ const mergeByKey =
               <InfoItemOb className="infoCol1" name="ITEM:" />
               <td className="nameSection" colSpan="2">
                 <input
+                  className=" border border-zinc-500 "
                   id="search"
                   placeholder="Search item name here"
                   type="text"
@@ -457,7 +489,8 @@ const mergeByKey =
                     fetchData3();
                     graphLineF();
                     graphLineByMonthF();
-                    graphByItemF()
+                    graphByItemF();
+                    graphByItemMonthF();
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -1574,6 +1607,8 @@ const mergeByKey =
                   >
                     {/*POS initial && Warning error*/}
 
+                    <option>POS_</option>
+
                     <option>
                       {
                         search
@@ -1696,9 +1731,10 @@ const mergeByKey =
                     .filter((item) => item.itemkey2)
                     .map((item, idx) => (
                       <div
+                        className="pointername"
                         key={idx}
                         style={{ textAlign: 'left', color: 'blue' }}
-                        onClick={() => setIsOpen(true)}
+                        onClick={() => eachItemClick(item.itemkey2)}
                       >
                         {item.itemkey2}
                       </div>
@@ -1960,9 +1996,18 @@ const mergeByKey =
         </table>
       </div>
       {isOpen && (
-        <div className="absolute top-0 z-50">
-          <ColorTab graphLine={graphLine}setIsOpen={setIsOpen} isOpen={isOpen} />
-          
+        <div className=" absolute top-0 z-50 ">
+          <ColorTab
+            eachItemGraph={eachItemGraph}
+            setIsOpen={setIsOpen}
+            isOpen={isOpen}
+            graphLine={graphLine}
+            
+            eachItemGraphMonth={eachItemGraphMonth}
+            graphLoading2={graphLoading2}
+            search={search}
+            
+          />
         </div>
       )}
     </div>

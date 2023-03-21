@@ -57,7 +57,7 @@ GROUP BY
 A.descrip,
 YEAR(A.invdte)
 HAVING
-SUM(A.qtyshp) > 0
+SUM(A.qtyshp) > -1
 ORDER BY
 year asc;
 

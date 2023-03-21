@@ -68,7 +68,7 @@ Round(( D.sold30 / ( D.onhand + sold30 ) ) * 100, 2)         AS
 sold30_percentage,
 Round(( D.sold60 / ( D.onhand + sold60 ) ) * 100, 2)         AS
 sold60_percentage,
-Round(( D.sold90 / ( D.onhand + sold60 ) ) * 100, 2)         AS
+Round(( D.sold90 / ( D.onhand + sold90 ) ) * 100, 2)         AS
 sold90_percentage,
 Round(( D.sold120 / ( D.onhand + sold120 ) ) * 100, 2)       AS
 sold6M_percentage,

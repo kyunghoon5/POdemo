@@ -5,6 +5,7 @@
 }
 .search {
   display: flex;
+  
 }
 
 .btn1name {
@@ -22,6 +23,11 @@
   transition: all 0.2s;
 }
 .btn1name:hover {
+  background-color: rgb(120, 168, 46);
+  cursor: pointer;
+}
+
+.pointername:hover {
   background-color: rgb(120, 168, 46);
   cursor: pointer;
 }
