@@ -95,6 +95,9 @@ export const SearchPage = () => {
               )
             )
         );
+       
+      
+
 
   const mergeByKey = search.map((itm) => ({
     ...test2.find((item) => item.itemkey2 === itm.itemkey2 && item),
@@ -126,7 +129,7 @@ export const SearchPage = () => {
 
       setLoadingDatapick(true);
       const response = await axios.get(
-        `http://localhost:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
+        `http://192.168.16.220:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
       );
       setSelectedData(response.data);
       setLoadingDatapick(false);
@@ -146,7 +149,9 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setloadingsoldP(true);
     await axios
-      .get(`http://localhost:8082/soldPercentage?descrip=${searchedRecord}`)
+      .get(
+        `http://192.168.16.220:8082/soldPercentage?descrip=${searchedRecord}`
+      )
 
       .then((response) => {
         setSelectedSoldPercentage(response.data);
@@ -188,7 +193,7 @@ export const SearchPage = () => {
 
       setloadingDatePicker(true);
       const response = await axios.get(
-        `http://localhost:8082/datePicker?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
+        `http://192.168.16.220:8082/datePicker?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
       );
       setSelectedDatePicker(response.data);
       setloadingDatePicker(false);
@@ -214,18 +219,56 @@ export const SearchPage = () => {
   //    }, [productData]);
 
   const [loading, setLoading] = useState(false);
+
   const searchRecords = () => {
     const searchedRecord = record.toLowerCase();
 
     setLoading(true);
     axios
-      .get(`http://localhost:8082/mergeData?descrip=${searchedRecord}`)
+      .get(`http://192.168.16.220:8082/mergeData?descrip=${searchedRecord}`)
 
       .then((response) => {
         setSearch(response.data);
         setLoading(false);
       });
   };
+
+  const [WDloading, WDsetLoading] = useState(false);
+  const [WDsearch, WDsetSearch] = useState([]);
+  const WDsearchRecords = () => {
+    const searchedRecord = record.toLowerCase();
+
+    WDsetLoading(true);
+    axios
+      .get(
+        `http://192.168.16.220:8082/WatchDog/WDInfo?search=${searchedRecord}&user=undefined/`
+      )
+
+      .then((response) => {
+        WDsetSearch(response.data);
+        WDsetLoading(false);
+      });
+  };
+
+   const [WDloading2, WDsetLoading2] = useState(false);
+   const [WDsearch2, WDsetSearch2] = useState([]);
+   const WDsearchRecords2 = () => {
+     const searchedRecord = record.toLowerCase();
+
+     WDsetLoading2(true);
+     axios
+       .get(
+         
+         `http://192.168.16.220:8082/WatchDog/ColorList?search=${searchedRecord}`
+       )
+
+       .then((response) => {
+         WDsetSearch2(response.data);
+         WDsetLoading2(false);
+       });
+   };
+  
+  
 
   //itemrank
   const [itemRank, setitemRank] = useState([]);
@@ -235,7 +278,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setitemLoading(true);
     await axios
-      .get(`http://localhost:8082/itemRank?descrip=${searchedRecord}`)
+      .get(`http://192.168.16.220:8082/itemRank?descrip=${searchedRecord}`)
 
       .then((response) => {
         setitemRank(response.data);
@@ -249,7 +292,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading(true);
     await axios
-      .get(`http://localhost:8082/graph?descrip=${searchedRecord}`)
+      .get(`http://192.168.16.220:8082/graph?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphLine(response.data);
@@ -262,7 +305,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading(true);
     await axios
-      .get(`http://localhost:8082/graphbymonth?descrip=${searchedRecord}`)
+      .get(`http://192.168.16.220:8082/graphbymonth?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphLineByMonth(response.data);
@@ -291,7 +334,7 @@ export const SearchPage = () => {
     setGraphLoading2(true);
 
     await axios
-      .get(`http://localhost:8082/graphByItem?descrip=${searchedRecord}`)
+      .get(`http://192.168.16.220:8082/graphByItem?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphByItem(response.data);
@@ -303,7 +346,9 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading2(true);
     await axios
-      .get(`http://localhost:8082/graphByItemMonth?descrip=${searchedRecord}`)
+      .get(
+        `http://192.168.16.220:8082/graphByItemMonth?descrip=${searchedRecord}`
+      )
 
       .then((response) => {
         setGraphByItemMonth(response.data);
@@ -336,6 +381,12 @@ export const SearchPage = () => {
     );
   };
 
+ 
+//REORDER DATA
+  const result2 = search.map((item)=>WDsearch2.find((item2)=>item2.Color.trim()===item.itemkey2.trim())); 
+
+ 
+
   //Calculating the numbers of days between two dates
   const dateC = test2.map((item) => item.recdate)[0];
   const date1 = new Date(dateC);
@@ -359,9 +410,10 @@ export const SearchPage = () => {
   const totalItems = filteredItems.length;
 
   //total REORDER
-  const totalItems1 = _.sumBy(
-    search.map((item) => _.sumBy(item.poreorder, 'total'))
+  const totalItems1 = _.sum(
+    result2.map((item) => item === undefined? (0):item.WMA)
   );
+  
 
   //total OH
   const filteredItems2 = search.map((item) => item.onhand);
@@ -420,8 +472,6 @@ export const SearchPage = () => {
 
   const graphMonthlyTotal = _.sum(monthLine.map((item) => item.qtyshp));
 
-  
-
   //new or old item
   const newOrOld = () => {
     if (search.length === 0) {
@@ -442,23 +492,8 @@ export const SearchPage = () => {
   };
 
   return (
-    <div
-      className="search"
-      style={{
-        width: '1800px',
-        marginLeft: '-15',
-        marginRight: '15',
-        height: '1651px',
-      }}
-    >
-      <div
-        style={{
-          width: '1400px',
-          paddingLeft: '15px',
-          paddingRight: '15px',
-          height: '1651px',
-        }}
-      >
+    <div className="search">
+      <div>
         <table id="tb1" className="table1">
           <tbody>
             <tr className="row1">
@@ -470,12 +505,6 @@ export const SearchPage = () => {
                   placeholder="Search item name here"
                   type="text"
                   onChange={(e) => setRecord(e.target.value)}
-                  style={{
-                    width: '150px',
-                    marginLeft: '3px',
-                    paddingLeft: '3px',
-                    display: 'block',
-                  }}
                 />
               </td>
 
@@ -491,6 +520,8 @@ export const SearchPage = () => {
                     graphLineByMonthF();
                     graphByItemF();
                     graphByItemMonthF();
+                    WDsearchRecords();
+                    WDsearchRecords2();
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -499,21 +530,12 @@ export const SearchPage = () => {
                   SUBMIT
                 </button>
               </td>
-              <td
+              <td               
                 colSpan="3"
                 rowSpan="10"
                 className="prodImg"
-                style={{ height: '320px', widows: '240px' }}
               >
-                <div>
-                  {
-                    <img
-                      src={imageClicked}
-                      className="mainImage"
-                      style={{ height: '320px', widows: '240px' }}
-                    />
-                  }
-                </div>
+                <div>{<img src={imageClicked} className="mainImage  " />}</div>
               </td>
               <td
                 colSpan="9"
@@ -521,7 +543,7 @@ export const SearchPage = () => {
                 style={{
                   position: 'relative',
                   width: '100%',
-                  paddingBottom: '250px',
+                  paddingBottom: '200px',
                 }}
               >
                 <div
@@ -669,11 +691,7 @@ export const SearchPage = () => {
             <tr className="row2">
               <InfoItemOb className="infoCol1" name="ITEM NO:" />
               <td colSpan="3" className="smpNo">
-                {search.map((item, idx) => (
-                  <div className="test2" key={idx}>
-                    {item.original}
-                  </div>
-                ))}
+                {WDsearch.map((item) => item.Sample)}
               </td>
             </tr>
 
@@ -683,7 +701,9 @@ export const SearchPage = () => {
                 <span
                   className="original"
                   style={{ float: 'left', paddingLeft: '3px' }}
-                ></span>
+                >
+                  {WDsearch.map((item) => item.Original)}
+                </span>
                 <span
                   className="originalPo"
                   style={{ float: 'right', paddingRight: '3px' }}
@@ -691,8 +711,10 @@ export const SearchPage = () => {
               </td>
             </tr>
             <tr className="row4">
-              <InfoItemOb className="infoCol1" name="SMP DTE:" />
-              <td colSpan="3" className="smpDte"></td>
+              <InfoItemOb className="infoCol1" name="SMP TYPE:" />
+              <td colSpan="3" className="smpDte">
+                {WDsearch.map((item) => item.sample_type)}
+              </td>
             </tr>
             <tr className="row5">
               <InfoItemOb className="infoCol1" name="WEIGHT:" />
@@ -704,7 +726,9 @@ export const SearchPage = () => {
                     textAlign: 'center',
                     paddingLeft: '3px',
                   }}
-                ></span>
+                >
+                  {WDsearch.map((item) => item.Weight)}
+                </span>
 
                 <span
                   className="weight_po"
@@ -718,25 +742,31 @@ export const SearchPage = () => {
             </tr>
             <tr className="row6">
               <InfoItemOb className="infoCol1" name="LENGTH:" />
-              <td colSpan="3">
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <span className="length"></span>
-                  <span>
-                    <span style={{ marginBottom: '0px' }}></span>
-                    <span className="fl"> </span>
-                  </span>
-                  <span style={{ paddingRight: '3px' }}>
-                    <span style={{ marginBottom: '0px' }}></span>
-                    <span className="pl"> </span>
-                  </span>
-                </div>
-              </td>
+              {WDsearch.map((item, idx) => (
+                <td key={idx} colSpan="3">
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <span className="length">{item.Length}</span>
+                    <span>
+                      <span style={{ marginBottom: '0px' }}></span>
+                      <span className="fl">
+                        F : {item.Front_lc_leng_w} X {item.Front_lc_leng_l}
+                      </span>
+                    </span>
+                    <span style={{ paddingRight: '3px' }}>
+                      <span style={{ marginBottom: '0px' }}></span>
+                      <span className="pl">
+                        P : {item.Part_lc_leng_w} X {item.Part_lc_leng_l}
+                      </span>
+                    </span>
+                  </div>
+                </td>
+              ))}
             </tr>
             <tr className="row7">
               <InfoItemOb className="infoCol1" name="FIBER:" />
@@ -748,7 +778,9 @@ export const SearchPage = () => {
                     verticalAlign: 'middle',
                     paddingLeft: '3px',
                   }}
-                ></span>
+                >
+                  {WDsearch.map((item) => item.Fiber)}
+                </span>
                 <span
                   className="fiberPo"
                   style={{
@@ -1061,9 +1093,19 @@ export const SearchPage = () => {
 
             <tr className="row9">
               <InfoItemOb className="infoCol1" name="PO's 2" />
+
               <td colSpan="2">
-                <span className="pctn" style={{ float: 'left' }}></span>
-                <span className="dimension" style={{ float: 'right' }}></span>
+                {WDsearch.map((item, idx) => (
+                  <div key={idx}>
+                    <span className="pctn" style={{ float: 'left' }}>
+                      P: {item.Pcs_ctn}
+                    </span>
+                    <span className="pctn" style={{ float: 'right' }}>
+                      (L:{item.Front_lc_leng_l} X W:{item.Front_lc_leng_w} X
+                      H:0)
+                    </span>
+                  </div>
+                ))}
               </td>
               {test2.map((item) => item.reqdate)[0] == null ? (
                 <td></td>
@@ -1077,8 +1119,8 @@ export const SearchPage = () => {
                   }
                 </td>
               )}
-              <td></td>
-              <td></td>
+              <td>SAMPLE:</td>
+              <td>{WDsearch.map((item) => item.SampleShp)}</td>
               <td style={{ background: '#f0e68c' }}>EXP_date</td>
               {/*expected rec date*/}
               <td>
@@ -1180,8 +1222,8 @@ export const SearchPage = () => {
                   }
                 </td>
               )}
-              <td></td>
-              <td></td>
+              <td>REORD:</td>
+              <td>{WDsearch.map((item) => item.ReordShp)}</td>
               <td style={{ background: '#f0e68c' }}>RCV_date</td>
 
               {/*Actual rec date*/}
@@ -1594,7 +1636,7 @@ export const SearchPage = () => {
               <td>CLRS:{totalItems}</td>
               <td>OH</td>
               {/*PO reorder */}
-              <td style={{ background: '#f4a460' }}>REORDER(1yr)</td>
+              <td style={{ background: '#f4a460' }}>REORDER</td>
               <td>
                 <div className="App">
                   <select
@@ -1745,21 +1787,22 @@ export const SearchPage = () => {
 
                 <td style={{ padding: '0' }}>
                   {search
-                    .filter((item) => typeof item.onhand === 'number')
+                    .filter(
+                      (item) =>
+                        typeof item.onhand === 'number' || item.onhand === null
+                    )
                     .map((item, idx) => (
                       <div key={idx}>{item.onhand}</div>
                     ))}
                   <div>{totalItems2}</div>
                 </td>
-
+                {/* needs reorder */}
                 <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.poreorder.length ? (
-                      item.poreorder.map((item2, idx2) => (
-                        <div key={idx2}>{item2.total}</div>
-                      ))
+                  {result2.map((item, idx) =>
+                    item === undefined ? (
+                      <div key={idx}>0</div>
                     ) : (
-                      <div key={idx}></div>
+                      <div key={idx}>{item.WMA}</div>
                     )
                   )}
                   <div>{totalItems1}</div>
@@ -2002,11 +2045,9 @@ export const SearchPage = () => {
             setIsOpen={setIsOpen}
             isOpen={isOpen}
             graphLine={graphLine}
-            
             eachItemGraphMonth={eachItemGraphMonth}
             graphLoading2={graphLoading2}
             search={search}
-            
           />
         </div>
       )}

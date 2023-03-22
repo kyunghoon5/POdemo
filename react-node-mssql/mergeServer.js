@@ -1,4 +1,6 @@
 //express
+
+
 var express = require('express');
 var app = express();
 const sql = require('mssql');
@@ -20,6 +22,14 @@ const graphByMonth = require('./routes/graphByMonth');
 
 const graphbyitem = require('./routes/graphByitem')
 const graphbyitemMonth = require('./routes/graphByitemMonth');
+//for 3rd API
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const proxy = createProxyMiddleware({
+  target: 'http://192.168.16.40:89',
+  changeOrigin: true,
+});
+
+app.use('/WatchDog', proxy);
 app.use('/dataPick', dataPick);
 app.use('/datePicker', datePicker);
 app.use('/itemRank', itemRank);
@@ -587,6 +597,6 @@ from(SELECT  A.purno
 });
 
 // Start the server on port 3000
-app.listen(8082, () => {
+app.listen(8082, '192.168.16.220', () => {
   console.log('Server listening on port 8082');
 });
