@@ -22,6 +22,9 @@ const graphByMonth = require('./routes/graphByMonth');
 
 const graphbyitem = require('./routes/graphByitem')
 const graphbyitemMonth = require('./routes/graphByitemMonth');
+const poForecast = require('./routes/poForecast');
+
+
 //for 3rd API
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const proxy = createProxyMiddleware({
@@ -39,6 +42,7 @@ app.use('/graphbymonth', graphByMonth);
 
 app.use('/graphByItem', graphbyitem);
 app.use('/graphByItemMonth', graphbyitemMonth);
+app.use('/poForecast', poForecast);
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
@@ -153,7 +157,49 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE convert(date,a.invdte) >= Dateadd(day, -30, Getdate())
+    WHERE convert(date,a.invdte) >= Dateadd(day, -31, Getdate())
+      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
+      and A.itemkey2 not in ('_MANUAL_INVOICE') 
+      and A.descrip='${req.query.descrip}'
+      --and A.class in ('RB')
+      --Exclude RB
+      --and A.class not in ('RB', 'AA', 'Z')
+    group by 
+     
+      A.itemkey2, 
+      A.descrip
+	  
+  ) A 
+  
+ORDER BY 
+  itemkey2 asc
+
+`);
+
+const result2Sold60 = await request2.query(`
+SELECT
+	 
+  A.itemkey2, 
+  A.descrip,
+  
+  A.qtyshp 
+  
+  
+FROM 
+  (
+    SELECT		
+      
+      A.itemkey2, 
+      A.descrip,
+	  
+      sum(A.qtyshp) as qtyshp 
+	 
+			   
+
+
+    FROM 
+      artran10c A 
+    WHERE convert(date,a.invdte) >= Dateadd(month, -2, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -194,7 +240,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE convert(date,a.invdte) >= Dateadd(day, -90, Getdate())
+    WHERE convert(date,a.invdte) >= Dateadd(month, -3, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -233,7 +279,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE convert(date,a.invdte) >= Dateadd(day, -365, Getdate())
+    WHERE convert(date,a.invdte) >= Dateadd(year, -1, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'
@@ -398,7 +444,7 @@ from(SELECT  A.purno
     
   FROM [BYT_LEG].[dbo].[potran10c]
 
-  where descrip='${req.query.descrip}'  and convert(date,purdate) >= Dateadd(day, -365, Getdate())
+  where descrip='${req.query.descrip}'  and convert(date,purdate) >= Dateadd(year, -1, Getdate())
   group by descrip,itemkey2`);
 
     //item start_dte
@@ -426,6 +472,7 @@ from(SELECT  A.purno
       arr6,
       arr7,
       sold30,
+      sold60,
       sold90,
       sold365,
       poreorder,
@@ -454,6 +501,9 @@ from(SELECT  A.purno
         const numbers13 = sold365.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
+        const numbers14 = sold60.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
 
         if (!numbers.length) {
           obj.first = numbers;
@@ -465,7 +515,7 @@ from(SELECT  A.purno
           obj.sold30 = numbers7;
           obj.poreorder = numbers8;
           obj.stdDate = numbers9;
-
+obj.sold60 = numbers14
           obj.sold90 = numbers12;
           obj.sold365 = numbers13;
 
@@ -544,6 +594,7 @@ from(SELECT  A.purno
         obj.sold90 = numbers12.map((num) => ({
           qtyshp: num.qtyshp,
         }));
+        obj.sold60 = numbers14.map((num)=>({qtyshp: num.qtyshp,}))
         obj.sold365 = numbers13.map((num) => ({
           qtyshp: num.qtyshp,
         }));
@@ -565,6 +616,7 @@ from(SELECT  A.purno
       result25.recordset,
       result26.recordset,
       result2Sold30.recordset,
+      result2Sold60.recordset,
       result2Sold90.recordset,
       result2Sold365.recordset,
       result27.recordset,

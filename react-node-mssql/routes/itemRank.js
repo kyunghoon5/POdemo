@@ -76,7 +76,7 @@ FROM
       sum(A.qtyshp) as qtyshp					  
     FROM 
       artran10c A 
-    WHERE convert(date,invdte) >= Dateadd(day, -365, Getdate())
+    WHERE convert(date,invdte) >= Dateadd(year, -1, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
       --and A.class in ('RB')
@@ -110,7 +110,7 @@ FROM
       sum(A.qtyshp) as qtyshp					  
     FROM 
       artran10c A 
-    WHERE convert(date,invdte) >= Dateadd(day, -365, Getdate())
+    WHERE convert(date,invdte) >= Dateadd(year, -1, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
       and A.class in ('RB')

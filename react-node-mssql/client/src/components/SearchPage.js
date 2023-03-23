@@ -18,6 +18,7 @@ import {
   ComposedChart,
 } from 'recharts';
 import ColorTab from './ColorTab';
+import { round } from 'lodash';
 
 var _ = require('lodash');
 // or less ideally
@@ -28,6 +29,7 @@ export const SearchPage = () => {
   const [imageClicked, setImageClicked] = useState();
   const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
+  const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
@@ -95,9 +97,6 @@ export const SearchPage = () => {
               )
             )
         );
-       
-      
-
 
   const mergeByKey = search.map((itm) => ({
     ...test2.find((item) => item.itemkey2 === itm.itemkey2 && item),
@@ -250,25 +249,22 @@ export const SearchPage = () => {
       });
   };
 
-   const [WDloading2, WDsetLoading2] = useState(false);
-   const [WDsearch2, WDsetSearch2] = useState([]);
-   const WDsearchRecords2 = () => {
-     const searchedRecord = record.toLowerCase();
+  const [WDloading2, WDsetLoading2] = useState(false);
+  const [WDsearch2, WDsetSearch2] = useState([]);
+  const WDsearchRecords2 = () => {
+    const searchedRecord = record.toLowerCase();
 
-     WDsetLoading2(true);
-     axios
-       .get(
-         
-         `http://192.168.16.220:8082/WatchDog/ColorList?search=${searchedRecord}`
-       )
+    WDsetLoading2(true);
+    axios
+      .get(
+        `http://192.168.16.220:8082/WatchDog/ColorList?search=${searchedRecord}`
+      )
 
-       .then((response) => {
-         WDsetSearch2(response.data);
-         WDsetLoading2(false);
-       });
-   };
-  
-  
+      .then((response) => {
+        WDsetSearch2(response.data);
+        WDsetLoading2(false);
+      });
+  };
 
   //itemrank
   const [itemRank, setitemRank] = useState([]);
@@ -381,11 +377,10 @@ export const SearchPage = () => {
     );
   };
 
- 
-//REORDER DATA
-  const result2 = search.map((item)=>WDsearch2.find((item2)=>item2.Color.trim()===item.itemkey2.trim())); 
-
- 
+  //REORDER DATA
+  const result2 = search.map((item) =>
+    WDsearch2.find((item2) => item2.Color.trim() === item.itemkey2.trim())
+  );
 
   //Calculating the numbers of days between two dates
   const dateC = test2.map((item) => item.recdate)[0];
@@ -411,9 +406,8 @@ export const SearchPage = () => {
 
   //total REORDER
   const totalItems1 = _.sum(
-    result2.map((item) => item === undefined? (0):item.WMA)
+    result2.map((item) => (item === undefined ? 0 : item.WMA))
   );
-  
 
   //total OH
   const filteredItems2 = search.map((item) => item.onhand);
@@ -472,6 +466,102 @@ export const SearchPage = () => {
 
   const graphMonthlyTotal = _.sum(monthLine.map((item) => item.qtyshp));
 
+  //forecast
+   const [selforecastDatePicker, setselforecastDatePicker] = useState([]);
+   const [forecastLodingDatePicker, setforecastLodingDatePicker] =
+     useState(false);
+   useEffect(() => {
+     const fetchData4 = async () => {
+       if (search.length === 0) {
+         return;
+       }
+
+       const searchedRecord = record.toLowerCase();
+       const endDate = forecastDatePicker.toISOString().split('T')[0];
+
+       setforecastLodingDatePicker(true);
+       const response = await axios.get(
+         `http://192.168.16.220:8082/poForecast?descrip=${searchedRecord}&endDate=${endDate}`
+       );
+       setselforecastDatePicker(response.data);
+       setforecastLodingDatePicker(false);
+     };
+     fetchData4();
+   }, [forecastDatePicker, search]);
+
+   const sumReqForcast = 
+     selforecastDatePicker.map((item)=>_.sumBy(item.poForecast,'ORDEREDa'))
+   
+
+
+  const postDay = forecastDatePicker;
+  const Difference_In_PostDay = postDay.getTime() - date.getTime();
+
+  const Difference_In_PostDayresult = round(
+    Difference_In_PostDay / (1000 * 3600 * 24)
+  );
+
+
+  const Difference_In_PostDecimalDayresult =
+    Math.round((Difference_In_PostDayresult / 30) * 100) / 100;
+
+  const onhandCal = search.map((item) => Number(item.onhand));
+
+  const dayCal = search.map((item) =>
+    item.sold30.map(
+      (item) => Number(item.qtyshp / 30) * Difference_In_PostDayresult
+    )
+  );
+  const onhnadWithRVG = _.zipWith(onhandCal, sumReqForcast, (x, y) => x + y).map((num) =>
+    round(num)
+  );
+  
+  
+
+  const Cal30 = search.map((item) =>
+    item.sold30.map(
+      (item) => Number(item.qtyshp ) * Difference_In_PostDecimalDayresult
+    )
+  );
+
+   const Cal60 = search.map((item) =>
+     item.sold60.map(
+       (item) => Number(item.qtyshp / 2) * Difference_In_PostDecimalDayresult
+     )
+   );
+    const Cal90 = search.map((item) =>
+      item.sold90.map(
+        (item) => Number(item.qtyshp / 3) * Difference_In_PostDecimalDayresult
+      )
+    );
+
+    const Cal365 = search.map((item) =>
+      item.sold365.map(
+        (item) => Number(item.qtyshp / 12) * Difference_In_PostDecimalDayresult
+      )
+    );
+
+    const amounts =
+      Difference_In_PostDecimalDayresult <= 1
+        ? _.zipWith(onhnadWithRVG, dayCal, (x, y) => round(x - y))
+        : Difference_In_PostDecimalDayresult <= 1
+        ? _.zipWith(onhnadWithRVG, Cal30, (x, y) => round(x - y))
+        : Difference_In_PostDecimalDayresult > 1 &&
+          Difference_In_PostDecimalDayresult <= 2
+        ? _.zipWith(onhnadWithRVG, Cal60, (x, y) => round(x - y))
+        : Difference_In_PostDecimalDayresult > 2 &&
+          Difference_In_PostDecimalDayresult < 3
+        ? _.zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
+        : _.zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
+
+    const totalAmount = amounts.reduce((sum, num) => sum + num, 0);
+
+ 
+
+
+ 
+
+
   //new or old item
   const newOrOld = () => {
     if (search.length === 0) {
@@ -492,7 +582,7 @@ export const SearchPage = () => {
   };
 
   return (
-    <div className="search">
+    <div className="search flex w-full p-4">
       <div>
         <table id="tb1" className="table1">
           <tbody>
@@ -530,11 +620,7 @@ export const SearchPage = () => {
                   SUBMIT
                 </button>
               </td>
-              <td               
-                colSpan="3"
-                rowSpan="10"
-                className="prodImg"
-              >
+              <td colSpan="3" rowSpan="10" className="prodImg " style={{width:'250px'}}>
                 <div>{<img src={imageClicked} className="mainImage  " />}</div>
               </td>
               <td
@@ -906,7 +992,7 @@ export const SearchPage = () => {
               <InfoItemOb className="infoCol1" name="DGN DTE:" />
               <td colSpan="3" className="dgnDte"></td>
               {/*Sold percentage */}
-              <td style={{ textAlign: 'left' }}>
+              <td style={{ textAlign: 'center' }}>
                 SOLD
                 <select
                   className="border border-zinc-500"
@@ -1344,7 +1430,9 @@ export const SearchPage = () => {
 
               <td className="prv30">{past30c}</td>
               <td className="prv30">{past90c}</td>
-              <td className="prv30">{past365c}</td>
+              <td className="prv30" style={{ background: '#f4a460' }}>
+                FORECAST
+              </td>
               {/*purno No*/}
               <td>
                 {
@@ -1577,7 +1665,15 @@ export const SearchPage = () => {
                 {new Date().toISOString().split('T')[0]}
               </td>
               <td className="prv365">
-                {new Date().toISOString().split('T')[0]}
+                {/* {new Date().toISOString().split('T')[0]} */}
+                {/* forecast datepicker */}
+                <DatePicker
+                  className="w-20 border-2 border-zinc-500 text-center"
+                  minDate={new Date()}
+                  maxDate={new Date().setDate(new Date().getDate() + 365)}
+                  selected={forecastDatePicker}
+                  onChange={(date) => setForecasteDatePicker(date)}
+                />
               </td>
               {/*invoice No */}
               <td>
@@ -1712,7 +1808,7 @@ export const SearchPage = () => {
               <td colSpan={2}>{Math.floor(Difference_In_Days2)} days</td>
               <td>SOLD30</td>
               <td>SOLD90</td>
-              <td>SOLD365</td>
+              <td>+{Difference_In_PostDayresult} days</td>
               <td>
                 {
                   search
@@ -1934,16 +2030,13 @@ export const SearchPage = () => {
                 </td>
 
                 <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.sold365.length ? (
-                      item.sold365.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyshp}</div>
-                      ))
-                    ) : (
-                      <div key={idx}>0</div>
-                    )
-                  )}
-                  <div>{totalItems6}</div>
+                  {/* forecast render */}
+                  {amounts.map((num) => (
+                    <div className={num < 0 ? 'negative-amount' : ''}>
+                      {round(num)}
+                    </div>
+                  ))}
+                  <div>{totalAmount}</div>
                 </td>
                 {/*column table with nested array */}
                 <td style={{ padding: '0' }}>

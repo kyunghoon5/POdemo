@@ -96,7 +96,7 @@ FROM   (SELECT --A.ranknum
          FROM   potran10c
          WHERE  descrip = A.descrip
                 AND qtyrec NOT IN ( '0' )
-                AND convert(date,recdate) >= Dateadd(day, -365, Cast(Getdate() AS DATE
+                AND convert(date,recdate) >= Dateadd(year, -1, Cast(Getdate() AS DATE
                                                    ))) AS
        total_rec,*/
        (SELECT Isnull(Sum(qtyshp), 0)
@@ -113,22 +113,22 @@ FROM   (SELECT --A.ranknum
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND convert(date,invdte) >= Dateadd(day, -90, Cast(Getdate() AS DATE)))  AS
+               AND convert(date,invdte) >= Dateadd(month, -3, Cast(Getdate() AS DATE)))  AS
        sold90,
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND convert(date,invdte) >= Dateadd(day, -60, Cast(Getdate() AS DATE)))  AS
+               AND convert(date,invdte) >= Dateadd(month, -2, Cast(Getdate() AS DATE)))  AS
        sold60,
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND convert(date,invdte) >= Dateadd(day, -30, Cast(Getdate() AS DATE)))  AS
+               AND convert(date,invdte) >= Dateadd(day, -31, Cast(Getdate() AS DATE)))  AS
        sold30,
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
-               AND convert(date,invdte) >= Dateadd(day, -7, Cast(Getdate() AS DATE)))   AS
+               AND convert(date,invdte) >= Dateadd(day, -8, Cast(Getdate() AS DATE)))   AS
        sold7
         FROM   (SELECT --Rank()
                --OVER (
@@ -137,7 +137,7 @@ FROM   (SELECT --A.ranknum
                A.descrip,
                Sum(A.qtyshp) AS sold365
                 FROM   artran10c A
-                WHERE  convert(date,invdte) >= Dateadd(day, -365, Cast(Getdate() AS DATE))
+                WHERE  convert(date,invdte) >= Dateadd(year, -1, Cast(Getdate() AS DATE))
                        AND A.descrip NOT IN ( 'SHIP', 'CALENDAR', 'BROCHURE' )
                        AND A.itemkey2 NOT IN ( '_MANUAL_INVOICE' )
 					   and descrip='${req.query.descrip}'
