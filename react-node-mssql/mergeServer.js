@@ -23,6 +23,7 @@ const graphByMonth = require('./routes/graphByMonth');
 const graphbyitem = require('./routes/graphByitem')
 const graphbyitemMonth = require('./routes/graphByitemMonth');
 const poForecast = require('./routes/poForecast');
+const searchSuggest = require('./routes/searchSuggest')
 
 
 //for 3rd API
@@ -43,6 +44,7 @@ app.use('/graphbymonth', graphByMonth);
 app.use('/graphByItem', graphbyitem);
 app.use('/graphByItemMonth', graphbyitemMonth);
 app.use('/poForecast', poForecast);
+app.use('/searchAuto', searchSuggest)
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {

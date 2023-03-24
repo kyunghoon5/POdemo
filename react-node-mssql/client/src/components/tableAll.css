@@ -94,7 +94,43 @@ zoom: 45%;}
   background-color: rgb(242, 135, 135);
 }
 
+.dataResult {
+  
+  margin-top: 5px;
+  width: 300px;
+  height: 200px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  overflow: hidden;
+  overflow-y: auto;
+}
 
+
+
+.dataResult  {
+  width: 170px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  border:1px solid gray;
+  overflow: hidden;
+  overflow-y:auto;
+}
+
+.dataResult::-webkit-scrollbar{
+  display: flex;
+}
+
+.dataResult:empty {
+  border:none;
+}
+
+
+.dropdown-row{
+  cursor:pointer;
+  text-align: start;
+  margin: 2px 0;
+}
 
 
 

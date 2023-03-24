@@ -18,7 +18,6 @@ import {
   ComposedChart,
 } from 'recharts';
 import ColorTab from './ColorTab';
-import { round } from 'lodash';
 
 var _ = require('lodash');
 // or less ideally
@@ -30,9 +29,53 @@ export const SearchPage = () => {
   const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
   const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
+  const round = (num) => (isNaN(num) ? 0 : Math.round(num));
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
+
+  //searchSuggest
+
+  const [suggest, setSuggest] = useState([]);
+  const itemData = async () => {
+    return await axios
+      .get('http://192.168.16.220:8082/searchAuto')
+      .then((response) => setSuggest(response.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    itemData();
+  }, []);
+
+  const [filteredData, setfilteredDate] = useState([]);
+  const handleFilter = (e) => {
+    const searchWord = e.target.value;
+    setRecord(searchWord);
+    const newFilter = suggest.filter((value) => {
+      return value.descrip.toLowerCase().includes(searchWord.toLowerCase());
+    });
+
+    if (searchWord === '') {
+      setfilteredDate([]);
+    } else {
+      setfilteredDate(newFilter);      
+    }
+  };
+
+  const onSearch =  (record1) => {
+    setRecord(record1); // set the input value to the clicked suggestion
+    setfilteredDate([]);   
+
+  onClickImageHandler(record1);
+  };
+
+  
+
+  
+
+  
+
+
 
   //DATE buttonSearch console
   const date = new Date();
@@ -119,6 +162,7 @@ export const SearchPage = () => {
     }
 
     const fetchData = async () => {
+      const searchedRecord = record.toLowerCase();
       const curDate = new Date().toISOString().split('T')[0];
       const endDate = curDate;
 
@@ -128,7 +172,7 @@ export const SearchPage = () => {
 
       setLoadingDatapick(true);
       const response = await axios.get(
-        `http://192.168.16.220:8082/dataPick?descrip=${record}&startDate=${startDate}&endDate=${endDate}`
+        `http://192.168.16.220:8082/dataPick?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
       );
       setSelectedData(response.data);
       setLoadingDatapick(false);
@@ -171,6 +215,7 @@ export const SearchPage = () => {
     setSelectedData([]);
     setSelectedSold([]);
     setValue2([]);
+    WDsetSearch([]);
   };
 
   //all data
@@ -201,8 +246,8 @@ export const SearchPage = () => {
   }, [startDatePicker, endDatePicker, search]);
 
   //image handler
-  const onClickImageHandler = () => {
-    setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`);
+  const onClickImageHandler = (record1) => {
+    setImageClicked(`http://img.vanessahair.com/sales/${record1}.jpg`);
   };
 
   // const [productData, setProductData] = useState([]);
@@ -216,6 +261,27 @@ export const SearchPage = () => {
   //    useEffect(() => {
   //      itemData();
   //    }, [productData]);
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      const record1 = onSearch(record1);
+      
+
+      searchRecords();
+      onClickImageHandler(record1);
+      reset();
+      itemRecords();
+      fetchData3();
+      graphLineF();
+      graphLineByMonthF();
+      graphByItemF();
+      graphByItemMonthF();
+      WDsearchRecords();
+      WDsearchRecords2();
+      setfilteredDate([]);
+      
+    }
+  };
 
   const [loading, setLoading] = useState(false);
 
@@ -467,32 +533,31 @@ export const SearchPage = () => {
   const graphMonthlyTotal = _.sum(monthLine.map((item) => item.qtyshp));
 
   //forecast
-   const [selforecastDatePicker, setselforecastDatePicker] = useState([]);
-   const [forecastLodingDatePicker, setforecastLodingDatePicker] =
-     useState(false);
-   useEffect(() => {
-     const fetchData4 = async () => {
-       if (search.length === 0) {
-         return;
-       }
+  const [selforecastDatePicker, setselforecastDatePicker] = useState([]);
+  const [forecastLodingDatePicker, setforecastLodingDatePicker] =
+    useState(false);
+  useEffect(() => {
+    const fetchData4 = async () => {
+      if (search.length === 0) {
+        return;
+      }
 
-       const searchedRecord = record.toLowerCase();
-       const endDate = forecastDatePicker.toISOString().split('T')[0];
+      const searchedRecord = record.toLowerCase();
+      const endDate = forecastDatePicker.toISOString().split('T')[0];
 
-       setforecastLodingDatePicker(true);
-       const response = await axios.get(
-         `http://192.168.16.220:8082/poForecast?descrip=${searchedRecord}&endDate=${endDate}`
-       );
-       setselforecastDatePicker(response.data);
-       setforecastLodingDatePicker(false);
-     };
-     fetchData4();
-   }, [forecastDatePicker, search]);
+      setforecastLodingDatePicker(true);
+      const response = await axios.get(
+        `http://192.168.16.220:8082/poForecast?descrip=${searchedRecord}&endDate=${endDate}`
+      );
+      setselforecastDatePicker(response.data);
+      setforecastLodingDatePicker(false);
+    };
+    fetchData4();
+  }, [forecastDatePicker, search]);
 
-   const sumReqForcast = 
-     selforecastDatePicker.map((item)=>_.sumBy(item.poForecast,'ORDEREDa'))
-   
-
+  const sumReqForcast = selforecastDatePicker.map((item) =>
+    _.sumBy(item.poForecast, 'ORDEREDa')
+  );
 
   const postDay = forecastDatePicker;
   const Difference_In_PostDay = postDay.getTime() - date.getTime();
@@ -500,7 +565,6 @@ export const SearchPage = () => {
   const Difference_In_PostDayresult = round(
     Difference_In_PostDay / (1000 * 3600 * 24)
   );
-
 
   const Difference_In_PostDecimalDayresult =
     Math.round((Difference_In_PostDayresult / 30) * 100) / 100;
@@ -512,55 +576,49 @@ export const SearchPage = () => {
       (item) => Number(item.qtyshp / 30) * Difference_In_PostDayresult
     )
   );
-  const onhnadWithRVG = _.zipWith(onhandCal, sumReqForcast, (x, y) => x + y).map((num) =>
-    round(num)
-  );
-  
-  
+  const onhnadWithRVG = _.zipWith(
+    onhandCal,
+    sumReqForcast,
+    (x, y) => x + y
+  ).map((num) => round(num));
 
   const Cal30 = search.map((item) =>
     item.sold30.map(
-      (item) => Number(item.qtyshp ) * Difference_In_PostDecimalDayresult
+      (item) => Number(item.qtyshp) * Difference_In_PostDecimalDayresult
     )
   );
 
-   const Cal60 = search.map((item) =>
-     item.sold60.map(
-       (item) => Number(item.qtyshp / 2) * Difference_In_PostDecimalDayresult
-     )
-   );
-    const Cal90 = search.map((item) =>
-      item.sold90.map(
-        (item) => Number(item.qtyshp / 3) * Difference_In_PostDecimalDayresult
-      )
-    );
+  const Cal60 = search.map((item) =>
+    item.sold60.map(
+      (item) => Number(item.qtyshp / 2) * Difference_In_PostDecimalDayresult
+    )
+  );
+  const Cal90 = search.map((item) =>
+    item.sold90.map(
+      (item) => Number(item.qtyshp / 3) * Difference_In_PostDecimalDayresult
+    )
+  );
 
-    const Cal365 = search.map((item) =>
-      item.sold365.map(
-        (item) => Number(item.qtyshp / 12) * Difference_In_PostDecimalDayresult
-      )
-    );
+  const Cal365 = search.map((item) =>
+    item.sold365.map(
+      (item) => Number(item.qtyshp / 12) * Difference_In_PostDecimalDayresult
+    )
+  );
 
-    const amounts =
-      Difference_In_PostDecimalDayresult <= 1
-        ? _.zipWith(onhnadWithRVG, dayCal, (x, y) => round(x - y))
-        : Difference_In_PostDecimalDayresult <= 1
-        ? _.zipWith(onhnadWithRVG, Cal30, (x, y) => round(x - y))
-        : Difference_In_PostDecimalDayresult > 1 &&
-          Difference_In_PostDecimalDayresult <= 2
-        ? _.zipWith(onhnadWithRVG, Cal60, (x, y) => round(x - y))
-        : Difference_In_PostDecimalDayresult > 2 &&
-          Difference_In_PostDecimalDayresult < 3
-        ? _.zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
-        : _.zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
+  const amounts =
+    Difference_In_PostDecimalDayresult <= 1
+      ? _.zipWith(onhnadWithRVG, dayCal, (x, y) => round(x - y))
+      : Difference_In_PostDecimalDayresult <= 1
+      ? _.zipWith(onhnadWithRVG, Cal30, (x, y) => round(x - y))
+      : Difference_In_PostDecimalDayresult > 1 &&
+        Difference_In_PostDecimalDayresult <= 2
+      ? _.zipWith(onhnadWithRVG, Cal60, (x, y) => round(x - y))
+      : Difference_In_PostDecimalDayresult > 2 &&
+        Difference_In_PostDecimalDayresult < 3
+      ? _.zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
+      : _.zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
 
-    const totalAmount = amounts.reduce((sum, num) => sum + num, 0);
-
- 
-
-
- 
-
+  const totalAmount = amounts.reduce((sum, num) => sum + num, 0);
 
   //new or old item
   const newOrOld = () => {
@@ -594,12 +652,34 @@ export const SearchPage = () => {
                   id="search"
                   placeholder="Search item name here"
                   type="text"
-                  onChange={(e) => setRecord(e.target.value)}
+                  value={record}
+                  onChange={handleFilter}
+                  autoComplete="off"
+                  onKeyPress={handleKeyPress}
                 />
+                {filteredData.length != 0 && (
+                  <div className="dataResult absolute">
+                    {filteredData.slice(0, 15).map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="dropdown-row"
+                        onClick={() => {onSearch(item.descrip);
+                          
+                          
+                          
+                        }}
+                      >
+                        {item.descrip}
+                        
+                      </div>
+                    ))}
+                  </div>
+                )}
               </td>
 
               <td className="btn1">
                 <button
+                
                   onClick={() => {
                     searchRecords();
                     onClickImageHandler();
@@ -612,6 +692,7 @@ export const SearchPage = () => {
                     graphByItemMonthF();
                     WDsearchRecords();
                     WDsearchRecords2();
+                    setfilteredDate([]);
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -620,7 +701,12 @@ export const SearchPage = () => {
                   SUBMIT
                 </button>
               </td>
-              <td colSpan="3" rowSpan="10" className="prodImg " style={{width:'250px'}}>
+              <td
+                colSpan="3"
+                rowSpan="10"
+                className="prodImg "
+                style={{ width: '250px' }}
+              >
                 <div>{<img src={imageClicked} className="mainImage  " />}</div>
               </td>
               <td
@@ -2031,8 +2117,8 @@ export const SearchPage = () => {
 
                 <td style={{ padding: '0' }}>
                   {/* forecast render */}
-                  {amounts.map((num) => (
-                    <div className={num < 0 ? 'negative-amount' : ''}>
+                  {amounts.map((num, idx) => (
+                    <div key={idx} className={num < 0 ? 'negative-amount' : ''}>
                       {round(num)}
                     </div>
                   ))}
