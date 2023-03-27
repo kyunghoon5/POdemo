@@ -62,26 +62,25 @@ ORDER BY
 
 D.descrip,
 
-Round(( D.sold7 / ( D.onhand + sold7 ) ) * 100, 2)           AS 
-sold7_percentage,
-Round(( D.sold30 / ( D.onhand + sold30 ) ) * 100, 2)         AS
+Round(( D.sold7 / NULLIF(D.onhand + D.sold7, 0) ) * 100, 2) AS sold7_percentage,
+Round(( D.sold30 / NULLIF(D.onhand + D.sold30, 0) ) * 100, 2) AS
 sold30_percentage,
-Round(( D.sold60 / ( D.onhand + sold60 ) ) * 100, 2)         AS
+Round(( D.sold60 / NULLIF(D.onhand + D.sold60, 0) ) * 100, 2) AS
 sold60_percentage,
-Round(( D.sold90 / ( D.onhand + sold90 ) ) * 100, 2)         AS
+Round(( D.sold90 / NULLIF(D.onhand + D.sold90, 0) ) * 100, 2) AS
 sold90_percentage,
-Round(( D.sold120 / ( D.onhand + sold120 ) ) * 100, 2)       AS
+Round(( D.sold120 / NULLIF(D.onhand + D.sold120, 0) ) * 100, 2) AS
 sold6M_percentage,
-Round(( D.sold365 / ( D.onhand + sold365 ) ) * 100, 2)       AS
+Round(( D.sold365 / NULLIF(D.onhand + D.sold365, 0) ) * 100, 2) AS
 sold365_percentage,
-Round(( D.sold_total / ( D.onhand + sold_total ) ) * 100, 2) AS 
+Round(( D.sold_total / NULLIF( D.onhand + sold_total,0 ) ) * 100, 2) AS 
 total_percentage
 FROM   (SELECT --A.ranknum
        --AS
        --rank,
       
        A.descrip,
-       A.sold365,
+       
        (SELECT Sum(onhand)
         FROM   arinvt10
         WHERE  descrip = A.descrip)                                       AS
@@ -105,6 +104,11 @@ FROM   (SELECT --A.ranknum
                AND convert(date,invdte) >= Dateadd(year, -50, Cast(Getdate() AS DATE))) AS
        sold_total
        ,
+	   (SELECT Isnull(Sum(qtyshp), 0)
+        FROM   artran10c
+        WHERE  descrip = a.descrip
+               AND convert(date,invdte) >= Dateadd(year, -1, Cast(Getdate() AS DATE))) AS
+       sold365,
        (SELECT Isnull(Sum(qtyshp), 0)
         FROM   artran10c
         WHERE  descrip = a.descrip
@@ -134,11 +138,10 @@ FROM   (SELECT --A.ranknum
                --OVER (
                --ORDER BY Sum(A.qtyshp) DESC ) AS rankNum,
                
-               A.descrip,
-               Sum(A.qtyshp) AS sold365
-                FROM   artran10c A
-                WHERE  convert(date,invdte) >= Dateadd(year, -1, Cast(Getdate() AS DATE))
-                       AND A.descrip NOT IN ( 'SHIP', 'CALENDAR', 'BROCHURE' )
+               A.descrip
+               
+                FROM   artran10c a
+                WHERE  A.descrip NOT IN ( 'SHIP', 'CALENDAR', 'BROCHURE' )
                        AND A.itemkey2 NOT IN ( '_MANUAL_INVOICE' )
 					   and descrip='${req.query.descrip}'
                 --RB only
@@ -147,15 +150,10 @@ FROM   (SELECT --A.ranknum
                 --AND A.class NOT IN ('RB', 'AA', 'Z')
                 GROUP  BY 
                           A.descrip)A
-        WHERE  A.sold365 > 0)D 
-WHERE  D.sold7 > 0
-       AND D.sold30 > 0
-       AND D.sold60 > 0
-       AND D.sold120 > 0
-       AND D.sold365 > 0
-       AND D.sold_total > 0
+     )D 
+
 	   
-ORDER  BY sold365 DESC 
+
 
 `);
   const mergedResults = [...result2.recordset];

@@ -58,24 +58,14 @@ export const SearchPage = () => {
     if (searchWord === '') {
       setfilteredDate([]);
     } else {
-      setfilteredDate(newFilter);      
+      setfilteredDate(newFilter);
     }
   };
-
-  const onSearch =  (record1) => {
+  const onSearch = (record1) => {
     setRecord(record1); // set the input value to the clicked suggestion
-    setfilteredDate([]);   
 
-  onClickImageHandler(record1);
+    setfilteredDate([]);
   };
-
-  
-
-  
-
-  
-
-
 
   //DATE buttonSearch console
   const date = new Date();
@@ -188,10 +178,10 @@ export const SearchPage = () => {
   const [selectedSoldPercentage, setSelectedSoldPercentage] = useState([]);
   const [loadingsoldP, setloadingsoldP] = useState(false);
 
-  const fetchData3 = async () => {
+  const fetchData3 = () => {
     const searchedRecord = record.toLowerCase();
     setloadingsoldP(true);
-    await axios
+    axios
       .get(
         `http://192.168.16.220:8082/soldPercentage?descrip=${searchedRecord}`
       )
@@ -246,8 +236,8 @@ export const SearchPage = () => {
   }, [startDatePicker, endDatePicker, search]);
 
   //image handler
-  const onClickImageHandler = (record1) => {
-    setImageClicked(`http://img.vanessahair.com/sales/${record1}.jpg`);
+  const onClickImageHandler = () => {
+    setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`);
   };
 
   // const [productData, setProductData] = useState([]);
@@ -264,11 +254,8 @@ export const SearchPage = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      const record1 = onSearch(record1);
-      
-
       searchRecords();
-      onClickImageHandler(record1);
+      onClickImageHandler();
       reset();
       itemRecords();
       fetchData3();
@@ -279,7 +266,6 @@ export const SearchPage = () => {
       WDsearchRecords();
       WDsearchRecords2();
       setfilteredDate([]);
-      
     }
   };
 
@@ -663,14 +649,11 @@ export const SearchPage = () => {
                       <div
                         key={idx}
                         className="dropdown-row"
-                        onClick={() => {onSearch(item.descrip);
-                          
-                          
-                          
+                        onClick={() => {
+                          onSearch(item.descrip);
                         }}
                       >
                         {item.descrip}
-                        
                       </div>
                     ))}
                   </div>
@@ -679,7 +662,6 @@ export const SearchPage = () => {
 
               <td className="btn1">
                 <button
-                
                   onClick={() => {
                     searchRecords();
                     onClickImageHandler();
@@ -883,9 +865,9 @@ export const SearchPage = () => {
               </td>
             </tr>
             <tr className="row4">
-              <InfoItemOb className="infoCol1" name="SMP TYPE:" />
+              <InfoItemOb className="infoCol1" name="TYPE:" />
               <td colSpan="3" className="smpDte">
-                {WDsearch.map((item) => item.sample_type)}
+                {search.map((item) => item.length_cat)[0]}
               </td>
             </tr>
             <tr className="row5">
@@ -1073,6 +1055,7 @@ export const SearchPage = () => {
                 }
               </td>
             </tr>
+           
 
             <tr className="row8">
               <InfoItemOb className="infoCol1" name="DGN DTE:" />
@@ -1090,8 +1073,10 @@ export const SearchPage = () => {
                   <option
                     value={
                       selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map(
-                          (item) => item.soldtotal_percentage
+                        item.soldPercentage.map((item) =>
+                          item.soldtotal_percentage
+                            ? item.soldtotal_percentagee
+                            : 0
                         )
                       )[0]
                     }
@@ -1101,7 +1086,9 @@ export const SearchPage = () => {
                   <option
                     value={
                       selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map((item) => item.sold7_percentage)
+                        item.soldPercentage.map((item) =>
+                          item.sold7_percentage ? item.sold7_percentage : 0
+                        )
                       )[0]
                     }
                   >
@@ -1121,8 +1108,8 @@ export const SearchPage = () => {
                   <option
                     value={
                       selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map(
-                          (item) => item.sold60_percentage
+                        item.soldPercentage.map((item) =>
+                          item.sold60_percentage ? item.sold60_percentage : 0
                         )
                       )[0]
                     }
@@ -1132,8 +1119,8 @@ export const SearchPage = () => {
                   <option
                     value={
                       selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map(
-                          (item) => item.sold90_percentage
+                        item.soldPercentage.map((item) =>
+                          item.sold90_percentage ? item.sold90_percentage : 0
                         )
                       )[0]
                     }
@@ -1143,8 +1130,8 @@ export const SearchPage = () => {
                   <option
                     value={
                       selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map(
-                          (item) => item.sold6M_percentage
+                        item.soldPercentage.map((item) =>
+                          item.sold6M_percentage ? item.sold6M_percentage : 0
                         )
                       )[0]
                     }
@@ -1154,8 +1141,8 @@ export const SearchPage = () => {
                   <option
                     value={
                       selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map(
-                          (item) => item.sold365_percentage
+                        item.soldPercentage.map((item) =>
+                          item.sold365_percentage ? item.sold365_percentage : 0
                         )
                       )[0]
                     }

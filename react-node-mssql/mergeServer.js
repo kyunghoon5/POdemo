@@ -1,6 +1,5 @@
 //express
 
-
 var express = require('express');
 var app = express();
 const sql = require('mssql');
@@ -20,11 +19,10 @@ const soldPercentage = require('./routes/soldPercentage');
 const graph = require('./routes/graph');
 const graphByMonth = require('./routes/graphByMonth');
 
-const graphbyitem = require('./routes/graphByitem')
+const graphbyitem = require('./routes/graphByitem');
 const graphbyitemMonth = require('./routes/graphByitemMonth');
 const poForecast = require('./routes/poForecast');
-const searchSuggest = require('./routes/searchSuggest')
-
+const searchSuggest = require('./routes/searchSuggest');
 
 //for 3rd API
 const { createProxyMiddleware } = require('http-proxy-middleware');
@@ -44,7 +42,7 @@ app.use('/graphbymonth', graphByMonth);
 app.use('/graphByItem', graphbyitem);
 app.use('/graphByItemMonth', graphbyitemMonth);
 app.use('/poForecast', poForecast);
-app.use('/searchAuto', searchSuggest)
+app.use('/searchAuto', searchSuggest);
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
@@ -93,6 +91,7 @@ SELECT
   A.cost,
   A.price,
   A.start_dte
+ ,a.length_cat
  
   
   
@@ -109,7 +108,8 @@ FROM
       
 	 
 					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
-					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost
+					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost,
+					  (select length_cat from arinvt10_brand where descrip = a.descrip ) as length_cat
 					 
 				
 			   
@@ -178,7 +178,7 @@ ORDER BY
 
 `);
 
-const result2Sold60 = await request2.query(`
+    const result2Sold60 = await request2.query(`
 SELECT
 	 
   A.itemkey2, 
@@ -517,7 +517,7 @@ from(SELECT  A.purno
           obj.sold30 = numbers7;
           obj.poreorder = numbers8;
           obj.stdDate = numbers9;
-obj.sold60 = numbers14
+          obj.sold60 = numbers14;
           obj.sold90 = numbers12;
           obj.sold365 = numbers13;
 
@@ -596,7 +596,7 @@ obj.sold60 = numbers14
         obj.sold90 = numbers12.map((num) => ({
           qtyshp: num.qtyshp,
         }));
-        obj.sold60 = numbers14.map((num)=>({qtyshp: num.qtyshp,}))
+        obj.sold60 = numbers14.map((num) => ({ qtyshp: num.qtyshp }));
         obj.sold365 = numbers13.map((num) => ({
           qtyshp: num.qtyshp,
         }));
