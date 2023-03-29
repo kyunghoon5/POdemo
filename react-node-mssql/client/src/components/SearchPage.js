@@ -16,6 +16,11 @@ import {
   ResponsiveContainer,
   Bar,
   ComposedChart,
+  PieChart,
+  Pie,
+  Cell
+  
+  
 } from 'recharts';
 import ColorTab from './ColorTab';
 
@@ -206,6 +211,8 @@ export const SearchPage = () => {
     setSelectedSold([]);
     setValue2([]);
     WDsetSearch([]);
+    setitemRank([]);
+    setnewitemRank([]);
   };
 
   //all data
@@ -266,6 +273,8 @@ export const SearchPage = () => {
       WDsearchRecords();
       WDsearchRecords2();
       setfilteredDate([]);
+      newitemRecords();
+      pieChartF();
     }
   };
 
@@ -331,6 +340,21 @@ export const SearchPage = () => {
       .then((response) => {
         setitemRank(response.data);
         setitemLoading(false);
+      });
+  };
+
+  const [newitemRank, setnewitemRank] = useState([]);
+  const [newitemLoading, setnewitemLoading] = useState(false);
+
+  const newitemRecords = async () => {
+    const searchedRecord = record.toLowerCase();
+    setnewitemLoading(true);
+    await axios
+      .get(`http://192.168.16.220:8082/newItemRank?descrip=${searchedRecord}`)
+
+      .then((response) => {
+        setnewitemRank(response.data);
+        setnewitemLoading(false);
       });
   };
 
@@ -419,6 +443,45 @@ export const SearchPage = () => {
     );
     setEachItemGraphMonth(filteredGraphMonth);
   };
+
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    // Get the maximum value from the data
+  
+  const [pieLoading, setpieLoading] = useState(false);
+  const [pieChart, setpieChart] = useState([]);
+  const pieChartF = async () => {
+    const searchedRecord = record.toLowerCase();
+    setpieLoading(true);
+    await axios
+      .get(`http://192.168.16.220:8082/pieChart?descrip=${searchedRecord}`)
+
+      .then((response) => {
+        setpieChart(response.data);
+        setpieLoading(false);
+      });
+  };
+  
+    // Get the maximum value from the data
+  const maxVal = Math.max(...pieChart.map((data) => data.qtyshp));
+
+   const [loadingfile, setLoadingfile] = useState(false);
+
+   const handleDownload = () => {
+     setLoadingfile(true);
+     axios({
+       url: 'http://192.168.16.220:8082/download',
+       method: 'GET',
+       responseType: 'blob',
+     }).then((response) => {
+       const url = window.URL.createObjectURL(new Blob([response.data]));
+       const link = document.createElement('a');
+       link.href = url;
+       link.setAttribute('download', 'rb_Rank.xlsx');
+       document.body.appendChild(link);
+       link.click();
+       setLoadingfile(false);
+     });
+   };
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -675,6 +738,8 @@ export const SearchPage = () => {
                     WDsearchRecords();
                     WDsearchRecords2();
                     setfilteredDate([]);
+                    newitemRecords();
+                    pieChartF();
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -683,13 +748,16 @@ export const SearchPage = () => {
                   SUBMIT
                 </button>
               </td>
-              <td
-                colSpan="3"
-                rowSpan="10"
-                className="prodImg "
-                style={{ width: '250px' }}
-              >
-                <div>{<img src={imageClicked} className="mainImage  " />}</div>
+              <td colSpan="3" rowSpan="10" className="prodImg ">
+                <div>
+                  {
+                    <img
+                      style={{ width: '250px', height: '320px' }}
+                      src={imageClicked}
+                      className="mainImage  "
+                    />
+                  }
+                </div>
               </td>
               <td
                 colSpan="9"
@@ -703,10 +771,8 @@ export const SearchPage = () => {
                 <div
                   style={{
                     position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    top: 0,
+                    width: '70%',
+                    height: '100%',
                   }}
                 >
                   {value2.length ? (
@@ -838,6 +904,80 @@ export const SearchPage = () => {
                   ) : (
                     <>Loading...</>
                   )}
+                </div>
+
+                <div
+                  style={{
+                    position: 'absolute',
+
+                    width: '30%',
+                    height: '100%',
+
+                    right: '1px',
+                  }}
+                >
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart width={400} height={400}>
+                      <Pie
+                        data={pieChart}
+                        dataKey="qtyshp"
+                        nameKey="quarter"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        fill="#8884d8"
+                        labelLine={false}
+                        label={({
+                          cx,
+                          cy,
+                          midAngle,
+                          innerRadius,
+                          outerRadius,
+                          value,
+                          index,
+                          payload,
+                        }) => {
+                          const RADIAN = Math.PI / 180;
+                          const radius =
+                            25 + innerRadius + (outerRadius - innerRadius);
+                          const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                          const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                          const percent = `${(
+                            (value /
+                              pieChart.reduce((a, b) => a + b.qtyshp, 0)) *
+                            100
+                          ).toFixed(0)}%`;
+                          const quarter = payload.quarter;
+                          return (
+                            <text
+                              x={x}
+                              y={y}
+                              fill={COLORS[index % COLORS.length]}
+                              textAnchor={x > cx ? 'start' : 'end'}
+                              dominantBaseline="central"
+                            >
+                              <tspan dx={x > cx ? -20 : 20} dy={-3}>
+                                {quarter}Q({percent})
+                              </tspan>
+                            </text>
+                          );
+                        }}
+                      >
+                        {pieChart.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={
+                              entry.qtyshp === maxVal
+                                ? '#FF0000'
+                                : COLORS[index % COLORS.length]
+                            }
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip formatter={(value) => [value, 'qtyshp']} />
+                      <Legend />
+                    </PieChart>
+                  </ResponsiveContainer>
                 </div>
               </td>
             </tr>
@@ -1055,7 +1195,6 @@ export const SearchPage = () => {
                 }
               </td>
             </tr>
-           
 
             <tr className="row8">
               <InfoItemOb className="infoCol1" name="DGN DTE:" />
@@ -1562,13 +1701,17 @@ export const SearchPage = () => {
               {/* grading https://www.wane.com/news/sacs-approves-new-grading-scale/*/}
               <td>GRADE</td>
               {itemRank.length ? (
-                itemLoading === false ? (
+                itemLoading === false || newitemLoading === false ? (
                   itemRank
                     .flatMap((item) => [item].concat(item.ranknonRB ?? []))
                     .filter((item) => item.percentile)
                     .map((item) => item.percentile * 100)[0] > 98 ||
                   itemRank
                     .flatMap((item) => [item].concat(item.rankRB ?? []))
+                    .filter((item) => item.percentile)
+                    .map((item) => item.percentile * 100)[0] > 98 ||
+                  newitemRank
+                    .flatMap((item) => [item].concat(item.descrip ?? []))
                     .filter((item) => item.percentile)
                     .map((item) => item.percentile * 100)[0] > 98 ? (
                     <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
@@ -1581,6 +1724,10 @@ export const SearchPage = () => {
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
                       .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 93 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
+                      .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 93 ? (
                     <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
                       A
@@ -1591,6 +1738,10 @@ export const SearchPage = () => {
                       .map((item) => item.percentile * 100)[0] > 90 ||
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 90 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
                       .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 90 ? (
                     <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
@@ -1603,6 +1754,10 @@ export const SearchPage = () => {
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
                       .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 87 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
+                      .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 87 ? (
                     <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
                       B+
@@ -1613,6 +1768,10 @@ export const SearchPage = () => {
                       .map((item) => item.percentile * 100)[0] > 83 ||
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 83 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
                       .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 83 ? (
                     <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
@@ -1625,6 +1784,10 @@ export const SearchPage = () => {
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
                       .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 80 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
+                      .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 80 ? (
                     <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
                       B-
@@ -1635,6 +1798,10 @@ export const SearchPage = () => {
                       .map((item) => item.percentile * 100)[0] > 77 ||
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 77 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
                       .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 77 ? (
                     <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
@@ -1647,6 +1814,10 @@ export const SearchPage = () => {
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
                       .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 73 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
+                      .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 73 ? (
                     <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
                       C
@@ -1657,6 +1828,10 @@ export const SearchPage = () => {
                       .map((item) => item.percentile * 100)[0] > 70 ||
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 70 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
                       .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 70 ? (
                     <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
@@ -1669,6 +1844,10 @@ export const SearchPage = () => {
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
                       .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 67 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
+                      .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 67 ? (
                     <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
                       D+
@@ -1679,6 +1858,10 @@ export const SearchPage = () => {
                       .map((item) => item.percentile * 100)[0] > 63 ||
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 63 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
                       .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 63 ? (
                     <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
@@ -1691,19 +1874,36 @@ export const SearchPage = () => {
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
                       .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] > 60 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
+                      .filter((item) => item.percentile)
                       .map((item) => item.percentile * 100)[0] > 60 ? (
                     <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
                       D-
                     </td>
-                  ) : (
+                  ) : itemRank
+                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] <= 60 ||
+                    itemRank
+                      .flatMap((item) => [item].concat(item.rankRB ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] <= 60 ||
+                    newitemRank
+                      .flatMap((item) => [item].concat(item.descrip ?? []))
+                      .filter((item) => item.percentile)
+                      .map((item) => item.percentile * 100)[0] <= 60 ? (
                     <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>
                       F
                     </td>
+                  ) : (
+                    <>Loading...</>
                   )
                 ) : (
                   <>Loading...</>
                 )
-              ) : itemLoading === false ? (
+              ) : itemLoading === false || newitemLoading === false ? (
                 <td></td>
               ) : (
                 <>Loading...</>
@@ -2217,6 +2417,9 @@ export const SearchPage = () => {
           />
         </div>
       )}
+      <button onClick={handleDownload} disabled={loadingfile}>
+        {loadingfile ? 'Downloading...' : 'Download Excel File'}
+      </button>
     </div>
   );
 };

@@ -30,4 +30,5 @@ module.exports = {
     enableArithAbort: true,
     truestConnection: true,
   },
+  requestTimeout: 300000,
 };

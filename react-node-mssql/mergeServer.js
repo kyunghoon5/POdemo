@@ -23,12 +23,24 @@ const graphbyitem = require('./routes/graphByitem');
 const graphbyitemMonth = require('./routes/graphByitemMonth');
 const poForecast = require('./routes/poForecast');
 const searchSuggest = require('./routes/searchSuggest');
+const newItemRank = require('./routes/newitemRank');
+const pieChartQ = require('./routes/pieChartQuarter')
 
 //for 3rd API
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const proxy = createProxyMiddleware({
   target: 'http://192.168.16.40:89',
   changeOrigin: true,
+});
+const path = require('path')
+
+app.get('/download', (req, res) => {
+  const file = path.join(
+    __dirname,
+    '../../RB RANK.xlsx'
+    
+  );
+  res.download(file);
 });
 
 app.use('/WatchDog', proxy);
@@ -43,6 +55,8 @@ app.use('/graphByItem', graphbyitem);
 app.use('/graphByItemMonth', graphbyitemMonth);
 app.use('/poForecast', poForecast);
 app.use('/searchAuto', searchSuggest);
+app.use('/newItemRank', newItemRank);
+app.use('/pieChart', pieChartQ)
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
