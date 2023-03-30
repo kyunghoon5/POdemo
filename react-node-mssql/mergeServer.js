@@ -24,7 +24,7 @@ const graphbyitemMonth = require('./routes/graphByitemMonth');
 const poForecast = require('./routes/poForecast');
 const searchSuggest = require('./routes/searchSuggest');
 const newItemRank = require('./routes/newitemRank');
-const pieChartQ = require('./routes/pieChartQuarter')
+const pieChartQ = require('./routes/pieChartQuarter');
 
 //for 3rd API
 const { createProxyMiddleware } = require('http-proxy-middleware');
@@ -32,14 +32,34 @@ const proxy = createProxyMiddleware({
   target: 'http://192.168.16.40:89',
   changeOrigin: true,
 });
-const path = require('path')
+const path = require('path');
 
 app.get('/download', (req, res) => {
-  const file = path.join(
-    __dirname,
-    '../../RB RANK.xlsx'
-    
-  );
+  const file = path.join(__dirname, '../../Data/RB Rank.xlsx');
+  res.download(file);
+});
+app.get('/downloadnonRB', (req, res) => {
+  const file = path.join(__dirname, '../../Data/nonRB Rank.xlsx');
+  res.download(file);
+});
+app.get('/downloadNewItem', (req, res) => {
+  const file = path.join(__dirname, '../../Data/newItem Rank.xlsx');
+  res.download(file);
+});
+app.get('/download1Q', (req, res) => {
+  const file = path.join(__dirname, '../../Data/1Q.xlsx');
+  res.download(file);
+});
+app.get('/download2Q', (req, res) => {
+  const file = path.join(__dirname, '../../Data/2Q.xlsx');
+  res.download(file);
+});
+app.get('/download3Q', (req, res) => {
+  const file = path.join(__dirname, '../../Data/3Q.xlsx');
+  res.download(file);
+});
+app.get('/download4Q', (req, res) => {
+  const file = path.join(__dirname, '../../Data/4Q.xlsx');
   res.download(file);
 });
 
@@ -56,7 +76,7 @@ app.use('/graphByItemMonth', graphbyitemMonth);
 app.use('/poForecast', poForecast);
 app.use('/searchAuto', searchSuggest);
 app.use('/newItemRank', newItemRank);
-app.use('/pieChart', pieChartQ)
+app.use('/pieChart', pieChartQ);
 
 // Define an endpoint for merging data from both servers
 app.get('/mergeData', async (req, res) => {
@@ -100,9 +120,11 @@ SELECT
   A.itemkey2, 
   A.descrip,
   A.onhand,
+   A.mincost,
+  a.maxcost,
   
   
-  A.cost,
+  
   A.price,
   A.start_dte
  ,a.length_cat
@@ -122,7 +144,9 @@ FROM
       
 	 
 					  (SELECT MIN(price) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as price,
-					  (SELECT cost FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as cost,
+            (SELECT min(cost) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as mincost,
+					   (SELECT max(cost) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as maxcost,
+					 
 					  (select length_cat from arinvt10_brand where descrip = a.descrip ) as length_cat
 					 
 				

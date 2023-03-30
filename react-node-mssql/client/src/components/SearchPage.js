@@ -18,14 +18,20 @@ import {
   ComposedChart,
   PieChart,
   Pie,
-  Cell
-  
-  
+  Cell,
 } from 'recharts';
+
 import ColorTab from './ColorTab';
+import TreeView from '@mui/lab/TreeView';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TreeItem from '@mui/lab/TreeItem';
+import DownloadButton from 'react-dfb';
+
 
 var _ = require('lodash');
-// or less ideally
+
+
 
 export const SearchPage = () => {
   const [search, setSearch] = useState([]);
@@ -445,8 +451,8 @@ export const SearchPage = () => {
   };
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-    // Get the maximum value from the data
-  
+  // Get the maximum value from the data
+
   const [pieLoading, setpieLoading] = useState(false);
   const [pieChart, setpieChart] = useState([]);
   const pieChartF = async () => {
@@ -460,28 +466,144 @@ export const SearchPage = () => {
         setpieLoading(false);
       });
   };
-  
-    // Get the maximum value from the data
+
+  // Get the maximum value from the data
   const maxVal = Math.max(...pieChart.map((data) => data.qtyshp));
 
-   const [loadingfile, setLoadingfile] = useState(false);
+  const [loadingfile, setLoadingfile] = useState(false);
 
-   const handleDownload = () => {
-     setLoadingfile(true);
-     axios({
-       url: 'http://192.168.16.220:8082/download',
-       method: 'GET',
-       responseType: 'blob',
-     }).then((response) => {
-       const url = window.URL.createObjectURL(new Blob([response.data]));
-       const link = document.createElement('a');
-       link.href = url;
-       link.setAttribute('download', 'rb_Rank.xlsx');
-       document.body.appendChild(link);
-       link.click();
-       setLoadingfile(false);
-     });
-   };
+  const handleDownload = () => {
+    setLoadingfile(true);
+    axios({
+      url: 'http://192.168.16.220:8082/download',
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'RB_Rank.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile(false);
+    });
+  };
+
+
+  const [loadingfile2, setLoadingfile2] = useState(false);
+
+  const handleDownload2 = () => {
+    setLoadingfile2(true);
+    axios({
+      url: 'http://192.168.16.220:8082/downloadnonRB',
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'nonRB_Rank.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile2(false);
+    });
+  };
+
+  const [loadingfile3, setLoadingfile3] = useState(false);
+
+  const handleDownload3 = () => {
+    setLoadingfile3(true);
+    axios({
+      url: 'http://192.168.16.220:8082/downloadNewItem',
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'newItem_Rank.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile3(false);
+    });
+  };
+
+  const [loadingfile4, setLoadingfile4] = useState(false);
+
+  const handleDownload4 = () => {
+    setLoadingfile4(true);
+    axios({
+      url: 'http://192.168.16.220:8082/download1Q',
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', '1Q.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile4(false);
+    });
+  };
+  const [loadingfile5, setLoadingfile5] = useState(false);
+
+  const handleDownload5 = () => {
+    setLoadingfile5(true);
+    axios({
+      url: 'http://192.168.16.220:8082/download2Q',
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', '2Q.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile5(false);
+    });
+  };
+  const [loadingfile6, setLoadingfile6] = useState(false);
+
+  const handleDownload6 = () => {
+    setLoadingfile6(true);
+    axios({
+      url: 'http://192.168.16.220:8082/download3Q',
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', '3Q.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile6(false);
+    });
+  };
+  const [loadingfile7, setLoadingfile7] = useState(false);
+
+  const handleDownload7 = () => {
+    setLoadingfile7(true);
+    axios({
+      url: 'http://192.168.16.220:8082/download4Q',
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', '4Q.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile7(false);
+    });
+  };
+
+ 
+   
+  
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -511,8 +633,14 @@ export const SearchPage = () => {
   const Difference_In_Days2 = Difference_In_Time2 / (1000 * 3600 * 24);
 
   //PRL
-  const filteredItemsP = search.map((item) => item.cost);
-  const PRLmin = Math.min(...filteredItemsP);
+  const filteredItemsP = search.map((item) => item.mincost && item.maxcost);
+ 
+  const filteredItemsPWithoutZero = filteredItemsP.filter(
+    (value) => value !== null 
+  );
+  
+  const PRLmin = Math.min(...filteredItemsPWithoutZero);
+ 
   const PRLmax = Math.max(...filteredItemsP);
 
   //total CLRS
@@ -610,6 +738,7 @@ export const SearchPage = () => {
 
   const postDay = forecastDatePicker;
   const Difference_In_PostDay = postDay.getTime() - date.getTime();
+ 
 
   const Difference_In_PostDayresult = round(
     Difference_In_PostDay / (1000 * 3600 * 24)
@@ -956,7 +1085,7 @@ export const SearchPage = () => {
                               textAnchor={x > cx ? 'start' : 'end'}
                               dominantBaseline="central"
                             >
-                              <tspan dx={x > cx ? -20 : 20} dy={-3}>
+                              <tspan dx={x > cx ? -31 : 30} dy={3}>
                                 {quarter}Q({percent})
                               </tspan>
                             </text>
@@ -2417,9 +2546,42 @@ export const SearchPage = () => {
           />
         </div>
       )}
-      <button onClick={handleDownload} disabled={loadingfile}>
-        {loadingfile ? 'Downloading...' : 'Download Excel File'}
-      </button>
+
+      <>
+        <TreeView
+          defaultCollapseIcon={<ExpandMoreIcon />}
+          defaultExpandIcon={<ChevronRightIcon />}
+        >
+          <TreeItem nodeId="1" label="Rank by Items">
+            <TreeItem
+              nodeId="2"
+              label="RB_Rank.xlsx"
+              onClick={handleDownload}
+            />
+            <TreeItem
+              nodeId="3"
+              label="nonRB_Rank.xlsx"
+              onClick={handleDownload2}
+            />
+          </TreeItem>
+          <TreeItem nodeId="4" label="Rank by NewItems">
+            <TreeItem
+              nodeId="5"
+              label="newItem Rank.xlsx"
+              onClick={handleDownload3}
+            />
+          </TreeItem>
+          <TreeItem nodeId="6" label="Rank by Quarters">
+            <TreeItem nodeId="7" label="1Q.xlsx" onClick={handleDownload4}/>
+            <TreeItem nodeId="8" label="2Q.xlsx" onClick={handleDownload5}/>
+            <TreeItem nodeId="9" label="3Q.xlsx" onClick={handleDownload6}/>
+            <TreeItem nodeId="10" label="4Q.xlsx" onClick={handleDownload7} />
+          </TreeItem>
+          <TreeItem nodeId="11" label="Check List">
+            <TreeItem nodeId="12" label="CheckList.xlsx" />
+          </TreeItem>
+        </TreeView>
+      </>
     </div>
   );
 };

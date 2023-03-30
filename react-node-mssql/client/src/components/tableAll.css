@@ -1,15 +1,10 @@
-
-
-.search{overflow: auto;
-  
-
-
+.search {
+  overflow: auto;
 }
 
 .infoCol1 {
   background-color: #88bef2;
 }
-
 
 .btn1name {
   display: inline-block;
@@ -43,17 +38,13 @@
 }
 
 @media print {
-body {-webkit-print-color-adjust: exact;
-zoom: 45%;}
+  body {
+    -webkit-print-color-adjust: exact;
+    zoom: 45%;
+  }
 }
 
-
-
-
-
-
 .table1 tbody tr td {
-  
   padding: 0;
   padding-left: 2px;
   margin: 0;
@@ -62,40 +53,32 @@ zoom: 45%;}
   border: 1px solid black;
   font-size: 13px;
   text-align: center;
-   
 }
-
 
 .table2 td {
   background-color: #88bef2;
 }
 
-
-
-
-.bottomSearch div{
-   display:block;
+.bottomSearch div {
+  display: block;
   border: 1px solid black;
   border-right-width: 0px;
-  
+
   padding-top: 7px;
   padding-left: 2px;
   padding-right: 2px;
-  
+
   min-width: 80px;
   height: 32px;
   font-size: 13px;
-  text-align: right;   
+  text-align: right;
 }
-
-
 
 .negative-amount {
   background-color: rgb(242, 135, 135);
 }
 
 .dataResult {
-  
   margin-top: 5px;
   width: 300px;
   height: 200px;
@@ -105,38 +88,29 @@ zoom: 45%;}
   overflow-y: auto;
 }
 
-
-
-.dataResult  {
+.dataResult {
   width: 170px;
   height: 200px;
   display: flex;
   flex-direction: column;
-  border:1px solid gray;
+  border: 1px solid gray;
   overflow: hidden;
-  overflow-y:auto;
+  overflow-y: auto;
 }
 
-.dataResult::-webkit-scrollbar{
+.dataResult::-webkit-scrollbar {
   display: flex;
 }
 
 .dataResult:empty {
-  border:none;
+  border: none;
 }
 
-
-.dropdown-row{
-  cursor:pointer;
+.dropdown-row {
+  cursor: pointer;
   text-align: start;
   margin: 2px 0;
 }
-
-
-
-
-
-
 
 /* .test5 tbody tr td{
   display: block;
