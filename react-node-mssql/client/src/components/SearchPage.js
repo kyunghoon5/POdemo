@@ -28,10 +28,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import DownloadButton from 'react-dfb';
 
-
 var _ = require('lodash');
-
-
 
 export const SearchPage = () => {
   const [search, setSearch] = useState([]);
@@ -489,7 +486,6 @@ export const SearchPage = () => {
     });
   };
 
-
   const [loadingfile2, setLoadingfile2] = useState(false);
 
   const handleDownload2 = () => {
@@ -601,9 +597,175 @@ export const SearchPage = () => {
     });
   };
 
- 
-   
-  
+  const [loadingfile8, setLoadingfile8] = useState(false);
+
+  const handleDownload8 = () => {
+    setLoadingfile8(true);
+    axios({
+      url: 'http://192.168.16.220:8082/downloadCheck2021',
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', '2020-2021 change_rate.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile8(false);
+    });
+  };
+  const [loadingfile9, setLoadingfile9] = useState(false);
+
+  const handleDownload9 = () => {
+    setLoadingfile9(true);
+    axios({
+      url: 'http://192.168.16.220:8082/downloadCheck2022',
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', '2021-2022 change_rate.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile9(false);
+    });
+  };
+
+   const [loadingfile10, setLoadingfile10] = useState(false);
+
+   const handleDownload10 = () => {
+     setLoadingfile10(true);
+     axios({
+       url: 'http://192.168.16.220:8082/downloadXSHORT',
+       method: 'GET',
+       responseType: 'blob',
+     }).then((response) => {
+       const url = window.URL.createObjectURL(new Blob([response.data]));
+       const link = document.createElement('a');
+       link.href = url;
+       link.setAttribute('download', 'XSHORT.xlsx');
+       document.body.appendChild(link);
+       link.click();
+       setLoadingfile10(false);
+     });
+   };
+
+    const [loadingfile11, setLoadingfile11] = useState(false);
+
+    const handleDownload11 = () => {
+      setLoadingfile11(true);
+      axios({
+        url: 'http://192.168.16.220:8082/downloadSHORT',
+        method: 'GET',
+        responseType: 'blob',
+      }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'SHORT.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        setLoadingfile11(false);
+      });
+    };
+
+     const [loadingfile12, setLoadingfile12] = useState(false);
+
+   const handleDownload12 = () => {
+     setLoadingfile12(true);
+     axios({
+       url: 'http://192.168.16.220:8082/downloadMIDSHORT',
+       method: 'GET',
+       responseType: 'blob',
+     }).then((response) => {
+       const url = window.URL.createObjectURL(new Blob([response.data]));
+       const link = document.createElement('a');
+       link.href = url;
+       link.setAttribute('download', 'MID_SHORT.xlsx');
+       document.body.appendChild(link);
+       link.click();
+       setLoadingfile12(false);
+     });
+   };
+
+    const [loadingfile13, setLoadingfile13] = useState(false);
+
+    const handleDownload13 = () => {
+      setLoadingfile13(true);
+      axios({
+        url: 'http://192.168.16.220:8082/downloadMID',
+        method: 'GET',
+        responseType: 'blob',
+      }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'MID.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        setLoadingfile13(false);
+      });
+    };
+
+     const [loadingfile14, setLoadingfile14] = useState(false);
+
+     const handleDownload14 = () => {
+       setLoadingfile14(true);
+       axios({
+         url: 'http://192.168.16.220:8082/downloadMIDLONG',
+         method: 'GET',
+         responseType: 'blob',
+       }).then((response) => {
+         const url = window.URL.createObjectURL(new Blob([response.data]));
+         const link = document.createElement('a');
+         link.href = url;
+         link.setAttribute('download', 'MID_LONG.xlsx');
+         document.body.appendChild(link);
+         link.click();
+         setLoadingfile14(false);
+       });
+     };
+
+      const [loadingfile15, setLoadingfile15] = useState(false);
+
+      const handleDownload15 = () => {
+        setLoadingfile15(true);
+        axios({
+          url: 'http://192.168.16.220:8082/downloadLONG',
+          method: 'GET',
+          responseType: 'blob',
+        }).then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'LONG.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          setLoadingfile15(false);
+        });
+      };
+
+       const [loadingfile16, setLoadingfile16] = useState(false);
+
+       const handleDownload16 = () => {
+         setLoadingfile16(true);
+         axios({
+           url: 'http://192.168.16.220:8082/downloadXLONG',
+           method: 'GET',
+           responseType: 'blob',
+         }).then((response) => {
+           const url = window.URL.createObjectURL(new Blob([response.data]));
+           const link = document.createElement('a');
+           link.href = url;
+           link.setAttribute('download', 'XLONG.xlsx');
+           document.body.appendChild(link);
+           link.click();
+           setLoadingfile16(false);
+         });
+       };
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -634,13 +796,13 @@ export const SearchPage = () => {
 
   //PRL
   const filteredItemsP = search.map((item) => item.mincost && item.maxcost);
- 
+
   const filteredItemsPWithoutZero = filteredItemsP.filter(
-    (value) => value !== null 
+    (value) => value !== null
   );
-  
+
   const PRLmin = Math.min(...filteredItemsPWithoutZero);
- 
+
   const PRLmax = Math.max(...filteredItemsP);
 
   //total CLRS
@@ -738,7 +900,6 @@ export const SearchPage = () => {
 
   const postDay = forecastDatePicker;
   const Difference_In_PostDay = postDay.getTime() - date.getTime();
- 
 
   const Difference_In_PostDayresult = round(
     Difference_In_PostDay / (1000 * 3600 * 24)
@@ -2572,13 +2733,31 @@ export const SearchPage = () => {
             />
           </TreeItem>
           <TreeItem nodeId="6" label="Rank by Quarters">
-            <TreeItem nodeId="7" label="1Q.xlsx" onClick={handleDownload4}/>
-            <TreeItem nodeId="8" label="2Q.xlsx" onClick={handleDownload5}/>
-            <TreeItem nodeId="9" label="3Q.xlsx" onClick={handleDownload6}/>
+            <TreeItem nodeId="7" label="1Q.xlsx" onClick={handleDownload4} />
+            <TreeItem nodeId="8" label="2Q.xlsx" onClick={handleDownload5} />
+            <TreeItem nodeId="9" label="3Q.xlsx" onClick={handleDownload6} />
             <TreeItem nodeId="10" label="4Q.xlsx" onClick={handleDownload7} />
           </TreeItem>
+          <TreeItem nodeId="14" label="Rank by Types">
+            <TreeItem nodeId="15" label="XSHORT.xlsx" onClick={handleDownload10} />
+            <TreeItem nodeId="16" label="SHORT.xlsx" onClick={handleDownload11} />
+            <TreeItem nodeId="17" label="MID_SHORT.xlsx" onClick={handleDownload12} />
+            <TreeItem nodeId="18" label="MID.xlsx" onClick={handleDownload13} />
+            <TreeItem nodeId="19" label="MID_LONG.xlsx" onClick={handleDownload14} />
+              <TreeItem nodeId="20" label="LONG.xlsx" onClick={handleDownload15} />
+               <TreeItem nodeId="21" label="XLONG.xlsx" onClick={handleDownload16} />
+          </TreeItem>
           <TreeItem nodeId="11" label="Check List">
-            <TreeItem nodeId="12" label="CheckList.xlsx" />
+            <TreeItem
+              nodeId="12"
+              label="2020-2021 change_rate.xlsx"
+              onClick={handleDownload8}
+            />
+            <TreeItem
+              nodeId="13"
+              label="2021-2022 change_rate.xlsx"
+              onClick={handleDownload9}
+            />
           </TreeItem>
         </TreeView>
       </>

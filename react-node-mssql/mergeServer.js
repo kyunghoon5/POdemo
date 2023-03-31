@@ -62,6 +62,43 @@ app.get('/download4Q', (req, res) => {
   const file = path.join(__dirname, '../../Data/4Q.xlsx');
   res.download(file);
 });
+app.get('/downloadCheck2021', (req, res) => {
+  const file = path.join(__dirname, '../../Data/2020-2021 change_rate.xlsx');
+  res.download(file);
+});
+
+app.get('/downloadCheck2022', (req, res) => {
+  const file = path.join(__dirname, '../../Data/2021-2022 change_rate.xlsx');
+  res.download(file);
+});
+app.get('/downloadXSHORT', (req, res) => {
+  const file = path.join(__dirname, '../../Data/size rank/XSHORT.xlsx');
+  res.download(file);
+});
+app.get('/downloadSHORT', (req, res) => {
+  const file = path.join(__dirname, '../../Data/size rank/SHORT.xlsx');
+  res.download(file);
+});
+app.get('/downloadMIDSHORT', (req, res) => {
+  const file = path.join(__dirname, '../../Data/size rank/MID_SHORT.xlsx');
+  res.download(file);
+});
+app.get('/downloadMID', (req, res) => {
+  const file = path.join(__dirname, '../../Data/size rank/MID.xlsx');
+  res.download(file);
+});
+app.get('/downloadMIDLONG', (req, res) => {
+  const file = path.join(__dirname, '../../Data/size rank/MID_LONG.xlsx');
+  res.download(file);
+});
+app.get('/downloadLONG', (req, res) => {
+  const file = path.join(__dirname, '../../Data/size rank/LONG.xlsx');
+  res.download(file);
+});
+app.get('/downloadXLONG', (req, res) => {
+  const file = path.join(__dirname, '../../Data/size rank/XLONG.xlsx');
+  res.download(file);
+});
 
 app.use('/WatchDog', proxy);
 app.use('/dataPick', dataPick);
@@ -148,11 +185,6 @@ FROM
 					   (SELECT max(cost) FROM arinvt10 WHERE itemkey2 = A.itemkey2 and descrip = A.descrip) as maxcost,
 					 
 					  (select length_cat from arinvt10_brand where descrip = a.descrip ) as length_cat
-					 
-				
-			   
-
-
     FROM 
       artran10c A 
     WHERE invdte >= Dateadd(year, -50, Getdate())
