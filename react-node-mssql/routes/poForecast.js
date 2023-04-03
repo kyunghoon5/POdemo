@@ -11,12 +11,14 @@ app.use(cors());
 var _ = require('lodash');
 
 // Configuration for the two SQL servers
-const configServer1 = require('../config');
-const configServer2 = require('../config2');
+const configServer1 = require('../sqlServer1');
+const configServer2 = require('../sqlServer2');
+const utils = require('../data/utils');
 
 router.get('/', async (req, res) => {
   const startDate = req.query.startDate;
   const endDate = req.query.endDate;
+  const loadQ = await utils.loadSqlQueries('events');
   // Connect to both servers
   const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
   let request1 = new sql.Request(sqlPool);
@@ -24,66 +26,17 @@ router.get('/', async (req, res) => {
   const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
   let request2 = new sql.Request(sqlPool2);
 
-  const result2 = await request2.query(`
-SELECT
-	
-  A.itemkey2, 
-  A.descrip  
-  
-  
-FROM 
-  (
-    SELECT	
+    const POForeCast1Query = await loadQ.POForecast1.replace(
+      '${req.query.descrip}',
+      req.query.descrip
+    );
+  const result2 = await request2.query(POForeCast1Query);
 
-     
-      A.itemkey2, 
-      A.descrip
-
-    FROM 
-      artran10c A 
-    WHERE invdte >= Dateadd(year, -50, Getdate())
-      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
-      and A.itemkey2 not in ('_MANUAL_INVOICE') 
-      and A.descrip='${req.query.descrip}'
-      --and A.class in ('RB')
-      --Exclude RB
-      --and A.class not in ('RB', 'AA', 'Z')
-    group by 
-       
-      A.itemkey2, 
-      A.descrip
-	  
-  ) A  
-ORDER BY 
-  itemkey2 asc
-
-`);
-
-  const result21 = await request2.query(`
-SELECT POTRANS.purno AS 'PONO'
-,POTRANS.vendno AS 'VENNO'
-,POTRANS.purdate AS 'O_DATE'
-,POTRANS.recdate AS 'R_DATE'
-,POTRANS.shpdate AS 'SS_DATE'
-,POTRANS.reqdate AS 'EA_DATE'
-,POTRANS.descrip AS 'PROD_CODE', POTRANS.itemkey2 AS 'itemkey2'
-,POTRANS.qtyord AS 'ORDEREDa'
-,POTRANS.qtyrec AS 'SHIP_S1'
-,POTRANS.cost AS 'PRICE'
-,POTRANS.extcost AS 'AMOUNT'
-,POTRANS.qtyord AS 'ONQTY'
-,POTRANS.qtyord AS 'TRQTY30'
-,POTRANS.qtyord AS 'TRQTY90'
-,POTRANS.qtyord AS 'TRQTY'
-,POTRANS.qtyord AS 'INQTY'
-,POTRANS.qtyord AS 'UN_ORD'
-,POTRANS.postat AS 'CANCEL', POTRANS.invno AS 'INVONO'
-FROM BYT_LEG.dbo.POTRAN10C POTRANS
-WHERE (POTRANS.descrip='${req.query.descrip}')  and POTRANS.reqdate between getDate() and '${endDate}'
-
-ORDER BY POTRANS.purno DESC, POTRANS.descrip, POTRANS.itemkey2 asc
-
-`);
+    const POForeCast2Query = await loadQ.POForecast2.replace(
+      /\${req\.query\.descrip}/g,
+      req.query.descrip || ''
+    ).replace(/\${endDate}/g, req.query.endDate || '');
+  const result21 = await request2.query(POForeCast2Query);
   const mergedResults = [...result2.recordset];
 
   const mergeArrays = (arr1, arr2) => {

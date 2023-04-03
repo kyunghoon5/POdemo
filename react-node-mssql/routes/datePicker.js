@@ -11,111 +11,34 @@ app.use(cors());
 var _ = require('lodash');
 
 // Configuration for the two SQL servers
-const configServer1 = require('../config');
-const configServer2 = require('../config2');
+const configServer1 = require('../sqlServer1');
+const configServer2 = require('../sqlServer2');
+const utils = require('../data/utils');
 
 router.get('/', async (req, res) => {
   const startDate = req.query.startDate;
   const endDate = req.query.endDate;
+   const loadQ = await utils.loadSqlQueries('events');
   // Connect to both servers
   const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
   let request1 = new sql.Request(sqlPool);
 
   const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
   let request2 = new sql.Request(sqlPool2);
+   const calendarDatePick1Query = await loadQ.calendarDatePick1.replace(
+     '${req.query.descrip}',
+     req.query.descrip
+   );
 
-  const result2 = await request2.query(`SELECT
-	
-  A.itemkey2, 
-  A.descrip  
-  
-  
-FROM 
-  (
-    SELECT	
+  const result2 = await request2.query(calendarDatePick1Query);
 
+   const calendarDatePick2Query = await loadQ.calendarDatePick2
+     .replace(/\${req\.query\.descrip}/g, req.query.descrip || '')
+     .replace(/\${startDate}/g, req.query.startDate || '')
+     .replace(/\${endDate}/g, req.query.endDate || '');
      
-      A.itemkey2, 
-      A.descrip
 
-    FROM 
-      artran10c A 
-    WHERE invdte >= Dateadd(year, -50, Getdate())
-      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
-      and A.itemkey2 not in ('_MANUAL_INVOICE') 
-      and A.descrip='${req.query.descrip}'
-      --and A.class in ('RB')
-      --Exclude RB
-      --and A.class not in ('RB', 'AA', 'Z')
-    group by 
-       
-      A.itemkey2, 
-      A.descrip
-	  
-  ) A  
-ORDER BY 
-  itemkey2 asc
-
-`);
-
-  const result21 = await request2.query(`WITH BOTranTmp as (
-  SELECT 
-    * 
-  FROM 
-    BOTran 
-  WHERE convert(date,invdte)between '${startDate}' AND '${endDate}'
-) 
-SELECT
-	
-  A.itemkey2, 
-  A.descrip,
-
-  A.qtyshp, 
-  A.qtybo
- 
- 
-  
-  
-FROM 
-  (
-    SELECT	
-	
-    
-      A.itemkey2, 
-      A.descrip,
-	  
-	  
-      sum(A.qtyshp) as qtyshp, 
-	  Isnull((SELECT Sum(qtybo)
-                      FROM   Botrantmp
-                      WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip), 0) AS qtybo
-					  
-					 
-              
-			   
-
-
-    FROM 
-      artran10c A 
-    WHERE convert(date,invdte)between '${startDate}' AND  '${endDate}'
-      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
-      and A.itemkey2 not in ('_MANUAL_INVOICE') 
-	  and A.descrip='${req.query.descrip}'
-      
-      --and A.class in ('RB')
-      --Exclude RB
-      --and A.class not in ('RB', 'AA', 'Z')
-    group by 
-      
-      A.itemkey2, 
-      A.descrip
-	  
-  ) A 
-  WHERE A.qtyshp > 0
-ORDER BY 
-  itemkey2 asc
-
-`);
+  const result21 = await request2.query(calendarDatePick2Query);
   const mergedResults = [...result2.recordset];
 
   const mergeArrays = (arr1, arr2) => {

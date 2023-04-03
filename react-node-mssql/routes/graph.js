@@ -11,12 +11,14 @@ app.use(cors());
 var _ = require('lodash');
 
 // Configuration for the two SQL servers
-const configServer1 = require('../config');
-const configServer2 = require('../config2');
+const configServer1 = require('../sqlServer1');
+const configServer2 = require('../sqlServer2');
+const utils = require('../data/utils');
 
 router.get('/', async (req, res) => {
   const startDate = req.query.startDate;
   const endDate = req.query.endDate;
+  const loadQ = await utils.loadSqlQueries('events');
   // Connect to both servers
   const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
   let request1 = new sql.Request(sqlPool);
@@ -24,44 +26,13 @@ router.get('/', async (req, res) => {
   const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
   let request2 = new sql.Request(sqlPool2);
 
-  const result2 = await request2.query(`SELECT
+  const allYearhraphQuery = await loadQ.allYeargraph.replace(
+    '${req.query.descrip}',
+    req.query.descrip
+  );
 
-A.descrip,
-YEAR(A.invdte) AS year,
-SUM(A.qtyshp) AS qtyshp,
- (SELECT SUM(qtyrec) FROM potran10c WHERE descrip=a.descrip and year(recdate)=year(a.invdte)) as qtyrec
-FROM
-artran10c A
-INNER JOIN (
-SELECT
+  const result2 = await request2.query(allYearhraphQuery);
 
-descrip
-FROM
-artran10c
-WHERE
-descrip NOT IN ('SHIP', 'CALENDAR', 'BROCHURE')
-AND itemkey2 NOT IN ('_MANUAL_INVOICE')
-AND descrip='${req.query.descrip}' 
---RB only
---AND class IN ('RB')
---Exclude RB
---AND class NOT IN ('RB', 'AA', 'Z')
-GROUP BY
-
-descrip
-) B ON  A.descrip = B.descrip
-WHERE
-CONVERT(DATE, A.invdte) BETWEEN (select min(recdate) from potran10c where descrip = a.descrip) AND GETDATE()
-GROUP BY
-
-A.descrip,
-YEAR(A.invdte)
-HAVING
-SUM(A.qtyshp) > -1
-ORDER BY
-year asc;
-
-`);
   const mergedResults = [...result2.recordset];
 
   if (req.query.descrip) {

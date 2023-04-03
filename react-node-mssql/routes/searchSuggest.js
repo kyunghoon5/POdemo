@@ -11,12 +11,14 @@ app.use(cors());
 var _ = require('lodash');
 
 // Configuration for the two SQL servers
-const configServer1 = require('../config');
-const configServer2 = require('../config2');
+const configServer1 = require('../sqlServer1');
+const configServer2 = require('../sqlServer2');
+const utils = require('../data/utils');
 
 router.get('/', async (req, res) => {
   const startDate = req.query.startDate;
   const endDate = req.query.endDate;
+  const loadQ = await utils.loadSqlQueries('events');
   // Connect to both servers
   const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
   let request1 = new sql.Request(sqlPool);
@@ -24,14 +26,11 @@ router.get('/', async (req, res) => {
   const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
   let request2 = new sql.Request(sqlPool2);
 
-  const result2 = await request2.query(`SELECT DISTINCT
-  
-     
-      descrip
-     
-  FROM [BYT_LEG].[dbo].[arinvt10]
-  where descrip is not null and descrip <> ''
-`);
+  const searchAutoQuery = await loadQ.searchAuto.replace(
+    '${req.query.descrip}',
+    req.query.descrip
+  );
+  const result2 = await request2.query(searchAutoQuery);
 //trim
   const mergedResults = [...result2.recordset].map((row) => {
     const trimmedRow = {};
