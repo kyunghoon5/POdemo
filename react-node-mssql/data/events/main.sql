@@ -1,0 +1,12 @@
+SELECT TOP (5) [bono]
+      ,[custno]
+      ,[invdte]
+      ,[salesmn]
+      ,[item] 
+      
+      ,[qtyshp]
+      ,[qtybo]
+      ,[price]
+      ,[invno]
+      ,[descrip]
+  FROM [BYT_LEG_TEST].[dbo].[BOTran]

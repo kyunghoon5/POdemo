@@ -25,13 +25,7 @@ app.get('/', function (req, res) {
     // query to the database and get the records
     request.query(
       `
-     SELECT top 5000
-     [descrip]
-	  ,[cost]
-    ,[itemkey2]
-	  ,[weight]
-    ,[start_dte]
-  FROM [BYT_LEG_TEST].[dbo].[arinvt10]
+     
   `,
       function (err, recordset) {
         if (err) console.log(err);

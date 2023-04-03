@@ -25,11 +25,16 @@ const poForecast = require('./routes/poForecast');
 const searchSuggest = require('./routes/searchSuggest');
 const newItemRank = require('./routes/newitemRank');
 const pieChartQ = require('./routes/pieChartQuarter');
+const dotenv = require('dotenv');
+dotenv.config();
+const { host_url3, host_url4 } = process.env;
+
+
 
 //for 3rd API
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const proxy = createProxyMiddleware({
-  target: 'http://192.168.16.40:89',
+  target: host_url3,
   changeOrigin: true,
 });
 const path = require('path');
@@ -721,6 +726,6 @@ from(SELECT  A.purno
 });
 
 // Start the server on port 3000
-app.listen(8082, '192.168.16.220', () => {
+app.listen(8082, host_url4, () => {
   console.log('Server listening on port 8082');
 });

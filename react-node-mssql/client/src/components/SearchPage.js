@@ -26,11 +26,11 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import DownloadButton from 'react-dfb';
 
 var _ = require('lodash');
 
 export const SearchPage = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [search, setSearch] = useState([]);
   const [record, setRecord] = useState([]);
   const [imageClicked, setImageClicked] = useState();
@@ -47,7 +47,7 @@ export const SearchPage = () => {
   const [suggest, setSuggest] = useState([]);
   const itemData = async () => {
     return await axios
-      .get('http://192.168.16.220:8082/searchAuto')
+      .get(`${BASE_URL}searchAuto`)
       .then((response) => setSuggest(response.data))
       .catch((err) => console.log(err));
   };
@@ -170,7 +170,7 @@ export const SearchPage = () => {
 
       setLoadingDatapick(true);
       const response = await axios.get(
-        `http://192.168.16.220:8082/dataPick?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
+        `${BASE_URL}dataPick?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
       );
       setSelectedData(response.data);
       setLoadingDatapick(false);
@@ -190,9 +190,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setloadingsoldP(true);
     axios
-      .get(
-        `http://192.168.16.220:8082/soldPercentage?descrip=${searchedRecord}`
-      )
+      .get(`${BASE_URL}soldPercentage?descrip=${searchedRecord}`)
 
       .then((response) => {
         setSelectedSoldPercentage(response.data);
@@ -237,7 +235,7 @@ export const SearchPage = () => {
 
       setloadingDatePicker(true);
       const response = await axios.get(
-        `http://192.168.16.220:8082/datePicker?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
+        `${BASE_URL}datePicker?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
       );
       setSelectedDatePicker(response.data);
       setloadingDatePicker(false);
@@ -288,7 +286,7 @@ export const SearchPage = () => {
 
     setLoading(true);
     axios
-      .get(`http://192.168.16.220:8082/mergeData?descrip=${searchedRecord}`)
+      .get(`${BASE_URL}mergeData?descrip=${searchedRecord}`)
 
       .then((response) => {
         setSearch(response.data);
@@ -304,7 +302,7 @@ export const SearchPage = () => {
     WDsetLoading(true);
     axios
       .get(
-        `http://192.168.16.220:8082/WatchDog/WDInfo?search=${searchedRecord}&user=undefined/`
+        `${BASE_URL}WatchDog/WDInfo?search=${searchedRecord}&user=undefined/`
       )
 
       .then((response) => {
@@ -320,9 +318,7 @@ export const SearchPage = () => {
 
     WDsetLoading2(true);
     axios
-      .get(
-        `http://192.168.16.220:8082/WatchDog/ColorList?search=${searchedRecord}`
-      )
+      .get(`${BASE_URL}WatchDog/ColorList?search=${searchedRecord}`)
 
       .then((response) => {
         WDsetSearch2(response.data);
@@ -338,7 +334,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setitemLoading(true);
     await axios
-      .get(`http://192.168.16.220:8082/itemRank?descrip=${searchedRecord}`)
+      .get(`${BASE_URL}itemRank?descrip=${searchedRecord}`)
 
       .then((response) => {
         setitemRank(response.data);
@@ -353,7 +349,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setnewitemLoading(true);
     await axios
-      .get(`http://192.168.16.220:8082/newItemRank?descrip=${searchedRecord}`)
+      .get(`${BASE_URL}newItemRank?descrip=${searchedRecord}`)
 
       .then((response) => {
         setnewitemRank(response.data);
@@ -367,7 +363,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading(true);
     await axios
-      .get(`http://192.168.16.220:8082/graph?descrip=${searchedRecord}`)
+      .get(`${BASE_URL}graph?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphLine(response.data);
@@ -380,7 +376,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading(true);
     await axios
-      .get(`http://192.168.16.220:8082/graphbymonth?descrip=${searchedRecord}`)
+      .get(`${BASE_URL}graphbymonth?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphLineByMonth(response.data);
@@ -409,7 +405,7 @@ export const SearchPage = () => {
     setGraphLoading2(true);
 
     await axios
-      .get(`http://192.168.16.220:8082/graphByItem?descrip=${searchedRecord}`)
+      .get(`${BASE_URL}graphByItem?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphByItem(response.data);
@@ -421,9 +417,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading2(true);
     await axios
-      .get(
-        `http://192.168.16.220:8082/graphByItemMonth?descrip=${searchedRecord}`
-      )
+      .get(`${BASE_URL}graphByItemMonth?descrip=${searchedRecord}`)
 
       .then((response) => {
         setGraphByItemMonth(response.data);
@@ -456,7 +450,7 @@ export const SearchPage = () => {
     const searchedRecord = record.toLowerCase();
     setpieLoading(true);
     await axios
-      .get(`http://192.168.16.220:8082/pieChart?descrip=${searchedRecord}`)
+      .get(`${BASE_URL}pieChart?descrip=${searchedRecord}`)
 
       .then((response) => {
         setpieChart(response.data);
@@ -472,7 +466,7 @@ export const SearchPage = () => {
   const handleDownload = () => {
     setLoadingfile(true);
     axios({
-      url: 'http://192.168.16.220:8082/download',
+      url: `${BASE_URL}download`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
@@ -491,7 +485,7 @@ export const SearchPage = () => {
   const handleDownload2 = () => {
     setLoadingfile2(true);
     axios({
-      url: 'http://192.168.16.220:8082/downloadnonRB',
+      url: `${BASE_URL}downloadnonRB`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
@@ -510,7 +504,7 @@ export const SearchPage = () => {
   const handleDownload3 = () => {
     setLoadingfile3(true);
     axios({
-      url: 'http://192.168.16.220:8082/downloadNewItem',
+      url: `${BASE_URL}downloadNewItem`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
@@ -529,7 +523,7 @@ export const SearchPage = () => {
   const handleDownload4 = () => {
     setLoadingfile4(true);
     axios({
-      url: 'http://192.168.16.220:8082/download1Q',
+      url: `${BASE_URL}download1Q`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
@@ -547,7 +541,7 @@ export const SearchPage = () => {
   const handleDownload5 = () => {
     setLoadingfile5(true);
     axios({
-      url: 'http://192.168.16.220:8082/download2Q',
+      url: `${BASE_URL}download2Q`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
@@ -565,7 +559,7 @@ export const SearchPage = () => {
   const handleDownload6 = () => {
     setLoadingfile6(true);
     axios({
-      url: 'http://192.168.16.220:8082/download3Q',
+      url: `${BASE_URL}download3Q`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
@@ -583,7 +577,7 @@ export const SearchPage = () => {
   const handleDownload7 = () => {
     setLoadingfile7(true);
     axios({
-      url: 'http://192.168.16.220:8082/download4Q',
+      url: `${BASE_URL}download4Q`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
@@ -602,7 +596,7 @@ export const SearchPage = () => {
   const handleDownload8 = () => {
     setLoadingfile8(true);
     axios({
-      url: 'http://192.168.16.220:8082/downloadCheck2021',
+      url: `${BASE_URL}downloadCheck2021`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
@@ -620,7 +614,7 @@ export const SearchPage = () => {
   const handleDownload9 = () => {
     setLoadingfile9(true);
     axios({
-      url: 'http://192.168.16.220:8082/downloadCheck2022',
+      url: `${BASE_URL}downloadCheck2022`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
@@ -634,138 +628,138 @@ export const SearchPage = () => {
     });
   };
 
-   const [loadingfile10, setLoadingfile10] = useState(false);
+  const [loadingfile10, setLoadingfile10] = useState(false);
 
-   const handleDownload10 = () => {
-     setLoadingfile10(true);
-     axios({
-       url: 'http://192.168.16.220:8082/downloadXSHORT',
-       method: 'GET',
-       responseType: 'blob',
-     }).then((response) => {
-       const url = window.URL.createObjectURL(new Blob([response.data]));
-       const link = document.createElement('a');
-       link.href = url;
-       link.setAttribute('download', 'XSHORT.xlsx');
-       document.body.appendChild(link);
-       link.click();
-       setLoadingfile10(false);
-     });
-   };
+  const handleDownload10 = () => {
+    setLoadingfile10(true);
+    axios({
+      url: `${BASE_URL}downloadXSHORT`,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'XSHORT.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile10(false);
+    });
+  };
 
-    const [loadingfile11, setLoadingfile11] = useState(false);
+  const [loadingfile11, setLoadingfile11] = useState(false);
 
-    const handleDownload11 = () => {
-      setLoadingfile11(true);
-      axios({
-        url: 'http://192.168.16.220:8082/downloadSHORT',
-        method: 'GET',
-        responseType: 'blob',
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'SHORT.xlsx');
-        document.body.appendChild(link);
-        link.click();
-        setLoadingfile11(false);
-      });
-    };
+  const handleDownload11 = () => {
+    setLoadingfile11(true);
+    axios({
+      url: `${BASE_URL}downloadSHORT`,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'SHORT.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile11(false);
+    });
+  };
 
-     const [loadingfile12, setLoadingfile12] = useState(false);
+  const [loadingfile12, setLoadingfile12] = useState(false);
 
-   const handleDownload12 = () => {
-     setLoadingfile12(true);
-     axios({
-       url: 'http://192.168.16.220:8082/downloadMIDSHORT',
-       method: 'GET',
-       responseType: 'blob',
-     }).then((response) => {
-       const url = window.URL.createObjectURL(new Blob([response.data]));
-       const link = document.createElement('a');
-       link.href = url;
-       link.setAttribute('download', 'MID_SHORT.xlsx');
-       document.body.appendChild(link);
-       link.click();
-       setLoadingfile12(false);
-     });
-   };
+  const handleDownload12 = () => {
+    setLoadingfile12(true);
+    axios({
+      url: `${BASE_URL}downloadMIDSHORT`,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'MID_SHORT.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile12(false);
+    });
+  };
 
-    const [loadingfile13, setLoadingfile13] = useState(false);
+  const [loadingfile13, setLoadingfile13] = useState(false);
 
-    const handleDownload13 = () => {
-      setLoadingfile13(true);
-      axios({
-        url: 'http://192.168.16.220:8082/downloadMID',
-        method: 'GET',
-        responseType: 'blob',
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'MID.xlsx');
-        document.body.appendChild(link);
-        link.click();
-        setLoadingfile13(false);
-      });
-    };
+  const handleDownload13 = () => {
+    setLoadingfile13(true);
+    axios({
+      url: `${BASE_URL}downloadMID`,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'MID.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile13(false);
+    });
+  };
 
-     const [loadingfile14, setLoadingfile14] = useState(false);
+  const [loadingfile14, setLoadingfile14] = useState(false);
 
-     const handleDownload14 = () => {
-       setLoadingfile14(true);
-       axios({
-         url: 'http://192.168.16.220:8082/downloadMIDLONG',
-         method: 'GET',
-         responseType: 'blob',
-       }).then((response) => {
-         const url = window.URL.createObjectURL(new Blob([response.data]));
-         const link = document.createElement('a');
-         link.href = url;
-         link.setAttribute('download', 'MID_LONG.xlsx');
-         document.body.appendChild(link);
-         link.click();
-         setLoadingfile14(false);
-       });
-     };
+  const handleDownload14 = () => {
+    setLoadingfile14(true);
+    axios({
+      url: `${BASE_URL}downloadMIDLONG`,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'MID_LONG.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile14(false);
+    });
+  };
 
-      const [loadingfile15, setLoadingfile15] = useState(false);
+  const [loadingfile15, setLoadingfile15] = useState(false);
 
-      const handleDownload15 = () => {
-        setLoadingfile15(true);
-        axios({
-          url: 'http://192.168.16.220:8082/downloadLONG',
-          method: 'GET',
-          responseType: 'blob',
-        }).then((response) => {
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'LONG.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          setLoadingfile15(false);
-        });
-      };
+  const handleDownload15 = () => {
+    setLoadingfile15(true);
+    axios({
+      url: `${BASE_URL}downloadLONG`,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'LONG.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile15(false);
+    });
+  };
 
-       const [loadingfile16, setLoadingfile16] = useState(false);
+  const [loadingfile16, setLoadingfile16] = useState(false);
 
-       const handleDownload16 = () => {
-         setLoadingfile16(true);
-         axios({
-           url: 'http://192.168.16.220:8082/downloadXLONG',
-           method: 'GET',
-           responseType: 'blob',
-         }).then((response) => {
-           const url = window.URL.createObjectURL(new Blob([response.data]));
-           const link = document.createElement('a');
-           link.href = url;
-           link.setAttribute('download', 'XLONG.xlsx');
-           document.body.appendChild(link);
-           link.click();
-           setLoadingfile16(false);
-         });
-       };
+  const handleDownload16 = () => {
+    setLoadingfile16(true);
+    axios({
+      url: `${BASE_URL}downloadXLONG`,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'XLONG.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      setLoadingfile16(false);
+    });
+  };
 
   //className & table-text
   const InfoItemOb = (props) => {
@@ -886,7 +880,7 @@ export const SearchPage = () => {
 
       setforecastLodingDatePicker(true);
       const response = await axios.get(
-        `http://192.168.16.220:8082/poForecast?descrip=${searchedRecord}&endDate=${endDate}`
+        `${BASE_URL}poForecast?descrip=${searchedRecord}&endDate=${endDate}`
       );
       setselforecastDatePicker(response.data);
       setforecastLodingDatePicker(false);
@@ -2739,13 +2733,37 @@ export const SearchPage = () => {
             <TreeItem nodeId="10" label="4Q.xlsx" onClick={handleDownload7} />
           </TreeItem>
           <TreeItem nodeId="14" label="Rank by Types">
-            <TreeItem nodeId="15" label="XSHORT.xlsx" onClick={handleDownload10} />
-            <TreeItem nodeId="16" label="SHORT.xlsx" onClick={handleDownload11} />
-            <TreeItem nodeId="17" label="MID_SHORT.xlsx" onClick={handleDownload12} />
+            <TreeItem
+              nodeId="15"
+              label="XSHORT.xlsx"
+              onClick={handleDownload10}
+            />
+            <TreeItem
+              nodeId="16"
+              label="SHORT.xlsx"
+              onClick={handleDownload11}
+            />
+            <TreeItem
+              nodeId="17"
+              label="MID_SHORT.xlsx"
+              onClick={handleDownload12}
+            />
             <TreeItem nodeId="18" label="MID.xlsx" onClick={handleDownload13} />
-            <TreeItem nodeId="19" label="MID_LONG.xlsx" onClick={handleDownload14} />
-              <TreeItem nodeId="20" label="LONG.xlsx" onClick={handleDownload15} />
-               <TreeItem nodeId="21" label="XLONG.xlsx" onClick={handleDownload16} />
+            <TreeItem
+              nodeId="19"
+              label="MID_LONG.xlsx"
+              onClick={handleDownload14}
+            />
+            <TreeItem
+              nodeId="20"
+              label="LONG.xlsx"
+              onClick={handleDownload15}
+            />
+            <TreeItem
+              nodeId="21"
+              label="XLONG.xlsx"
+              onClick={handleDownload16}
+            />
           </TreeItem>
           <TreeItem nodeId="11" label="Check List">
             <TreeItem
