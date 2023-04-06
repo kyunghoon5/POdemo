@@ -2702,7 +2702,7 @@ export const SearchPage = () => {
         </div>
       )}
 
-      <>
+      {/* <>
         <TreeView
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
@@ -2778,7 +2778,7 @@ export const SearchPage = () => {
             />
           </TreeItem>
         </TreeView>
-      </>
+      </> */}
     </div>
   );
 };
