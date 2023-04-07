@@ -103,6 +103,11 @@ app.get('/downloadXLONG', (req, res) => {
   res.download(file);
 });
 
+app.get('/downloadItemReorderPoint', (req, res) => {
+  const file = path.join(__dirname, '../../Data/item_reorder_point.xlsx');
+  res.download(file);
+});
+
 app.use('/WatchDog', proxy);
 app.use('/dataPick', dataPick);
 app.use('/datePicker', datePicker);
