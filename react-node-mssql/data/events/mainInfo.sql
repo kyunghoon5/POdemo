@@ -1,5 +1,5 @@
 SELECT
-
+a.class,
   A.itemkey2, 
   A.descrip,
   A.onhand,
@@ -11,6 +11,7 @@ SELECT
 FROM 
   (
     SELECT		
+	a.class,
       A.itemkey2, 
       A.descrip,
 	   (SELECT sum(onhand)
@@ -35,7 +36,7 @@ FROM
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
     group by 
-    
+    a.class,
       A.itemkey2, 
       A.descrip
 	  

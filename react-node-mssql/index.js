@@ -37,71 +37,71 @@ const proxy = createProxyMiddleware({
 });
 const path = require('path');
 
-app.get('/download', (req, res) => {
-  const file = path.join(__dirname, '../../Data/RB Rank.xlsx');
-  res.download(file);
-});
-app.get('/downloadnonRB', (req, res) => {
-  const file = path.join(__dirname, '../../Data/nonRB Rank.xlsx');
-  res.download(file);
-});
-app.get('/downloadNewItem', (req, res) => {
-  const file = path.join(__dirname, '../../Data/newItem Rank.xlsx');
-  res.download(file);
-});
-app.get('/download1Q', (req, res) => {
-  const file = path.join(__dirname, '../../Data/1Q.xlsx');
-  res.download(file);
-});
-app.get('/download2Q', (req, res) => {
-  const file = path.join(__dirname, '../../Data/2Q.xlsx');
-  res.download(file);
-});
-app.get('/download3Q', (req, res) => {
-  const file = path.join(__dirname, '../../Data/3Q.xlsx');
-  res.download(file);
-});
-app.get('/download4Q', (req, res) => {
-  const file = path.join(__dirname, '../../Data/4Q.xlsx');
-  res.download(file);
-});
-app.get('/downloadCheck2021', (req, res) => {
-  const file = path.join(__dirname, '../../Data/2020-2021 change_rate.xlsx');
-  res.download(file);
-});
+// app.get('/download', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/RB Rank.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadnonRB', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/nonRB Rank.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadNewItem', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/newItem Rank.xlsx');
+//   res.download(file);
+// });
+// app.get('/download1Q', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/1Q.xlsx');
+//   res.download(file);
+// });
+// app.get('/download2Q', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/2Q.xlsx');
+//   res.download(file);
+// });
+// app.get('/download3Q', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/3Q.xlsx');
+//   res.download(file);
+// });
+// app.get('/download4Q', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/4Q.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadCheck2021', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/2020-2021 change_rate.xlsx');
+//   res.download(file);
+// });
 
-app.get('/downloadCheck2022', (req, res) => {
-  const file = path.join(__dirname, '../../Data/2021-2022 change_rate.xlsx');
-  res.download(file);
-});
-app.get('/downloadXSHORT', (req, res) => {
-  const file = path.join(__dirname, '../../Data/size rank/XSHORT.xlsx');
-  res.download(file);
-});
-app.get('/downloadSHORT', (req, res) => {
-  const file = path.join(__dirname, '../../Data/size rank/SHORT.xlsx');
-  res.download(file);
-});
-app.get('/downloadMIDSHORT', (req, res) => {
-  const file = path.join(__dirname, '../../Data/size rank/MID_SHORT.xlsx');
-  res.download(file);
-});
-app.get('/downloadMID', (req, res) => {
-  const file = path.join(__dirname, '../../Data/size rank/MID.xlsx');
-  res.download(file);
-});
-app.get('/downloadMIDLONG', (req, res) => {
-  const file = path.join(__dirname, '../../Data/size rank/MID_LONG.xlsx');
-  res.download(file);
-});
-app.get('/downloadLONG', (req, res) => {
-  const file = path.join(__dirname, '../../Data/size rank/LONG.xlsx');
-  res.download(file);
-});
-app.get('/downloadXLONG', (req, res) => {
-  const file = path.join(__dirname, '../../Data/size rank/XLONG.xlsx');
-  res.download(file);
-});
+// app.get('/downloadCheck2022', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/2021-2022 change_rate.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadXSHORT', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/size rank/XSHORT.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadSHORT', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/size rank/SHORT.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadMIDSHORT', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/size rank/MID_SHORT.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadMID', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/size rank/MID.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadMIDLONG', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/size rank/MID_LONG.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadLONG', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/size rank/LONG.xlsx');
+//   res.download(file);
+// });
+// app.get('/downloadXLONG', (req, res) => {
+//   const file = path.join(__dirname, '../../Data/size rank/XLONG.xlsx');
+//   res.download(file);
+// });
 
 app.get('/downloadItemReorderPoint', (req, res) => {
   const file = path.join(__dirname, '../../Data/item_reorder_point.xlsx');
@@ -215,7 +215,35 @@ app.get('/mergeData', async (req, res) => {
       '${req.query.descrip}',
       req.query.descrip
     );
+
     const result26 = await request2.query(purnoSixthQuery);
+
+    const reOrderPointMainQuery = await loadQ.ReorderPointMain.replace(
+      '${req.query.descrip}',
+      req.query.descrip
+    );
+    const reOrderPointMain = await request2.query(reOrderPointMainQuery);
+
+    const poPendingDataQuery = await loadQ.POpendingData.replace(
+      '${req.query.descrip}',
+      req.query.descrip
+    );
+
+    const poPendingData = await request2.query(poPendingDataQuery);
+
+    const poLeadTimeQuery = await loadQ.POleadTime.replace(
+      '${req.query.descrip}',
+      req.query.descrip
+    );
+
+    const poLeadTime = await request2.query(poLeadTimeQuery);
+
+    const bofromLastRcvQuery = await loadQ.BOfromLastRcv.replace(
+      '${req.query.descrip}',
+      req.query.descrip
+    );
+
+    const bofromLastRcv = await request2.query(bofromLastRcvQuery);
 
     // Combine the two results into a single array
     const mergedResults = [...result2.recordset];
@@ -235,7 +263,11 @@ app.get('/mergeData', async (req, res) => {
       sold30,
       sold60,
       sold90,
-      sold365
+      sold365,
+      reorderPointO,
+      pendingDataO,
+      poLeadTimeO,
+      bofromLastRcvO
     ) => {
       return arr1.map((obj) => {
         const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
@@ -257,6 +289,16 @@ app.get('/mergeData', async (req, res) => {
         const numbers14 = sold60.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
+        const numbers15 = reorderPointO.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
+        const numbers16 = pendingDataO.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
+
+        const numbers17 = poLeadTimeO.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
 
         if (!numbers.length) {
           obj.first = numbers;
@@ -266,11 +308,12 @@ app.get('/mergeData', async (req, res) => {
           obj.fifth = numbers5;
           obj.sixth = numbers6;
           obj.sold30 = numbers7;
-
           obj.sold60 = numbers14;
           obj.sold90 = numbers12;
           obj.sold365 = numbers13;
-
+          obj.reorderPointO = numbers15;
+          obj.pendingDataO = numbers16;
+          obj.poLeadTimeO = numbers17;
           return obj;
         }
         obj.first = numbers.map((num) => ({
@@ -351,6 +394,20 @@ app.get('/mergeData', async (req, res) => {
           qtyshp: num.qtyshp,
         }));
 
+        obj.reorderPointO = numbers15.map((num) => ({
+          itemkey2: num.itemkey2,
+          vendno: num.vendno,
+          qtyshp: num.qtyshp,
+          avg_qtyshp: num.avg_qtyshp,
+        }));
+
+        obj.pendingDataO = numbers16.map((num) => ({ pending: num.pending }));
+
+        obj.poLeadTimeO = numbers17.map((num) => ({
+          avg_lead_time: num.avg_lead_time,
+          max_lead_time: num.max_lead_time,
+        }));
+
         return obj;
       });
     };
@@ -366,7 +423,10 @@ app.get('/mergeData', async (req, res) => {
       result2Sold30.recordset,
       result2Sold60.recordset,
       result2Sold90.recordset,
-      result2Sold365.recordset
+      result2Sold365.recordset,
+      reOrderPointMain.recordset,
+      poPendingData.recordset,
+      poLeadTime.recordset
     );
     //console.log(result);
     // Sort the merged results by ID

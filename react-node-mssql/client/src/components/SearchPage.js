@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import './tableAll.css';
 import BlankPage from './BlankPage';
@@ -15,7 +15,7 @@ import {
   Legend,
   ResponsiveContainer,
   Bar,
-  ComposedChart, 
+  ComposedChart,
   PieChart,
   Pie,
   Cell,
@@ -75,6 +75,7 @@ export const SearchPage = () => {
     setfilteredDate([]);
   };
 
+  console.log(search);
   //DATE buttonSearch console
   const date = new Date();
   const curDate = date.toISOString().split('T')[0];
@@ -840,6 +841,10 @@ export const SearchPage = () => {
     search.map((item) => _.sumBy(item.sold30, 'qtyshp'))
   );
 
+  const totalSold60 = _.sumBy(
+    search.map((item) => _.sumBy(item.sold60, 'qtyshp'))
+  );
+
   const totalItems5 = _.sumBy(
     search.map((item) => _.sumBy(item.sold90, 'qtyshp'))
   );
@@ -867,6 +872,22 @@ export const SearchPage = () => {
   const totalItems12 = _.sumBy(
     search.map((item) => _.sumBy(item.first, 'qtyord'))
   );
+
+  const totalItems13 = _.sumBy(
+    search.map((item) => _.sumBy(item.pendingDataO, 'pending'))
+  );
+
+  const totalItems14 = _.sumBy(
+    search.map((item) => _.sumBy(item.reorderPointO, 'avg_qtyshp'))
+  );
+
+  const totalItems15 =
+    _.sumBy(search.map((item) => _.sumBy(item.poLeadTimeO, 'avg_lead_time'))) /
+    filteredItems.length;
+
+  const totalItems16 =
+    _.sumBy(search.map((item) => _.sumBy(item.poLeadTimeO, 'max_lead_time'))) /
+    filteredItems.length;
 
   const totalItemsFromRCVD = _.sumBy(
     selectedData.map((item) => _.sumBy(item.new, 'qtyshp'))
@@ -1695,7 +1716,7 @@ export const SearchPage = () => {
             <tr className="row9">
               <InfoItemOb className="infoCol1" name="PO's 2" />
 
-              <td colSpan="2">
+              <td colSpan="3">
                 {WDsearch.map((item, idx) => (
                   <div key={idx}>
                     <span className="pctn" style={{ float: 'left' }}>
@@ -1708,7 +1729,7 @@ export const SearchPage = () => {
                   </div>
                 ))}
               </td>
-              {test2.map((item) => item.reqdate)[0] == null ? (
+              {/* {test2.map((item) => item.reqdate)[0] == null ? (
                 <td></td>
               ) : (
                 <td>
@@ -1719,7 +1740,7 @@ export const SearchPage = () => {
                     )[0]
                   }
                 </td>
-              )}
+              )} */}
               <td>SAMPLE:</td>
               <td>{WDsearch.map((item) => item.SampleShp)}</td>
               <td style={{ background: '#f0e68c' }}>EXP_date</td>
@@ -1799,7 +1820,7 @@ export const SearchPage = () => {
             </tr>
             <tr className="row10">
               <InfoItemOb className="infoCol1" name="ST_DATE" />
-              <td className="stDate" colSpan="2">
+              <td className="stDate" colSpan="3">
                 {
                   search
                     .filter((item) => item.start_dte)
@@ -1811,7 +1832,7 @@ export const SearchPage = () => {
                 }
               </td>
 
-              {test2.map((item) => item.recdate)[0] == null ? (
+              {/* {test2.map((item) => item.recdate)[0] == null ? (
                 <td></td>
               ) : (
                 <td>
@@ -1822,7 +1843,7 @@ export const SearchPage = () => {
                     )[0]
                   }
                 </td>
-              )}
+              )} */}
               <td>REORD:</td>
               <td>{WDsearch.map((item) => item.ReordShp)}</td>
               <td style={{ background: '#f0e68c' }}>RCV_date</td>
@@ -1915,13 +1936,14 @@ export const SearchPage = () => {
                 }
               </td>
 
-              {test2.map((item) => item.recdate)[0] == null ? (
+              {/* {test2.map((item) => item.recdate)[0] == null ? (
                 <td></td>
               ) : (
                 <td>{Math.floor(Difference_In_Days)} days</td>
-              )}
+              )} */}
+              <td>Class: {search.map((item) => item.class)[0]}</td>
 
-              {test2.map((item) => item.recdate)[0] == null ? (
+              {/* {test2.map((item) => item.recdate)[0] == null ? (
                 <td></td>
               ) : (
                 <td>
@@ -1932,7 +1954,7 @@ export const SearchPage = () => {
                     )[0]
                   }{' '}
                 </td>
-              )}
+              )} */}
 
               <td colSpan="2">
                 <DatePicker
@@ -1945,9 +1967,8 @@ export const SearchPage = () => {
 
               <td className="prv30">{past30c}</td>
               <td className="prv30">{past90c}</td>
-              <td className="prv30" style={{ background: '#f4a460' }}>
-                FORECAST
-              </td>
+              <td className="prv30">{past365c}</td>
+              <td></td>
               {/*purno No*/}
               <td>
                 {
@@ -1981,13 +2002,8 @@ export const SearchPage = () => {
                     .map((item) => item.portn)[0]
                 }
               </td>
-              <td>
-                {
-                  search
-                    .flatMap((item) => [item].concat(item.second ?? []))
-                    .filter((item) => item.portn)
-                    .map((item) => item.portn)[0]
-                }
+              <td className="prv30" style={{ background: '#f4a460' }}>
+                FORECAST
               </td>
               <td>
                 {
@@ -2213,7 +2229,7 @@ export const SearchPage = () => {
               )}
 
               {/* waiting & rcvd table  */}
-              {selectedItem.length > 0 ? (
+              {/* {selectedItem.length > 0 ? (
                 test2.map((item) => item.recdate)[0] == null ? (
                   <td style={{ color: 'red' }}>WAITING</td>
                 ) : (
@@ -2221,11 +2237,18 @@ export const SearchPage = () => {
                 )
               ) : (
                 <td></td>
-              )}
-
-              <td id="recDte" className="recDateSel_cal">
-                {new Date().toISOString().split('T')[0]}
+              )} */}
+              <td>
+                Vend:{' '}
+                {
+                  search.map((item) =>
+                    item.reorderPointO.map((item) => item.vendno)
+                  )[0]
+                }
               </td>
+              {/* <td id="recDte" className="recDateSel_cal">
+                {new Date().toISOString().split('T')[0]}
+              </td> */}
               <td colSpan="2">
                 <DatePicker
                   className="border-2 border-zinc-500 text-center"
@@ -2241,16 +2264,10 @@ export const SearchPage = () => {
                 {new Date().toISOString().split('T')[0]}
               </td>
               <td className="prv365">
-                {/* {new Date().toISOString().split('T')[0]} */}
-                {/* forecast datepicker */}
-                <DatePicker
-                  className="w-20 border-2 border-zinc-500 text-center"
-                  minDate={new Date()}
-                  maxDate={new Date().setDate(new Date().getDate() + 365)}
-                  selected={forecastDatePicker}
-                  onChange={(date) => setForecasteDatePicker(date)}
-                />
+                {new Date().toISOString().split('T')[0]}
               </td>
+
+              <td></td>
               {/*invoice No */}
               <td>
                 {
@@ -2285,12 +2302,20 @@ export const SearchPage = () => {
                 }
               </td>
               <td>
-                {
+                {/* forecast datepicker */}
+                <DatePicker
+                  className="w-20 border-2 border-zinc-500 text-center"
+                  minDate={new Date()}
+                  maxDate={new Date().setDate(new Date().getDate() + 365)}
+                  selected={forecastDatePicker}
+                  onChange={(date) => setForecasteDatePicker(date)}
+                />
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.second ?? []))
                     .filter((item) => item.invno)
                     .map((item) => item.invno)[0]
-                }
+                } */}
               </td>
               <td>
                 {
@@ -2310,7 +2335,8 @@ export const SearchPage = () => {
               {/*PO reorder */}
               <td style={{ background: '#f4a460' }}>REORDER</td>
               <td>
-                <div className="App">
+                {/*POS initial && Warning error*/}
+                {/* <div className="App">
                   <select
                     className="border border-zinc-500"
                     name="item-selected"
@@ -2319,7 +2345,7 @@ export const SearchPage = () => {
                       handleChange(e);
                     }}
                   >
-                    {/*POS initial && Warning error*/}
+                    
 
                     <option>POS_</option>
 
@@ -2377,61 +2403,68 @@ export const SearchPage = () => {
                       }
                     </option>
                   </select>
-                </div>
+                </div> */}
+                PENDING
               </td>
 
-              <td>SOLD</td>
               <td colSpan={2}>{Math.floor(Difference_In_Days2)} days</td>
               <td>SOLD30</td>
               <td>SOLD90</td>
-              <td>+{Difference_In_PostDayresult} days</td>
+              <td>SOLD365</td>
+              <td>AVG_SHP(1Y)</td>
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.sixth ?? []))
                     .filter((item) => item.purno)
                     .map((item) => item.purno)[0]
-                }
+                } */}
+                AVG_LEAD
               </td>
               <td>
-                {
+                MAX_LEAD
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fifth ?? []))
                     .filter((item) => item.purno)
                     .map((item) => item.purno)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                BO_lastRCV
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fourth ?? []))
                     .filter((item) => item.purno)
                     .map((item) => item.purno)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                Suggested
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.third ?? []))
                     .filter((item) => item.purno)
                     .map((item) => item.purno)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                +{Difference_In_PostDayresult} days
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.second ?? []))
                     .filter((item) => item.purno)
                     .map((item) => item.purno)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                FoSuggested
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.first ?? []))
                     .filter((item) => item.purno)
                     .map((item) => item.purno)[0]
-                }
+                } */}
               </td>
             </tr>
           </tbody>
@@ -2439,48 +2472,52 @@ export const SearchPage = () => {
           {/* body table3 */}
           {search.length > 0 ? (
             loading === false ? (
-              <tbody id="tt" className="bottomSearch">
-                <td style={{ padding: '0' }}>
-                  {search
-                    .filter((item) => item.itemkey2)
-                    .map((item, idx) => (
-                      <div
-                        className="pointername"
-                        key={idx}
-                        style={{ textAlign: 'left', color: 'blue' }}
-                        onClick={() => eachItemClick(item.itemkey2)}
-                      >
-                        {item.itemkey2}
-                      </div>
-                    ))}
+              <Fragment>
+                <tbody id="tt" className="bottomSearch">
+                  <>
+                    <td style={{ padding: '0' }}>
+                      {search
+                        .filter((item) => item.itemkey2)
+                        .map((item, idx) => (
+                          <div
+                            className="pointername"
+                            key={idx}
+                            style={{ textAlign: 'left', color: 'blue' }}
+                            onClick={() => eachItemClick(item.itemkey2)}
+                          >
+                            {item.itemkey2}
+                          </div>
+                        ))}
 
-                  <div style={{ textAlign: 'left' }}>TOTAL</div>
-                </td>
+                      <div style={{ textAlign: 'left' }}>TOTAL</div>
+                    </td>
+                  </>
 
-                <td style={{ padding: '0' }}>
-                  {search
-                    .filter(
-                      (item) =>
-                        typeof item.onhand === 'number' || item.onhand === null
-                    )
-                    .map((item, idx) => (
-                      <div key={idx}>{item.onhand}</div>
-                    ))}
-                  <div>{totalItems2}</div>
-                </td>
-                {/* needs reorder */}
-                <td style={{ padding: '0' }}>
-                  {result2.map((item, idx) =>
-                    item === undefined ? (
-                      <div key={idx}>0</div>
-                    ) : (
-                      <div key={idx}>{item.WMA}</div>
-                    )
-                  )}
-                  <div>{totalItems1}</div>
-                </td>
+                  <td style={{ padding: '0' }}>
+                    {search
+                      .filter(
+                        (item) =>
+                          typeof item.onhand === 'number' ||
+                          item.onhand === null
+                      )
+                      .map((item, idx) => (
+                        <div key={idx}>{item.onhand}</div>
+                      ))}
+                    <div>{totalItems2}</div>
+                  </td>
+                  {/*  reorder */}
+                  <td style={{ padding: '0' }}>
+                    {result2.map((item, idx) =>
+                      item === undefined ? (
+                        <div key={idx}>0</div>
+                      ) : (
+                        <div key={idx}>{item.WMA}</div>
+                      )
+                    )}
+                    <div>{totalItems1}</div>
+                  </td>
 
-                {selectedItem.length > 0 ? (
+                  {/* {selectedItem.length > 0 ? (
                   <td style={{ padding: '0' }}>
                     {mergeByKey.map((item, idx) => (
                       <div key={idx}>{item.qtyord}</div>
@@ -2501,11 +2538,17 @@ export const SearchPage = () => {
 
                     <div>{totalItems12}</div>
                   </td>
-                )}
+                )} */}
+                  <td style={{ padding: '0' }}>
+                    {search.map((item) =>
+                      item.pendingDataO.map((item) => <div>{item.pending}</div>)
+                    )}
+                    <div>{totalItems13}</div>
+                  </td>
 
-                {/*sold amount regarding RCVD date //loading && render table cell */}
+                  {/*sold amount regarding RCVD date //loading && render table cell */}
 
-                <td style={{ padding: '0' }}>
+                  {/* <td style={{ padding: '0' }}>
                   {test2.length
                     ? loadingDatapick === false
                       ? test2.map((item) => item.recdate)[0] == null
@@ -2530,92 +2573,108 @@ export const SearchPage = () => {
                       ))
                     : search.map((item, idx) => <div key={idx}>Loading</div>)}
                   <div>{totalItemsFromRCVD}</div>
-                </td>
+                </td> */}
 
-                <td style={{ padding: '0' }}>
-                  {selectedDatePicker.length
-                    ? loadingDatePicker === false
-                      ? selectedDatePicker.map((item, idx) =>
-                          item.datepicker.length ? (
-                            item.datepicker.map((item2, idx2) => (
-                              <div key={idx2}>{item2.qtyshp}</div>
-                            ))
-                          ) : (
-                            <div key={idx}>0</div>
+                  <td style={{ padding: '0' }}>
+                    {selectedDatePicker.length
+                      ? loadingDatePicker === false
+                        ? selectedDatePicker.map((item, idx) =>
+                            item.datepicker.length ? (
+                              item.datepicker.map((item2, idx2) => (
+                                <div key={idx2}>{item2.qtyshp}</div>
+                              ))
+                            ) : (
+                              <div key={idx}>0</div>
+                            )
                           )
-                        )
-                      : search.map((item, idx) => (
-                          <div key={idx}>Loading...</div>
+                        : search.map((item, idx) => (
+                            <div key={idx}>Loading...</div>
+                          ))
+                      : loadingDatePicker === false
+                      ? search.map((item, idx) => (
+                          <div key={idx}>{item.purno}</div>
                         ))
-                    : loadingDatePicker === false
-                    ? search.map((item, idx) => (
-                        <div key={idx}>{item.purno}</div>
-                      ))
-                    : search.map((item, idx) => <div key={idx}>Loading</div>)}
-                  <div>{totalDatePickerqty}</div>
-                </td>
+                      : search.map((item, idx) => <div key={idx}>Loading</div>)}
+                    <div>{totalDatePickerqty}</div>
+                  </td>
 
-                <td style={{ padding: '0' }}>
-                  {selectedDatePicker.length
-                    ? loadingDatePicker === false
-                      ? selectedDatePicker.map((item, idx) =>
-                          item.datepicker.length ? (
-                            item.datepicker.map((item2, idx2) => (
-                              <div key={idx2}>{item2.qtybo}</div>
-                            ))
-                          ) : (
-                            <div key={idx}>0</div>
+                  <td style={{ padding: '0' }}>
+                    {selectedDatePicker.length
+                      ? loadingDatePicker === false
+                        ? selectedDatePicker.map((item, idx) =>
+                            item.datepicker.length ? (
+                              item.datepicker.map((item2, idx2) => (
+                                <div key={idx2}>{item2.qtybo}</div>
+                              ))
+                            ) : (
+                              <div key={idx}>0</div>
+                            )
                           )
-                        )
-                      : search.map((item, idx) => (
-                          <div key={idx}>Loading...</div>
+                        : search.map((item, idx) => (
+                            <div key={idx}>Loading...</div>
+                          ))
+                      : loadingDatePicker === false
+                      ? search.map((item, idx) => (
+                          <div key={idx}>{item.purno}</div>
                         ))
-                    : loadingDatePicker === false
-                    ? search.map((item, idx) => (
-                        <div key={idx}>{item.purno}</div>
-                      ))
-                    : search.map((item, idx) => <div key={idx}>Loading</div>)}
-                  <div>{totalDatePickerbo}</div>
-                </td>
+                      : search.map((item, idx) => <div key={idx}>Loading</div>)}
+                    <div>{totalDatePickerbo}</div>
+                  </td>
 
-                {/*column table with nested array */}
-                <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.sold30.length ? (
-                      item.sold30.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyshp}</div>
-                      ))
-                    ) : (
-                      <div key={idx}>0</div>
-                    )
-                  )}
-                  <div>{totalItems4}</div>
-                </td>
+                  {/*column table with nested array */}
+                  <td style={{ padding: '0' }}>
+                    {search.map((item, idx) =>
+                      item.sold30.length ? (
+                        item.sold30.map((item2, idx2) => (
+                          <div key={idx2}>{item2.qtyshp}</div>
+                        ))
+                      ) : (
+                        <div key={idx}>0</div>
+                      )
+                    )}
+                    <div>{totalItems4}</div>
+                  </td>
 
-                <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.sold90.length ? (
-                      item.sold90.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyshp}</div>
-                      ))
-                    ) : (
-                      <div key={idx}>0</div>
-                    )
-                  )}
-                  <div>{totalItems5}</div>
-                </td>
+                  <td style={{ padding: '0' }}>
+                    {search.map((item, idx) =>
+                      item.sold90.length ? (
+                        item.sold90.map((item2, idx2) => (
+                          <div key={idx2}>{item2.qtyshp}</div>
+                        ))
+                      ) : (
+                        <div key={idx}>0</div>
+                      )
+                    )}
+                    <div>{totalItems5}</div>
+                  </td>
 
-                <td style={{ padding: '0' }}>
-                  {/* forecast render */}
-                  {amounts.map((num, idx) => (
-                    <div key={idx} className={num < 0 ? 'negative-amount' : ''}>
-                      {round(num)}
-                    </div>
-                  ))}
-                  <div>{totalAmount}</div>
-                </td>
-                {/*column table with nested array */}
-                <td style={{ padding: '0' }}>
+                  <td style={{ padding: '0' }}>
+                    {search.map((item, idx) =>
+                      item.sold365.length ? (
+                        item.sold365.map((item2, idx2) => (
+                          <div key={idx2}>{item2.qtyshp}</div>
+                        ))
+                      ) : (
+                        <div key={idx}>0</div>
+                      )
+                    )}
+                    <div>{totalItems6}</div>
+                  </td>
+
+                  <td style={{ padding: '0' }}>
+                    {search.map((item, idx) =>
+                      item.reorderPointO.length ? (
+                        item.reorderPointO.map((item2, idx2) => (
+                          <div key={idx2}>{item2.avg_qtyshp}</div>
+                        ))
+                      ) : (
+                        <div key={idx}>0</div>
+                      )
+                    )}
+                    <div>{totalItems14}</div>
+                  </td>
+                  {/*column table with nested array */}
+                  {/* <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.sixth.length ? (
                       item.sixth.map((item2, idx2) => (
@@ -2626,9 +2685,20 @@ export const SearchPage = () => {
                     )
                   )}
                   <div>{totalItems7}</div>
-                </td>
-                {/*column table with nested array */}
-                <td style={{ padding: '0' }}>
+                </td> */}
+                  <td style={{ padding: '0' }}>
+                    {search.map((item, idx) =>
+                      item.poLeadTimeO.length ? (
+                        item.poLeadTimeO.map((item2, idx2) => (
+                          <div key={idx2}>{item2.avg_lead_time}</div>
+                        ))
+                      ) : (
+                        <div key={idx}>0</div>
+                      )
+                    )}
+                  </td>
+                  {/*column table with nested array */}
+                  {/* <td style={{ padding: '0' }}>
                   {search.map((item, idx) =>
                     item.fifth.length ? (
                       item.fifth.map((item2, idx2) => (
@@ -2639,62 +2709,79 @@ export const SearchPage = () => {
                     )
                   )}
                   <div>{totalItems8}</div>
-                </td>
-                {/*column table with nested array */}
-                <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.fourth.length ? (
-                      item.fourth.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyord}</div>
-                      ))
-                    ) : (
-                      <div key={idx}></div>
-                    )
-                  )}
-                  <div>{totalItems9}</div>
-                </td>
-                {/*column table with nested array */}
-                <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.third.length ? (
-                      item.third.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyord}</div>
-                      ))
-                    ) : (
-                      <div key={idx}></div>
-                    )
-                  )}
-                  <div>{totalItems10}</div>
-                </td>
-                {/*column table with nested array */}
-                <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.second.length ? (
-                      item.second.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyord}</div>
-                      ))
-                    ) : (
-                      <div key={idx}></div>
-                    )
-                  )}
-                  <div>{totalItems11}</div>
-                </td>
-                {/*column table with nested array */}
-                <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.first.length ? (
-                      item.first.map((item2, idx2) => (
-                        <div key={idx2} style={{ borderRightWidth: '1px' }}>
-                          {item2.qtyord}
-                        </div>
-                      ))
-                    ) : (
-                      <div key={idx} style={{ borderRightWidth: '1px' }}></div>
-                    )
-                  )}
-                  <div style={{ borderRightWidth: '1px' }}>{totalItems12}</div>
-                </td>
-              </tbody>
+                </td> */}
+                  <td style={{ padding: '0' }}>
+                    {search.map((item, idx) =>
+                      item.poLeadTimeO.length ? (
+                        item.poLeadTimeO.map((item2, idx2) => (
+                          <div key={idx2}>{item2.max_lead_time}</div>
+                        ))
+                      ) : (
+                        <div key={idx}>0</div>
+                      )
+                    )}
+                  </td>
+                  {/*column table with nested array */}
+                  <td style={{ padding: '0' }}>
+                    {search.map((item, idx) =>
+                      item.fourth.length ? (
+                        item.fourth.map((item2, idx2) => (
+                          <div key={idx2}>{item2.qtyord}</div>
+                        ))
+                      ) : (
+                        <div key={idx}></div>
+                      )
+                    )}
+                    <div>{totalItems9}</div>
+                  </td>
+                  {/*column table with nested array */}
+                  <td style={{ padding: '0' }}>
+                    {search.map((item, idx) =>
+                      item.third.length ? (
+                        item.third.map((item2, idx2) => (
+                          <div key={idx2}>{item2.qtyord}</div>
+                        ))
+                      ) : (
+                        <div key={idx}></div>
+                      )
+                    )}
+                    <div>{totalItems10}</div>
+                  </td>
+                  {/*column table with nested array */}
+                  <td style={{ padding: '0' }}>
+                    {/* forecast render */}
+                    {amounts.map((num, idx) => (
+                      <div
+                        key={idx}
+                        className={num < 0 ? 'negative-amount' : ''}
+                      >
+                        {round(num)}
+                      </div>
+                    ))}
+                    <div>{totalAmount}</div>
+                  </td>
+                  {/*column table with nested array */}
+                  <td style={{ padding: '0' }}>
+                    {search.map((item, idx) =>
+                      item.first.length ? (
+                        item.first.map((item2, idx2) => (
+                          <div key={idx2} style={{ borderRightWidth: '1px' }}>
+                            {item2.qtyord}
+                          </div>
+                        ))
+                      ) : (
+                        <div
+                          key={idx}
+                          style={{ borderRightWidth: '1px' }}
+                        ></div>
+                      )
+                    )}
+                    <div style={{ borderRightWidth: '1px' }}>
+                      {totalItems12}
+                    </div>
+                  </td>
+                </tbody>
+              </Fragment>
             ) : (
               <>Loading...</>
             )
@@ -2735,83 +2822,7 @@ export const SearchPage = () => {
           </TreeItem>
         </TreeView>
       </>
-      {/* <>
-        <TreeView
-          defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-        >
-          <TreeItem nodeId="1" label="Rank by Items">
-            <TreeItem
-              nodeId="2"
-              label="RB_Rank.xlsx"
-              onClick={handleDownload}
-            />
-            <TreeItem
-              nodeId="3"
-              label="nonRB_Rank.xlsx"
-              onClick={handleDownload2}
-            />
-          </TreeItem>
-          <TreeItem nodeId="4" label="Rank by NewItems">
-            <TreeItem
-              nodeId="5"
-              label="newItem Rank.xlsx"
-              onClick={handleDownload3}
-            />
-          </TreeItem>
-          <TreeItem nodeId="6" label="Rank by Quarters">
-            <TreeItem nodeId="7" label="1Q.xlsx" onClick={handleDownload4} />
-            <TreeItem nodeId="8" label="2Q.xlsx" onClick={handleDownload5} />
-            <TreeItem nodeId="9" label="3Q.xlsx" onClick={handleDownload6} />
-            <TreeItem nodeId="10" label="4Q.xlsx" onClick={handleDownload7} />
-          </TreeItem>
-          <TreeItem nodeId="14" label="Rank by Types">
-            <TreeItem
-              nodeId="15"
-              label="XSHORT.xlsx"
-              onClick={handleDownload10}
-            />
-            <TreeItem
-              nodeId="16"
-              label="SHORT.xlsx"
-              onClick={handleDownload11}
-            />
-            <TreeItem
-              nodeId="17"
-              label="MID_SHORT.xlsx"
-              onClick={handleDownload12}
-            />
-            <TreeItem nodeId="18" label="MID.xlsx" onClick={handleDownload13} />
-            <TreeItem
-              nodeId="19"
-              label="MID_LONG.xlsx"
-              onClick={handleDownload14}
-            />
-            <TreeItem
-              nodeId="20"
-              label="LONG.xlsx"
-              onClick={handleDownload15}
-            />
-            <TreeItem
-              nodeId="21"
-              label="XLONG.xlsx"
-              onClick={handleDownload16}
-            />
-          </TreeItem>
-          <TreeItem nodeId="11" label="Check List">
-            <TreeItem
-              nodeId="12"
-              label="2020-2021 change_rate.xlsx"
-              onClick={handleDownload8}
-            />
-            <TreeItem
-              nodeId="13"
-              label="2021-2022 change_rate.xlsx"
-              onClick={handleDownload9}
-            />
-          </TreeItem>
-        </TreeView>
-      </> */}
+     
     </div>
   );
 };
