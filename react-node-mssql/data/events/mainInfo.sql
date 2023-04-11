@@ -14,9 +14,9 @@ FROM
 	a.class,
       A.itemkey2, 
       A.descrip,
-	   (SELECT sum(onhand)
+	  isnull( (SELECT sum(onhand)
                FROM   arinvt10
-               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip)            AS onhand,
+               WHERE  itemkey2 = A.itemkey2 and descrip = A.descrip),0 )           AS onhand,
 			   (select min(recdate) from potran10c where descrip = a.descrip) as start_dte,
 	  
       

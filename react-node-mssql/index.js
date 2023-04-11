@@ -104,7 +104,7 @@ const path = require('path');
 // });
 
 app.get('/downloadItemReorderPoint', (req, res) => {
-  const file = path.join(__dirname, '../../Data/item_reorder_point.xlsx');
+  const file = path.join(__dirname, '../../Data/itemReorderList.xlsx');
   res.download(file);
 });
 
@@ -129,13 +129,13 @@ app.get('/mergeData', async (req, res) => {
   try {
     // Connect to both servers
     const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
-    let request1 = new sql.Request(sqlPool);
+    // let request1 = new sql.Request(sqlPool);
 
     // Query the two servers for data
-    const result1 = await request1.query(`
-  `);
+  //   const result1 = await request1.query(`
+  // `);
 
-    const result11 = await request1.query(``);
+  //   const result11 = await request1.query(``);
 
     // Connect to both servers
     const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
@@ -176,47 +176,47 @@ app.get('/mergeData', async (req, res) => {
 
     // rank non RB
     //Seach value parsing into query
-    const purnoFirstQuery = await loadQ.purnoFirst.replace(
-      '${req.query.descrip}',
-      req.query.descrip
-    );
-    const result21 = await request2.query(purnoFirstQuery);
+    // const purnoFirstQuery = await loadQ.purnoFirst.replace(
+    //   '${req.query.descrip}',
+    //   req.query.descrip
+    // );
+    // const result21 = await request2.query(purnoFirstQuery);
 
-    //Seach value parsing into query
-    const purnoSecondQuery = await loadQ.purnoSecond.replace(
-      '${req.query.descrip}',
-      req.query.descrip
-    );
-    const result22 = await request2.query(purnoSecondQuery);
+    // //Seach value parsing into query
+    // const purnoSecondQuery = await loadQ.purnoSecond.replace(
+    //   '${req.query.descrip}',
+    //   req.query.descrip
+    // );
+    // const result22 = await request2.query(purnoSecondQuery);
 
-    //Seach value parsing into query
-    const purnoThirdQuery = await loadQ.purnoThird.replace(
-      '${req.query.descrip}',
-      req.query.descrip
-    );
-    const result23 = await request2.query(purnoThirdQuery);
+    // //Seach value parsing into query
+    // const purnoThirdQuery = await loadQ.purnoThird.replace(
+    //   '${req.query.descrip}',
+    //   req.query.descrip
+    // );
+    // const result23 = await request2.query(purnoThirdQuery);
 
-    //Seach value parsing into query
-    const purnoFourthQuery = await loadQ.purnoFourth.replace(
-      '${req.query.descrip}',
-      req.query.descrip
-    );
-    const result24 = await request2.query(purnoFourthQuery);
+    // //Seach value parsing into query
+    // const purnoFourthQuery = await loadQ.purnoFourth.replace(
+    //   '${req.query.descrip}',
+    //   req.query.descrip
+    // );
+    // const result24 = await request2.query(purnoFourthQuery);
 
-    //Seach value parsing into query
-    const purnoFifthQuery = await loadQ.purnoFifth.replace(
-      '${req.query.descrip}',
-      req.query.descrip
-    );
-    const result25 = await request2.query(purnoFifthQuery);
+    // //Seach value parsing into query
+    // const purnoFifthQuery = await loadQ.purnoFifth.replace(
+    //   '${req.query.descrip}',
+    //   req.query.descrip
+    // );
+    // const result25 = await request2.query(purnoFifthQuery);
 
-    //Seach value parsing into query
-    const purnoSixthQuery = await loadQ.purnoSixth.replace(
-      '${req.query.descrip}',
-      req.query.descrip
-    );
+    // //Seach value parsing into query
+    // const purnoSixthQuery = await loadQ.purnoSixth.replace(
+    //   '${req.query.descrip}',
+    //   req.query.descrip
+    // );
 
-    const result26 = await request2.query(purnoSixthQuery);
+    // const result26 = await request2.query(purnoSixthQuery);
 
     const reOrderPointMainQuery = await loadQ.ReorderPointMain.replace(
       '${req.query.descrip}',
@@ -254,12 +254,12 @@ app.get('/mergeData', async (req, res) => {
     //obj recursive merge + POorder
     const mergeArrays = (
       arr1,
-      arr2,
-      arr3,
-      arr4,
-      arr5,
-      arr6,
-      arr7,
+      // arr2,
+      // arr3,
+      // arr4,
+      // arr5,
+      // arr6,
+      // arr7,
       sold30,
       sold60,
       sold90,
@@ -270,12 +270,12 @@ app.get('/mergeData', async (req, res) => {
       bofromLastRcvO
     ) => {
       return arr1.map((obj) => {
-        const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
-        const numbers2 = arr3.filter((item) => item.itemkey2 === obj.itemkey2);
-        const numbers3 = arr4.filter((item) => item.itemkey2 === obj.itemkey2);
-        const numbers4 = arr5.filter((item) => item.itemkey2 === obj.itemkey2);
-        const numbers5 = arr6.filter((item) => item.itemkey2 === obj.itemkey2);
-        const numbers6 = arr7.filter((item) => item.itemkey2 === obj.itemkey2);
+        // const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
+        // const numbers2 = arr3.filter((item) => item.itemkey2 === obj.itemkey2);
+        // const numbers3 = arr4.filter((item) => item.itemkey2 === obj.itemkey2);
+        // const numbers4 = arr5.filter((item) => item.itemkey2 === obj.itemkey2);
+        // const numbers5 = arr6.filter((item) => item.itemkey2 === obj.itemkey2);
+        // const numbers6 = arr7.filter((item) => item.itemkey2 === obj.itemkey2);
         const numbers7 = sold30.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
@@ -300,13 +300,15 @@ app.get('/mergeData', async (req, res) => {
           (item) => item.itemkey2 === obj.itemkey2
         );
 
-        if (!numbers.length) {
-          obj.first = numbers;
-          obj.second = numbers2;
-          obj.third = numbers3;
-          obj.fourth = numbers4;
-          obj.fifth = numbers5;
-          obj.sixth = numbers6;
+        const numbers18 = bofromLastRcvO.filter((item)=>item.itemkey2 === obj.itemkey2)
+
+        if (!numbers7.length) {
+          // obj.first = numbers;
+          // obj.second = numbers2;
+          // obj.third = numbers3;
+          // obj.fourth = numbers4;
+          // obj.fifth = numbers5;
+          // obj.sixth = numbers6;
           obj.sold30 = numbers7;
           obj.sold60 = numbers14;
           obj.sold90 = numbers12;
@@ -314,74 +316,75 @@ app.get('/mergeData', async (req, res) => {
           obj.reorderPointO = numbers15;
           obj.pendingDataO = numbers16;
           obj.poLeadTimeO = numbers17;
+          obj.bofromLastRcvO = numbers18;
           return obj;
         }
-        obj.first = numbers.map((num) => ({
-          itemkey2: num.itemkey2,
-          purno: num.purno,
-          qtyord: num.qtyord,
-          portn: num.portn,
-          purdate: num.purdate,
-          shpdate: num.shpdate,
-          reqdate: num.reqdate,
-          recdate: num.recdate,
-          invno: num.invno,
-        }));
-        obj.second = numbers2.map((num) => ({
-          itemkey2: num.itemkey2,
-          purno: num.purno,
-          qtyord: num.qtyord,
-          portn: num.portn,
-          purdate: num.purdate,
-          shpdate: num.shpdate,
-          reqdate: num.reqdate,
-          recdate: num.recdate,
-          invno: num.invno,
-        }));
-        obj.third = numbers3.map((num) => ({
-          itemkey2: num.itemkey2,
-          purno: num.purno,
-          qtyord: num.qtyord,
-          portn: num.portn,
-          purdate: num.purdate,
-          shpdate: num.shpdate,
-          reqdate: num.reqdate,
-          recdate: num.recdate,
-          invno: num.invno,
-        }));
-        obj.fourth = numbers4.map((num) => ({
-          itemkey2: num.itemkey2,
-          purno: num.purno,
-          qtyord: num.qtyord,
-          portn: num.portn,
-          purdate: num.purdate,
-          shpdate: num.shpdate,
-          reqdate: num.reqdate,
-          recdate: num.recdate,
-          invno: num.invno,
-        }));
-        obj.fifth = numbers5.map((num) => ({
-          itemkey2: num.itemkey2,
-          purno: num.purno,
-          qtyord: num.qtyord,
-          portn: num.portn,
-          purdate: num.purdate,
-          shpdate: num.shpdate,
-          reqdate: num.reqdate,
-          recdate: num.recdate,
-          invno: num.invno,
-        }));
-        obj.sixth = numbers6.map((num) => ({
-          itemkey2: num.itemkey2,
-          purno: num.purno,
-          qtyord: num.qtyord,
-          portn: num.portn,
-          purdate: num.purdate,
-          shpdate: num.shpdate,
-          reqdate: num.reqdate,
-          recdate: num.recdate,
-          invno: num.invno,
-        }));
+        // obj.first = numbers.map((num) => ({
+        //   itemkey2: num.itemkey2,
+        //   purno: num.purno,
+        //   qtyord: num.qtyord,
+        //   portn: num.portn,
+        //   purdate: num.purdate,
+        //   shpdate: num.shpdate,
+        //   reqdate: num.reqdate,
+        //   recdate: num.recdate,
+        //   invno: num.invno,
+        // }));
+        // obj.second = numbers2.map((num) => ({
+        //   itemkey2: num.itemkey2,
+        //   purno: num.purno,
+        //   qtyord: num.qtyord,
+        //   portn: num.portn,
+        //   purdate: num.purdate,
+        //   shpdate: num.shpdate,
+        //   reqdate: num.reqdate,
+        //   recdate: num.recdate,
+        //   invno: num.invno,
+        // }));
+        // obj.third = numbers3.map((num) => ({
+        //   itemkey2: num.itemkey2,
+        //   purno: num.purno,
+        //   qtyord: num.qtyord,
+        //   portn: num.portn,
+        //   purdate: num.purdate,
+        //   shpdate: num.shpdate,
+        //   reqdate: num.reqdate,
+        //   recdate: num.recdate,
+        //   invno: num.invno,
+        // }));
+        // obj.fourth = numbers4.map((num) => ({
+        //   itemkey2: num.itemkey2,
+        //   purno: num.purno,
+        //   qtyord: num.qtyord,
+        //   portn: num.portn,
+        //   purdate: num.purdate,
+        //   shpdate: num.shpdate,
+        //   reqdate: num.reqdate,
+        //   recdate: num.recdate,
+        //   invno: num.invno,
+        // }));
+        // obj.fifth = numbers5.map((num) => ({
+        //   itemkey2: num.itemkey2,
+        //   purno: num.purno,
+        //   qtyord: num.qtyord,
+        //   portn: num.portn,
+        //   purdate: num.purdate,
+        //   shpdate: num.shpdate,
+        //   reqdate: num.reqdate,
+        //   recdate: num.recdate,
+        //   invno: num.invno,
+        // }));
+        // obj.sixth = numbers6.map((num) => ({
+        //   itemkey2: num.itemkey2,
+        //   purno: num.purno,
+        //   qtyord: num.qtyord,
+        //   portn: num.portn,
+        //   purdate: num.purdate,
+        //   shpdate: num.shpdate,
+        //   reqdate: num.reqdate,
+        //   recdate: num.recdate,
+        //   invno: num.invno,
+        // }));
 
         obj.sold30 = numbers7.map((num) => ({
           qtyshp: num.qtyshp,
@@ -401,12 +404,18 @@ app.get('/mergeData', async (req, res) => {
           avg_qtyshp: num.avg_qtyshp,
         }));
 
-        obj.pendingDataO = numbers16.map((num) => ({ pending: num.pending }));
+        obj.pendingDataO = numbers16.map((num) => ({
+          itemkey2: num.itemkey2,
+          pending: num.pending,
+        }));
 
         obj.poLeadTimeO = numbers17.map((num) => ({
+          itemkey2: num.itemkey2,
           avg_lead_time: num.avg_lead_time,
           max_lead_time: num.max_lead_time,
         }));
+
+        obj.bofromLastRcvO = numbers18.map((num)=> ({itemkey2: num.itemkey2,last_rec: num.last_rec, qtybo: num.qtybo}))
 
         return obj;
       });
@@ -414,19 +423,21 @@ app.get('/mergeData', async (req, res) => {
 
     const result = mergeArrays(
       result2.recordset,
-      result21.recordset,
-      result22.recordset,
-      result23.recordset,
-      result24.recordset,
-      result25.recordset,
-      result26.recordset,
+      // result21.recordset,
+      // result22.recordset,
+      // result23.recordset,
+      // result24.recordset,
+      // result25.recordset,
+      // result26.recordset,
       result2Sold30.recordset,
       result2Sold60.recordset,
       result2Sold90.recordset,
       result2Sold365.recordset,
       reOrderPointMain.recordset,
       poPendingData.recordset,
-      poLeadTime.recordset
+      poLeadTime.recordset,
+      bofromLastRcv.recordset
+
     );
     //console.log(result);
     // Sort the merged results by ID

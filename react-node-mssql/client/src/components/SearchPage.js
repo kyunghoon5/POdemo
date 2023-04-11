@@ -26,6 +26,7 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
+import { zipWith } from 'lodash';
 
 var _ = require('lodash');
 
@@ -75,7 +76,6 @@ export const SearchPage = () => {
     setfilteredDate([]);
   };
 
-  console.log(search);
   //DATE buttonSearch console
   const date = new Date();
   const curDate = date.toISOString().split('T')[0];
@@ -90,60 +90,60 @@ export const SearchPage = () => {
   const past365c = past365.toISOString().split('T')[0];
 
   //POS select String to Array
-  const [selectedItem, setSelectedItem] = useState('');
+  // const [selectedItem, setSelectedItem] = useState('');
 
-  const handleChange = (e) => {
-    let value = e.target.value;
-    setSelectedItem(value);
-  };
+  // const handleChange = (e) => {
+  //   let value = e.target.value;
+  //   setSelectedItem(value);
+  // };
 
-  const test2 =
-    selectedItem == 'POS_'
-      ? search
-          .flatMap((item) => [item].concat(item.first ?? []))
-          .map((item) => item)
-      : search.flatMap((item) =>
-          item.first
-            .filter(
-              (item2) =>
-                item2.purno && item2.purno.trim() === String(selectedItem)
-            )
-            .concat(
-              item.second.filter(
-                (item2) =>
-                  item2.purno && item2.purno.trim() === String(selectedItem)
-              )
-            )
-            .concat(
-              item.third.filter(
-                (item2) =>
-                  item2.purno && item2.purno.trim() === String(selectedItem)
-              )
-            )
-            .concat(
-              item.fourth.filter(
-                (item2) =>
-                  item2.purno && item2.purno.trim() === String(selectedItem)
-              )
-            )
-            .concat(
-              item.fifth.filter(
-                (item2) =>
-                  item2.purno && item2.purno.trim() === String(selectedItem)
-              )
-            )
-            .concat(
-              item.sixth.filter(
-                (item2) =>
-                  item2.purno && item2.purno.trim() === String(selectedItem)
-              )
-            )
-        );
+  // const test2 =
+  //   selectedItem == 'POS_'
+  //     ? search
+  //         .flatMap((item) => [item].concat(item.first ?? []))
+  //         .map((item) => item)
+  //     : search.flatMap((item) =>
+  //         item.first
+  //           .filter(
+  //             (item2) =>
+  //               item2.purno && item2.purno.trim() === String(selectedItem)
+  //           )
+  //           .concat(
+  //             item.second.filter(
+  //               (item2) =>
+  //                 item2.purno && item2.purno.trim() === String(selectedItem)
+  //             )
+  //           )
+  //           .concat(
+  //             item.third.filter(
+  //               (item2) =>
+  //                 item2.purno && item2.purno.trim() === String(selectedItem)
+  //             )
+  //           )
+  //           .concat(
+  //             item.fourth.filter(
+  //               (item2) =>
+  //                 item2.purno && item2.purno.trim() === String(selectedItem)
+  //             )
+  //           )
+  //           .concat(
+  //             item.fifth.filter(
+  //               (item2) =>
+  //                 item2.purno && item2.purno.trim() === String(selectedItem)
+  //             )
+  //           )
+  //           .concat(
+  //             item.sixth.filter(
+  //               (item2) =>
+  //                 item2.purno && item2.purno.trim() === String(selectedItem)
+  //             )
+  //           )
+  //       );
 
-  const mergeByKey = search.map((itm) => ({
-    ...test2.find((item) => item.itemkey2 === itm.itemkey2 && item),
-    ...itm,
-  }));
+  // const mergeByKey = search.map((itm) => ({
+  //   ...test2.find((item) => item.itemkey2 === itm.itemkey2 && item),
+  //   ...itm,
+  // }));
 
   // console.log(test2);
   // console.log(search)
@@ -152,33 +152,33 @@ export const SearchPage = () => {
   //console.log(selectedItem)
 
   //DataPick regarding option value
-  const [loadingDatapick, setLoadingDatapick] = useState(false);
-  const [selectedData, setSelectedData] = useState([]);
+  // const [loadingDatapick, setLoadingDatapick] = useState(false);
+  // const [selectedData, setSelectedData] = useState([]);
 
-  useEffect(() => {
-    if (selectedItem.length === 0) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (selectedItem.length === 0) {
+  //     return;
+  //   }
 
-    const fetchData = async () => {
-      const searchedRecord = record.toLowerCase();
-      const curDate = new Date().toISOString().split('T')[0];
-      const endDate = curDate;
+  //   const fetchData = async () => {
+  //     const searchedRecord = record.toLowerCase();
+  //     const curDate = new Date().toISOString().split('T')[0];
+  //     const endDate = curDate;
 
-      const startDate = test2.map(
-        (item) => new Date(item.recdate).toISOString().split('T')[0]
-      )[0];
+  //     const startDate = test2.map(
+  //       (item) => new Date(item.recdate).toISOString().split('T')[0]
+  //     )[0];
 
-      setLoadingDatapick(true);
-      const response = await axios.get(
-        `${BASE_URL}dataPick?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
-      );
-      setSelectedData(response.data);
-      setLoadingDatapick(false);
-    };
+  //     setLoadingDatapick(true);
+  //     const response = await axios.get(
+  //       `${BASE_URL}dataPick?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
+  //     );
+  //     setSelectedData(response.data);
+  //     setLoadingDatapick(false);
+  //   };
 
-    fetchData();
-  }, [selectedItem]);
+  //   fetchData();
+  // }, [selectedItem]);
 
   //data from dataPick
   //console.log(selectedData);
@@ -208,8 +208,8 @@ export const SearchPage = () => {
 
   //dropdownlist list reset
   const reset = () => {
-    setSelectedItem([]);
-    setSelectedData([]);
+    // setSelectedItem([]);
+    // setSelectedData([]);
     setSelectedSold([]);
     setValue2([]);
     WDsetSearch([]);
@@ -372,6 +372,35 @@ export const SearchPage = () => {
       });
   };
 
+  const lastyear = graphLine.map((item)=>item.year).at(-1)
+  const lastyearSoldQty = graphLine.map((item)=>item.qtyshp).at(-1)
+    const lastyearSoldQty2 = graphLine.map((item)=>item.qtyshp).at(-2)
+    const lastyearSoldQty3 = graphLine.map((item)=>item.qtyshp).at(-3)
+    const lastyearSoldQty4 = graphLine.map((item)=>item.qtyshp).at(-4)
+    const lastyearSoldQty5 = graphLine.map((item)=>item.qtyshp).at(-5)
+    const lastyearSoldQty6 = graphLine.map((item)=>item.qtyshp).at(-6)
+    const lastyearSoldQty7 = graphLine.map((item)=>item.qtyshp).at(-7)
+
+    const lastyearRCVQty = graphLine.map((item)=>item.qtyrec).at(-1)
+    const lastyearRCVQty2 = graphLine.map((item)=>item.qtyrec).at(-2)
+    const lastyearRCVQty3 = graphLine.map((item)=>item.qtyrec).at(-3)
+    const lastyearRCVQty4 = graphLine.map((item)=>item.qtyrec).at(-4)
+    const lastyearRCVQty5 = graphLine.map((item)=>item.qtyrec).at(-5)
+    const lastyearRCVQty6 = graphLine.map((item)=>item.qtyrec).at(-6)
+
+    const YoY = ((lastyearSoldQty/lastyearSoldQty2)-1)*100
+    const YoY2 = ((lastyearSoldQty2/lastyearSoldQty3)-1)*100
+    const YoY3 = ((lastyearSoldQty3/lastyearSoldQty4)-1)*100
+    const YoY4 = ((lastyearSoldQty4/lastyearSoldQty5)-1)*100
+    const YoY5 = ((lastyearSoldQty5/lastyearSoldQty6)-1)*100
+    const YoY6 = ((lastyearSoldQty6/lastyearSoldQty7)-1)*100
+
+  
+
+
+
+
+  
   const [graphLineByMonth, setGraphLineByMonth] = useState([]);
   const graphLineByMonthF = async () => {
     const searchedRecord = record.toLowerCase();
@@ -385,11 +414,16 @@ export const SearchPage = () => {
       });
   };
 
+
+  
+
   const [value2, setValue2] = useState('');
   const handleChangeGraphByMonth = (e) => {
     const selectedMonth = e.target.value;
     setValue2(selectedMonth); // update the value of value2
   };
+
+
 
   const monthLine = graphLineByMonth.filter(
     (item) => item.year === Number(value2)
@@ -397,6 +431,61 @@ export const SearchPage = () => {
   const monthLinePrv = graphLineByMonth.filter(
     (item) => item.year === Number(value2) - 1
   );
+
+    const lastmonthSoldQty1F = graphLineByMonth.filter((item)=>item.year === Number(value2))
+    
+  const lastmonthSoldQty1 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(0)
+  const lastmonthSoldQty2 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(1)
+   const lastmonthSoldQty3 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(2)
+    const lastmonthSoldQty4 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(3)
+     const lastmonthSoldQty5 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(4)
+      const lastmonthSoldQty6 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(5)
+       const lastmonthSoldQty7 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(6)
+        const lastmonthSoldQty8 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(7)
+         const lastmonthSoldQty9 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(8)
+          const lastmonthSoldQty10 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(9)
+           const lastmonthSoldQty11 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(10)
+            const lastmonthSoldQty12 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(11)
+            
+
+             const lastmonthRCVQty1 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(0)
+             const lastmonthRCVQty2 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(1)
+             const lastmonthRCVQty3 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(2)
+             const lastmonthRCVQty4 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(3)
+             const lastmonthRCVQty5 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(4)
+             const lastmonthRCVQty6 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(5)
+             const lastmonthRCVQty7 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(6)
+             const lastmonthRCVQty8 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(7)
+             const lastmonthRCVQty9 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(8)
+             const lastmonthRCVQty10 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(9)
+             const lastmonthRCVQty11 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(10)
+             const lastmonthRCVQty12 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(11)
+
+                    const lastmonthSoldQty2F = graphLineByMonth.filter((item)=>item.year === Number(value2)-1)
+             const lastmonthSoldQty13 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(0)
+  const lastmonthSoldQty14 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(1)
+   const lastmonthSoldQty15 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(2)
+    const lastmonthSoldQty16 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(3)
+     const lastmonthSoldQty17 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(4)
+      const lastmonthSoldQty18 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(5)
+       const lastmonthSoldQty19 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(6)
+        const lastmonthSoldQty20 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(7)
+         const lastmonthSoldQty21 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(8)
+          const lastmonthSoldQty22 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(9)
+           const lastmonthSoldQty23 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(10)
+            const lastmonthSoldQty24 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(11)
+
+      
+             
+             const YoYEachMonth = ((lastmonthSoldQty12/lastmonthSoldQty24)-1) *100
+
+             console.log(YoYEachMonth)
+             
+
+
+
+
+ 
 
   //itemkey2
   const [graphLoading2, setGraphLoading2] = useState(false);
@@ -796,11 +885,11 @@ export const SearchPage = () => {
   );
 
   //Calculating the numbers of days between two dates
-  const dateC = test2.map((item) => item.recdate)[0];
-  const date1 = new Date(dateC);
+  // const dateC = test2.map((item) => item.recdate)[0];
+  // const date1 = new Date(dateC);
   const date2 = new Date();
-  const Difference_In_Time = date2.getTime() - date1.getTime();
-  const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  // const Difference_In_Time = date2.getTime() - date1.getTime();
+  // const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   //Calculating the numbers of days between two dates for datepicker
   const date3 = endDatePicker;
   const date4 = startDatePicker;
@@ -833,8 +922,8 @@ export const SearchPage = () => {
   const totalItems2 = _.sum(filteredItems2);
 
   //total POS_
-  const filteredItems3 = mergeByKey.map((item) => item.qtyord);
-  const totalItems3 = _.sum(filteredItems3);
+  // const filteredItems3 = mergeByKey.map((item) => item.qtyord);
+  // const totalItems3 = _.sum(filteredItems3);
 
   //total Sold30, 90 365
   const totalItems4 = _.sumBy(
@@ -854,24 +943,24 @@ export const SearchPage = () => {
   );
 
   //total PO qty
-  const totalItems7 = _.sumBy(
-    search.map((item) => _.sumBy(item.sixth, 'qtyord'))
-  );
-  const totalItems8 = _.sumBy(
-    search.map((item) => _.sumBy(item.fifth, 'qtyord'))
-  );
-  const totalItems9 = _.sumBy(
-    search.map((item) => _.sumBy(item.fourth, 'qtyord'))
-  );
-  const totalItems10 = _.sumBy(
-    search.map((item) => _.sumBy(item.third, 'qtyord'))
-  );
-  const totalItems11 = _.sumBy(
-    search.map((item) => _.sumBy(item.second, 'qtyord'))
-  );
-  const totalItems12 = _.sumBy(
-    search.map((item) => _.sumBy(item.first, 'qtyord'))
-  );
+  // const totalItems7 = _.sumBy(
+  //   search.map((item) => _.sumBy(item.sixth, 'qtyord'))
+  // );
+  // const totalItems8 = _.sumBy(
+  //   search.map((item) => _.sumBy(item.fifth, 'qtyord'))
+  // );
+  // const totalItems9 = _.sumBy(
+  //   search.map((item) => _.sumBy(item.fourth, 'qtyord'))
+  // );
+  // const totalItems10 = _.sumBy(
+  //   search.map((item) => _.sumBy(item.third, 'qtyord'))
+  // );
+  // const totalItems11 = _.sumBy(
+  //   search.map((item) => _.sumBy(item.second, 'qtyord'))
+  // );
+  // const totalItems12 = _.sumBy(
+  //   search.map((item) => _.sumBy(item.first, 'qtyord'))
+  // );
 
   const totalItems13 = _.sumBy(
     search.map((item) => _.sumBy(item.pendingDataO, 'pending'))
@@ -881,17 +970,44 @@ export const SearchPage = () => {
     search.map((item) => _.sumBy(item.reorderPointO, 'avg_qtyshp'))
   );
 
+  const totalItems14Decimal = totalItems14.toFixed(2);
+
   const totalItems15 =
     _.sumBy(search.map((item) => _.sumBy(item.poLeadTimeO, 'avg_lead_time'))) /
-    filteredItems.length;
+    search.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
 
   const totalItems16 =
     _.sumBy(search.map((item) => _.sumBy(item.poLeadTimeO, 'max_lead_time'))) /
-    filteredItems.length;
+    search.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
 
-  const totalItemsFromRCVD = _.sumBy(
-    selectedData.map((item) => _.sumBy(item.new, 'qtyshp'))
+  const totalItems17 = _.sumBy(
+    search.map((item) => _.sumBy(item.bofromLastRcvO, 'qtybo'))
   );
+
+  // const totalItemsFromRCVD = _.sumBy(
+  //   selectedData.map((item) => _.sumBy(item.new, 'qtyshp'))
+  // );
+
+  const suggestedQtyavg_qty = search.map((item) =>
+    item.reorderPointO.map((item) => Number(item.avg_qtyshp))
+  );
+
+  const suggestedQtyavg_lead = search.map((item) =>
+    item.poLeadTimeO.map((item) => Number(item.avg_lead_time))
+  );
+
+  const suggestedBo = search.map((item) =>
+    item.bofromLastRcvO.map((item) => Number(item.qtybo))
+  );
+
+  const suggestedQty = zipWith(
+    suggestedQtyavg_qty,
+    suggestedQtyavg_lead,
+    suggestedBo,
+    (qty, lead, bo) => qty * lead + bo
+  ).reduce((acc, curr) => acc.concat(curr), []);
+
+  const totalItems18 = _.sum(suggestedQty.map((value) => round(value)));
 
   const totalDatePickerqty = _.sumBy(
     selectedDatePicker.map((item) => _.sumBy(item.datepicker, 'qtyshp'))
@@ -992,6 +1108,14 @@ export const SearchPage = () => {
       : _.zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
 
   const totalAmount = amounts.reduce((sum, num) => sum + num, 0);
+  const FosuggestedQty = zipWith(
+    suggestedQtyavg_qty,
+    suggestedQtyavg_lead,
+    suggestedBo,
+    amounts,
+    (qty, lead, bo, am) => qty * lead + bo - am
+  ).reduce((acc, curr) => acc.concat(curr), []);
+  const totalAmount19 = FosuggestedQty.reduce((sum, num) => sum + num, 0);
 
   //new or old item
   const newOrOld = () => {
@@ -1018,9 +1142,12 @@ export const SearchPage = () => {
         <table id="tb1" className="table1">
           <tbody>
             <tr className="row1">
-              <InfoItemOb className="infoCol1" name="ITEM:" />
+              <>
+                <InfoItemOb className="infoCol1" name="ITEM:" />
+              </>
+
               <td className="nameSection" colSpan="2">
-                <input
+                <><input
                   className=" border border-zinc-500 "
                   id="search"
                   placeholder="Search item name here"
@@ -1029,11 +1156,11 @@ export const SearchPage = () => {
                   onChange={handleFilter}
                   autoComplete="off"
                   onKeyPress={handleKeyPress}
-                />
-                {filteredData.length != 0 && (
-                  <div className="dataResult absolute">
+                /></>
+                <> {filteredData.length !== 0 && (
+                  <span className="dataResult absolute">
                     {filteredData.slice(0, 15).map((item, idx) => (
-                      <div
+                      <span
                         key={idx}
                         className="dropdown-row"
                         onClick={() => {
@@ -1041,14 +1168,14 @@ export const SearchPage = () => {
                         }}
                       >
                         {item.descrip}
-                      </div>
+                      </span>
                     ))}
-                  </div>
-                )}
+                  </span>
+                )}</>
+               
               </td>
-
               <td className="btn1">
-                <button
+                <> <button
                   onClick={() => {
                     searchRecords();
                     onClickImageHandler();
@@ -1070,18 +1197,20 @@ export const SearchPage = () => {
                   type="submit"
                 >
                   SUBMIT
-                </button>
+                </button></>
+               
               </td>
               <td colSpan="3" rowSpan="10" className="prodImg ">
-                <div>
+                <span>
                   {
+                    // eslint-disable-next-line jsx-a11y/alt-text
                     <img
                       style={{ width: '250px', height: '320px' }}
                       src={imageClicked}
                       className="mainImage  "
                     />
                   }
-                </div>
+                </span>
               </td>
               <td
                 colSpan="9"
@@ -1092,229 +1221,239 @@ export const SearchPage = () => {
                   paddingBottom: '200px',
                 }}
               >
-                <div
-                  style={{
-                    position: 'absolute',
-                    width: '70%',
-                    height: '100%',
-                  }}
-                >
-                  {value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        value2 === 'YEAR' ? (
-                          <ResponsiveContainer width="100%" height="100%">
-                            <ComposedChart
-                              width={500}
-                              height={300}
-                              data={graphLine}
-                              margin={{
-                                top: 5,
-                                right: 30,
-                                left: 20,
-                                bottom: 5,
-                              }}
-                            >
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="year" />
-                              <YAxis />
-                              <Tooltip />
-                              <Legend />
-                              <Bar
-                                name="PO rec"
+                <>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      width: '70%',
+                      height: '100%',
+                    }}
+                  >
+                    {value2.length ? (
+                      graphLoading === false ? (
+                        value2.length ? (
+                          value2 === 'YEAR' ? (
+                            <ResponsiveContainer width="100%" height="100%">
+                              <ComposedChart
+                                width={500}
+                                height={300}
                                 data={graphLine}
-                                barSize={4}
-                                fill="#ffb366"
-                                dataKey="qtyrec"
-                              />
+                                margin={{
+                                  top: 5,
+                                  right: 30,
+                                  left: 20,
+                                  bottom: 5,
+                                }}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="year" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar
+                                  name="PO rec"
+                                  data={graphLine}
+                                  barSize={4}
+                                  fill="#ffb366"
+                                  dataKey="qtyrec"
+                                />
 
-                              <Line
-                                type="monotone"
-                                dataKey="qtyshp"
-                                strokeWidth={3}
-                                stroke="#82ca9d"
-                              />
-                            </ComposedChart>
-                          </ResponsiveContainer>
+                                <Line
+                                  type="monotone"
+                                  dataKey="qtyshp"
+                                  strokeWidth={3}
+                                  stroke="#82ca9d"
+                                />
+                              </ComposedChart>
+                            </ResponsiveContainer>
+                          ) : (
+                            <ResponsiveContainer width="100%" height="100%">
+                              <ComposedChart
+                                data={monthLine}
+                                width={500}
+                                height={300}
+                                margin={{
+                                  top: 5,
+                                  right: 30,
+                                  left: 20,
+                                  bottom: 5,
+                                }}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis
+                                  dataKey="month"
+                                  allowDuplicatedCategory={false}
+                                />
+                                <YAxis />
+
+                                <Tooltip />
+                                <Legend />
+                                <Bar
+                                  name="PO rec"
+                                  data={monthLine}
+                                  barSize={4}
+                                  fill="#ffb366"
+                                  dataKey="qtyrec"
+                                />
+
+                                <Line
+                                  name={Number(value2)}
+                                  data={monthLine}
+                                  type="monotone"
+                                  dataKey="qtyshp"
+                                  strokeWidth={3}
+                                  stroke="#82ca9d"
+                                />
+                                <Line
+                                  name={Number(value2) - 1}
+                                  data={monthLinePrv}
+                                  type="monotone"
+                                  dataKey="qtyshp"
+                                  strokeWidth={3}
+                                  stroke="#8884d8"
+                                />
+                              </ComposedChart>
+                            </ResponsiveContainer>
+                          )
                         ) : (
-                          <ResponsiveContainer width="100%" height="100%">
-                            <ComposedChart
-                              data={monthLine}
-                              width={500}
-                              height={300}
-                              margin={{
-                                top: 5,
-                                right: 30,
-                                left: 20,
-                                bottom: 5,
-                              }}
-                            >
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis
-                                dataKey="month"
-                                allowDuplicatedCategory={false}
-                              />
-                              <YAxis />
-
-                              <Tooltip />
-                              <Legend />
-                              <Bar
-                                name="PO rec"
-                                data={monthLine}
-                                barSize={4}
-                                fill="#ffb366"
-                                dataKey="qtyrec"
-                              />
-
-                              <Line
-                                name={Number(value2)}
-                                data={monthLine}
-                                type="monotone"
-                                dataKey="qtyshp"
-                                strokeWidth={3}
-                                stroke="#82ca9d"
-                              />
-                              <Line
-                                name={Number(value2) - 1}
-                                data={monthLinePrv}
-                                type="monotone"
-                                dataKey="qtyshp"
-                                strokeWidth={3}
-                                stroke="#8884d8"
-                              />
-                            </ComposedChart>
-                          </ResponsiveContainer>
+                          <td></td>
                         )
                       ) : (
-                        <td></td>
+                        <td>Loading...</td>
                       )
-                    ) : (
-                      <td>Loading...</td>
-                    )
-                  ) : graphLoading === false ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <ComposedChart
-                        width={500}
-                        height={300}
-                        data={graphLine}
-                        margin={{
-                          top: 5,
-                          right: 30,
-                          left: 20,
-                          bottom: 5,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar
-                          name="PO rec"
+                    ) : graphLoading === false ? (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <ComposedChart
+                          width={500}
+                          height={300}
                           data={graphLine}
-                          barSize={4}
-                          fill="#ffb366"
-                          dataKey="qtyrec"
-                        />
-
-                        <Line
-                          type="monotone"
-                          dataKey="qtyshp"
-                          strokeWidth={3}
-                          stroke="#82ca9d"
-                        />
-                      </ComposedChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <>Loading...</>
-                  )}
-                </div>
-
-                <div
-                  style={{
-                    position: 'absolute',
-
-                    width: '30%',
-                    height: '100%',
-
-                    right: '1px',
-                  }}
-                >
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart width={400} height={400}>
-                      <Pie
-                        data={pieChart}
-                        dataKey="qtyshp"
-                        nameKey="quarter"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        fill="#8884d8"
-                        labelLine={false}
-                        label={({
-                          cx,
-                          cy,
-                          midAngle,
-                          innerRadius,
-                          outerRadius,
-                          value,
-                          index,
-                          payload,
-                        }) => {
-                          const RADIAN = Math.PI / 180;
-                          const radius =
-                            25 + innerRadius + (outerRadius - innerRadius);
-                          const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                          const y = cy + radius * Math.sin(-midAngle * RADIAN);
-                          const percent = `${(
-                            (value /
-                              pieChart.reduce((a, b) => a + b.qtyshp, 0)) *
-                            100
-                          ).toFixed(0)}%`;
-                          const quarter = payload.quarter;
-                          return (
-                            <text
-                              x={x}
-                              y={y}
-                              fill={COLORS[index % COLORS.length]}
-                              textAnchor={x > cx ? 'start' : 'end'}
-                              dominantBaseline="central"
-                            >
-                              <tspan dx={x > cx ? -31 : 30} dy={3}>
-                                {quarter}Q({percent})
-                              </tspan>
-                            </text>
-                          );
-                        }}
-                      >
-                        {pieChart.map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={
-                              entry.qtyshp === maxVal
-                                ? '#FF0000'
-                                : COLORS[index % COLORS.length]
-                            }
+                          margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                          }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="year" />
+                          <YAxis />
+                          <Tooltip />
+                          <Legend />
+                          <Bar
+                            name="PO rec"
+                            data={graphLine}
+                            barSize={4}
+                            fill="#ffb366"
+                            dataKey="qtyrec"
                           />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value) => [value, 'qtyshp']} />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
+
+                          <Line
+                            type="monotone"
+                            dataKey="qtyshp"
+                            strokeWidth={3}
+                            stroke="#82ca9d"
+                          />
+                        </ComposedChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <>Loading...</>
+                    )}
+                  </div>
+
+                  <div
+                    style={{
+                      position: 'absolute',
+
+                      width: '30%',
+                      height: '100%',
+
+                      right: '1px',
+                    }}
+                  >
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart width={400} height={400}>
+                        <Pie
+                          data={pieChart}
+                          dataKey="qtyshp"
+                          nameKey="quarter"
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={80}
+                          fill="#8884d8"
+                          labelLine={false}
+                          label={({
+                            cx,
+                            cy,
+                            midAngle,
+                            innerRadius,
+                            outerRadius,
+                            value,
+                            index,
+                            payload,
+                          }) => {
+                            const RADIAN = Math.PI / 180;
+                            const radius =
+                              25 + innerRadius + (outerRadius - innerRadius);
+                            const x =
+                              cx + radius * Math.cos(-midAngle * RADIAN);
+                            const y =
+                              cy + radius * Math.sin(-midAngle * RADIAN);
+                            const percent = `${(
+                              (value /
+                                pieChart.reduce((a, b) => a + b.qtyshp, 0)) *
+                              100
+                            ).toFixed(0)}%`;
+                            const quarter = payload.quarter;
+                            return (
+                              <text
+                                x={x}
+                                y={y}
+                                fill={COLORS[index % COLORS.length]}
+                                textAnchor={x > cx ? 'start' : 'end'}
+                                dominantBaseline="central"
+                              >
+                                <tspan dx={x > cx ? -31 : 30} dy={3}>
+                                  {quarter}Q({percent})
+                                </tspan>
+                              </text>
+                            );
+                          }}
+                        >
+                          {pieChart.map((entry, index) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={
+                                entry.qtyshp === maxVal
+                                  ? '#FF0000'
+                                  : COLORS[index % COLORS.length]
+                              }
+                            />
+                          ))}
+                        </Pie>
+                        <Tooltip formatter={(value) => [value, 'qtyshp']} />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </>
               </td>
             </tr>
 
             <tr className="row2">
-              <InfoItemOb className="infoCol1" name="ITEM NO:" />
+              <>
+                <InfoItemOb className="infoCol1" name="ITEM NO:" />
+              </>
+
               <td colSpan="3" className="smpNo">
                 {WDsearch.map((item) => item.Sample)}
               </td>
             </tr>
 
             <tr className="row3">
-              <InfoItemOb className="infoCol1" name="ORIGINAL:" />
+              <>
+                <InfoItemOb className="infoCol1" name="ORIGINAL:" />
+              </>
+
               <td colSpan="3">
                 <span
                   className="original"
@@ -1328,8 +1467,12 @@ export const SearchPage = () => {
                 ></span>
               </td>
             </tr>
+
             <tr className="row4">
-              <InfoItemOb className="infoCol1" name="TYPE:" />
+              <>
+                <InfoItemOb className="infoCol1" name="TYPE:" />
+              </>
+
               <td colSpan="3" className="smpDte">
                 {search.map((item) => item.length_cat)[0]}
               </td>
@@ -1359,35 +1502,43 @@ export const SearchPage = () => {
               </td>
             </tr>
             <tr className="row6">
-              <InfoItemOb className="infoCol1" name="LENGTH:" />
-              {WDsearch.map((item, idx) => (
-                <td key={idx} colSpan="3">
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <span className="length">{item.Length}</span>
-                    <span>
-                      <span style={{ marginBottom: '0px' }}></span>
-                      <span className="fl">
-                        F : {item.Front_lc_leng_w} X {item.Front_lc_leng_l}
+              <>
+                <InfoItemOb className="infoCol1" name="LENGTH:" />
+              </>
+              <>
+                {WDsearch.map((item, idx) => (
+                  <td key={idx} colSpan="3">
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <span className="length">{item.Length}</span>
+                      <span>
+                        <span style={{ marginBottom: '0px' }}></span>
+                        <span className="fl">
+                          F : {item.Front_lc_leng_w} X {item.Front_lc_leng_l}
+                        </span>
                       </span>
-                    </span>
-                    <span style={{ paddingRight: '3px' }}>
-                      <span style={{ marginBottom: '0px' }}></span>
-                      <span className="pl">
-                        P : {item.Part_lc_leng_w} X {item.Part_lc_leng_l}
+                      <span style={{ paddingRight: '3px' }}>
+                        <span style={{ marginBottom: '0px' }}></span>
+                        <span className="pl">
+                          P : {item.Part_lc_leng_w} X {item.Part_lc_leng_l}
+                        </span>
                       </span>
-                    </span>
-                  </div>
-                </td>
-              ))}
+                    </div>
+                  </td>
+                ))}
+              </>
             </tr>
+
             <tr className="row7">
-              <InfoItemOb className="infoCol1" name="FIBER:" />
+              <>
+                <InfoItemOb className="infoCol1" name="FIBER:" />
+              </>
+
               <td colSpan="3">
                 <span
                   className="fiber"
@@ -1424,35 +1575,85 @@ export const SearchPage = () => {
                   ))}
                 </select>
               </td>
-              {search.length ? (
-                value2.length ? (
-                  graphLoading === false ? (
-                    value2.length ? (
-                      <td>
-                        {value2 === 'YEAR'
-                          ? graphYearlyTotal
-                          : graphMonthlyTotal}
-                      </td>
+              <>
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <td>
+                          {value2 === 'YEAR'
+                            ? graphYearlyTotal
+                            : graphMonthlyTotal}
+                        </td>
+                      ) : (
+                        <td></td>
+                      )
                     ) : (
-                      <td></td>
+                      <td>Loading...</td>
                     )
+                  ) : graphLoading === false ? (
+                    <td>{graphYearlyTotal}</td>
                   ) : (
                     <td>Loading...</td>
                   )
-                ) : graphLoading === false ? (
-                  <td>{graphYearlyTotal}</td>
                 ) : (
-                  <td>Loading...</td>
-                )
-              ) : (
-                <td></td>
-              )}
+                  <td></td>
+                )}
+              </>
 
-              <td style={{ background: '#f0e68c' }}>PUR_date</td>
-
-              {/*purchased date*/}
+              <td style={{ background: '#f0e68c' }}>{search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? 'YEAR'
+                            : 'MONTH'}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <>Loading...</>
+                    )
+                  ) : graphLoading === false ? (
+                    <>YEAR</>
+                  ) : (
+                    <>Loading...</>
+                  )
+                ) : (
+                  <>YEAR</>
+                )}</td>
+                  
+              
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyear-5
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>JAN</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>FEB</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyear-5}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.sixth ?? []))
                     .filter((item) => item.purdate)
@@ -1460,11 +1661,37 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.purdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
 
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyear-4
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>MAR</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>APR</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyear-4}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fifth ?? []))
                     .filter((item) => item.purdate)
@@ -1472,10 +1699,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.purdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+               {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyear-3
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>MAY</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>JUN</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyear-3}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fourth ?? []))
                     .filter((item) => item.purdate)
@@ -1483,10 +1736,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.purdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyear-2
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>JUL</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>AUG</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyear-2}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.third ?? []))
                     .filter((item) => item.purdate)
@@ -1494,10 +1773,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.purdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
-              <td>
-                {
+              <td colSpan="0.5">
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyear-1
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>SEP</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>OCT</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyear-1}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.second ?? []))
                     .filter((item) => item.purdate)
@@ -1505,10 +1810,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.purdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyear
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>NOV</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>DEC</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyear}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.first ?? []))
                     .filter((item) => item.purdate)
@@ -1516,14 +1847,17 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.purdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
             </tr>
 
             <tr className="row8">
-              <InfoItemOb className="infoCol1" name="DGN DTE:" />
+              <>
+                <InfoItemOb className="infoCol1" name="DGN DTE:" />
+              </>
+
               <td colSpan="3" className="dgnDte"></td>
-              {/*Sold percentage */}
+
               <td style={{ textAlign: 'center' }}>
                 SOLD
                 <select
@@ -1614,39 +1948,67 @@ export const SearchPage = () => {
                   </option>
                 </select>
               </td>
-              {search.length ? (
-                selectedSold.length ? (
-                  loadingsoldP === false ? (
-                    selectedSold.length ? (
-                      <td>{Math.floor(selectedSold)} %</td>
+              <>
+                {search.length ? (
+                  selectedSold.length ? (
+                    loadingsoldP === false ? (
+                      selectedSold.length ? (
+                        <td>{Math.floor(selectedSold)} %</td>
+                      ) : (
+                        <td></td>
+                      )
                     ) : (
-                      <td></td>
+                      <td>Loading...</td>
                     )
+                  ) : loadingsoldP === false ? (
+                    <td>
+                      {Math.floor(
+                        selectedSoldPercentage.map((item) =>
+                          item.soldPercentage.map(
+                            (item) => item.soldtotal_percentage
+                          )
+                        )[0]
+                      )}
+                      %
+                    </td>
                   ) : (
                     <td>Loading...</td>
                   )
-                ) : loadingsoldP === false ? (
-                  <td>
-                    {Math.floor(
-                      selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map(
-                          (item) => item.soldtotal_percentage
-                        )
-                      )[0]
-                    )}
-                    %
-                  </td>
                 ) : (
-                  <td>Loading...</td>
-                )
-              ) : (
-                <td></td>
-              )}
+                  <td></td>
+                )}
+              </>
 
-              <td style={{ background: '#f0e68c' }}>SHP_date</td>
-              {/*shipping date*/}
+              <td style={{ background: '#f0e68c' }}>SOLD_QTY</td>
+
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearSoldQty6
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty1}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty2}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearSoldQty6}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.sixth ?? []))
                     .filter((item) => item.shpdate)
@@ -1654,10 +2016,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.shpdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearSoldQty5
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty3}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty4}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearSoldQty5}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fifth ?? []))
                     .filter((item) => item.shpdate)
@@ -1665,10 +2053,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.shpdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearSoldQty4
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty5}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty6}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearSoldQty4}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fourth ?? []))
                     .filter((item) => item.shpdate)
@@ -1676,10 +2090,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.shpdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearSoldQty3
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty7}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty8}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearSoldQty3}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.third ?? []))
                     .filter((item) => item.shpdate)
@@ -1687,10 +2127,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.shpdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearSoldQty2
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty9}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty10}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearSoldQty2}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.second ?? []))
                     .filter((item) => item.shpdate)
@@ -1698,10 +2164,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.shpdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                   {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearSoldQty
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearSoldQty}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.first ?? []))
                     .filter((item) => item.shpdate)
@@ -1709,16 +2201,18 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.shpdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
             </tr>
 
             <tr className="row9">
-              <InfoItemOb className="infoCol1" name="PO's 2" />
+              <>
+                <InfoItemOb className="infoCol1" name="PO's 2" />
+              </>
 
               <td colSpan="3">
                 {WDsearch.map((item, idx) => (
-                  <div key={idx}>
+                  <Fragment key={idx}>
                     <span className="pctn" style={{ float: 'left' }}>
                       P: {item.Pcs_ctn}
                     </span>
@@ -1726,10 +2220,11 @@ export const SearchPage = () => {
                       (L:{item.Front_lc_leng_l} X W:{item.Front_lc_leng_w} X
                       H:0)
                     </span>
-                  </div>
+                  </Fragment>
                 ))}
               </td>
-              {/* {test2.map((item) => item.reqdate)[0] == null ? (
+              <>
+                {/* {test2.map((item) => item.reqdate)[0] == null ? (
                 <td></td>
               ) : (
                 <td>
@@ -1741,12 +2236,40 @@ export const SearchPage = () => {
                   }
                 </td>
               )} */}
+              </>
+
               <td>SAMPLE:</td>
               <td>{WDsearch.map((item) => item.SampleShp)}</td>
-              <td style={{ background: '#f0e68c' }}>EXP_date</td>
-              {/*expected rec date*/}
+              <td style={{ background: '#f0e68c' }}>YoY</td>
+
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? <span style={{ color: YoY6 >= 0 ? 'green' : 'red' }}>{YoY6.toFixed(2)}%</span>
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <span style={{ color: YoY6 >= 0 ? 'green' : 'red' }}>{YoY6.toFixed(2)}%</span>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.sixth ?? []))
                     .filter((item) => item.reqdate)
@@ -1755,10 +2278,36 @@ export const SearchPage = () => {
                         {new Date(item.reqdate).toISOString().split('T')[0]}
                       </button>
                     ))[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? <span style={{ color: YoY5 >= 0 ? 'green' : 'red' }}>{YoY5.toFixed(2)}%</span>
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <span style={{ color: YoY5 >= 0 ? 'green' : 'red' }}>{YoY5.toFixed(2)}%</span>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fifth ?? []))
                     .filter((item) => item.reqdate)
@@ -1767,10 +2316,36 @@ export const SearchPage = () => {
                         {new Date(item.reqdate).toISOString().split('T')[0]}
                       </button>
                     ))[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? <span style={{ color: YoY4 >= 0 ? 'green' : 'red' }}>{YoY4.toFixed(2)}%</span>
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <span style={{ color: YoY4 >= 0 ? 'green' : 'red' }}>{YoY4.toFixed(2)}%</span>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fourth ?? []))
                     .filter((item) => item.reqdate)
@@ -1779,10 +2354,36 @@ export const SearchPage = () => {
                         {new Date(item.reqdate).toISOString().split('T')[0]}
                       </button>
                     ))[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? <span style={{ color: YoY3 >= 0 ? 'green' : 'red' }}>{YoY3.toFixed(2)}%</span>
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <span style={{ color: YoY3 >= 0 ? 'green' : 'red' }}>{YoY3.toFixed(2)}%</span>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.third ?? []))
                     .filter((item) => item.reqdate)
@@ -1791,10 +2392,36 @@ export const SearchPage = () => {
                         {new Date(item.reqdate).toISOString().split('T')[0]}
                       </button>
                     ))[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? <span style={{ color: YoY2 >= 0 ? 'green' : 'red' }}>{YoY2.toFixed(2)}%</span>
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <span style={{ color: YoY2 >= 0 ? 'green' : 'red' }}>{YoY2.toFixed(2)}%</span>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.second ?? []))
                     .filter((item) => item.reqdate)
@@ -1803,10 +2430,36 @@ export const SearchPage = () => {
                         {new Date(item.reqdate).toISOString().split('T')[0]}
                       </button>
                     ))[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>{YoY.toFixed(2)}%</span>
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>{YoY.toFixed(2)}%</span>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.first ?? []))
                     .filter((item) => item.reqdate)
@@ -1815,11 +2468,14 @@ export const SearchPage = () => {
                         {new Date(item.reqdate).toISOString().split('T')[0]}
                       </button>
                     ))[0]
-                }
+                } */}
               </td>
             </tr>
             <tr className="row10">
-              <InfoItemOb className="infoCol1" name="ST_DATE" />
+              <>
+                <InfoItemOb className="infoCol1" name="ST_DATE" />
+              </>
+
               <td className="stDate" colSpan="3">
                 {
                   search
@@ -1831,8 +2487,8 @@ export const SearchPage = () => {
                     )[0]
                 }
               </td>
-
-              {/* {test2.map((item) => item.recdate)[0] == null ? (
+              <>
+                {/* {test2.map((item) => item.recdate)[0] == null ? (
                 <td></td>
               ) : (
                 <td>
@@ -1844,13 +2500,40 @@ export const SearchPage = () => {
                   }
                 </td>
               )} */}
+              </>
+
               <td>REORD:</td>
               <td>{WDsearch.map((item) => item.ReordShp)}</td>
-              <td style={{ background: '#f0e68c' }}>RCV_date</td>
+              <td style={{ background: '#f0e68c' }}>RCV_QTY</td>
 
-              {/*Actual rec date*/}
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearRCVQty6
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty1}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty2}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearRCVQty6}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.sixth ?? []))
                     .filter((item) => item.recdate)
@@ -1858,10 +2541,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.recdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearRCVQty5
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty3}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty4}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearRCVQty5}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fifth ?? []))
                     .filter((item) => item.recdate)
@@ -1869,10 +2578,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.recdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearRCVQty4
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty5}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty6}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearRCVQty4}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fourth ?? []))
                     .filter((item) => item.recdate)
@@ -1880,10 +2615,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.recdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearRCVQty3
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty7}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty8}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearRCVQty3}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.third ?? []))
                     .filter((item) => item.recdate)
@@ -1891,10 +2652,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.recdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearRCVQty2
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty9}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty10}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearRCVQty2}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.second ?? []))
                     .filter((item) => item.recdate)
@@ -1902,10 +2689,36 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.recdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {search.length ? (
+                  value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        <>
+                          {value2 === 'YEAR'
+                            ? lastyearRCVQty
+                            :  <>
+    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty11}</span>    
+    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty12}</span>
+  </>}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <></>
+                    )
+                  ) : graphLoading === false ? (
+                    <>{lastyearRCVQty}</>
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.first ?? []))
                     .filter((item) => item.recdate)
@@ -1913,37 +2726,41 @@ export const SearchPage = () => {
                       (item) =>
                         new Date(item.recdate).toISOString().split('T')[0]
                     )[0]
-                }
+                } */}
               </td>
             </tr>
 
             <tr className="row11">
-              {search.length > 0 ? (
-                <td className="PRL">
-                  {PRLmin} - {PRLmax}
-                </td>
-              ) : (
-                <td></td>
-              )}
+              <>
+                {search.length > 0 ? (
+                  <td className="PRL">
+                    {PRLmin} - {PRLmax}
+                  </td>
+                ) : (
+                  <td></td>
+                )}
+              </>
 
               <td colSpan="2" className="price">
                 {
                   search
                     .filter((item) => typeof item.price === 'number')
                     .map((item, idx) => (
-                      <div key={idx}>PRICE: ${item.price}</div>
+                      <Fragment key={idx}>PRICE: ${item.price}</Fragment>
                     ))[0]
                 }
               </td>
-
-              {/* {test2.map((item) => item.recdate)[0] == null ? (
+              <>
+                {/* {test2.map((item) => item.recdate)[0] == null ? (
                 <td></td>
               ) : (
                 <td>{Math.floor(Difference_In_Days)} days</td>
               )} */}
-              <td>Class: {search.map((item) => item.class)[0]}</td>
+              </>
 
-              {/* {test2.map((item) => item.recdate)[0] == null ? (
+              <td>Class: {search.map((item) => item.class)[0]}</td>
+              <>
+                {/* {test2.map((item) => item.recdate)[0] == null ? (
                 <td></td>
               ) : (
                 <td>
@@ -1955,6 +2772,7 @@ export const SearchPage = () => {
                   }{' '}
                 </td>
               )} */}
+              </>
 
               <td colSpan="2">
                 <DatePicker
@@ -1969,267 +2787,270 @@ export const SearchPage = () => {
               <td className="prv30">{past90c}</td>
               <td className="prv30">{past365c}</td>
               <td></td>
-              {/*purno No*/}
+
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.sixth ?? []))
                     .filter((item) => item.portn)
                     .map((item) => item.portn)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fifth ?? []))
                     .filter((item) => item.portn)
                     .map((item) => item.portn)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fourth ?? []))
                     .filter((item) => item.portn)
                     .map((item) => item.portn)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.third ?? []))
                     .filter((item) => item.portn)
                     .map((item) => item.portn)[0]
-                }
+                } */}
               </td>
               <td className="prv30" style={{ background: '#f4a460' }}>
                 FORECAST
               </td>
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.first ?? []))
                     .filter((item) => item.portn)
                     .map((item) => item.portn)[0]
-                }
+                } */}
               </td>
             </tr>
 
             <tr className="row12">
               <td className="newOrOld">{newOrOld()}</td>
-              {/* grading https://www.wane.com/news/sacs-approves-new-grading-scale/*/}
+
               <td>GRADE</td>
-              {itemRank.length ? (
-                itemLoading === false || newitemLoading === false ? (
-                  itemRank
-                    .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                    .filter((item) => item.percentile)
-                    .map((item) => item.percentile * 100)[0] > 98 ||
-                  itemRank
-                    .flatMap((item) => [item].concat(item.rankRB ?? []))
-                    .filter((item) => item.percentile)
-                    .map((item) => item.percentile * 100)[0] > 98 ||
-                  newitemRank
-                    .flatMap((item) => [item].concat(item.descrip ?? []))
-                    .filter((item) => item.percentile)
-                    .map((item) => item.percentile * 100)[0] > 98 ? (
-                    <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
-                      A+
-                    </td>
-                  ) : itemRank
+              <>
+                {itemRank.length ? (
+                  itemLoading === false || newitemLoading === false ? (
+                    itemRank
                       .flatMap((item) => [item].concat(item.ranknonRB ?? []))
                       .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 93 ||
+                      .map((item) => item.percentile * 100)[0] > 98 ||
                     itemRank
                       .flatMap((item) => [item].concat(item.rankRB ?? []))
                       .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 93 ||
+                      .map((item) => item.percentile * 100)[0] > 98 ||
                     newitemRank
                       .flatMap((item) => [item].concat(item.descrip ?? []))
                       .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 93 ? (
-                    <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
-                      A
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 90 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 90 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 90 ? (
-                    <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
-                      A-
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 87 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 87 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 87 ? (
-                    <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
-                      B+
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 83 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 83 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 83 ? (
-                    <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
-                      B
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 80 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 80 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 80 ? (
-                    <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
-                      B-
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 77 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 77 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 77 ? (
-                    <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
-                      C+
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 73 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 73 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 73 ? (
-                    <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
-                      C
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 70 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 70 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 70 ? (
-                    <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
-                      C-
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 67 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 67 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 67 ? (
-                    <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
-                      D+
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 63 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 63 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 63 ? (
-                    <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
-                      D
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 60 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 60 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] > 60 ? (
-                    <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
-                      D-
-                    </td>
-                  ) : itemRank
-                      .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] <= 60 ||
-                    itemRank
-                      .flatMap((item) => [item].concat(item.rankRB ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] <= 60 ||
-                    newitemRank
-                      .flatMap((item) => [item].concat(item.descrip ?? []))
-                      .filter((item) => item.percentile)
-                      .map((item) => item.percentile * 100)[0] <= 60 ? (
-                    <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>
-                      F
-                    </td>
+                      .map((item) => item.percentile * 100)[0] > 98 ? (
+                      <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
+                        A+
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 93 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 93 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 93 ? (
+                      <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
+                        A
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 90 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 90 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 90 ? (
+                      <td style={{ background: '#90ee90', fontWeight: 'bold' }}>
+                        A-
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 87 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 87 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 87 ? (
+                      <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
+                        B+
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 83 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 83 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 83 ? (
+                      <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
+                        B
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 80 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 80 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 80 ? (
+                      <td style={{ background: '#87cefa', fontWeight: 'bold' }}>
+                        B-
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 77 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 77 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 77 ? (
+                      <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
+                        C+
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 73 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 73 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 73 ? (
+                      <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
+                        C
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 70 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 70 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 70 ? (
+                      <td style={{ background: '#ffa500', fontWeight: 'bold' }}>
+                        C-
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 67 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 67 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 67 ? (
+                      <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
+                        D+
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 63 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 63 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 63 ? (
+                      <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
+                        D
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 60 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 60 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] > 60 ? (
+                      <td style={{ background: '#ff4500', fontWeight: 'bold' }}>
+                        D-
+                      </td>
+                    ) : itemRank
+                        .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] <= 60 ||
+                      itemRank
+                        .flatMap((item) => [item].concat(item.rankRB ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] <= 60 ||
+                      newitemRank
+                        .flatMap((item) => [item].concat(item.descrip ?? []))
+                        .filter((item) => item.percentile)
+                        .map((item) => item.percentile * 100)[0] <= 60 ? (
+                      <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>
+                        F
+                      </td>
+                    ) : (
+                      <>Loading...</>
+                    )
                   ) : (
                     <>Loading...</>
                   )
+                ) : itemLoading === false || newitemLoading === false ? (
+                  <td></td>
                 ) : (
                   <>Loading...</>
-                )
-              ) : itemLoading === false || newitemLoading === false ? (
-                <td></td>
-              ) : (
-                <>Loading...</>
-              )}
+                )}
+              </>
 
-              {/* waiting & rcvd table  */}
-              {/* {selectedItem.length > 0 ? (
+              <>
+                {/* waiting & rcvd table  */}
+                {/* {selectedItem.length > 0 ? (
                 test2.map((item) => item.recdate)[0] == null ? (
                   <td style={{ color: 'red' }}>WAITING</td>
                 ) : (
@@ -2238,6 +3059,8 @@ export const SearchPage = () => {
               ) : (
                 <td></td>
               )} */}
+              </>
+
               <td>
                 Vend:{' '}
                 {
@@ -2246,9 +3069,12 @@ export const SearchPage = () => {
                   )[0]
                 }
               </td>
-              {/* <td id="recDte" className="recDateSel_cal">
+              <>
+                {/* <td id="recDte" className="recDateSel_cal">
                 {new Date().toISOString().split('T')[0]}
               </td> */}
+              </>
+
               <td colSpan="2">
                 <DatePicker
                   className="border-2 border-zinc-500 text-center"
@@ -2268,38 +3094,38 @@ export const SearchPage = () => {
               </td>
 
               <td></td>
-              {/*invoice No */}
+
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.sixth ?? []))
                     .filter((item) => item.invno)
                     .map((item) => item.invno)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fifth ?? []))
                     .filter((item) => item.invno)
                     .map((item) => item.invno)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.fourth ?? []))
                     .filter((item) => item.invno)
                     .map((item) => item.invno)[0]
-                }
+                } */}
               </td>
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.third ?? []))
                     .filter((item) => item.invno)
                     .map((item) => item.invno)[0]
-                }
+                } */}
               </td>
               <td>
                 {/* forecast datepicker */}
@@ -2318,12 +3144,12 @@ export const SearchPage = () => {
                 } */}
               </td>
               <td>
-                {
+                {/* {
                   search
                     .flatMap((item) => [item].concat(item.first ?? []))
                     .filter((item) => item.invno)
                     .map((item) => item.invno)[0]
-                }
+                } */}
               </td>
             </tr>
           </tbody>
@@ -2332,7 +3158,7 @@ export const SearchPage = () => {
             <tr>
               <td>CLRS:{totalItems}</td>
               <td>OH</td>
-              {/*PO reorder */}
+
               <td style={{ background: '#f4a460' }}>REORDER</td>
               <td>
                 {/*POS initial && Warning error*/}
@@ -2469,7 +3295,6 @@ export const SearchPage = () => {
             </tr>
           </tbody>
 
-          {/* body table3 */}
           {search.length > 0 ? (
             loading === false ? (
               <Fragment>
@@ -2540,8 +3365,14 @@ export const SearchPage = () => {
                   </td>
                 )} */}
                   <td style={{ padding: '0' }}>
-                    {search.map((item) =>
-                      item.pendingDataO.map((item) => <div>{item.pending}</div>)
+                    {search.map((item, idx) =>
+                      item.pendingDataO.length ? (
+                        item.pendingDataO.map((item2, idx2) => (
+                          <div key={idx2}>{item2.pending}</div>
+                        ))
+                      ) : (
+                        <div key={idx}>0</div>
+                      )
                     )}
                     <div>{totalItems13}</div>
                   </td>
@@ -2665,13 +3496,13 @@ export const SearchPage = () => {
                     {search.map((item, idx) =>
                       item.reorderPointO.length ? (
                         item.reorderPointO.map((item2, idx2) => (
-                          <div key={idx2}>{item2.avg_qtyshp}</div>
+                          <div key={idx2}>{item2.avg_qtyshp.toFixed(2)}</div>
                         ))
                       ) : (
                         <div key={idx}>0</div>
                       )
                     )}
-                    <div>{totalItems14}</div>
+                    <div>{totalItems14Decimal}</div>
                   </td>
                   {/*column table with nested array */}
                   {/* <td style={{ padding: '0' }}>
@@ -2690,12 +3521,13 @@ export const SearchPage = () => {
                     {search.map((item, idx) =>
                       item.poLeadTimeO.length ? (
                         item.poLeadTimeO.map((item2, idx2) => (
-                          <div key={idx2}>{item2.avg_lead_time}</div>
+                          <div key={idx2}>{item2.avg_lead_time} days</div>
                         ))
                       ) : (
-                        <div key={idx}>0</div>
+                        <div key={idx}>0 days</div>
                       )
                     )}
+                    <div>{round(totalItems15)} days</div>
                   </td>
                   {/*column table with nested array */}
                   {/* <td style={{ padding: '0' }}>
@@ -2714,16 +3546,17 @@ export const SearchPage = () => {
                     {search.map((item, idx) =>
                       item.poLeadTimeO.length ? (
                         item.poLeadTimeO.map((item2, idx2) => (
-                          <div key={idx2}>{item2.max_lead_time}</div>
+                          <div key={idx2}>{item2.max_lead_time} days</div>
                         ))
                       ) : (
-                        <div key={idx}>0</div>
+                        <div key={idx}>0 days</div>
                       )
                     )}
+                    <div>{round(totalItems16)} days</div>
                   </td>
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
+                    {/* {search.map((item, idx) =>
                       item.fourth.length ? (
                         item.fourth.map((item2, idx2) => (
                           <div key={idx2}>{item2.qtyord}</div>
@@ -2732,11 +3565,21 @@ export const SearchPage = () => {
                         <div key={idx}></div>
                       )
                     )}
-                    <div>{totalItems9}</div>
+                    <div>{totalItems9}</div> */}
+                    {search.map((item, idx) =>
+                      item.bofromLastRcvO.length ? (
+                        item.bofromLastRcvO.map((item2, idx2) => (
+                          <div key={idx2}>{item2.qtybo}</div>
+                        ))
+                      ) : (
+                        <div key={idx}>0</div>
+                      )
+                    )}
+                    <div>{totalItems17}</div>
                   </td>
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
+                    {/* {search.map((item, idx) =>
                       item.third.length ? (
                         item.third.map((item2, idx2) => (
                           <div key={idx2}>{item2.qtyord}</div>
@@ -2745,7 +3588,11 @@ export const SearchPage = () => {
                         <div key={idx}></div>
                       )
                     )}
-                    <div>{totalItems10}</div>
+                    <div>{totalItems10}</div> */}
+                    {suggestedQty.map((value, index) => (
+                      <div key={`qty-${index}`}>{round(value)}</div>
+                    ))}
+                    <div>{totalItems18}</div>
                   </td>
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
@@ -2760,9 +3607,10 @@ export const SearchPage = () => {
                     ))}
                     <div>{totalAmount}</div>
                   </td>
+                  
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
+                    {/* {search.map((item, idx) =>
                       item.first.length ? (
                         item.first.map((item2, idx2) => (
                           <div key={idx2} style={{ borderRightWidth: '1px' }}>
@@ -2778,6 +3626,18 @@ export const SearchPage = () => {
                     )}
                     <div style={{ borderRightWidth: '1px' }}>
                       {totalItems12}
+                    </div> */}
+                    {FosuggestedQty.map((num, index) => (
+                      <div
+                        key={`qty-${index}`}
+                        className={num < 0 ? 'negative-amount' : ''}
+                        style={{ borderRightWidth: '1px' }}
+                      >
+                        {round(num)}
+                      </div>
+                    ))}
+                    <div style={{ borderRightWidth: '1px' }}>
+                      {round(totalAmount19)}
                     </div>
                   </td>
                 </tbody>
@@ -2813,16 +3673,15 @@ export const SearchPage = () => {
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
         >
-          <TreeItem nodeId="1" label="ItemReorderPoint">
+          <TreeItem nodeId="1" label="ItemReorderAlert">
             <TreeItem
               nodeId="2"
-              label="ItemReorderPoint.xlsx"
+              label="ItemReorderList.xlsx"
               onClick={handleDownload17}
             />
           </TreeItem>
         </TreeView>
       </>
-     
     </div>
   );
 };

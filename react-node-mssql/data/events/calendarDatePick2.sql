@@ -51,6 +51,6 @@ FROM
       A.descrip
 	  
   ) A 
-  WHERE A.qtyshp > 0
+  
 ORDER BY 
   itemkey2 asc
