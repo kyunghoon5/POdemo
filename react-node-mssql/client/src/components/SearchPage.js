@@ -372,35 +372,34 @@ export const SearchPage = () => {
       });
   };
 
-  const lastyear = graphLine.map((item)=>item.year).at(-1)
-  const lastyearSoldQty = graphLine.map((item)=>item.qtyshp).at(-1)
-    const lastyearSoldQty2 = graphLine.map((item)=>item.qtyshp).at(-2)
-    const lastyearSoldQty3 = graphLine.map((item)=>item.qtyshp).at(-3)
-    const lastyearSoldQty4 = graphLine.map((item)=>item.qtyshp).at(-4)
-    const lastyearSoldQty5 = graphLine.map((item)=>item.qtyshp).at(-5)
-    const lastyearSoldQty6 = graphLine.map((item)=>item.qtyshp).at(-6)
-    const lastyearSoldQty7 = graphLine.map((item)=>item.qtyshp).at(-7)
+  const lastyear = graphLine.map((item) => item.year).at(-1);
+  const lastyear2 = graphLine.map((item) => item.year).at(-2);
+  const lastyear3 = graphLine.map((item) => item.year).at(-3);
+  const lastyear4 = graphLine.map((item) => item.year).at(-4);
+  const lastyear5 = graphLine.map((item) => item.year).at(-5);
+  const lastyear6 = graphLine.map((item) => item.year).at(-6);
+  const lastyearSoldQty = graphLine.map((item) => item.qtyshp).at(-1);
+  const lastyearSoldQty2 = graphLine.map((item) => item.qtyshp).at(-2);
+  const lastyearSoldQty3 = graphLine.map((item) => item.qtyshp).at(-3);
+  const lastyearSoldQty4 = graphLine.map((item) => item.qtyshp).at(-4);
+  const lastyearSoldQty5 = graphLine.map((item) => item.qtyshp).at(-5);
+  const lastyearSoldQty6 = graphLine.map((item) => item.qtyshp).at(-6);
+  const lastyearSoldQty7 = graphLine.map((item) => item.qtyshp).at(-7);
 
-    const lastyearRCVQty = graphLine.map((item)=>item.qtyrec).at(-1)
-    const lastyearRCVQty2 = graphLine.map((item)=>item.qtyrec).at(-2)
-    const lastyearRCVQty3 = graphLine.map((item)=>item.qtyrec).at(-3)
-    const lastyearRCVQty4 = graphLine.map((item)=>item.qtyrec).at(-4)
-    const lastyearRCVQty5 = graphLine.map((item)=>item.qtyrec).at(-5)
-    const lastyearRCVQty6 = graphLine.map((item)=>item.qtyrec).at(-6)
+  const lastyearRCVQty = graphLine.map((item) => item.qtyrec).at(-1);
+  const lastyearRCVQty2 = graphLine.map((item) => item.qtyrec).at(-2);
+  const lastyearRCVQty3 = graphLine.map((item) => item.qtyrec).at(-3);
+  const lastyearRCVQty4 = graphLine.map((item) => item.qtyrec).at(-4);
+  const lastyearRCVQty5 = graphLine.map((item) => item.qtyrec).at(-5);
+  const lastyearRCVQty6 = graphLine.map((item) => item.qtyrec).at(-6);
 
-    const YoY = ((lastyearSoldQty/lastyearSoldQty2)-1)*100
-    const YoY2 = ((lastyearSoldQty2/lastyearSoldQty3)-1)*100
-    const YoY3 = ((lastyearSoldQty3/lastyearSoldQty4)-1)*100
-    const YoY4 = ((lastyearSoldQty4/lastyearSoldQty5)-1)*100
-    const YoY5 = ((lastyearSoldQty5/lastyearSoldQty6)-1)*100
-    const YoY6 = ((lastyearSoldQty6/lastyearSoldQty7)-1)*100
+  const YoY = (lastyearSoldQty / lastyearSoldQty2 - 1) * 100;
+  const YoY2 = (lastyearSoldQty2 / lastyearSoldQty3 - 1) * 100;
+  const YoY3 = (lastyearSoldQty3 / lastyearSoldQty4 - 1) * 100;
+  const YoY4 = (lastyearSoldQty4 / lastyearSoldQty5 - 1) * 100;
+  const YoY5 = (lastyearSoldQty5 / lastyearSoldQty6 - 1) * 100;
+  const YoY6 = (lastyearSoldQty6 / lastyearSoldQty7 - 1) * 100;
 
-  
-
-
-
-
-  
   const [graphLineByMonth, setGraphLineByMonth] = useState([]);
   const graphLineByMonthF = async () => {
     const searchedRecord = record.toLowerCase();
@@ -414,78 +413,115 @@ export const SearchPage = () => {
       });
   };
 
-
-  
-
   const [value2, setValue2] = useState('');
   const handleChangeGraphByMonth = (e) => {
     const selectedMonth = e.target.value;
     setValue2(selectedMonth); // update the value of value2
   };
 
-
-
   const monthLine = graphLineByMonth.filter(
     (item) => item.year === Number(value2)
   );
+
   const monthLinePrv = graphLineByMonth.filter(
     (item) => item.year === Number(value2) - 1
   );
 
-    const lastmonthSoldQty1F = graphLineByMonth.filter((item)=>item.year === Number(value2))
-    
-  const lastmonthSoldQty1 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(0)
-  const lastmonthSoldQty2 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(1)
-   const lastmonthSoldQty3 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(2)
-    const lastmonthSoldQty4 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(3)
-     const lastmonthSoldQty5 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(4)
-      const lastmonthSoldQty6 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(5)
-       const lastmonthSoldQty7 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(6)
-        const lastmonthSoldQty8 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(7)
-         const lastmonthSoldQty9 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(8)
-          const lastmonthSoldQty10 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(9)
-           const lastmonthSoldQty11 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(10)
-            const lastmonthSoldQty12 = lastmonthSoldQty1F.map((item)=>item.qtyshp).at(11)
-            
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
 
-             const lastmonthRCVQty1 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(0)
-             const lastmonthRCVQty2 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(1)
-             const lastmonthRCVQty3 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(2)
-             const lastmonthRCVQty4 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(3)
-             const lastmonthRCVQty5 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(4)
-             const lastmonthRCVQty6 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(5)
-             const lastmonthRCVQty7 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(6)
-             const lastmonthRCVQty8 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(7)
-             const lastmonthRCVQty9 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(8)
-             const lastmonthRCVQty10 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(9)
-             const lastmonthRCVQty11 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(10)
-             const lastmonthRCVQty12 = lastmonthSoldQty1F.map((item)=>item.qtyrec).at(11)
+  const monthData = [];
+  monthNames.forEach((name, index) => {
+    const dataItem = monthLine.find((item) => item.month === index + 1);
+    monthData.push(
+      dataItem
+        ? { name, qtyshp: dataItem.qtyshp, qtyrec: dataItem.qtyrec }
+        : { name, qtyshp: 0, qtyrec: 0 }
+    );
+  });
 
-                    const lastmonthSoldQty2F = graphLineByMonth.filter((item)=>item.year === Number(value2)-1)
-             const lastmonthSoldQty13 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(0)
-  const lastmonthSoldQty14 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(1)
-   const lastmonthSoldQty15 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(2)
-    const lastmonthSoldQty16 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(3)
-     const lastmonthSoldQty17 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(4)
-      const lastmonthSoldQty18 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(5)
-       const lastmonthSoldQty19 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(6)
-        const lastmonthSoldQty20 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(7)
-         const lastmonthSoldQty21 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(8)
-          const lastmonthSoldQty22 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(9)
-           const lastmonthSoldQty23 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(10)
-            const lastmonthSoldQty24 = lastmonthSoldQty2F.map((item)=>item.qtyshp).at(11)
+  const PrvmonthData = [];
+  monthNames.forEach((name, index) => {
+    const dataItem = monthLinePrv.find((item) => item.month === index + 1);
+    PrvmonthData.push(
+      dataItem
+        ? { name, qtyshp: dataItem.qtyshp, qtyrec: dataItem.qtyrec }
+        : { name, qtyshp: 0, qtyrec: 0 }
+    );
+  });
 
-      
-             
-             const YoYEachMonth = ((lastmonthSoldQty12/lastmonthSoldQty24)-1) *100
-
-             console.log(YoYEachMonth)
-             
-
-
-
-
- 
+  const YoYEachMonth =
+    (monthData.map((item) => item.qtyshp)[0] /
+      PrvmonthData.map((item) => item.qtyshp)[0] -
+      1) *
+    100;
+  const YoYEachMonth2 =
+    (monthData.map((item) => item.qtyshp)[1] /
+      PrvmonthData.map((item) => item.qtyshp)[1] -
+      1) *
+    100;
+  const YoYEachMonth3 =
+    (monthData.map((item) => item.qtyshp)[2] /
+      PrvmonthData.map((item) => item.qtyshp)[2] -
+      1) *
+    100;
+  const YoYEachMonth4 =
+    (monthData.map((item) => item.qtyshp)[3] /
+      PrvmonthData.map((item) => item.qtyshp)[3] -
+      1) *
+    100;
+  const YoYEachMonth5 =
+    (monthData.map((item) => item.qtyshp)[4] /
+      PrvmonthData.map((item) => item.qtyshp)[4] -
+      1) *
+    100;
+  const YoYEachMonth6 =
+    (monthData.map((item) => item.qtyshp)[5] /
+      PrvmonthData.map((item) => item.qtyshp)[5] -
+      1) *
+    100;
+  const YoYEachMonth7 =
+    (monthData.map((item) => item.qtyshp)[6] /
+      PrvmonthData.map((item) => item.qtyshp)[6] -
+      1) *
+    100;
+  const YoYEachMonth8 =
+    (monthData.map((item) => item.qtyshp)[7] /
+      PrvmonthData.map((item) => item.qtyshp)[7] -
+      1) *
+    100;
+  const YoYEachMonth9 =
+    (monthData.map((item) => item.qtyshp)[8] /
+      PrvmonthData.map((item) => item.qtyshp)[8] -
+      1) *
+    100;
+  const YoYEachMonth10 =
+    (monthData.map((item) => item.qtyshp)[9] /
+      PrvmonthData.map((item) => item.qtyshp)[9] -
+      1) *
+    100;
+  const YoYEachMonth11 =
+    (monthData.map((item) => item.qtyshp)[10] /
+      PrvmonthData.map((item) => item.qtyshp)[10] -
+      1) *
+    100;
+  const YoYEachMonth12 =
+    (monthData.map((item) => item.qtyshp)[11] /
+      PrvmonthData.map((item) => item.qtyshp)[11] -
+      1) *
+    100;
 
   //itemkey2
   const [graphLoading2, setGraphLoading2] = useState(false);
@@ -1147,58 +1183,64 @@ export const SearchPage = () => {
               </>
 
               <td className="nameSection" colSpan="2">
-                <><input
-                  className=" border border-zinc-500 "
-                  id="search"
-                  placeholder="Search item name here"
-                  type="text"
-                  value={record}
-                  onChange={handleFilter}
-                  autoComplete="off"
-                  onKeyPress={handleKeyPress}
-                /></>
-                <> {filteredData.length !== 0 && (
-                  <span className="dataResult absolute">
-                    {filteredData.slice(0, 15).map((item, idx) => (
-                      <span
-                        key={idx}
-                        className="dropdown-row"
-                        onClick={() => {
-                          onSearch(item.descrip);
-                        }}
-                      >
-                        {item.descrip}
-                      </span>
-                    ))}
-                  </span>
-                )}</>
-               
+                <>
+                  <input
+                    className=" border border-zinc-500 "
+                    id="search"
+                    placeholder="Search item name here"
+                    type="text"
+                    value={record}
+                    onChange={handleFilter}
+                    autoComplete="off"
+                    onKeyPress={handleKeyPress}
+                  />
+                </>
+                <>
+                  {' '}
+                  {filteredData.length !== 0 && (
+                    <span className="dataResult absolute">
+                      {filteredData.slice(0, 15).map((item, idx) => (
+                        <span
+                          key={idx}
+                          className="dropdown-row"
+                          onClick={() => {
+                            onSearch(item.descrip);
+                          }}
+                        >
+                          {item.descrip}
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                </>
               </td>
               <td className="btn1">
-                <> <button
-                  onClick={() => {
-                    searchRecords();
-                    onClickImageHandler();
-                    reset();
-                    itemRecords();
-                    fetchData3();
-                    graphLineF();
-                    graphLineByMonthF();
-                    graphByItemF();
-                    graphByItemMonthF();
-                    WDsearchRecords();
-                    WDsearchRecords2();
-                    setfilteredDate([]);
-                    newitemRecords();
-                    pieChartF();
-                  }}
-                  className="btn1name"
-                  id="submitBtn"
-                  type="submit"
-                >
-                  SUBMIT
-                </button></>
-               
+                <>
+                  {' '}
+                  <button
+                    onClick={() => {
+                      searchRecords();
+                      onClickImageHandler();
+                      reset();
+                      itemRecords();
+                      fetchData3();
+                      graphLineF();
+                      graphLineByMonthF();
+                      graphByItemF();
+                      graphByItemMonthF();
+                      WDsearchRecords();
+                      WDsearchRecords2();
+                      setfilteredDate([]);
+                      newitemRecords();
+                      pieChartF();
+                    }}
+                    className="btn1name"
+                    id="submitBtn"
+                    type="submit"
+                  >
+                    SUBMIT
+                  </button>
+                </>
               </td>
               <td colSpan="3" rowSpan="10" className="prodImg ">
                 <span>
@@ -1304,14 +1346,16 @@ export const SearchPage = () => {
                                   strokeWidth={3}
                                   stroke="#82ca9d"
                                 />
-                                <Line
-                                  name={Number(value2) - 1}
-                                  data={monthLinePrv}
-                                  type="monotone"
-                                  dataKey="qtyshp"
-                                  strokeWidth={3}
-                                  stroke="#8884d8"
-                                />
+                                {monthLinePrv.some((entry) => entry.qtyshp) ? (
+                                  <Line
+                                    name={Number(value2) - 1}
+                                    data={monthLinePrv}
+                                    type="monotone"
+                                    dataKey="qtyshp"
+                                    strokeWidth={3}
+                                    stroke="#8884d8"
+                                  />
+                                ) : null}
                               </ComposedChart>
                             </ResponsiveContainer>
                           )
@@ -1601,15 +1645,12 @@ export const SearchPage = () => {
                 )}
               </>
 
-              <td style={{ background: '#f0e68c' }}>{search.length ? (
+              <td style={{ background: '#f0e68c' }}>
+                {search.length ? (
                   value2.length ? (
                     graphLoading === false ? (
                       value2.length ? (
-                        <>
-                          {value2 === 'YEAR'
-                            ? 'YEAR'
-                            : 'MONTH'}
-                        </>
+                        <>{value2 === 'YEAR' ? 'YEAR' : 'MONTH'}</>
                       ) : (
                         <></>
                       )
@@ -1623,21 +1664,31 @@ export const SearchPage = () => {
                   )
                 ) : (
                   <>YEAR</>
-                )}</td>
-                  
-              
+                )}
+              </td>
+
               <td>
                 {search.length ? (
                   value2.length ? (
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyear-5
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>JAN</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>FEB</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyear6
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[0]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[1]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -1646,7 +1697,7 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <>{lastyear-5}</>
+                    <>{lastyear6}</>
                   ) : (
                     <></>
                   )
@@ -1670,12 +1721,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyear-4
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>MAR</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>APR</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyear5
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[2]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[3]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -1684,7 +1745,7 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <>{lastyear-4}</>
+                    <>{lastyear5}</>
                   ) : (
                     <></>
                   )
@@ -1702,17 +1763,27 @@ export const SearchPage = () => {
                 } */}
               </td>
               <td>
-               {search.length ? (
+                {search.length ? (
                   value2.length ? (
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyear-3
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>MAY</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>JUN</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyear4
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[4]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[5]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -1721,7 +1792,7 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <>{lastyear-3}</>
+                    <>{lastyear4}</>
                   ) : (
                     <></>
                   )
@@ -1744,12 +1815,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyear-2
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>JUL</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>AUG</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyear3
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[6]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[7]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -1758,7 +1839,7 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <>{lastyear-2}</>
+                    <>{lastyear3}</>
                   ) : (
                     <></>
                   )
@@ -1781,12 +1862,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyear-1
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>SEP</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>OCT</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyear2
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[8]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[9]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -1795,7 +1886,7 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <>{lastyear-1}</>
+                    <>{lastyear2}</>
                   ) : (
                     <></>
                   )
@@ -1818,12 +1909,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyear
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>NOV</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>DEC</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyear
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[10]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.name)[11]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -1987,12 +2088,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearSoldQty6
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty1}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty2}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearSoldQty6
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[0]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[1]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2024,12 +2135,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearSoldQty5
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty3}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty4}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearSoldQty5
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[2]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[3]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2061,12 +2182,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearSoldQty4
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty5}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty6}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearSoldQty4
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[4]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[5]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2098,12 +2229,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearSoldQty3
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty7}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty8}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearSoldQty3
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[6]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[7]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2135,12 +2276,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearSoldQty2
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty9}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty10}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearSoldQty2
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[8]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[9]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2167,17 +2318,27 @@ export const SearchPage = () => {
                 } */}
               </td>
               <td>
-                   {search.length ? (
+                {search.length ? (
                   value2.length ? (
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearSoldQty
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearSoldQty
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[10]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyshp)[11]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2248,12 +2409,36 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? <span style={{ color: YoY6 >= 0 ? 'green' : 'red' }}>{YoY6.toFixed(2)}%</span>
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            <span
+                              style={{ color: YoY6 >= 0 ? 'green' : 'red' }}
+                            >
+                              {YoY6.toFixed(2)}%
+                            </span>
+                          ) : (
+                            <>
+                              <span
+                                style={{
+                                  float: 'left',
+                                  paddingLeft: '4px',
+                                  color: YoYEachMonth >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth.toFixed(1)}%
+                              </span>
+                              <span
+                                style={{
+                                  float: 'right',
+                                  paddingRight: '4px',
+                                  color: YoYEachMonth2 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth2.toFixed(1)}%
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2262,7 +2447,9 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <span style={{ color: YoY6 >= 0 ? 'green' : 'red' }}>{YoY6.toFixed(2)}%</span>
+                    <span style={{ color: YoY6 >= 0 ? 'green' : 'red' }}>
+                      {YoY6.toFixed(1)}%
+                    </span>
                   ) : (
                     <></>
                   )
@@ -2286,12 +2473,36 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? <span style={{ color: YoY5 >= 0 ? 'green' : 'red' }}>{YoY5.toFixed(2)}%</span>
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            <span
+                              style={{ color: YoY5 >= 0 ? 'green' : 'red' }}
+                            >
+                              {YoY5.toFixed(2)}%
+                            </span>
+                          ) : (
+                            <>
+                              <span
+                                style={{
+                                  float: 'left',
+                                  paddingLeft: '4px',
+                                  color: YoYEachMonth3 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth3.toFixed(1)}%
+                              </span>
+                              <span
+                                style={{
+                                  float: 'right',
+                                  paddingRight: '4px',
+                                  color: YoYEachMonth4 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth4.toFixed(1)}%
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2300,7 +2511,9 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <span style={{ color: YoY5 >= 0 ? 'green' : 'red' }}>{YoY5.toFixed(2)}%</span>
+                    <span style={{ color: YoY5 >= 0 ? 'green' : 'red' }}>
+                      {YoY5.toFixed(2)}%
+                    </span>
                   ) : (
                     <></>
                   )
@@ -2324,12 +2537,36 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? <span style={{ color: YoY4 >= 0 ? 'green' : 'red' }}>{YoY4.toFixed(2)}%</span>
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            <span
+                              style={{ color: YoY4 >= 0 ? 'green' : 'red' }}
+                            >
+                              {YoY4.toFixed(2)}%
+                            </span>
+                          ) : (
+                            <>
+                              <span
+                                style={{
+                                  float: 'left',
+                                  paddingLeft: '4px',
+                                  color: YoYEachMonth5 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth5.toFixed(1)}%
+                              </span>
+                              <span
+                                style={{
+                                  float: 'right',
+                                  paddingRight: '4px',
+                                  color: YoYEachMonth6 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth6.toFixed(1)}%
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2338,7 +2575,9 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <span style={{ color: YoY4 >= 0 ? 'green' : 'red' }}>{YoY4.toFixed(2)}%</span>
+                    <span style={{ color: YoY4 >= 0 ? 'green' : 'red' }}>
+                      {YoY4.toFixed(2)}%
+                    </span>
                   ) : (
                     <></>
                   )
@@ -2362,12 +2601,36 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? <span style={{ color: YoY3 >= 0 ? 'green' : 'red' }}>{YoY3.toFixed(2)}%</span>
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            <span
+                              style={{ color: YoY3 >= 0 ? 'green' : 'red' }}
+                            >
+                              {YoY3.toFixed(2)}%
+                            </span>
+                          ) : (
+                            <>
+                              <span
+                                style={{
+                                  float: 'left',
+                                  paddingLeft: '4px',
+                                  color: YoYEachMonth7 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth7.toFixed(1)}%
+                              </span>
+                              <span
+                                style={{
+                                  float: 'right',
+                                  paddingRight: '4px',
+                                  color: YoYEachMonth8 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth8.toFixed(1)}%
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2376,7 +2639,9 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <span style={{ color: YoY3 >= 0 ? 'green' : 'red' }}>{YoY3.toFixed(2)}%</span>
+                    <span style={{ color: YoY3 >= 0 ? 'green' : 'red' }}>
+                      {YoY3.toFixed(2)}%
+                    </span>
                   ) : (
                     <></>
                   )
@@ -2400,12 +2665,36 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? <span style={{ color: YoY2 >= 0 ? 'green' : 'red' }}>{YoY2.toFixed(2)}%</span>
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            <span
+                              style={{ color: YoY2 >= 0 ? 'green' : 'red' }}
+                            >
+                              {YoY2.toFixed(2)}%
+                            </span>
+                          ) : (
+                            <>
+                              <span
+                                style={{
+                                  float: 'left',
+                                  paddingLeft: '4px',
+                                  color: YoYEachMonth9 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth9.toFixed(1)}%
+                              </span>
+                              <span
+                                style={{
+                                  float: 'right',
+                                  paddingRight: '4px',
+                                  color: YoYEachMonth10 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth10.toFixed(1)}%
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2414,7 +2703,9 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <span style={{ color: YoY2 >= 0 ? 'green' : 'red' }}>{YoY2.toFixed(2)}%</span>
+                    <span style={{ color: YoY2 >= 0 ? 'green' : 'red' }}>
+                      {YoY2.toFixed(2)}%
+                    </span>
                   ) : (
                     <></>
                   )
@@ -2438,12 +2729,34 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>{YoY.toFixed(2)}%</span>
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthSoldQty11}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthSoldQty12}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>
+                              {YoY.toFixed(2)}%
+                            </span>
+                          ) : (
+                            <>
+                              <span
+                                style={{
+                                  float: 'left',
+                                  paddingLeft: '4px',
+                                  color: YoYEachMonth11 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth11.toFixed(1)}%
+                              </span>
+                              <span
+                                style={{
+                                  float: 'right',
+                                  paddingRight: '4px',
+                                  color: YoYEachMonth12 >= 0 ? 'green' : 'red',
+                                  fontSize: '10px',
+                                }}
+                              >
+                                {YoYEachMonth12.toFixed(1)}%
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2452,7 +2765,9 @@ export const SearchPage = () => {
                       <></>
                     )
                   ) : graphLoading === false ? (
-                    <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>{YoY.toFixed(2)}%</span>
+                    <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>
+                      {YoY.toFixed(2)}%
+                    </span>
                   ) : (
                     <></>
                   )
@@ -2512,12 +2827,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearRCVQty6
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty1}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty2}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearRCVQty6
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[0]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[1]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2549,12 +2874,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearRCVQty5
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty3}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty4}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearRCVQty5
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[2]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[3]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2586,12 +2921,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearRCVQty4
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty5}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty6}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearRCVQty4
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[4]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[5]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2623,12 +2968,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearRCVQty3
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty7}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty8}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearRCVQty3
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[6]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[7]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2660,12 +3015,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearRCVQty2
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty9}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty10}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearRCVQty2
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[8]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[9]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -2697,12 +3062,22 @@ export const SearchPage = () => {
                     graphLoading === false ? (
                       value2.length ? (
                         <>
-                          {value2 === 'YEAR'
-                            ? lastyearRCVQty
-                            :  <>
-    <span style={{float:'left',paddingLeft:'4px'}}>{lastmonthRCVQty11}</span>    
-    <span style={{float:'right',paddingRight:'4px'}}>{lastmonthRCVQty12}</span>
-  </>}
+                          {value2 === 'YEAR' ? (
+                            lastyearRCVQty
+                          ) : (
+                            <>
+                              <span
+                                style={{ float: 'left', paddingLeft: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[10]}
+                              </span>
+                              <span
+                                style={{ float: 'right', paddingRight: '4px' }}
+                              >
+                                {monthData.map((item) => item.qtyrec)[11]}
+                              </span>
+                            </>
+                          )}
                         </>
                       ) : (
                         <></>
@@ -3237,7 +3612,7 @@ export const SearchPage = () => {
               <td>SOLD30</td>
               <td>SOLD90</td>
               <td>SOLD365</td>
-              <td>AVG_SHP(1Y)</td>
+              <td style={{ fontSize: '12px' }}>AVG_SOLD(1Y)</td>
               <td>
                 {/* {
                   search
@@ -3607,7 +3982,7 @@ export const SearchPage = () => {
                     ))}
                     <div>{totalAmount}</div>
                   </td>
-                  
+
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
                     {/* {search.map((item, idx) =>
