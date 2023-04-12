@@ -3,6 +3,7 @@
 }
 
 .infoCol1 {
+  
   background-color: #88bef2;
 }
 
@@ -44,7 +45,7 @@
   }
 }
 
-.table1 tbody tr td {
+.table1   td {
   padding: 0;
   padding-left: 2px;
   margin: 0;
@@ -59,9 +60,9 @@
   background-color: #88bef2;
 }
 
-.bottomSearch div {
+.table3 div {
   display: block;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
   border-right-width: 0px;
 
   padding-top: 7px;
@@ -114,12 +115,3 @@
 
 
 
-/* .test5 tbody tr td{
-  display: block;
-
-  border: 1px solid black;
-  min-width: 80px;
-  height: 32px;
-  font-size: 13px;
-  border-right-width: 0px;
-} */

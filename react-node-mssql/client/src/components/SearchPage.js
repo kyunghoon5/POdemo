@@ -78,7 +78,7 @@ export const SearchPage = () => {
 
   //DATE buttonSearch console
   const date = new Date();
-  const curDate = date.toISOString().split('T')[0];
+
   const past30 = new Date();
   past30.setDate(past30.getDate() - 30);
   const past30c = past30.toISOString().split('T')[0];
@@ -295,12 +295,10 @@ export const SearchPage = () => {
       });
   };
 
-  const [WDloading, WDsetLoading] = useState(false);
   const [WDsearch, WDsetSearch] = useState([]);
   const WDsearchRecords = () => {
     const searchedRecord = record.toLowerCase();
 
-    WDsetLoading(true);
     axios
       .get(
         `${BASE_URL}WatchDog/WDInfo?search=${searchedRecord}&user=undefined/`
@@ -308,22 +306,18 @@ export const SearchPage = () => {
 
       .then((response) => {
         WDsetSearch(response.data);
-        WDsetLoading(false);
       });
   };
 
-  const [WDloading2, WDsetLoading2] = useState(false);
   const [WDsearch2, WDsetSearch2] = useState([]);
   const WDsearchRecords2 = () => {
     const searchedRecord = record.toLowerCase();
 
-    WDsetLoading2(true);
     axios
       .get(`${BASE_URL}WatchDog/ColorList?search=${searchedRecord}`)
 
       .then((response) => {
         WDsetSearch2(response.data);
-        WDsetLoading2(false);
       });
   };
 
@@ -570,327 +564,22 @@ export const SearchPage = () => {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
   // Get the maximum value from the data
 
-  const [pieLoading, setpieLoading] = useState(false);
   const [pieChart, setpieChart] = useState([]);
   const pieChartF = async () => {
     const searchedRecord = record.toLowerCase();
-    setpieLoading(true);
+
     await axios
       .get(`${BASE_URL}pieChart?descrip=${searchedRecord}`)
 
       .then((response) => {
         setpieChart(response.data);
-        setpieLoading(false);
       });
   };
 
   // Get the maximum value from the data
   const maxVal = Math.max(...pieChart.map((data) => data.qtyshp));
 
-  const [loadingfile, setLoadingfile] = useState(false);
-
-  const handleDownload = () => {
-    setLoadingfile(true);
-    axios({
-      url: `${BASE_URL}download`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'RB_Rank.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile(false);
-    });
-  };
-
-  const [loadingfile2, setLoadingfile2] = useState(false);
-
-  const handleDownload2 = () => {
-    setLoadingfile2(true);
-    axios({
-      url: `${BASE_URL}downloadnonRB`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'nonRB_Rank.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile2(false);
-    });
-  };
-
-  const [loadingfile3, setLoadingfile3] = useState(false);
-
-  const handleDownload3 = () => {
-    setLoadingfile3(true);
-    axios({
-      url: `${BASE_URL}downloadNewItem`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'newItem_Rank.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile3(false);
-    });
-  };
-
-  const [loadingfile4, setLoadingfile4] = useState(false);
-
-  const handleDownload4 = () => {
-    setLoadingfile4(true);
-    axios({
-      url: `${BASE_URL}download1Q`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', '1Q.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile4(false);
-    });
-  };
-  const [loadingfile5, setLoadingfile5] = useState(false);
-
-  const handleDownload5 = () => {
-    setLoadingfile5(true);
-    axios({
-      url: `${BASE_URL}download2Q`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', '2Q.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile5(false);
-    });
-  };
-  const [loadingfile6, setLoadingfile6] = useState(false);
-
-  const handleDownload6 = () => {
-    setLoadingfile6(true);
-    axios({
-      url: `${BASE_URL}download3Q`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', '3Q.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile6(false);
-    });
-  };
-  const [loadingfile7, setLoadingfile7] = useState(false);
-
-  const handleDownload7 = () => {
-    setLoadingfile7(true);
-    axios({
-      url: `${BASE_URL}download4Q`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', '4Q.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile7(false);
-    });
-  };
-
-  const [loadingfile8, setLoadingfile8] = useState(false);
-
-  const handleDownload8 = () => {
-    setLoadingfile8(true);
-    axios({
-      url: `${BASE_URL}downloadCheck2021`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', '2020-2021 change_rate.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile8(false);
-    });
-  };
-  const [loadingfile9, setLoadingfile9] = useState(false);
-
-  const handleDownload9 = () => {
-    setLoadingfile9(true);
-    axios({
-      url: `${BASE_URL}downloadCheck2022`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', '2021-2022 change_rate.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile9(false);
-    });
-  };
-
-  const [loadingfile10, setLoadingfile10] = useState(false);
-
-  const handleDownload10 = () => {
-    setLoadingfile10(true);
-    axios({
-      url: `${BASE_URL}downloadXSHORT`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'XSHORT.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile10(false);
-    });
-  };
-
-  const [loadingfile11, setLoadingfile11] = useState(false);
-
-  const handleDownload11 = () => {
-    setLoadingfile11(true);
-    axios({
-      url: `${BASE_URL}downloadSHORT`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'SHORT.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile11(false);
-    });
-  };
-
-  const [loadingfile12, setLoadingfile12] = useState(false);
-
-  const handleDownload12 = () => {
-    setLoadingfile12(true);
-    axios({
-      url: `${BASE_URL}downloadMIDSHORT`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'MID_SHORT.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile12(false);
-    });
-  };
-
-  const [loadingfile13, setLoadingfile13] = useState(false);
-
-  const handleDownload13 = () => {
-    setLoadingfile13(true);
-    axios({
-      url: `${BASE_URL}downloadMID`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'MID.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile13(false);
-    });
-  };
-
-  const [loadingfile14, setLoadingfile14] = useState(false);
-
-  const handleDownload14 = () => {
-    setLoadingfile14(true);
-    axios({
-      url: `${BASE_URL}downloadMIDLONG`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'MID_LONG.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile14(false);
-    });
-  };
-
-  const [loadingfile15, setLoadingfile15] = useState(false);
-
-  const handleDownload15 = () => {
-    setLoadingfile15(true);
-    axios({
-      url: `${BASE_URL}downloadLONG`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'LONG.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile15(false);
-    });
-  };
-
-  const [loadingfile16, setLoadingfile16] = useState(false);
-
-  const handleDownload16 = () => {
-    setLoadingfile16(true);
-    axios({
-      url: `${BASE_URL}downloadXLONG`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'XLONG.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      setLoadingfile16(false);
-    });
-  };
-
-  const [loadingfile17, setLoadingfile17] = useState(false);
-
   const handleDownload17 = () => {
-    setLoadingfile17(true);
     axios({
       url: `${BASE_URL}downloadItemReorderPoint`,
       method: 'GET',
@@ -902,7 +591,6 @@ export const SearchPage = () => {
       link.setAttribute('download', 'ItemReorderPoint.xlsx');
       document.body.appendChild(link);
       link.click();
-      setLoadingfile17(false);
     });
   };
 
@@ -923,7 +611,7 @@ export const SearchPage = () => {
   //Calculating the numbers of days between two dates
   // const dateC = test2.map((item) => item.recdate)[0];
   // const date1 = new Date(dateC);
-  const date2 = new Date();
+  // const date2 = new Date();
   // const Difference_In_Time = date2.getTime() - date1.getTime();
   // const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   //Calculating the numbers of days between two dates for datepicker
@@ -966,9 +654,9 @@ export const SearchPage = () => {
     search.map((item) => _.sumBy(item.sold30, 'qtyshp'))
   );
 
-  const totalSold60 = _.sumBy(
-    search.map((item) => _.sumBy(item.sold60, 'qtyshp'))
-  );
+  // const totalSold60 = _.sumBy(
+  //   search.map((item) => _.sumBy(item.sold60, 'qtyshp'))
+  // );
 
   const totalItems5 = _.sumBy(
     search.map((item) => _.sumBy(item.sold90, 'qtyshp'))
@@ -1059,8 +747,7 @@ export const SearchPage = () => {
 
   //forecast
   const [selforecastDatePicker, setselforecastDatePicker] = useState([]);
-  const [forecastLodingDatePicker, setforecastLodingDatePicker] =
-    useState(false);
+
   useEffect(() => {
     const fetchData4 = async () => {
       if (search.length === 0) {
@@ -1070,12 +757,10 @@ export const SearchPage = () => {
       const searchedRecord = record.toLowerCase();
       const endDate = forecastDatePicker.toISOString().split('T')[0];
 
-      setforecastLodingDatePicker(true);
       const response = await axios.get(
         `${BASE_URL}poForecast?descrip=${searchedRecord}&endDate=${endDate}`
       );
       setselforecastDatePicker(response.data);
-      setforecastLodingDatePicker(false);
     };
     fetchData4();
   }, [forecastDatePicker, search]);
@@ -1143,7 +828,10 @@ export const SearchPage = () => {
       ? _.zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : _.zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
 
-  const totalAmount = amounts.reduce((sum, num) => sum + num, 0);
+  const totalAmount = amounts.reduce(
+    (sum, num) => (num < 0 ? round(sum + num) : sum),
+    0
+  );
   const FosuggestedQty = zipWith(
     suggestedQtyavg_qty,
     suggestedQtyavg_lead,
@@ -1151,7 +839,11 @@ export const SearchPage = () => {
     amounts,
     (qty, lead, bo, am) => qty * lead + bo - am
   ).reduce((acc, curr) => acc.concat(curr), []);
-  const totalAmount19 = FosuggestedQty.reduce((sum, num) => sum + num, 0);
+
+  const totalAmount19 = FosuggestedQty.reduce(
+    (sum, num) => (num > 0 ? round(sum + num) : sum),
+    0
+  );
 
   //new or old item
   const newOrOld = () => {
@@ -1178,69 +870,62 @@ export const SearchPage = () => {
         <table id="tb1" className="table1">
           <tbody>
             <tr className="row1">
-              <>
-                <InfoItemOb className="infoCol1" name="ITEM:" />
-              </>
+              <td className="infoCol1" style={{ textAlign: 'left' }}>
+                ITEM:
+              </td>
 
               <td className="nameSection" colSpan="2">
-                <>
-                  <input
-                    className=" border border-zinc-500 "
-                    id="search"
-                    placeholder="Search item name here"
-                    type="text"
-                    value={record}
-                    onChange={handleFilter}
-                    autoComplete="off"
-                    onKeyPress={handleKeyPress}
-                  />
-                </>
-                <>
-                  {' '}
-                  {filteredData.length !== 0 && (
-                    <span className="dataResult absolute">
-                      {filteredData.slice(0, 15).map((item, idx) => (
-                        <span
-                          key={idx}
-                          className="dropdown-row"
-                          onClick={() => {
-                            onSearch(item.descrip);
-                          }}
-                        >
-                          {item.descrip}
-                        </span>
-                      ))}
-                    </span>
-                  )}
-                </>
+                <input
+                  className=" border border-zinc-500 "
+                  id="search"
+                  placeholder="Search item name here"
+                  type="text"
+                  value={record}
+                  onChange={handleFilter}
+                  autoComplete="off"
+                  onKeyPress={handleKeyPress}
+                />
+
+                {filteredData.length !== 0 && (
+                  <span className="dataResult absolute">
+                    {filteredData.slice(0, 15).map((item, idx) => (
+                      <span
+                        key={idx}
+                        className="dropdown-row"
+                        onClick={() => {
+                          onSearch(item.descrip);
+                        }}
+                      >
+                        {item.descrip}
+                      </span>
+                    ))}
+                  </span>
+                )}
               </td>
               <td className="btn1">
-                <>
-                  {' '}
-                  <button
-                    onClick={() => {
-                      searchRecords();
-                      onClickImageHandler();
-                      reset();
-                      itemRecords();
-                      fetchData3();
-                      graphLineF();
-                      graphLineByMonthF();
-                      graphByItemF();
-                      graphByItemMonthF();
-                      WDsearchRecords();
-                      WDsearchRecords2();
-                      setfilteredDate([]);
-                      newitemRecords();
-                      pieChartF();
-                    }}
-                    className="btn1name"
-                    id="submitBtn"
-                    type="submit"
-                  >
-                    SUBMIT
-                  </button>
-                </>
+                <button
+                  onClick={() => {
+                    searchRecords();
+                    onClickImageHandler();
+                    reset();
+                    itemRecords();
+                    fetchData3();
+                    graphLineF();
+                    graphLineByMonthF();
+                    graphByItemF();
+                    graphByItemMonthF();
+                    WDsearchRecords();
+                    WDsearchRecords2();
+                    setfilteredDate([]);
+                    newitemRecords();
+                    pieChartF();
+                  }}
+                  className="btn1name"
+                  id="submitBtn"
+                  type="submit"
+                >
+                  SUBMIT
+                </button>
               </td>
               <td colSpan="3" rowSpan="10" className="prodImg ">
                 <span>
@@ -1263,230 +948,224 @@ export const SearchPage = () => {
                   paddingBottom: '200px',
                 }}
               >
-                <>
-                  <div
-                    style={{
-                      position: 'absolute',
-                      width: '70%',
-                      height: '100%',
-                    }}
-                  >
-                    {value2.length ? (
-                      graphLoading === false ? (
-                        value2.length ? (
-                          value2 === 'YEAR' ? (
-                            <ResponsiveContainer width="100%" height="100%">
-                              <ComposedChart
-                                width={500}
-                                height={300}
+                <div
+                  style={{
+                    position: 'absolute',
+                    width: '70%',
+                    height: '100%',
+                  }}
+                >
+                  {value2.length ? (
+                    graphLoading === false ? (
+                      value2.length ? (
+                        value2 === 'YEAR' ? (
+                          <ResponsiveContainer width="100%" height="100%">
+                            <ComposedChart
+                              width={500}
+                              height={300}
+                              data={graphLine}
+                              margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
+                              }}
+                            >
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis dataKey="year" />
+                              <YAxis />
+                              <Tooltip />
+                              <Legend />
+                              <Bar
+                                name="PO rec"
                                 data={graphLine}
-                                margin={{
-                                  top: 5,
-                                  right: 30,
-                                  left: 20,
-                                  bottom: 5,
-                                }}
-                              >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="year" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar
-                                  name="PO rec"
-                                  data={graphLine}
-                                  barSize={4}
-                                  fill="#ffb366"
-                                  dataKey="qtyrec"
-                                />
+                                barSize={4}
+                                fill="#ffb366"
+                                dataKey="qtyrec"
+                              />
 
-                                <Line
-                                  type="monotone"
-                                  dataKey="qtyshp"
-                                  strokeWidth={3}
-                                  stroke="#82ca9d"
-                                />
-                              </ComposedChart>
-                            </ResponsiveContainer>
-                          ) : (
-                            <ResponsiveContainer width="100%" height="100%">
-                              <ComposedChart
-                                data={monthLine}
-                                width={500}
-                                height={300}
-                                margin={{
-                                  top: 5,
-                                  right: 30,
-                                  left: 20,
-                                  bottom: 5,
-                                }}
-                              >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis
-                                  dataKey="month"
-                                  allowDuplicatedCategory={false}
-                                />
-                                <YAxis />
-
-                                <Tooltip />
-                                <Legend />
-                                <Bar
-                                  name="PO rec"
-                                  data={monthLine}
-                                  barSize={4}
-                                  fill="#ffb366"
-                                  dataKey="qtyrec"
-                                />
-
-                                <Line
-                                  name={Number(value2)}
-                                  data={monthLine}
-                                  type="monotone"
-                                  dataKey="qtyshp"
-                                  strokeWidth={3}
-                                  stroke="#82ca9d"
-                                />
-                                {monthLinePrv.some((entry) => entry.qtyshp) ? (
-                                  <Line
-                                    name={Number(value2) - 1}
-                                    data={monthLinePrv}
-                                    type="monotone"
-                                    dataKey="qtyshp"
-                                    strokeWidth={3}
-                                    stroke="#8884d8"
-                                  />
-                                ) : null}
-                              </ComposedChart>
-                            </ResponsiveContainer>
-                          )
+                              <Line
+                                type="monotone"
+                                dataKey="qtyshp"
+                                strokeWidth={3}
+                                stroke="#82ca9d"
+                              />
+                            </ComposedChart>
+                          </ResponsiveContainer>
                         ) : (
-                          <td></td>
+                          <ResponsiveContainer width="100%" height="100%">
+                            <ComposedChart
+                              data={monthLine}
+                              width={500}
+                              height={300}
+                              margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
+                              }}
+                            >
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis
+                                dataKey="month"
+                                allowDuplicatedCategory={false}
+                              />
+                              <YAxis />
+
+                              <Tooltip />
+                              <Legend />
+                              <Bar
+                                name="PO rec"
+                                data={monthLine}
+                                barSize={4}
+                                fill="#ffb366"
+                                dataKey="qtyrec"
+                              />
+
+                              <Line
+                                name={Number(value2)}
+                                data={monthLine}
+                                type="monotone"
+                                dataKey="qtyshp"
+                                strokeWidth={3}
+                                stroke="#82ca9d"
+                              />
+                              {monthLinePrv.some((entry) => entry.qtyshp) ? (
+                                <Line
+                                  name={Number(value2) - 1}
+                                  data={monthLinePrv}
+                                  type="monotone"
+                                  dataKey="qtyshp"
+                                  strokeWidth={3}
+                                  stroke="#8884d8"
+                                />
+                              ) : null}
+                            </ComposedChart>
+                          </ResponsiveContainer>
                         )
                       ) : (
-                        <td>Loading...</td>
+                        <td></td>
                       )
-                    ) : graphLoading === false ? (
-                      <ResponsiveContainer width="100%" height="100%">
-                        <ComposedChart
-                          width={500}
-                          height={300}
-                          data={graphLine}
-                          margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5,
-                          }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="year" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Bar
-                            name="PO rec"
-                            data={graphLine}
-                            barSize={4}
-                            fill="#ffb366"
-                            dataKey="qtyrec"
-                          />
-
-                          <Line
-                            type="monotone"
-                            dataKey="qtyshp"
-                            strokeWidth={3}
-                            stroke="#82ca9d"
-                          />
-                        </ComposedChart>
-                      </ResponsiveContainer>
                     ) : (
-                      <>Loading...</>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      position: 'absolute',
-
-                      width: '30%',
-                      height: '100%',
-
-                      right: '1px',
-                    }}
-                  >
+                      <td>Loading...</td>
+                    )
+                  ) : graphLoading === false ? (
                     <ResponsiveContainer width="100%" height="100%">
-                      <PieChart width={400} height={400}>
-                        <Pie
-                          data={pieChart}
-                          dataKey="qtyshp"
-                          nameKey="quarter"
-                          cx="50%"
-                          cy="50%"
-                          outerRadius={80}
-                          fill="#8884d8"
-                          labelLine={false}
-                          label={({
-                            cx,
-                            cy,
-                            midAngle,
-                            innerRadius,
-                            outerRadius,
-                            value,
-                            index,
-                            payload,
-                          }) => {
-                            const RADIAN = Math.PI / 180;
-                            const radius =
-                              25 + innerRadius + (outerRadius - innerRadius);
-                            const x =
-                              cx + radius * Math.cos(-midAngle * RADIAN);
-                            const y =
-                              cy + radius * Math.sin(-midAngle * RADIAN);
-                            const percent = `${(
-                              (value /
-                                pieChart.reduce((a, b) => a + b.qtyshp, 0)) *
-                              100
-                            ).toFixed(0)}%`;
-                            const quarter = payload.quarter;
-                            return (
-                              <text
-                                x={x}
-                                y={y}
-                                fill={COLORS[index % COLORS.length]}
-                                textAnchor={x > cx ? 'start' : 'end'}
-                                dominantBaseline="central"
-                              >
-                                <tspan dx={x > cx ? -31 : 30} dy={3}>
-                                  {quarter}Q({percent})
-                                </tspan>
-                              </text>
-                            );
-                          }}
-                        >
-                          {pieChart.map((entry, index) => (
-                            <Cell
-                              key={`cell-${index}`}
-                              fill={
-                                entry.qtyshp === maxVal
-                                  ? '#FF0000'
-                                  : COLORS[index % COLORS.length]
-                              }
-                            />
-                          ))}
-                        </Pie>
-                        <Tooltip formatter={(value) => [value, 'qtyshp']} />
+                      <ComposedChart
+                        width={500}
+                        height={300}
+                        data={graphLine}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="year" />
+                        <YAxis />
+                        <Tooltip />
                         <Legend />
-                      </PieChart>
+                        <Bar
+                          name="PO rec"
+                          data={graphLine}
+                          barSize={4}
+                          fill="#ffb366"
+                          dataKey="qtyrec"
+                        />
+
+                        <Line
+                          type="monotone"
+                          dataKey="qtyshp"
+                          strokeWidth={3}
+                          stroke="#82ca9d"
+                        />
+                      </ComposedChart>
                     </ResponsiveContainer>
-                  </div>
-                </>
+                  ) : (
+                    <>Loading...</>
+                  )}
+                </div>
+
+                <div
+                  style={{
+                    position: 'absolute',
+
+                    width: '30%',
+                    height: '100%',
+
+                    right: '1px',
+                  }}
+                >
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart width={400} height={400}>
+                      <Pie
+                        data={pieChart}
+                        dataKey="qtyshp"
+                        nameKey="quarter"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        fill="#8884d8"
+                        labelLine={false}
+                        label={({
+                          cx,
+                          cy,
+                          midAngle,
+                          innerRadius,
+                          outerRadius,
+                          value,
+                          index,
+                          payload,
+                        }) => {
+                          const RADIAN = Math.PI / 180;
+                          const radius =
+                            25 + innerRadius + (outerRadius - innerRadius);
+                          const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                          const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                          const percent = `${(
+                            (value /
+                              pieChart.reduce((a, b) => a + b.qtyshp, 0)) *
+                            100
+                          ).toFixed(0)}%`;
+                          const quarter = payload.quarter;
+                          return (
+                            <text
+                              x={x}
+                              y={y}
+                              fill={COLORS[index % COLORS.length]}
+                              textAnchor={x > cx ? 'start' : 'end'}
+                              dominantBaseline="central"
+                            >
+                              <tspan dx={x > cx ? -31 : 30} dy={3}>
+                                {quarter}Q({percent})
+                              </tspan>
+                            </text>
+                          );
+                        }}
+                      >
+                        {pieChart.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={
+                              entry.qtyshp === maxVal
+                                ? '#FF0000'
+                                : COLORS[index % COLORS.length]
+                            }
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip formatter={(value) => [value, 'qtyshp']} />
+                      <Legend />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
               </td>
             </tr>
 
             <tr className="row2">
-              <>
-                <InfoItemOb className="infoCol1" name="ITEM NO:" />
-              </>
+              <InfoItemOb className="infoCol1" name="ITEM NO:" />
 
               <td colSpan="3" className="smpNo">
                 {WDsearch.map((item) => item.Sample)}
@@ -1494,9 +1173,7 @@ export const SearchPage = () => {
             </tr>
 
             <tr className="row3">
-              <>
-                <InfoItemOb className="infoCol1" name="ORIGINAL:" />
-              </>
+              <InfoItemOb className="infoCol1" name="ORIGINAL:" />
 
               <td colSpan="3">
                 <span
@@ -1513,9 +1190,7 @@ export const SearchPage = () => {
             </tr>
 
             <tr className="row4">
-              <>
-                <InfoItemOb className="infoCol1" name="TYPE:" />
-              </>
+              <InfoItemOb className="infoCol1" name="TYPE:" />
 
               <td colSpan="3" className="smpDte">
                 {search.map((item) => item.length_cat)[0]}
@@ -1546,42 +1221,37 @@ export const SearchPage = () => {
               </td>
             </tr>
             <tr className="row6">
-              <>
-                <InfoItemOb className="infoCol1" name="LENGTH:" />
-              </>
-              <>
-                {WDsearch.map((item, idx) => (
-                  <td key={idx} colSpan="3">
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <span className="length">{item.Length}</span>
-                      <span>
-                        <span style={{ marginBottom: '0px' }}></span>
-                        <span className="fl">
-                          F : {item.Front_lc_leng_w} X {item.Front_lc_leng_l}
-                        </span>
+              <InfoItemOb className="infoCol1" name="LENGTH:" />
+
+              {WDsearch.map((item, idx) => (
+                <td key={idx} colSpan="3">
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <span className="length">{item.Length}</span>
+                    <span>
+                      <span style={{ marginBottom: '0px' }}></span>
+                      <span className="fl">
+                        F : {item.Front_lc_leng_w} X {item.Front_lc_leng_l}
                       </span>
-                      <span style={{ paddingRight: '3px' }}>
-                        <span style={{ marginBottom: '0px' }}></span>
-                        <span className="pl">
-                          P : {item.Part_lc_leng_w} X {item.Part_lc_leng_l}
-                        </span>
+                    </span>
+                    <span style={{ paddingRight: '3px' }}>
+                      <span style={{ marginBottom: '0px' }}></span>
+                      <span className="pl">
+                        P : {item.Part_lc_leng_w} X {item.Part_lc_leng_l}
                       </span>
-                    </div>
-                  </td>
-                ))}
-              </>
+                    </span>
+                  </div>
+                </td>
+              ))}
             </tr>
 
             <tr className="row7">
-              <>
-                <InfoItemOb className="infoCol1" name="FIBER:" />
-              </>
+              <InfoItemOb className="infoCol1" name="FIBER:" />
 
               <td colSpan="3">
                 <span
@@ -1619,31 +1289,30 @@ export const SearchPage = () => {
                   ))}
                 </select>
               </td>
-              <>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <td>
-                          {value2 === 'YEAR'
-                            ? graphYearlyTotal
-                            : graphMonthlyTotal}
-                        </td>
-                      ) : (
-                        <td></td>
-                      )
+
+              {search.length ? (
+                value2.length ? (
+                  graphLoading === false ? (
+                    value2.length ? (
+                      <td>
+                        {value2 === 'YEAR'
+                          ? graphYearlyTotal
+                          : graphMonthlyTotal}
+                      </td>
                     ) : (
-                      <td>Loading...</td>
+                      <td></td>
                     )
-                  ) : graphLoading === false ? (
-                    <td>{graphYearlyTotal}</td>
                   ) : (
                     <td>Loading...</td>
                   )
+                ) : graphLoading === false ? (
+                  <td>{graphYearlyTotal}</td>
                 ) : (
-                  <td></td>
-                )}
-              </>
+                  <td>Loading...</td>
+                )
+              ) : (
+                <td></td>
+              )}
 
               <td style={{ background: '#f0e68c' }}>
                 {search.length ? (
@@ -3195,8 +2864,11 @@ export const SearchPage = () => {
                     .map((item) => item.portn)[0]
                 } */}
               </td>
-              <td className="prv30" style={{ background: '#f4a460' }}>
-                FORECAST
+              <td
+                className="prv30"
+                style={{ background: '#f4a460', fontSize: '10px' }}
+              >
+                OH_FORECAST
               </td>
               <td>
                 {/* {
@@ -3672,27 +3344,24 @@ export const SearchPage = () => {
 
           {search.length > 0 ? (
             loading === false ? (
-              <Fragment>
-                <tbody id="tt" className="bottomSearch">
-                  <>
-                    <td style={{ padding: '0' }}>
-                      {search
-                        .filter((item) => item.itemkey2)
-                        .map((item, idx) => (
-                          <div
-                            className="pointername"
-                            key={idx}
-                            style={{ textAlign: 'left', color: 'blue' }}
-                            onClick={() => eachItemClick(item.itemkey2)}
-                          >
-                            {item.itemkey2}
-                          </div>
-                        ))}
-
-                      <div style={{ textAlign: 'left' }}>TOTAL</div>
-                    </td>
-                  </>
-
+              <tbody id="tt" className="table3">
+                <tr>
+                  {' '}
+                  <td style={{ padding: '0' }}>
+                    {search
+                      .filter((item) => item.itemkey2)
+                      .map((item, idx) => (
+                        <div
+                          className="pointername"
+                          key={idx}
+                          style={{ textAlign: 'left', color: 'blue' }}
+                          onClick={() => eachItemClick(item.itemkey2)}
+                        >
+                          {item.itemkey2}
+                        </div>
+                      ))}
+                    <div style={{ textAlign: 'left' }}>TOTAL</div>
+                  </td>
                   <td style={{ padding: '0' }}>
                     {search
                       .filter(
@@ -3716,7 +3385,6 @@ export const SearchPage = () => {
                     )}
                     <div>{totalItems1}</div>
                   </td>
-
                   {/* {selectedItem.length > 0 ? (
                   <td style={{ padding: '0' }}>
                     {mergeByKey.map((item, idx) => (
@@ -3751,9 +3419,7 @@ export const SearchPage = () => {
                     )}
                     <div>{totalItems13}</div>
                   </td>
-
                   {/*sold amount regarding RCVD date //loading && render table cell */}
-
                   {/* <td style={{ padding: '0' }}>
                   {test2.length
                     ? loadingDatapick === false
@@ -3780,7 +3446,6 @@ export const SearchPage = () => {
                     : search.map((item, idx) => <div key={idx}>Loading</div>)}
                   <div>{totalItemsFromRCVD}</div>
                 </td> */}
-
                   <td style={{ padding: '0' }}>
                     {selectedDatePicker.length
                       ? loadingDatePicker === false
@@ -3803,7 +3468,6 @@ export const SearchPage = () => {
                       : search.map((item, idx) => <div key={idx}>Loading</div>)}
                     <div>{totalDatePickerqty}</div>
                   </td>
-
                   <td style={{ padding: '0' }}>
                     {selectedDatePicker.length
                       ? loadingDatePicker === false
@@ -3826,7 +3490,6 @@ export const SearchPage = () => {
                       : search.map((item, idx) => <div key={idx}>Loading</div>)}
                     <div>{totalDatePickerbo}</div>
                   </td>
-
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
@@ -3840,7 +3503,6 @@ export const SearchPage = () => {
                     )}
                     <div>{totalItems4}</div>
                   </td>
-
                   <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
                       item.sold90.length ? (
@@ -3853,7 +3515,6 @@ export const SearchPage = () => {
                     )}
                     <div>{totalItems5}</div>
                   </td>
-
                   <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
                       item.sold365.length ? (
@@ -3866,7 +3527,6 @@ export const SearchPage = () => {
                     )}
                     <div>{totalItems6}</div>
                   </td>
-
                   <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
                       item.reorderPointO.length ? (
@@ -3982,7 +3642,6 @@ export const SearchPage = () => {
                     ))}
                     <div>{totalAmount}</div>
                   </td>
-
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
                     {/* {search.map((item, idx) =>
@@ -4006,17 +3665,14 @@ export const SearchPage = () => {
                       <div
                         key={`qty-${index}`}
                         className={num < 0 ? 'negative-amount' : ''}
-                        style={{ borderRightWidth: '1px' }}
                       >
                         {round(num)}
                       </div>
                     ))}
-                    <div style={{ borderRightWidth: '1px' }}>
-                      {round(totalAmount19)}
-                    </div>
+                    <div>{round(totalAmount19)}</div>
                   </td>
-                </tbody>
-              </Fragment>
+                </tr>
+              </tbody>
             ) : (
               <>Loading...</>
             )
@@ -4043,20 +3699,18 @@ export const SearchPage = () => {
         </div>
       )}
 
-      <>
-        <TreeView
-          defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-        >
-          <TreeItem nodeId="1" label="ItemReorderAlert">
-            <TreeItem
-              nodeId="2"
-              label="ItemReorderList.xlsx"
-              onClick={handleDownload17}
-            />
-          </TreeItem>
-        </TreeView>
-      </>
+      <TreeView
+        defaultCollapseIcon={<ExpandMoreIcon />}
+        defaultExpandIcon={<ChevronRightIcon />}
+      >
+        <TreeItem nodeId="1" label="ItemReorderAlert">
+          <TreeItem
+            nodeId="2"
+            label="ItemReorderList.xlsx"
+            onClick={handleDownload17}
+          />
+        </TreeItem>
+      </TreeView>
     </div>
   );
 };
