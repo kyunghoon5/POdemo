@@ -22,11 +22,15 @@ import {
 } from 'recharts';
 
 import ColorTab from './ColorTab';
+
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import { zipWith } from 'lodash';
+
+
+
 
 var _ = require('lodash');
 
@@ -43,8 +47,10 @@ export const SearchPage = () => {
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
 
-  //searchSuggest
+  
 
+ 
+//searchSuggest
   const [suggest, setSuggest] = useState([]);
   const itemData = async () => {
     return await axios
@@ -248,18 +254,6 @@ export const SearchPage = () => {
   const onClickImageHandler = () => {
     setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`);
   };
-
-  // const [productData, setProductData] = useState([]);
-  //   const itemData = async () => {
-  //     return await axios
-  //       .get('http://localhost:8082/mergeData')
-  //       .then((response) => setProductData(response.data))
-  //       .catch((err) => console.log(err));
-  //   };
-
-  //    useEffect(() => {
-  //      itemData();
-  //    }, [productData]);
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -604,6 +598,7 @@ export const SearchPage = () => {
   };
 
   //REORDER DATA
+
   const result2 = search.map((item) =>
     WDsearch2.find((item2) => item2.Color.trim() === item.itemkey2.trim())
   );
@@ -919,6 +914,7 @@ export const SearchPage = () => {
                     setfilteredDate([]);
                     newitemRecords();
                     pieChartF();
+                    
                   }}
                   className="btn1name"
                   id="submitBtn"

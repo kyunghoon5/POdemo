@@ -1,5 +1,5 @@
 import { MdOutlineClose } from 'react-icons/md';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Line,
   XAxis,
@@ -17,8 +17,7 @@ var _ = require('lodash');
 const ColorTab = ({
   setIsOpen,
   isOpen,
-  eachItemGraph,
-  
+  eachItemGraph,  
   eachItemGraphMonth,
   graphLoading2,
   search,
