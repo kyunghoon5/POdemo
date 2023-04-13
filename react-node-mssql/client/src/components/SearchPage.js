@@ -28,8 +28,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import { zipWith } from 'lodash';
-
-
+import Table3Total from './math/Table3Total';
 
 
 var _ = require('lodash');
@@ -37,8 +36,28 @@ var _ = require('lodash');
 export const SearchPage = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [search, setSearch] = useState([]);
-  const [record, setRecord] = useState([]);
+  const [record, setRecord] = useState("");
+  const [loading, setLoading] = useState(false);
+  
+  const searchRecords = () => {
+    const searchedRecord = record.toLowerCase();
+
+    setLoading(true);
+    axios
+      .get(`${BASE_URL}mergeData?descrip=${searchedRecord}`)
+      .then((response) => {
+        setSearch(response.data);
+        setLoading(false);
+      }).catch((error) => {
+      console.log(error);
+      setLoading(false);
+    });;
+  };
+  //image handler
   const [imageClicked, setImageClicked] = useState();
+  const onClickImageHandler = () => {
+    setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`);
+  };
   const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
   const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
@@ -47,10 +66,7 @@ export const SearchPage = () => {
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
 
-  
-
- 
-//searchSuggest
+  //searchSuggest
   const [suggest, setSuggest] = useState([]);
   const itemData = async () => {
     return await axios
@@ -84,7 +100,6 @@ export const SearchPage = () => {
 
   //DATE buttonSearch console
   const date = new Date();
-
   const past30 = new Date();
   past30.setDate(past30.getDate() - 30);
   const past30c = past30.toISOString().split('T')[0];
@@ -234,10 +249,8 @@ export const SearchPage = () => {
       if (search.length === 0) {
         return;
       }
-
       const searchedRecord = record.toLowerCase();
       const endDate = endDatePicker.toISOString().split('T')[0];
-
       const startDate = startDatePicker.toISOString().split('T')[0];
 
       setloadingDatePicker(true);
@@ -250,10 +263,8 @@ export const SearchPage = () => {
     fetchData2();
   }, [startDatePicker, endDatePicker, search]);
 
-  //image handler
-  const onClickImageHandler = () => {
-    setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`);
-  };
+  
+ 
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -274,20 +285,7 @@ export const SearchPage = () => {
     }
   };
 
-  const [loading, setLoading] = useState(false);
-
-  const searchRecords = () => {
-    const searchedRecord = record.toLowerCase();
-
-    setLoading(true);
-    axios
-      .get(`${BASE_URL}mergeData?descrip=${searchedRecord}`)
-
-      .then((response) => {
-        setSearch(response.data);
-        setLoading(false);
-      });
-  };
+  
 
   const [WDsearch, WDsetSearch] = useState([]);
   const WDsearchRecords = () => {
@@ -627,94 +625,43 @@ export const SearchPage = () => {
 
   const PRLmax = Math.max(...filteredItemsP);
 
-  //total CLRS
-  const filteredItems = search.filter((item) => item.itemkey2);
-  const totalItems = filteredItems.length;
+  //total
+  const [colorTotal, setColorTotal] = useState(0);
 
-  //total REORDER
-  const totalItems1 = _.sum(
-    result2.map((item) => (item === undefined ? 0 : item.WMA))
-  );
+  const [onHandTotal, setonHandTotal] = useState(0);
+   
+  const [reOrderTotal, setreOrderTotal] = useState(0);
 
-  //total OH
-  const filteredItems2 = search.map((item) => item.onhand);
-  const totalItems2 = _.sum(filteredItems2);
+  const [pendingTotal, setpendingTotal] = useState(0);
 
-  //total POS_
-  // const filteredItems3 = mergeByKey.map((item) => item.qtyord);
-  // const totalItems3 = _.sum(filteredItems3);
+  const [calendarQtyTotal, setcalendarQtyTotal] = useState(0);
+  
+const [calendarBOTotal, setcalendarBOTotal] = useState(0);
+  
+  const [sold30Total, setsold30Total] = useState(0);
+ 
+const [sold90Total, setsold90Total] = useState(0);
+  
+const [sold365Total, setsold365Total] = useState(0);   
 
-  //total Sold30, 90 365
-  const totalItems4 = _.sumBy(
-    search.map((item) => _.sumBy(item.sold30, 'qtyshp'))
-  );
+  const [avg_sold365Total, setavg_sold365Total] = useState(0);
 
-  // const totalSold60 = _.sumBy(
-  //   search.map((item) => _.sumBy(item.sold60, 'qtyshp'))
-  // );
+  const [avg_lead_timeTotal, setavg_lead_timeTotal] = useState(0)
 
-  const totalItems5 = _.sumBy(
-    search.map((item) => _.sumBy(item.sold90, 'qtyshp'))
-  );
+  const [max_leadtimeTotal, setmax_leadtimeTotal] = useState(0)
 
-  const totalItems6 = _.sumBy(
-    search.map((item) => _.sumBy(item.sold365, 'qtyshp'))
-  );
+  const [BO_lastRCVTotal, setBO_lastRCVTotal] = useState(0)
 
-  //total PO qty
-  // const totalItems7 = _.sumBy(
-  //   search.map((item) => _.sumBy(item.sixth, 'qtyord'))
-  // );
-  // const totalItems8 = _.sumBy(
-  //   search.map((item) => _.sumBy(item.fifth, 'qtyord'))
-  // );
-  // const totalItems9 = _.sumBy(
-  //   search.map((item) => _.sumBy(item.fourth, 'qtyord'))
-  // );
-  // const totalItems10 = _.sumBy(
-  //   search.map((item) => _.sumBy(item.third, 'qtyord'))
-  // );
-  // const totalItems11 = _.sumBy(
-  //   search.map((item) => _.sumBy(item.second, 'qtyord'))
-  // );
-  // const totalItems12 = _.sumBy(
-  //   search.map((item) => _.sumBy(item.first, 'qtyord'))
-  // );
+  
 
-  const totalItems13 = _.sumBy(
-    search.map((item) => _.sumBy(item.pendingDataO, 'pending'))
-  );
-
-  const totalItems14 = _.sumBy(
-    search.map((item) => _.sumBy(item.reorderPointO, 'avg_qtyshp'))
-  );
-
-  const totalItems14Decimal = totalItems14.toFixed(2);
-
-  const totalItems15 =
-    _.sumBy(search.map((item) => _.sumBy(item.poLeadTimeO, 'avg_lead_time'))) /
-    search.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
-
-  const totalItems16 =
-    _.sumBy(search.map((item) => _.sumBy(item.poLeadTimeO, 'max_lead_time'))) /
-    search.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
-
-  const totalItems17 = _.sumBy(
-    search.map((item) => _.sumBy(item.bofromLastRcvO, 'qtybo'))
-  );
-
-  // const totalItemsFromRCVD = _.sumBy(
-  //   selectedData.map((item) => _.sumBy(item.new, 'qtyshp'))
-  // );
+ 
 
   const suggestedQtyavg_qty = search.map((item) =>
     item.reorderPointO.map((item) => Number(item.avg_qtyshp))
   );
-
   const suggestedQtyavg_lead = search.map((item) =>
     item.poLeadTimeO.map((item) => Number(item.avg_lead_time))
   );
-
   const suggestedBo = search.map((item) =>
     item.bofromLastRcvO.map((item) => Number(item.qtybo))
   );
@@ -726,16 +673,8 @@ export const SearchPage = () => {
     (qty, lead, bo) => qty * lead + bo
   ).reduce((acc, curr) => acc.concat(curr), []);
 
-  const totalItems18 = _.sum(suggestedQty.map((value) => round(value)));
-
-  const totalDatePickerqty = _.sumBy(
-    selectedDatePicker.map((item) => _.sumBy(item.datepicker, 'qtyshp'))
-  );
-
-  const totalDatePickerbo = _.sumBy(
-    selectedDatePicker.map((item) => _.sumBy(item.datepicker, 'qtybo'))
-  );
-
+  const [suggestedQtyTotal, setsuggestedQtyTotal] = useState(0);
+  
   const graphYearlyTotal = _.sum(graphLine.map((item) => item.qtyshp));
 
   const graphMonthlyTotal = _.sum(monthLine.map((item) => item.qtyshp));
@@ -822,11 +761,11 @@ export const SearchPage = () => {
         Difference_In_PostDecimalDayresult < 3
       ? _.zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : _.zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
+      
 
-  const totalAmount = amounts.reduce(
-    (sum, num) => (num < 0 ? round(sum + num) : sum),
-    0
-  );
+      const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
+  
+  
   const FosuggestedQty = zipWith(
     suggestedQtyavg_qty,
     suggestedQtyavg_lead,
@@ -835,10 +774,10 @@ export const SearchPage = () => {
     (qty, lead, bo, am) => qty * lead + bo - am
   ).reduce((acc, curr) => acc.concat(curr), []);
 
-  const totalAmount19 = FosuggestedQty.reduce(
-    (sum, num) => (num > 0 ? round(sum + num) : sum),
-    0
-  );
+  const [foSuggestedTotal, setfoSuggestedTotal] = useState(0);
+
+
+  
 
   //new or old item
   const newOrOld = () => {
@@ -858,9 +797,34 @@ export const SearchPage = () => {
       return 'OLD';
     }
   };
+  
 
   return (
     <div className="search flex w-full p-4">
+      <Table3Total
+        search={search}
+        WDsearch2={WDsearch2}
+        selectedDatePicker={selectedDatePicker}
+        suggestedQty={suggestedQty}
+        amounts={amounts}
+        FosuggestedQty={FosuggestedQty}
+        setColorTotal={setColorTotal}
+        setonHandTotal={setonHandTotal}
+        setreOrderTotal={setreOrderTotal}
+        setcalendarQtyTotal={setcalendarQtyTotal}
+        setcalendarBOTotal={setcalendarBOTotal}
+        setsold30Total={setsold30Total}
+        setsold90Total={setsold90Total}
+        setsold365Total={setsold365Total}
+        setpendingTotal={setpendingTotal}
+        setavg_sold365Total={setavg_sold365Total}
+        setavg_lead_timeTotal={setavg_lead_timeTotal}
+        setmax_leadtimeTotal={setmax_leadtimeTotal}
+        setBO_lastRCVTotal={setBO_lastRCVTotal}
+        setsuggestedQtyTotal={setsuggestedQtyTotal}
+        setoh_forecastTotal={setoh_forecastTotal}
+        setfoSuggestedTotal={setfoSuggestedTotal}
+      />
       <div>
         <table id="tb1" className="table1">
           <tbody>
@@ -914,7 +878,6 @@ export const SearchPage = () => {
                     setfilteredDate([]);
                     newitemRecords();
                     pieChartF();
-                    
                   }}
                   className="btn1name"
                   id="submitBtn"
@@ -3199,7 +3162,7 @@ export const SearchPage = () => {
 
           <tbody id="tb2" className="table2">
             <tr>
-              <td>CLRS:{totalItems}</td>
+              <td>CLRS:{colorTotal}</td>
               <td>OH</td>
 
               <td style={{ background: '#f4a460' }}>REORDER</td>
@@ -3368,7 +3331,7 @@ export const SearchPage = () => {
                       .map((item, idx) => (
                         <div key={idx}>{item.onhand}</div>
                       ))}
-                    <div>{totalItems2}</div>
+                    <div>{onHandTotal}</div>
                   </td>
                   {/*  reorder */}
                   <td style={{ padding: '0' }}>
@@ -3379,7 +3342,7 @@ export const SearchPage = () => {
                         <div key={idx}>{item.WMA}</div>
                       )
                     )}
-                    <div>{totalItems1}</div>
+                    <div>{reOrderTotal}</div>
                   </td>
                   {/* {selectedItem.length > 0 ? (
                   <td style={{ padding: '0' }}>
@@ -3413,7 +3376,7 @@ export const SearchPage = () => {
                         <div key={idx}>0</div>
                       )
                     )}
-                    <div>{totalItems13}</div>
+                    <div>{pendingTotal}</div>
                   </td>
                   {/*sold amount regarding RCVD date //loading && render table cell */}
                   {/* <td style={{ padding: '0' }}>
@@ -3462,7 +3425,7 @@ export const SearchPage = () => {
                           <div key={idx}>{item.purno}</div>
                         ))
                       : search.map((item, idx) => <div key={idx}>Loading</div>)}
-                    <div>{totalDatePickerqty}</div>
+                    <div>{calendarQtyTotal}</div>
                   </td>
                   <td style={{ padding: '0' }}>
                     {selectedDatePicker.length
@@ -3484,7 +3447,7 @@ export const SearchPage = () => {
                           <div key={idx}>{item.purno}</div>
                         ))
                       : search.map((item, idx) => <div key={idx}>Loading</div>)}
-                    <div>{totalDatePickerbo}</div>
+                    <div>{calendarBOTotal}</div>
                   </td>
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
@@ -3497,7 +3460,7 @@ export const SearchPage = () => {
                         <div key={idx}>0</div>
                       )
                     )}
-                    <div>{totalItems4}</div>
+                    <div>{sold30Total}</div>
                   </td>
                   <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
@@ -3509,7 +3472,7 @@ export const SearchPage = () => {
                         <div key={idx}>0</div>
                       )
                     )}
-                    <div>{totalItems5}</div>
+                    <div>{sold90Total}</div>
                   </td>
                   <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
@@ -3521,7 +3484,7 @@ export const SearchPage = () => {
                         <div key={idx}>0</div>
                       )
                     )}
-                    <div>{totalItems6}</div>
+                    <div>{sold365Total}</div>
                   </td>
                   <td style={{ padding: '0' }}>
                     {search.map((item, idx) =>
@@ -3533,7 +3496,7 @@ export const SearchPage = () => {
                         <div key={idx}>0</div>
                       )
                     )}
-                    <div>{totalItems14Decimal}</div>
+                    <div>{avg_sold365Total.toFixed(2)}</div>
                   </td>
                   {/*column table with nested array */}
                   {/* <td style={{ padding: '0' }}>
@@ -3558,7 +3521,7 @@ export const SearchPage = () => {
                         <div key={idx}>0 days</div>
                       )
                     )}
-                    <div>{round(totalItems15)} days</div>
+                    <div>{round(avg_lead_timeTotal)} days</div>
                   </td>
                   {/*column table with nested array */}
                   {/* <td style={{ padding: '0' }}>
@@ -3583,7 +3546,7 @@ export const SearchPage = () => {
                         <div key={idx}>0 days</div>
                       )
                     )}
-                    <div>{round(totalItems16)} days</div>
+                    <div>{round(max_leadtimeTotal)} days</div>
                   </td>
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
@@ -3606,7 +3569,7 @@ export const SearchPage = () => {
                         <div key={idx}>0</div>
                       )
                     )}
-                    <div>{totalItems17}</div>
+                    <div>{BO_lastRCVTotal}</div>
                   </td>
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
@@ -3623,7 +3586,7 @@ export const SearchPage = () => {
                     {suggestedQty.map((value, index) => (
                       <div key={`qty-${index}`}>{round(value)}</div>
                     ))}
-                    <div>{totalItems18}</div>
+                    <div>{suggestedQtyTotal}</div>
                   </td>
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
@@ -3636,7 +3599,7 @@ export const SearchPage = () => {
                         {round(num)}
                       </div>
                     ))}
-                    <div>{totalAmount}</div>
+                    <div>{oh_forecastTotal}</div>
                   </td>
                   {/*column table with nested array */}
                   <td style={{ padding: '0' }}>
@@ -3665,7 +3628,7 @@ export const SearchPage = () => {
                         {round(num)}
                       </div>
                     ))}
-                    <div>{round(totalAmount19)}</div>
+                    <div>{round(foSuggestedTotal)}</div>
                   </td>
                 </tr>
               </tbody>
