@@ -10,18 +10,17 @@ import {
   ResponsiveContainer,
   Bar,
   ComposedChart,
-
 } from 'recharts';
-var _ = require('lodash');
+
+import { sum } from 'lodash';
 
 const ColorTab = ({
   setIsOpen,
   isOpen,
-  eachItemGraph,  
+  eachItemGraph,
   eachItemGraphMonth,
   graphLoading2,
   search,
-  
 }) => {
   const [value3, setValue3] = useState('');
   const handleChangeitemByMonth = (e) => {
@@ -32,14 +31,10 @@ const ColorTab = ({
   const monthItemLine = eachItemGraphMonth.filter(
     (item) => item.year === Number(value3)
   );
- 
 
-  const eachgraphYearlyTotal = _.sum(eachItemGraph.map((item) => item.qtyshp));
+  const eachgraphYearlyTotal = sum(eachItemGraph.map((item) => item.qtyshp));
 
-  const eachgraphMonthlyTotal = _.sum(monthItemLine.map((item) => item.qtyshp));
-
-  
- 
+  const eachgraphMonthlyTotal = sum(monthItemLine.map((item) => item.qtyshp));
 
   return (
     <div className="flex flex-col  bg-gray-200 text-black w-[600px] border-none ">
@@ -121,7 +116,6 @@ const ColorTab = ({
                       strokeWidth={3}
                       stroke="#82ca9d"
                     />
-                    
                   </ComposedChart>
                 </ResponsiveContainer>
               )
@@ -179,15 +173,16 @@ const ColorTab = ({
             <option key={idx}>{item2.year} </option>
           ))}
         </select>
-        TOTAL: {search.length ? (
+        TOTAL:{' '}
+        {search.length ? (
           value3.length ? (
             graphLoading2 === false ? (
               value3.length ? (
-                
-                  value3 === 'YEAR'
-                    ? eachgraphYearlyTotal
-                    : eachgraphMonthlyTotal
-                
+                value3 === 'YEAR' ? (
+                  eachgraphYearlyTotal
+                ) : (
+                  eachgraphMonthlyTotal
+                )
               ) : (
                 <></>
               )

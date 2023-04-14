@@ -1,44 +1,26 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import './tableAll.css';
-import BlankPage from './BlankPage';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
-
-import {
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Bar,
-  ComposedChart,
-  PieChart,
-  Pie,
-  Cell,
-} from 'recharts';
-
 import ColorTab from './ColorTab';
-
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import { zipWith } from 'lodash';
+import { zipWith, sum, sumBy } from 'lodash';
 import Table3Total from './math/Table3Total';
+import Row1 from './first_table/Row1';
+import MainTable from './third_table/MainTable';
 
-
-var _ = require('lodash');
-
-export const SearchPage = () => {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
+const SearchPage = () => {
+  const BASE_URL = import.meta.env.VITE_DB_URL;
+  const round = (num) => (isNaN(num) ? 0 : Math.round(num));
   const [search, setSearch] = useState([]);
-  const [record, setRecord] = useState("");
+  const [record, setRecord] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const searchRecords = () => {
     const searchedRecord = record.toLowerCase();
 
@@ -48,55 +30,30 @@ export const SearchPage = () => {
       .then((response) => {
         setSearch(response.data);
         setLoading(false);
-      }).catch((error) => {
-      console.log(error);
-      setLoading(false);
-    });;
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   };
+
   //image handler
   const [imageClicked, setImageClicked] = useState();
   const onClickImageHandler = () => {
     setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`);
   };
+
   const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
   const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
-  const round = (num) => (isNaN(num) ? 0 : Math.round(num));
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
 
   //searchSuggest
   const [suggest, setSuggest] = useState([]);
-  const itemData = async () => {
-    return await axios
-      .get(`${BASE_URL}searchAuto`)
-      .then((response) => setSuggest(response.data))
-      .catch((err) => console.log(err));
-  };
-  useEffect(() => {
-    itemData();
-  }, []);
 
   const [filteredData, setfilteredDate] = useState([]);
-  const handleFilter = (e) => {
-    const searchWord = e.target.value;
-    setRecord(searchWord);
-    const newFilter = suggest.filter((value) => {
-      return value.descrip.toLowerCase().includes(searchWord.toLowerCase());
-    });
-
-    if (searchWord === '') {
-      setfilteredDate([]);
-    } else {
-      setfilteredDate(newFilter);
-    }
-  };
-  const onSearch = (record1) => {
-    setRecord(record1); // set the input value to the clicked suggestion
-
-    setfilteredDate([]);
-  };
 
   //DATE buttonSearch console
   const date = new Date();
@@ -263,9 +220,6 @@ export const SearchPage = () => {
     fetchData2();
   }, [startDatePicker, endDatePicker, search]);
 
-  
- 
-
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       searchRecords();
@@ -285,7 +239,22 @@ export const SearchPage = () => {
     }
   };
 
-  
+  const handleButton = () => {
+     searchRecords();
+      onClickImageHandler();
+      reset();
+      itemRecords();
+      fetchData3();
+      graphLineF();
+      graphLineByMonthF();
+      graphByItemF();
+      graphByItemMonthF();
+      WDsearchRecords();
+      WDsearchRecords2();
+      setfilteredDate([]);
+      newitemRecords();
+      pieChartF();
+  };
 
   const [WDsearch, WDsetSearch] = useState([]);
   const WDsearchRecords = () => {
@@ -304,10 +273,8 @@ export const SearchPage = () => {
   const [WDsearch2, WDsetSearch2] = useState([]);
   const WDsearchRecords2 = () => {
     const searchedRecord = record.toLowerCase();
-
     axios
       .get(`${BASE_URL}WatchDog/ColorList?search=${searchedRecord}`)
-
       .then((response) => {
         WDsetSearch2(response.data);
       });
@@ -559,10 +526,8 @@ export const SearchPage = () => {
   const [pieChart, setpieChart] = useState([]);
   const pieChartF = async () => {
     const searchedRecord = record.toLowerCase();
-
     await axios
       .get(`${BASE_URL}pieChart?descrip=${searchedRecord}`)
-
       .then((response) => {
         setpieChart(response.data);
       });
@@ -585,7 +550,7 @@ export const SearchPage = () => {
       link.click();
     });
   };
-
+  
   //className & table-text
   const InfoItemOb = (props) => {
     return (
@@ -629,32 +594,28 @@ export const SearchPage = () => {
   const [colorTotal, setColorTotal] = useState(0);
 
   const [onHandTotal, setonHandTotal] = useState(0);
-   
+
   const [reOrderTotal, setreOrderTotal] = useState(0);
 
   const [pendingTotal, setpendingTotal] = useState(0);
 
   const [calendarQtyTotal, setcalendarQtyTotal] = useState(0);
-  
-const [calendarBOTotal, setcalendarBOTotal] = useState(0);
-  
+
+  const [calendarBOTotal, setcalendarBOTotal] = useState(0);
+
   const [sold30Total, setsold30Total] = useState(0);
- 
-const [sold90Total, setsold90Total] = useState(0);
-  
-const [sold365Total, setsold365Total] = useState(0);   
+
+  const [sold90Total, setsold90Total] = useState(0);
+
+  const [sold365Total, setsold365Total] = useState(0);
 
   const [avg_sold365Total, setavg_sold365Total] = useState(0);
 
-  const [avg_lead_timeTotal, setavg_lead_timeTotal] = useState(0)
+  const [avg_lead_timeTotal, setavg_lead_timeTotal] = useState(0);
 
-  const [max_leadtimeTotal, setmax_leadtimeTotal] = useState(0)
+  const [max_leadtimeTotal, setmax_leadtimeTotal] = useState(0);
 
-  const [BO_lastRCVTotal, setBO_lastRCVTotal] = useState(0)
-
-  
-
- 
+  const [BO_lastRCVTotal, setBO_lastRCVTotal] = useState(0);
 
   const suggestedQtyavg_qty = search.map((item) =>
     item.reorderPointO.map((item) => Number(item.avg_qtyshp))
@@ -674,10 +635,10 @@ const [sold365Total, setsold365Total] = useState(0);
   ).reduce((acc, curr) => acc.concat(curr), []);
 
   const [suggestedQtyTotal, setsuggestedQtyTotal] = useState(0);
-  
-  const graphYearlyTotal = _.sum(graphLine.map((item) => item.qtyshp));
 
-  const graphMonthlyTotal = _.sum(monthLine.map((item) => item.qtyshp));
+  const graphYearlyTotal = sum(graphLine.map((item) => item.qtyshp));
+
+  const graphMonthlyTotal = sum(monthLine.map((item) => item.qtyshp));
 
   //forecast
   const [selforecastDatePicker, setselforecastDatePicker] = useState([]);
@@ -700,7 +661,7 @@ const [sold365Total, setsold365Total] = useState(0);
   }, [forecastDatePicker, search]);
 
   const sumReqForcast = selforecastDatePicker.map((item) =>
-    _.sumBy(item.poForecast, 'ORDEREDa')
+    sumBy(item.poForecast, 'ORDEREDa')
   );
 
   const postDay = forecastDatePicker;
@@ -720,11 +681,9 @@ const [sold365Total, setsold365Total] = useState(0);
       (item) => Number(item.qtyshp / 30) * Difference_In_PostDayresult
     )
   );
-  const onhnadWithRVG = _.zipWith(
-    onhandCal,
-    sumReqForcast,
-    (x, y) => x + y
-  ).map((num) => round(num));
+  const onhnadWithRVG = zipWith(onhandCal, sumReqForcast, (x, y) => x + y).map(
+    (num) => round(num)
+  );
 
   const Cal30 = search.map((item) =>
     item.sold30.map(
@@ -751,21 +710,19 @@ const [sold365Total, setsold365Total] = useState(0);
 
   const amounts =
     Difference_In_PostDecimalDayresult <= 1
-      ? _.zipWith(onhnadWithRVG, dayCal, (x, y) => round(x - y))
+      ? zipWith(onhnadWithRVG, dayCal, (x, y) => round(x - y))
       : Difference_In_PostDecimalDayresult <= 1
-      ? _.zipWith(onhnadWithRVG, Cal30, (x, y) => round(x - y))
+      ? zipWith(onhnadWithRVG, Cal30, (x, y) => round(x - y))
       : Difference_In_PostDecimalDayresult > 1 &&
         Difference_In_PostDecimalDayresult <= 2
-      ? _.zipWith(onhnadWithRVG, Cal60, (x, y) => round(x - y))
+      ? zipWith(onhnadWithRVG, Cal60, (x, y) => round(x - y))
       : Difference_In_PostDecimalDayresult > 2 &&
         Difference_In_PostDecimalDayresult < 3
-      ? _.zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
-      : _.zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
-      
+      ? zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
+      : zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
 
-      const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
-  
-  
+  const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
+
   const FosuggestedQty = zipWith(
     suggestedQtyavg_qty,
     suggestedQtyavg_lead,
@@ -775,9 +732,6 @@ const [sold365Total, setsold365Total] = useState(0);
   ).reduce((acc, curr) => acc.concat(curr), []);
 
   const [foSuggestedTotal, setfoSuggestedTotal] = useState(0);
-
-
-  
 
   //new or old item
   const newOrOld = () => {
@@ -797,7 +751,6 @@ const [sold365Total, setsold365Total] = useState(0);
       return 'OLD';
     }
   };
-  
 
   return (
     <div className="search flex w-full p-4">
@@ -828,300 +781,38 @@ const [sold365Total, setsold365Total] = useState(0);
       <div>
         <table id="tb1" className="table1">
           <tbody>
-            <tr className="row1">
-              <td className="infoCol1" style={{ textAlign: 'left' }}>
-                ITEM:
-              </td>
-
-              <td className="nameSection" colSpan="2">
-                <input
-                  className=" border border-zinc-500 "
-                  id="search"
-                  placeholder="Search item name here"
-                  type="text"
-                  value={record}
-                  onChange={handleFilter}
-                  autoComplete="off"
-                  onKeyPress={handleKeyPress}
-                />
-
-                {filteredData.length !== 0 && (
-                  <span className="dataResult absolute">
-                    {filteredData.slice(0, 15).map((item, idx) => (
-                      <span
-                        key={idx}
-                        className="dropdown-row"
-                        onClick={() => {
-                          onSearch(item.descrip);
-                        }}
-                      >
-                        {item.descrip}
-                      </span>
-                    ))}
-                  </span>
-                )}
-              </td>
-              <td className="btn1">
-                <button
-                  onClick={() => {
-                    searchRecords();
-                    onClickImageHandler();
-                    reset();
-                    itemRecords();
-                    fetchData3();
-                    graphLineF();
-                    graphLineByMonthF();
-                    graphByItemF();
-                    graphByItemMonthF();
-                    WDsearchRecords();
-                    WDsearchRecords2();
-                    setfilteredDate([]);
-                    newitemRecords();
-                    pieChartF();
-                  }}
-                  className="btn1name"
-                  id="submitBtn"
-                  type="submit"
-                >
-                  SUBMIT
-                </button>
-              </td>
-              <td colSpan="3" rowSpan="10" className="prodImg ">
-                <span>
-                  {
-                    // eslint-disable-next-line jsx-a11y/alt-text
-                    <img
-                      style={{ width: '250px', height: '320px' }}
-                      src={imageClicked}
-                      className="mainImage  "
-                    />
-                  }
-                </span>
-              </td>
-              <td
-                colSpan="9"
-                rowSpan="6"
-                style={{
-                  position: 'relative',
-                  width: '100%',
-                  paddingBottom: '200px',
-                }}
-              >
-                <div
-                  style={{
-                    position: 'absolute',
-                    width: '70%',
-                    height: '100%',
-                  }}
-                >
-                  {value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        value2 === 'YEAR' ? (
-                          <ResponsiveContainer width="100%" height="100%">
-                            <ComposedChart
-                              width={500}
-                              height={300}
-                              data={graphLine}
-                              margin={{
-                                top: 5,
-                                right: 30,
-                                left: 20,
-                                bottom: 5,
-                              }}
-                            >
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="year" />
-                              <YAxis />
-                              <Tooltip />
-                              <Legend />
-                              <Bar
-                                name="PO rec"
-                                data={graphLine}
-                                barSize={4}
-                                fill="#ffb366"
-                                dataKey="qtyrec"
-                              />
-
-                              <Line
-                                type="monotone"
-                                dataKey="qtyshp"
-                                strokeWidth={3}
-                                stroke="#82ca9d"
-                              />
-                            </ComposedChart>
-                          </ResponsiveContainer>
-                        ) : (
-                          <ResponsiveContainer width="100%" height="100%">
-                            <ComposedChart
-                              data={monthLine}
-                              width={500}
-                              height={300}
-                              margin={{
-                                top: 5,
-                                right: 30,
-                                left: 20,
-                                bottom: 5,
-                              }}
-                            >
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis
-                                dataKey="month"
-                                allowDuplicatedCategory={false}
-                              />
-                              <YAxis />
-
-                              <Tooltip />
-                              <Legend />
-                              <Bar
-                                name="PO rec"
-                                data={monthLine}
-                                barSize={4}
-                                fill="#ffb366"
-                                dataKey="qtyrec"
-                              />
-
-                              <Line
-                                name={Number(value2)}
-                                data={monthLine}
-                                type="monotone"
-                                dataKey="qtyshp"
-                                strokeWidth={3}
-                                stroke="#82ca9d"
-                              />
-                              {monthLinePrv.some((entry) => entry.qtyshp) ? (
-                                <Line
-                                  name={Number(value2) - 1}
-                                  data={monthLinePrv}
-                                  type="monotone"
-                                  dataKey="qtyshp"
-                                  strokeWidth={3}
-                                  stroke="#8884d8"
-                                />
-                              ) : null}
-                            </ComposedChart>
-                          </ResponsiveContainer>
-                        )
-                      ) : (
-                        <td></td>
-                      )
-                    ) : (
-                      <td>Loading...</td>
-                    )
-                  ) : graphLoading === false ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <ComposedChart
-                        width={500}
-                        height={300}
-                        data={graphLine}
-                        margin={{
-                          top: 5,
-                          right: 30,
-                          left: 20,
-                          bottom: 5,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar
-                          name="PO rec"
-                          data={graphLine}
-                          barSize={4}
-                          fill="#ffb366"
-                          dataKey="qtyrec"
-                        />
-
-                        <Line
-                          type="monotone"
-                          dataKey="qtyshp"
-                          strokeWidth={3}
-                          stroke="#82ca9d"
-                        />
-                      </ComposedChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <>Loading...</>
-                  )}
-                </div>
-
-                <div
-                  style={{
-                    position: 'absolute',
-
-                    width: '30%',
-                    height: '100%',
-
-                    right: '1px',
-                  }}
-                >
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart width={400} height={400}>
-                      <Pie
-                        data={pieChart}
-                        dataKey="qtyshp"
-                        nameKey="quarter"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        fill="#8884d8"
-                        labelLine={false}
-                        label={({
-                          cx,
-                          cy,
-                          midAngle,
-                          innerRadius,
-                          outerRadius,
-                          value,
-                          index,
-                          payload,
-                        }) => {
-                          const RADIAN = Math.PI / 180;
-                          const radius =
-                            25 + innerRadius + (outerRadius - innerRadius);
-                          const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                          const y = cy + radius * Math.sin(-midAngle * RADIAN);
-                          const percent = `${(
-                            (value /
-                              pieChart.reduce((a, b) => a + b.qtyshp, 0)) *
-                            100
-                          ).toFixed(0)}%`;
-                          const quarter = payload.quarter;
-                          return (
-                            <text
-                              x={x}
-                              y={y}
-                              fill={COLORS[index % COLORS.length]}
-                              textAnchor={x > cx ? 'start' : 'end'}
-                              dominantBaseline="central"
-                            >
-                              <tspan dx={x > cx ? -31 : 30} dy={3}>
-                                {quarter}Q({percent})
-                              </tspan>
-                            </text>
-                          );
-                        }}
-                      >
-                        {pieChart.map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={
-                              entry.qtyshp === maxVal
-                                ? '#FF0000'
-                                : COLORS[index % COLORS.length]
-                            }
-                          />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value) => [value, 'qtyshp']} />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-              </td>
-            </tr>
+            <Row1
+              record={record}
+              setRecord={setRecord}
+              suggest={suggest}
+              setSuggest={setSuggest}
+              filteredData={filteredData}
+              handleKeyPress={handleKeyPress}
+              searchRecords={searchRecords}
+              onClickImageHandler={onClickImageHandler}
+              reset={reset}
+              itemRecords={itemRecords}
+              fetchData3={fetchData3}
+              graphLineF={graphLineF}
+              graphLineByMonthF={graphLineByMonthF}
+              graphByItemF={graphByItemF}
+              graphByItemMonthF={graphByItemMonthF}
+              WDsearchRecords={WDsearchRecords}
+              WDsearchRecords2={WDsearchRecords2}
+              newitemRecords={newitemRecords}
+              pieChartF={pieChartF}
+              imageClicked={imageClicked}
+              value2={value2}
+              graphLoading={graphLoading}
+              graphLine={graphLine}
+              monthLine={monthLine}
+              monthLinePrv={monthLinePrv}
+              pieChart={pieChart}
+              COLORS={COLORS}
+              maxVal={maxVal}
+              setfilteredDate={setfilteredDate}
+              handleButton={handleButton}
+            />
 
             <tr className="row2">
               <InfoItemOb className="infoCol1" name="ITEM NO:" />
@@ -2780,7 +2471,6 @@ const [sold365Total, setsold365Total] = useState(0);
               <td colSpan="2">
                 <DatePicker
                   className="border-2 border-zinc-500 text-center"
-                  showIcon
                   selected={startDatePicker}
                   onChange={(date) => setStartDatePicker(date)}
                 />
@@ -3083,8 +2773,7 @@ const [sold365Total, setsold365Total] = useState(0);
 
               <td colSpan="2">
                 <DatePicker
-                  className="border-2 border-zinc-500 text-center"
-                  showIcon
+                  className="border-2 border-zinc-500 text-center text-"
                   selected={endDatePicker}
                   onChange={(date) => setEndDatePicker(date)}
                 />
@@ -3136,7 +2825,7 @@ const [sold365Total, setsold365Total] = useState(0);
               <td>
                 {/* forecast datepicker */}
                 <DatePicker
-                  className="w-20 border-2 border-zinc-500 text-center"
+                  className="w-20 border-2 border-zinc-500 text-center text-sm"
                   minDate={new Date()}
                   maxDate={new Date().setDate(new Date().getDate() + 365)}
                   selected={forecastDatePicker}
@@ -3301,347 +2990,32 @@ const [sold365Total, setsold365Total] = useState(0);
             </tr>
           </tbody>
 
-          {search.length > 0 ? (
-            loading === false ? (
-              <tbody id="tt" className="table3">
-                <tr>
-                  {' '}
-                  <td style={{ padding: '0' }}>
-                    {search
-                      .filter((item) => item.itemkey2)
-                      .map((item, idx) => (
-                        <div
-                          className="pointername"
-                          key={idx}
-                          style={{ textAlign: 'left', color: 'blue' }}
-                          onClick={() => eachItemClick(item.itemkey2)}
-                        >
-                          {item.itemkey2}
-                        </div>
-                      ))}
-                    <div style={{ textAlign: 'left' }}>TOTAL</div>
-                  </td>
-                  <td style={{ padding: '0' }}>
-                    {search
-                      .filter(
-                        (item) =>
-                          typeof item.onhand === 'number' ||
-                          item.onhand === null
-                      )
-                      .map((item, idx) => (
-                        <div key={idx}>{item.onhand}</div>
-                      ))}
-                    <div>{onHandTotal}</div>
-                  </td>
-                  {/*  reorder */}
-                  <td style={{ padding: '0' }}>
-                    {result2.map((item, idx) =>
-                      item === undefined ? (
-                        <div key={idx}>0</div>
-                      ) : (
-                        <div key={idx}>{item.WMA}</div>
-                      )
-                    )}
-                    <div>{reOrderTotal}</div>
-                  </td>
-                  {/* {selectedItem.length > 0 ? (
-                  <td style={{ padding: '0' }}>
-                    {mergeByKey.map((item, idx) => (
-                      <div key={idx}>{item.qtyord}</div>
-                    ))}
-                    <div>{totalItems3}</div>
-                  </td>
-                ) : (
-                  <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
-                      item.first.length ? (
-                        item.first.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtyord}</div>
-                        ))
-                      ) : (
-                        <div key={idx}></div>
-                      )
-                    )}
-
-                    <div>{totalItems12}</div>
-                  </td>
-                )} */}
-                  <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
-                      item.pendingDataO.length ? (
-                        item.pendingDataO.map((item2, idx2) => (
-                          <div key={idx2}>{item2.pending}</div>
-                        ))
-                      ) : (
-                        <div key={idx}>0</div>
-                      )
-                    )}
-                    <div>{pendingTotal}</div>
-                  </td>
-                  {/*sold amount regarding RCVD date //loading && render table cell */}
-                  {/* <td style={{ padding: '0' }}>
-                  {test2.length
-                    ? loadingDatapick === false
-                      ? test2.map((item) => item.recdate)[0] == null
-                        ? search.map((item, idx) => (
-                            <div key={idx}>{item.purno}</div>
-                          ))
-                        : selectedData.map((item, idx) =>
-                            item.new.length ? (
-                              item.new.map((item, idx2) => (
-                                <div key={idx2}>{item.qtyshp}</div>
-                              ))
-                            ) : (
-                              <div key={idx}></div>
-                            )
-                          )
-                      : search.map((item, idx) => (
-                          <div key={idx}>Loading...</div>
-                        ))
-                    : loadingDatapick === false
-                    ? search.map((item, idx) => (
-                        <div key={idx}>{item.purno}</div>
-                      ))
-                    : search.map((item, idx) => <div key={idx}>Loading</div>)}
-                  <div>{totalItemsFromRCVD}</div>
-                </td> */}
-                  <td style={{ padding: '0' }}>
-                    {selectedDatePicker.length
-                      ? loadingDatePicker === false
-                        ? selectedDatePicker.map((item, idx) =>
-                            item.datepicker.length ? (
-                              item.datepicker.map((item2, idx2) => (
-                                <div key={idx2}>{item2.qtyshp}</div>
-                              ))
-                            ) : (
-                              <div key={idx}>0</div>
-                            )
-                          )
-                        : search.map((item, idx) => (
-                            <div key={idx}>Loading...</div>
-                          ))
-                      : loadingDatePicker === false
-                      ? search.map((item, idx) => (
-                          <div key={idx}>{item.purno}</div>
-                        ))
-                      : search.map((item, idx) => <div key={idx}>Loading</div>)}
-                    <div>{calendarQtyTotal}</div>
-                  </td>
-                  <td style={{ padding: '0' }}>
-                    {selectedDatePicker.length
-                      ? loadingDatePicker === false
-                        ? selectedDatePicker.map((item, idx) =>
-                            item.datepicker.length ? (
-                              item.datepicker.map((item2, idx2) => (
-                                <div key={idx2}>{item2.qtybo}</div>
-                              ))
-                            ) : (
-                              <div key={idx}>0</div>
-                            )
-                          )
-                        : search.map((item, idx) => (
-                            <div key={idx}>Loading...</div>
-                          ))
-                      : loadingDatePicker === false
-                      ? search.map((item, idx) => (
-                          <div key={idx}>{item.purno}</div>
-                        ))
-                      : search.map((item, idx) => <div key={idx}>Loading</div>)}
-                    <div>{calendarBOTotal}</div>
-                  </td>
-                  {/*column table with nested array */}
-                  <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
-                      item.sold30.length ? (
-                        item.sold30.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtyshp}</div>
-                        ))
-                      ) : (
-                        <div key={idx}>0</div>
-                      )
-                    )}
-                    <div>{sold30Total}</div>
-                  </td>
-                  <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
-                      item.sold90.length ? (
-                        item.sold90.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtyshp}</div>
-                        ))
-                      ) : (
-                        <div key={idx}>0</div>
-                      )
-                    )}
-                    <div>{sold90Total}</div>
-                  </td>
-                  <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
-                      item.sold365.length ? (
-                        item.sold365.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtyshp}</div>
-                        ))
-                      ) : (
-                        <div key={idx}>0</div>
-                      )
-                    )}
-                    <div>{sold365Total}</div>
-                  </td>
-                  <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
-                      item.reorderPointO.length ? (
-                        item.reorderPointO.map((item2, idx2) => (
-                          <div key={idx2}>{item2.avg_qtyshp.toFixed(2)}</div>
-                        ))
-                      ) : (
-                        <div key={idx}>0</div>
-                      )
-                    )}
-                    <div>{avg_sold365Total.toFixed(2)}</div>
-                  </td>
-                  {/*column table with nested array */}
-                  {/* <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.sixth.length ? (
-                      item.sixth.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyord}</div>
-                      ))
-                    ) : (
-                      <div key={idx}></div>
-                    )
-                  )}
-                  <div>{totalItems7}</div>
-                </td> */}
-                  <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
-                      item.poLeadTimeO.length ? (
-                        item.poLeadTimeO.map((item2, idx2) => (
-                          <div key={idx2}>{item2.avg_lead_time} days</div>
-                        ))
-                      ) : (
-                        <div key={idx}>0 days</div>
-                      )
-                    )}
-                    <div>{round(avg_lead_timeTotal)} days</div>
-                  </td>
-                  {/*column table with nested array */}
-                  {/* <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.fifth.length ? (
-                      item.fifth.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyord}</div>
-                      ))
-                    ) : (
-                      <div key={idx}></div>
-                    )
-                  )}
-                  <div>{totalItems8}</div>
-                </td> */}
-                  <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
-                      item.poLeadTimeO.length ? (
-                        item.poLeadTimeO.map((item2, idx2) => (
-                          <div key={idx2}>{item2.max_lead_time} days</div>
-                        ))
-                      ) : (
-                        <div key={idx}>0 days</div>
-                      )
-                    )}
-                    <div>{round(max_leadtimeTotal)} days</div>
-                  </td>
-                  {/*column table with nested array */}
-                  <td style={{ padding: '0' }}>
-                    {/* {search.map((item, idx) =>
-                      item.fourth.length ? (
-                        item.fourth.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtyord}</div>
-                        ))
-                      ) : (
-                        <div key={idx}></div>
-                      )
-                    )}
-                    <div>{totalItems9}</div> */}
-                    {search.map((item, idx) =>
-                      item.bofromLastRcvO.length ? (
-                        item.bofromLastRcvO.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtybo}</div>
-                        ))
-                      ) : (
-                        <div key={idx}>0</div>
-                      )
-                    )}
-                    <div>{BO_lastRCVTotal}</div>
-                  </td>
-                  {/*column table with nested array */}
-                  <td style={{ padding: '0' }}>
-                    {/* {search.map((item, idx) =>
-                      item.third.length ? (
-                        item.third.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtyord}</div>
-                        ))
-                      ) : (
-                        <div key={idx}></div>
-                      )
-                    )}
-                    <div>{totalItems10}</div> */}
-                    {suggestedQty.map((value, index) => (
-                      <div key={`qty-${index}`}>{round(value)}</div>
-                    ))}
-                    <div>{suggestedQtyTotal}</div>
-                  </td>
-                  {/*column table with nested array */}
-                  <td style={{ padding: '0' }}>
-                    {/* forecast render */}
-                    {amounts.map((num, idx) => (
-                      <div
-                        key={idx}
-                        className={num < 0 ? 'negative-amount' : ''}
-                      >
-                        {round(num)}
-                      </div>
-                    ))}
-                    <div>{oh_forecastTotal}</div>
-                  </td>
-                  {/*column table with nested array */}
-                  <td style={{ padding: '0' }}>
-                    {/* {search.map((item, idx) =>
-                      item.first.length ? (
-                        item.first.map((item2, idx2) => (
-                          <div key={idx2} style={{ borderRightWidth: '1px' }}>
-                            {item2.qtyord}
-                          </div>
-                        ))
-                      ) : (
-                        <div
-                          key={idx}
-                          style={{ borderRightWidth: '1px' }}
-                        ></div>
-                      )
-                    )}
-                    <div style={{ borderRightWidth: '1px' }}>
-                      {totalItems12}
-                    </div> */}
-                    {FosuggestedQty.map((num, index) => (
-                      <div
-                        key={`qty-${index}`}
-                        className={num < 0 ? 'negative-amount' : ''}
-                      >
-                        {round(num)}
-                      </div>
-                    ))}
-                    <div>{round(foSuggestedTotal)}</div>
-                  </td>
-                </tr>
-              </tbody>
-            ) : (
-              <>Loading...</>
-            )
-          ) : loading === false ? (
-            <>
-              <BlankPage />
-            </>
-          ) : (
-            <>Loading...</>
-          )}
+          <MainTable
+            loading={loading}
+            searchLength={search.length}
+            search={search}
+            onHandTotal={onHandTotal}
+            reOrderTotal={reOrderTotal}
+            pendingTotal={pendingTotal}
+            selectedDatePicker={selectedDatePicker}
+            loadingDatePicker={loadingDatePicker}
+            calendarQtyTotal={calendarQtyTotal}
+            calendarBOTotal={calendarBOTotal}
+            sold30Total={sold30Total}
+            sold90Total={sold90Total}
+            sold365Total={sold365Total}
+            avg_sold365Total={avg_sold365Total}
+            avg_lead_timeTotal={avg_lead_timeTotal}
+            max_leadtimeTotal={max_leadtimeTotal}
+            BO_lastRCVTotal={BO_lastRCVTotal}
+            suggestedQty={suggestedQty}
+            suggestedQtyTotal={suggestedQtyTotal}
+            amounts={amounts}
+            oh_forecastTotal={oh_forecastTotal}
+            FosuggestedQty={FosuggestedQty}
+            foSuggestedTotal={foSuggestedTotal}
+            result2={result2}
+          />
         </table>
       </div>
       {isOpen && (
@@ -3673,3 +3047,5 @@ const [sold365Total, setsold365Total] = useState(0);
     </div>
   );
 };
+
+export default SearchPage;
