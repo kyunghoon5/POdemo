@@ -9,26 +9,34 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import { zipWith, sum, sumBy } from 'lodash';
+import { zipWith, sumBy } from 'lodash';
 import Table3Total from './math/Table3Total';
 import Row1 from './first_table/Row1';
 import MainTable from './third_table/MainTable';
+import Row2 from './first_table/Row2';
+import Row3 from './first_table/Row3';
+import Row4 from './first_table/Row4';
+import Row5 from './first_table/Row5';
+import Row6 from './first_table/Row6';
+import Row7 from './first_table/Row7';
+import Row8 from './first_table/Row8';
+import Row9 from './first_table/Row9';
+
+const BASE_URL = import.meta.env.VITE_DB_URL;
 
 const SearchPage = () => {
-  const BASE_URL = import.meta.env.VITE_DB_URL;
   const round = (num) => (isNaN(num) ? 0 : Math.round(num));
-  const [search, setSearch] = useState([]);
+  const [mainData, setMainData] = useState([]);
   const [record, setRecord] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const searchRecords = () => {
+  const mainDataAPI = () => {
     const searchedRecord = record.toLowerCase();
-
     setLoading(true);
     axios
       .get(`${BASE_URL}mergeData?descrip=${searchedRecord}`)
       .then((response) => {
-        setSearch(response.data);
+        setMainData(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -38,9 +46,9 @@ const SearchPage = () => {
   };
 
   //image handler
-  const [imageClicked, setImageClicked] = useState();
-  const onClickImageHandler = () => {
-    setImageClicked(`http://img.vanessahair.com/sales/${record}.jpg`);
+  const [mainImg, setMainImg] = useState();
+  const imageAPI = () => {
+    setMainImg(`http://img.vanessahair.com/sales/${record}.jpg`);
   };
 
   const [startDatePicker, setStartDatePicker] = useState(new Date());
@@ -52,120 +60,24 @@ const SearchPage = () => {
 
   //searchSuggest
   const [suggest, setSuggest] = useState([]);
-
   const [filteredData, setfilteredDate] = useState([]);
 
   //DATE buttonSearch console
+  const getDate = (day) => {
+    const date = new Date();
+    date.setDate(date.getDate() - day);
+    return date.toISOString().split('T')[0];
+  };
   const date = new Date();
-  const past30 = new Date();
-  past30.setDate(past30.getDate() - 30);
-  const past30c = past30.toISOString().split('T')[0];
-  const past90 = new Date();
-  past90.setDate(past90.getDate() - 90);
-  const past90c = past90.toISOString().split('T')[0];
-  const past365 = new Date();
-  past365.setDate(past365.getDate() - 365);
-  const past365c = past365.toISOString().split('T')[0];
-
-  //POS select String to Array
-  // const [selectedItem, setSelectedItem] = useState('');
-
-  // const handleChange = (e) => {
-  //   let value = e.target.value;
-  //   setSelectedItem(value);
-  // };
-
-  // const test2 =
-  //   selectedItem == 'POS_'
-  //     ? search
-  //         .flatMap((item) => [item].concat(item.first ?? []))
-  //         .map((item) => item)
-  //     : search.flatMap((item) =>
-  //         item.first
-  //           .filter(
-  //             (item2) =>
-  //               item2.purno && item2.purno.trim() === String(selectedItem)
-  //           )
-  //           .concat(
-  //             item.second.filter(
-  //               (item2) =>
-  //                 item2.purno && item2.purno.trim() === String(selectedItem)
-  //             )
-  //           )
-  //           .concat(
-  //             item.third.filter(
-  //               (item2) =>
-  //                 item2.purno && item2.purno.trim() === String(selectedItem)
-  //             )
-  //           )
-  //           .concat(
-  //             item.fourth.filter(
-  //               (item2) =>
-  //                 item2.purno && item2.purno.trim() === String(selectedItem)
-  //             )
-  //           )
-  //           .concat(
-  //             item.fifth.filter(
-  //               (item2) =>
-  //                 item2.purno && item2.purno.trim() === String(selectedItem)
-  //             )
-  //           )
-  //           .concat(
-  //             item.sixth.filter(
-  //               (item2) =>
-  //                 item2.purno && item2.purno.trim() === String(selectedItem)
-  //             )
-  //           )
-  //       );
-
-  // const mergeByKey = search.map((itm) => ({
-  //   ...test2.find((item) => item.itemkey2 === itm.itemkey2 && item),
-  //   ...itm,
-  // }));
-
-  // console.log(test2);
-  // console.log(search)
-
-  //pos_ dropdown data list
-  //console.log(selectedItem)
-
-  //DataPick regarding option value
-  // const [loadingDatapick, setLoadingDatapick] = useState(false);
-  // const [selectedData, setSelectedData] = useState([]);
-
-  // useEffect(() => {
-  //   if (selectedItem.length === 0) {
-  //     return;
-  //   }
-
-  //   const fetchData = async () => {
-  //     const searchedRecord = record.toLowerCase();
-  //     const curDate = new Date().toISOString().split('T')[0];
-  //     const endDate = curDate;
-
-  //     const startDate = test2.map(
-  //       (item) => new Date(item.recdate).toISOString().split('T')[0]
-  //     )[0];
-
-  //     setLoadingDatapick(true);
-  //     const response = await axios.get(
-  //       `${BASE_URL}dataPick?descrip=${searchedRecord}&startDate=${startDate}&endDate=${endDate}`
-  //     );
-  //     setSelectedData(response.data);
-  //     setLoadingDatapick(false);
-  //   };
-
-  //   fetchData();
-  // }, [selectedItem]);
-
-  //data from dataPick
-  //console.log(selectedData);
+  const past30c = getDate(30);
+  const past90c = getDate(90);
+  const past365c = getDate(365);
 
   //select & option dropdown soldPercentage
   const [selectedSoldPercentage, setSelectedSoldPercentage] = useState([]);
   const [loadingsoldP, setloadingsoldP] = useState(false);
 
-  const fetchData3 = () => {
+  const soldPercentageAPI = () => {
     const searchedRecord = record.toLowerCase();
     setloadingsoldP(true);
     axios
@@ -178,32 +90,26 @@ const SearchPage = () => {
   };
 
   const [selectedSold, setSelectedSold] = useState('');
-
   const soldPercentageHandler = (e) => {
-    const value = e.target.value;
-    setSelectedSold(value);
+    const soldPercentageDropdownValue = e.target.value;
+    setSelectedSold(soldPercentageDropdownValue);
   };
 
   //dropdownlist list reset
   const reset = () => {
-    // setSelectedItem([]);
-    // setSelectedData([]);
     setSelectedSold([]);
-    setValue2([]);
-    WDsetSearch([]);
+    setGraphDropdownSelectedYear([]);
+    setWatchDoginfo([]);
     setitemRank([]);
     setnewitemRank([]);
   };
-
-  //all data
-  //console.log(search);
 
   //datepicker between two dates
   const [selectedDatePicker, setSelectedDatePicker] = useState([]);
   const [loadingDatePicker, setloadingDatePicker] = useState(false);
   useEffect(() => {
     const fetchData2 = async () => {
-      if (search.length === 0) {
+      if (mainData.length === 0) {
         return;
       }
       const searchedRecord = record.toLowerCase();
@@ -218,46 +124,33 @@ const SearchPage = () => {
       setloadingDatePicker(false);
     };
     fetchData2();
-  }, [startDatePicker, endDatePicker, search]);
+  }, [startDatePicker, endDatePicker, mainData]);
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      searchRecords();
-      onClickImageHandler();
-      reset();
-      itemRecords();
-      fetchData3();
-      graphLineF();
-      graphLineByMonthF();
-      graphByItemF();
-      graphByItemMonthF();
-      WDsearchRecords();
-      WDsearchRecords2();
-      setfilteredDate([]);
-      newitemRecords();
-      pieChartF();
+      handleButton();
     }
   };
 
   const handleButton = () => {
-     searchRecords();
-      onClickImageHandler();
-      reset();
-      itemRecords();
-      fetchData3();
-      graphLineF();
-      graphLineByMonthF();
-      graphByItemF();
-      graphByItemMonthF();
-      WDsearchRecords();
-      WDsearchRecords2();
-      setfilteredDate([]);
-      newitemRecords();
-      pieChartF();
+    mainDataAPI();
+    imageAPI();
+    itemRecords();
+    soldPercentageAPI();
+    graphAllYearDataAPI();
+    chartEachYearDataAPI();
+    graphByItemF();
+    graphByItemMonthF();
+    watchDogAPI();
+    watchDogAPI2();
+    setfilteredDate([]);
+    newitemRecords();
+    pieChartF();
+    reset();
   };
 
-  const [WDsearch, WDsetSearch] = useState([]);
-  const WDsearchRecords = () => {
+  const [watchDoginfo, setWatchDoginfo] = useState([]);
+  const watchDogAPI = () => {
     const searchedRecord = record.toLowerCase();
 
     axios
@@ -266,17 +159,17 @@ const SearchPage = () => {
       )
 
       .then((response) => {
-        WDsetSearch(response.data);
+        setWatchDoginfo(response.data);
       });
   };
 
-  const [WDsearch2, WDsetSearch2] = useState([]);
-  const WDsearchRecords2 = () => {
+  const [watchDoginfo2, setWatchDoginfo2] = useState([]);
+  const watchDogAPI2 = () => {
     const searchedRecord = record.toLowerCase();
     axios
       .get(`${BASE_URL}WatchDog/ColorList?search=${searchedRecord}`)
       .then((response) => {
-        WDsetSearch2(response.data);
+        setWatchDoginfo2(response.data);
       });
   };
 
@@ -312,39 +205,33 @@ const SearchPage = () => {
   };
 
   const [graphLoading, setGraphLoading] = useState(false);
-  const [graphLine, setGraphLine] = useState([]);
-  const graphLineF = async () => {
+  const [graphAllYearData, setGraphAllYearData] = useState([]);
+  const graphAllYearDataAPI = async () => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading(true);
     await axios
       .get(`${BASE_URL}graph?descrip=${searchedRecord}`)
 
       .then((response) => {
-        setGraphLine(response.data);
+        setGraphAllYearData(response.data);
         setGraphLoading(false);
       });
   };
 
-  const lastyear = graphLine.map((item) => item.year).at(-1);
-  const lastyear2 = graphLine.map((item) => item.year).at(-2);
-  const lastyear3 = graphLine.map((item) => item.year).at(-3);
-  const lastyear4 = graphLine.map((item) => item.year).at(-4);
-  const lastyear5 = graphLine.map((item) => item.year).at(-5);
-  const lastyear6 = graphLine.map((item) => item.year).at(-6);
-  const lastyearSoldQty = graphLine.map((item) => item.qtyshp).at(-1);
-  const lastyearSoldQty2 = graphLine.map((item) => item.qtyshp).at(-2);
-  const lastyearSoldQty3 = graphLine.map((item) => item.qtyshp).at(-3);
-  const lastyearSoldQty4 = graphLine.map((item) => item.qtyshp).at(-4);
-  const lastyearSoldQty5 = graphLine.map((item) => item.qtyshp).at(-5);
-  const lastyearSoldQty6 = graphLine.map((item) => item.qtyshp).at(-6);
-  const lastyearSoldQty7 = graphLine.map((item) => item.qtyshp).at(-7);
+  const lastyearSoldQty = graphAllYearData.map((item) => item.qtyshp).at(-1);
+  const lastyearSoldQty2 = graphAllYearData.map((item) => item.qtyshp).at(-2);
+  const lastyearSoldQty3 = graphAllYearData.map((item) => item.qtyshp).at(-3);
+  const lastyearSoldQty4 = graphAllYearData.map((item) => item.qtyshp).at(-4);
+  const lastyearSoldQty5 = graphAllYearData.map((item) => item.qtyshp).at(-5);
+  const lastyearSoldQty6 = graphAllYearData.map((item) => item.qtyshp).at(-6);
+  const lastyearSoldQty7 = graphAllYearData.map((item) => item.qtyshp).at(-7);
 
-  const lastyearRCVQty = graphLine.map((item) => item.qtyrec).at(-1);
-  const lastyearRCVQty2 = graphLine.map((item) => item.qtyrec).at(-2);
-  const lastyearRCVQty3 = graphLine.map((item) => item.qtyrec).at(-3);
-  const lastyearRCVQty4 = graphLine.map((item) => item.qtyrec).at(-4);
-  const lastyearRCVQty5 = graphLine.map((item) => item.qtyrec).at(-5);
-  const lastyearRCVQty6 = graphLine.map((item) => item.qtyrec).at(-6);
+  const lastyearRCVQty = graphAllYearData.map((item) => item.qtyrec).at(-1);
+  const lastyearRCVQty2 = graphAllYearData.map((item) => item.qtyrec).at(-2);
+  const lastyearRCVQty3 = graphAllYearData.map((item) => item.qtyrec).at(-3);
+  const lastyearRCVQty4 = graphAllYearData.map((item) => item.qtyrec).at(-4);
+  const lastyearRCVQty5 = graphAllYearData.map((item) => item.qtyrec).at(-5);
+  const lastyearRCVQty6 = graphAllYearData.map((item) => item.qtyrec).at(-6);
 
   const YoY = (lastyearSoldQty / lastyearSoldQty2 - 1) * 100;
   const YoY2 = (lastyearSoldQty2 / lastyearSoldQty3 - 1) * 100;
@@ -353,31 +240,28 @@ const SearchPage = () => {
   const YoY5 = (lastyearSoldQty5 / lastyearSoldQty6 - 1) * 100;
   const YoY6 = (lastyearSoldQty6 / lastyearSoldQty7 - 1) * 100;
 
-  const [graphLineByMonth, setGraphLineByMonth] = useState([]);
-  const graphLineByMonthF = async () => {
+  const [chartbyEachYearData, setChartbyEachYearData] = useState([]);
+  const chartEachYearDataAPI = async () => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading(true);
     await axios
       .get(`${BASE_URL}graphbymonth?descrip=${searchedRecord}`)
 
       .then((response) => {
-        setGraphLineByMonth(response.data);
+        setChartbyEachYearData(response.data);
         setGraphLoading(false);
       });
   };
 
-  const [value2, setValue2] = useState('');
-  const handleChangeGraphByMonth = (e) => {
-    const selectedMonth = e.target.value;
-    setValue2(selectedMonth); // update the value of value2
-  };
+  const [graphDropdownSelectedYear, setGraphDropdownSelectedYear] =
+    useState('');
 
-  const monthLine = graphLineByMonth.filter(
-    (item) => item.year === Number(value2)
+  const monthLine = chartbyEachYearData.filter(
+    (item) => item.year === Number(graphDropdownSelectedYear)
   );
 
-  const monthLinePrv = graphLineByMonth.filter(
-    (item) => item.year === Number(value2) - 1
+  const monthLinePrv = chartbyEachYearData.filter(
+    (item) => item.year === Number(graphDropdownSelectedYear) - 1
   );
 
   const monthNames = [
@@ -395,10 +279,10 @@ const SearchPage = () => {
     'Dec',
   ];
 
-  const monthData = [];
+  const monthlyData = [];
   monthNames.forEach((name, index) => {
     const dataItem = monthLine.find((item) => item.month === index + 1);
-    monthData.push(
+    monthlyData.push(
       dataItem
         ? { name, qtyshp: dataItem.qtyshp, qtyrec: dataItem.qtyrec }
         : { name, qtyshp: 0, qtyrec: 0 }
@@ -416,62 +300,62 @@ const SearchPage = () => {
   });
 
   const YoYEachMonth =
-    (monthData.map((item) => item.qtyshp)[0] /
+    (monthlyData.map((item) => item.qtyshp)[0] /
       PrvmonthData.map((item) => item.qtyshp)[0] -
       1) *
     100;
   const YoYEachMonth2 =
-    (monthData.map((item) => item.qtyshp)[1] /
+    (monthlyData.map((item) => item.qtyshp)[1] /
       PrvmonthData.map((item) => item.qtyshp)[1] -
       1) *
     100;
   const YoYEachMonth3 =
-    (monthData.map((item) => item.qtyshp)[2] /
+    (monthlyData.map((item) => item.qtyshp)[2] /
       PrvmonthData.map((item) => item.qtyshp)[2] -
       1) *
     100;
   const YoYEachMonth4 =
-    (monthData.map((item) => item.qtyshp)[3] /
+    (monthlyData.map((item) => item.qtyshp)[3] /
       PrvmonthData.map((item) => item.qtyshp)[3] -
       1) *
     100;
   const YoYEachMonth5 =
-    (monthData.map((item) => item.qtyshp)[4] /
+    (monthlyData.map((item) => item.qtyshp)[4] /
       PrvmonthData.map((item) => item.qtyshp)[4] -
       1) *
     100;
   const YoYEachMonth6 =
-    (monthData.map((item) => item.qtyshp)[5] /
+    (monthlyData.map((item) => item.qtyshp)[5] /
       PrvmonthData.map((item) => item.qtyshp)[5] -
       1) *
     100;
   const YoYEachMonth7 =
-    (monthData.map((item) => item.qtyshp)[6] /
+    (monthlyData.map((item) => item.qtyshp)[6] /
       PrvmonthData.map((item) => item.qtyshp)[6] -
       1) *
     100;
   const YoYEachMonth8 =
-    (monthData.map((item) => item.qtyshp)[7] /
+    (monthlyData.map((item) => item.qtyshp)[7] /
       PrvmonthData.map((item) => item.qtyshp)[7] -
       1) *
     100;
   const YoYEachMonth9 =
-    (monthData.map((item) => item.qtyshp)[8] /
+    (monthlyData.map((item) => item.qtyshp)[8] /
       PrvmonthData.map((item) => item.qtyshp)[8] -
       1) *
     100;
   const YoYEachMonth10 =
-    (monthData.map((item) => item.qtyshp)[9] /
+    (monthlyData.map((item) => item.qtyshp)[9] /
       PrvmonthData.map((item) => item.qtyshp)[9] -
       1) *
     100;
   const YoYEachMonth11 =
-    (monthData.map((item) => item.qtyshp)[10] /
+    (monthlyData.map((item) => item.qtyshp)[10] /
       PrvmonthData.map((item) => item.qtyshp)[10] -
       1) *
     100;
   const YoYEachMonth12 =
-    (monthData.map((item) => item.qtyshp)[11] /
+    (monthlyData.map((item) => item.qtyshp)[11] /
       PrvmonthData.map((item) => item.qtyshp)[11] -
       1) *
     100;
@@ -506,6 +390,7 @@ const SearchPage = () => {
 
   const [eachItemGraph, setEachItemGraph] = useState([]);
   const [eachItemGraphMonth, setEachItemGraphMonth] = useState([]);
+
   const eachItemClick = (clickedItem) => {
     setIsOpen(true);
 
@@ -550,7 +435,7 @@ const SearchPage = () => {
       link.click();
     });
   };
-  
+
   //className & table-text
   const InfoItemOb = (props) => {
     return (
@@ -562,16 +447,9 @@ const SearchPage = () => {
 
   //REORDER DATA
 
-  const result2 = search.map((item) =>
-    WDsearch2.find((item2) => item2.Color.trim() === item.itemkey2.trim())
+  const result2 = mainData.map((item) =>
+    watchDoginfo2.find((item2) => item2.Color.trim() === item.itemkey2.trim())
   );
-
-  //Calculating the numbers of days between two dates
-  // const dateC = test2.map((item) => item.recdate)[0];
-  // const date1 = new Date(dateC);
-  // const date2 = new Date();
-  // const Difference_In_Time = date2.getTime() - date1.getTime();
-  // const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   //Calculating the numbers of days between two dates for datepicker
   const date3 = endDatePicker;
   const date4 = startDatePicker;
@@ -580,7 +458,7 @@ const SearchPage = () => {
   const Difference_In_Days2 = Difference_In_Time2 / (1000 * 3600 * 24);
 
   //PRL
-  const filteredItemsP = search.map((item) => item.mincost && item.maxcost);
+  const filteredItemsP = mainData.map((item) => item.mincost && item.maxcost);
 
   const filteredItemsPWithoutZero = filteredItemsP.filter(
     (value) => value !== null
@@ -592,38 +470,26 @@ const SearchPage = () => {
 
   //total
   const [colorTotal, setColorTotal] = useState(0);
-
   const [onHandTotal, setonHandTotal] = useState(0);
-
   const [reOrderTotal, setreOrderTotal] = useState(0);
-
   const [pendingTotal, setpendingTotal] = useState(0);
-
   const [calendarQtyTotal, setcalendarQtyTotal] = useState(0);
-
   const [calendarBOTotal, setcalendarBOTotal] = useState(0);
-
   const [sold30Total, setsold30Total] = useState(0);
-
   const [sold90Total, setsold90Total] = useState(0);
-
   const [sold365Total, setsold365Total] = useState(0);
-
   const [avg_sold365Total, setavg_sold365Total] = useState(0);
-
   const [avg_lead_timeTotal, setavg_lead_timeTotal] = useState(0);
-
   const [max_leadtimeTotal, setmax_leadtimeTotal] = useState(0);
-
   const [BO_lastRCVTotal, setBO_lastRCVTotal] = useState(0);
 
-  const suggestedQtyavg_qty = search.map((item) =>
+  const suggestedQtyavg_qty = mainData.map((item) =>
     item.reorderPointO.map((item) => Number(item.avg_qtyshp))
   );
-  const suggestedQtyavg_lead = search.map((item) =>
+  const suggestedQtyavg_lead = mainData.map((item) =>
     item.poLeadTimeO.map((item) => Number(item.avg_lead_time))
   );
-  const suggestedBo = search.map((item) =>
+  const suggestedBo = mainData.map((item) =>
     item.bofromLastRcvO.map((item) => Number(item.qtybo))
   );
 
@@ -636,16 +502,12 @@ const SearchPage = () => {
 
   const [suggestedQtyTotal, setsuggestedQtyTotal] = useState(0);
 
-  const graphYearlyTotal = sum(graphLine.map((item) => item.qtyshp));
-
-  const graphMonthlyTotal = sum(monthLine.map((item) => item.qtyshp));
-
   //forecast
   const [selforecastDatePicker, setselforecastDatePicker] = useState([]);
 
   useEffect(() => {
     const fetchData4 = async () => {
-      if (search.length === 0) {
+      if (mainData.length === 0) {
         return;
       }
 
@@ -658,7 +520,7 @@ const SearchPage = () => {
       setselforecastDatePicker(response.data);
     };
     fetchData4();
-  }, [forecastDatePicker, search]);
+  }, [forecastDatePicker, mainData]);
 
   const sumReqForcast = selforecastDatePicker.map((item) =>
     sumBy(item.poForecast, 'ORDEREDa')
@@ -674,9 +536,9 @@ const SearchPage = () => {
   const Difference_In_PostDecimalDayresult =
     Math.round((Difference_In_PostDayresult / 30) * 100) / 100;
 
-  const onhandCal = search.map((item) => Number(item.onhand));
+  const onhandCal = mainData.map((item) => Number(item.onhand));
 
-  const dayCal = search.map((item) =>
+  const dayCal = mainData.map((item) =>
     item.sold30.map(
       (item) => Number(item.qtyshp / 30) * Difference_In_PostDayresult
     )
@@ -685,24 +547,24 @@ const SearchPage = () => {
     (num) => round(num)
   );
 
-  const Cal30 = search.map((item) =>
+  const Cal30 = mainData.map((item) =>
     item.sold30.map(
       (item) => Number(item.qtyshp) * Difference_In_PostDecimalDayresult
     )
   );
 
-  const Cal60 = search.map((item) =>
+  const Cal60 = mainData.map((item) =>
     item.sold60.map(
       (item) => Number(item.qtyshp / 2) * Difference_In_PostDecimalDayresult
     )
   );
-  const Cal90 = search.map((item) =>
+  const Cal90 = mainData.map((item) =>
     item.sold90.map(
       (item) => Number(item.qtyshp / 3) * Difference_In_PostDecimalDayresult
     )
   );
 
-  const Cal365 = search.map((item) =>
+  const Cal365 = mainData.map((item) =>
     item.sold365.map(
       (item) => Number(item.qtyshp / 12) * Difference_In_PostDecimalDayresult
     )
@@ -735,11 +597,11 @@ const SearchPage = () => {
 
   //new or old item
   const newOrOld = () => {
-    if (search.length === 0) {
+    if (mainData.length === 0) {
       return;
     }
     if (
-      search
+      mainData
         .filter((item) => item.start_dte)
 
         .map(
@@ -755,8 +617,8 @@ const SearchPage = () => {
   return (
     <div className="search flex w-full p-4">
       <Table3Total
-        search={search}
-        WDsearch2={WDsearch2}
+        mainData={mainData}
+        watchDoginfo2={watchDoginfo2}
         selectedDatePicker={selectedDatePicker}
         suggestedQty={suggestedQty}
         amounts={amounts}
@@ -788,23 +650,10 @@ const SearchPage = () => {
               setSuggest={setSuggest}
               filteredData={filteredData}
               handleKeyPress={handleKeyPress}
-              searchRecords={searchRecords}
-              onClickImageHandler={onClickImageHandler}
-              reset={reset}
-              itemRecords={itemRecords}
-              fetchData3={fetchData3}
-              graphLineF={graphLineF}
-              graphLineByMonthF={graphLineByMonthF}
-              graphByItemF={graphByItemF}
-              graphByItemMonthF={graphByItemMonthF}
-              WDsearchRecords={WDsearchRecords}
-              WDsearchRecords2={WDsearchRecords2}
-              newitemRecords={newitemRecords}
-              pieChartF={pieChartF}
-              imageClicked={imageClicked}
-              value2={value2}
+              mainImg={mainImg}
+              graphDropdownSelectedYear={graphDropdownSelectedYear}
               graphLoading={graphLoading}
-              graphLine={graphLine}
+              graphAllYearData={graphAllYearData}
               monthLine={monthLine}
               monthLinePrv={monthLinePrv}
               pieChart={pieChart}
@@ -813,1306 +662,68 @@ const SearchPage = () => {
               setfilteredDate={setfilteredDate}
               handleButton={handleButton}
             />
+            <Row2 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
+            <Row3 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
+            <Row4 InfoItemOb={InfoItemOb} mainData={mainData} />
+            <Row5 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
+            <Row6 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
+            <Row7
+              InfoItemOb={InfoItemOb}
+              watchDoginfo={watchDoginfo}
+              setGraphDropdownSelectedYear={setGraphDropdownSelectedYear}
+              graphDropdownSelectedYear={graphDropdownSelectedYear}
+              graphAllYearData={graphAllYearData}
+              mainData={mainData}
+              graphLoading={graphLoading}
+              monthLine={monthLine}
+              monthlyData={monthlyData}
+            />
 
-            <tr className="row2">
-              <InfoItemOb className="infoCol1" name="ITEM NO:" />
+            <Row8
+              InfoItemOb={InfoItemOb}
+              selectedSold={selectedSold}
+              soldPercentageHandler={soldPercentageHandler}
+              selectedSoldPercentage={selectedSoldPercentage}
+              mainData={mainData}
+              loadingsoldP={loadingsoldP}
+              graphDropdownSelectedYear={graphDropdownSelectedYear}
+              graphLoading={graphLoading}
+              monthlyData={monthlyData}
+              graphAllYearData={graphAllYearData}
+            />
 
-              <td colSpan="3" className="smpNo">
-                {WDsearch.map((item) => item.Sample)}
-              </td>
-            </tr>
+            <Row9
+              InfoItemOb={InfoItemOb}
+              watchDoginfo={watchDoginfo}
+              mainData={mainData}
+              graphDropdownSelectedYear={graphDropdownSelectedYear}
+              graphLoading={graphLoading}
+              YoYEachMonth={YoYEachMonth}
+              YoYEachMonth2={YoYEachMonth2}
+              YoYEachMonth3={YoYEachMonth3}
+              YoYEachMonth4={YoYEachMonth4}
+              YoYEachMonth5={YoYEachMonth5}
+              YoYEachMonth6={YoYEachMonth6}
+              YoYEachMonth7={YoYEachMonth7}
+              YoYEachMonth8={YoYEachMonth8}
+              YoYEachMonth9={YoYEachMonth9}
+              YoYEachMonth10={YoYEachMonth10}
+              YoYEachMonth11={YoYEachMonth11}
+              YoYEachMonth12={YoYEachMonth12}
+              YoY6={YoY6}
+              YoY5={YoY5}
+              YoY4={YoY4}
+              YoY3={YoY3}
+              YoY2={YoY2}
+              YoY={YoY}
+            />
 
-            <tr className="row3">
-              <InfoItemOb className="infoCol1" name="ORIGINAL:" />
-
-              <td colSpan="3">
-                <span
-                  className="original"
-                  style={{ float: 'left', paddingLeft: '3px' }}
-                >
-                  {WDsearch.map((item) => item.Original)}
-                </span>
-                <span
-                  className="originalPo"
-                  style={{ float: 'right', paddingRight: '3px' }}
-                ></span>
-              </td>
-            </tr>
-
-            <tr className="row4">
-              <InfoItemOb className="infoCol1" name="TYPE:" />
-
-              <td colSpan="3" className="smpDte">
-                {search.map((item) => item.length_cat)[0]}
-              </td>
-            </tr>
-            <tr className="row5">
-              <InfoItemOb className="infoCol1" name="WEIGHT:" />
-              <td colSpan="3">
-                <span
-                  className="weight"
-                  style={{
-                    float: 'left',
-                    textAlign: 'center',
-                    paddingLeft: '3px',
-                  }}
-                >
-                  {WDsearch.map((item) => item.Weight)}
-                </span>
-
-                <span
-                  className="weight_po"
-                  style={{
-                    float: 'right',
-                    textAlign: 'center',
-                    paddingRight: '3px',
-                  }}
-                ></span>
-              </td>
-            </tr>
-            <tr className="row6">
-              <InfoItemOb className="infoCol1" name="LENGTH:" />
-
-              {WDsearch.map((item, idx) => (
-                <td key={idx} colSpan="3">
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <span className="length">{item.Length}</span>
-                    <span>
-                      <span style={{ marginBottom: '0px' }}></span>
-                      <span className="fl">
-                        F : {item.Front_lc_leng_w} X {item.Front_lc_leng_l}
-                      </span>
-                    </span>
-                    <span style={{ paddingRight: '3px' }}>
-                      <span style={{ marginBottom: '0px' }}></span>
-                      <span className="pl">
-                        P : {item.Part_lc_leng_w} X {item.Part_lc_leng_l}
-                      </span>
-                    </span>
-                  </div>
-                </td>
-              ))}
-            </tr>
-
-            <tr className="row7">
-              <InfoItemOb className="infoCol1" name="FIBER:" />
-
-              <td colSpan="3">
-                <span
-                  className="fiber"
-                  style={{
-                    float: 'left',
-                    verticalAlign: 'middle',
-                    paddingLeft: '3px',
-                  }}
-                >
-                  {WDsearch.map((item) => item.Fiber)}
-                </span>
-                <span
-                  className="fiberPo"
-                  style={{
-                    float: 'right',
-                    verticalAlign: 'middle',
-                    paddingRight: '3px',
-                  }}
-                ></span>
-              </td>
-
-              <td>
-                GRAPH
-                <select
-                  className=" border border-zinc-500 "
-                  value={value2}
-                  onChange={(e) => {
-                    handleChangeGraphByMonth(e);
-                  }}
-                >
-                  <option>YEAR</option>
-                  {graphLine.map((item2, idx) => (
-                    <option key={idx}>{item2.year}</option>
-                  ))}
-                </select>
-              </td>
-
-              {search.length ? (
-                value2.length ? (
-                  graphLoading === false ? (
-                    value2.length ? (
-                      <td>
-                        {value2 === 'YEAR'
-                          ? graphYearlyTotal
-                          : graphMonthlyTotal}
-                      </td>
-                    ) : (
-                      <td></td>
-                    )
-                  ) : (
-                    <td>Loading...</td>
-                  )
-                ) : graphLoading === false ? (
-                  <td>{graphYearlyTotal}</td>
-                ) : (
-                  <td>Loading...</td>
-                )
-              ) : (
-                <td></td>
-              )}
-
-              <td style={{ background: '#f0e68c' }}>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>{value2 === 'YEAR' ? 'YEAR' : 'MONTH'}</>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <>Loading...</>
-                    )
-                  ) : graphLoading === false ? (
-                    <>YEAR</>
-                  ) : (
-                    <>Loading...</>
-                  )
-                ) : (
-                  <>YEAR</>
-                )}
-              </td>
-
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyear6
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[0]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[1]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyear6}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.sixth ?? []))
-                    .filter((item) => item.purdate)
-                    .map(
-                      (item) =>
-                        new Date(item.purdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyear5
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[2]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[3]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyear5}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fifth ?? []))
-                    .filter((item) => item.purdate)
-                    .map(
-                      (item) =>
-                        new Date(item.purdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyear4
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[4]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[5]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyear4}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fourth ?? []))
-                    .filter((item) => item.purdate)
-                    .map(
-                      (item) =>
-                        new Date(item.purdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyear3
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[6]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[7]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyear3}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.third ?? []))
-                    .filter((item) => item.purdate)
-                    .map(
-                      (item) =>
-                        new Date(item.purdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-              <td colSpan="0.5">
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyear2
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[8]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[9]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyear2}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.second ?? []))
-                    .filter((item) => item.purdate)
-                    .map(
-                      (item) =>
-                        new Date(item.purdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyear
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[10]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.name)[11]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyear}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.first ?? []))
-                    .filter((item) => item.purdate)
-                    .map(
-                      (item) =>
-                        new Date(item.purdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-            </tr>
-
-            <tr className="row8">
-              <>
-                <InfoItemOb className="infoCol1" name="DGN DTE:" />
-              </>
-
-              <td colSpan="3" className="dgnDte"></td>
-
-              <td style={{ textAlign: 'center' }}>
-                SOLD
-                <select
-                  className="border border-zinc-500"
-                  value={selectedSold}
-                  onChange={(e) => {
-                    soldPercentageHandler(e);
-                  }}
-                >
-                  <option
-                    value={
-                      selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map((item) =>
-                          item.soldtotal_percentage
-                            ? item.soldtotal_percentagee
-                            : 0
-                        )
-                      )[0]
-                    }
-                  >
-                    All
-                  </option>
-                  <option
-                    value={
-                      selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map((item) =>
-                          item.sold7_percentage ? item.sold7_percentage : 0
-                        )
-                      )[0]
-                    }
-                  >
-                    7
-                  </option>
-                  <option
-                    value={
-                      selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map(
-                          (item) => item.sold30_percentage
-                        )
-                      )[0]
-                    }
-                  >
-                    30
-                  </option>
-                  <option
-                    value={
-                      selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map((item) =>
-                          item.sold60_percentage ? item.sold60_percentage : 0
-                        )
-                      )[0]
-                    }
-                  >
-                    60
-                  </option>
-                  <option
-                    value={
-                      selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map((item) =>
-                          item.sold90_percentage ? item.sold90_percentage : 0
-                        )
-                      )[0]
-                    }
-                  >
-                    90
-                  </option>
-                  <option
-                    value={
-                      selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map((item) =>
-                          item.sold6M_percentage ? item.sold6M_percentage : 0
-                        )
-                      )[0]
-                    }
-                  >
-                    6M
-                  </option>
-                  <option
-                    value={
-                      selectedSoldPercentage.map((item) =>
-                        item.soldPercentage.map((item) =>
-                          item.sold365_percentage ? item.sold365_percentage : 0
-                        )
-                      )[0]
-                    }
-                  >
-                    1Y
-                  </option>
-                </select>
-              </td>
-              <>
-                {search.length ? (
-                  selectedSold.length ? (
-                    loadingsoldP === false ? (
-                      selectedSold.length ? (
-                        <td>{Math.floor(selectedSold)} %</td>
-                      ) : (
-                        <td></td>
-                      )
-                    ) : (
-                      <td>Loading...</td>
-                    )
-                  ) : loadingsoldP === false ? (
-                    <td>
-                      {Math.floor(
-                        selectedSoldPercentage.map((item) =>
-                          item.soldPercentage.map(
-                            (item) => item.soldtotal_percentage
-                          )
-                        )[0]
-                      )}
-                      %
-                    </td>
-                  ) : (
-                    <td>Loading...</td>
-                  )
-                ) : (
-                  <td></td>
-                )}
-              </>
-
-              <td style={{ background: '#f0e68c' }}>SOLD_QTY</td>
-
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyearSoldQty6
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[0]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[1]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyearSoldQty6}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.sixth ?? []))
-                    .filter((item) => item.shpdate)
-                    .map(
-                      (item) =>
-                        new Date(item.shpdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyearSoldQty5
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[2]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[3]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyearSoldQty5}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fifth ?? []))
-                    .filter((item) => item.shpdate)
-                    .map(
-                      (item) =>
-                        new Date(item.shpdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyearSoldQty4
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[4]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[5]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyearSoldQty4}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fourth ?? []))
-                    .filter((item) => item.shpdate)
-                    .map(
-                      (item) =>
-                        new Date(item.shpdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyearSoldQty3
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[6]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[7]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyearSoldQty3}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.third ?? []))
-                    .filter((item) => item.shpdate)
-                    .map(
-                      (item) =>
-                        new Date(item.shpdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyearSoldQty2
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[8]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[9]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyearSoldQty2}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.second ?? []))
-                    .filter((item) => item.shpdate)
-                    .map(
-                      (item) =>
-                        new Date(item.shpdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            lastyearSoldQty
-                          ) : (
-                            <>
-                              <span
-                                style={{ float: 'left', paddingLeft: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[10]}
-                              </span>
-                              <span
-                                style={{ float: 'right', paddingRight: '4px' }}
-                              >
-                                {monthData.map((item) => item.qtyshp)[11]}
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <>{lastyearSoldQty}</>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.first ?? []))
-                    .filter((item) => item.shpdate)
-                    .map(
-                      (item) =>
-                        new Date(item.shpdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
-              </td>
-            </tr>
-
-            <tr className="row9">
-              <>
-                <InfoItemOb className="infoCol1" name="PO's 2" />
-              </>
-
-              <td colSpan="3">
-                {WDsearch.map((item, idx) => (
-                  <Fragment key={idx}>
-                    <span className="pctn" style={{ float: 'left' }}>
-                      P: {item.Pcs_ctn}
-                    </span>
-                    <span className="pctn" style={{ float: 'right' }}>
-                      (L:{item.Front_lc_leng_l} X W:{item.Front_lc_leng_w} X
-                      H:0)
-                    </span>
-                  </Fragment>
-                ))}
-              </td>
-              <>
-                {/* {test2.map((item) => item.reqdate)[0] == null ? (
-                <td></td>
-              ) : (
-                <td>
-                  {
-                    test2.map(
-                      (item) =>
-                        new Date(item.reqdate).toISOString().split('T')[0]
-                    )[0]
-                  }
-                </td>
-              )} */}
-              </>
-
-              <td>SAMPLE:</td>
-              <td>{WDsearch.map((item) => item.SampleShp)}</td>
-              <td style={{ background: '#f0e68c' }}>YoY</td>
-
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            <span
-                              style={{ color: YoY6 >= 0 ? 'green' : 'red' }}
-                            >
-                              {YoY6.toFixed(2)}%
-                            </span>
-                          ) : (
-                            <>
-                              <span
-                                style={{
-                                  float: 'left',
-                                  paddingLeft: '4px',
-                                  color: YoYEachMonth >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth.toFixed(1)}%
-                              </span>
-                              <span
-                                style={{
-                                  float: 'right',
-                                  paddingRight: '4px',
-                                  color: YoYEachMonth2 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth2.toFixed(1)}%
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <span style={{ color: YoY6 >= 0 ? 'green' : 'red' }}>
-                      {YoY6.toFixed(1)}%
-                    </span>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.sixth ?? []))
-                    .filter((item) => item.reqdate)
-                    .map((item, idx) => (
-                      <button key={idx}>
-                        {new Date(item.reqdate).toISOString().split('T')[0]}
-                      </button>
-                    ))[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            <span
-                              style={{ color: YoY5 >= 0 ? 'green' : 'red' }}
-                            >
-                              {YoY5.toFixed(2)}%
-                            </span>
-                          ) : (
-                            <>
-                              <span
-                                style={{
-                                  float: 'left',
-                                  paddingLeft: '4px',
-                                  color: YoYEachMonth3 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth3.toFixed(1)}%
-                              </span>
-                              <span
-                                style={{
-                                  float: 'right',
-                                  paddingRight: '4px',
-                                  color: YoYEachMonth4 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth4.toFixed(1)}%
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <span style={{ color: YoY5 >= 0 ? 'green' : 'red' }}>
-                      {YoY5.toFixed(2)}%
-                    </span>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fifth ?? []))
-                    .filter((item) => item.reqdate)
-                    .map((item, idx) => (
-                      <button key={idx}>
-                        {new Date(item.reqdate).toISOString().split('T')[0]}
-                      </button>
-                    ))[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            <span
-                              style={{ color: YoY4 >= 0 ? 'green' : 'red' }}
-                            >
-                              {YoY4.toFixed(2)}%
-                            </span>
-                          ) : (
-                            <>
-                              <span
-                                style={{
-                                  float: 'left',
-                                  paddingLeft: '4px',
-                                  color: YoYEachMonth5 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth5.toFixed(1)}%
-                              </span>
-                              <span
-                                style={{
-                                  float: 'right',
-                                  paddingRight: '4px',
-                                  color: YoYEachMonth6 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth6.toFixed(1)}%
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <span style={{ color: YoY4 >= 0 ? 'green' : 'red' }}>
-                      {YoY4.toFixed(2)}%
-                    </span>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fourth ?? []))
-                    .filter((item) => item.reqdate)
-                    .map((item, idx) => (
-                      <button key={idx}>
-                        {new Date(item.reqdate).toISOString().split('T')[0]}
-                      </button>
-                    ))[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            <span
-                              style={{ color: YoY3 >= 0 ? 'green' : 'red' }}
-                            >
-                              {YoY3.toFixed(2)}%
-                            </span>
-                          ) : (
-                            <>
-                              <span
-                                style={{
-                                  float: 'left',
-                                  paddingLeft: '4px',
-                                  color: YoYEachMonth7 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth7.toFixed(1)}%
-                              </span>
-                              <span
-                                style={{
-                                  float: 'right',
-                                  paddingRight: '4px',
-                                  color: YoYEachMonth8 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth8.toFixed(1)}%
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <span style={{ color: YoY3 >= 0 ? 'green' : 'red' }}>
-                      {YoY3.toFixed(2)}%
-                    </span>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.third ?? []))
-                    .filter((item) => item.reqdate)
-                    .map((item, idx) => (
-                      <button key={idx}>
-                        {new Date(item.reqdate).toISOString().split('T')[0]}
-                      </button>
-                    ))[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            <span
-                              style={{ color: YoY2 >= 0 ? 'green' : 'red' }}
-                            >
-                              {YoY2.toFixed(2)}%
-                            </span>
-                          ) : (
-                            <>
-                              <span
-                                style={{
-                                  float: 'left',
-                                  paddingLeft: '4px',
-                                  color: YoYEachMonth9 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth9.toFixed(1)}%
-                              </span>
-                              <span
-                                style={{
-                                  float: 'right',
-                                  paddingRight: '4px',
-                                  color: YoYEachMonth10 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth10.toFixed(1)}%
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <span style={{ color: YoY2 >= 0 ? 'green' : 'red' }}>
-                      {YoY2.toFixed(2)}%
-                    </span>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.second ?? []))
-                    .filter((item) => item.reqdate)
-                    .map((item, idx) => (
-                      <button key={idx}>
-                        {new Date(item.reqdate).toISOString().split('T')[0]}
-                      </button>
-                    ))[0]
-                } */}
-              </td>
-              <td>
-                {search.length ? (
-                  value2.length ? (
-                    graphLoading === false ? (
-                      value2.length ? (
-                        <>
-                          {value2 === 'YEAR' ? (
-                            <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>
-                              {YoY.toFixed(2)}%
-                            </span>
-                          ) : (
-                            <>
-                              <span
-                                style={{
-                                  float: 'left',
-                                  paddingLeft: '4px',
-                                  color: YoYEachMonth11 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth11.toFixed(1)}%
-                              </span>
-                              <span
-                                style={{
-                                  float: 'right',
-                                  paddingRight: '4px',
-                                  color: YoYEachMonth12 >= 0 ? 'green' : 'red',
-                                  fontSize: '10px',
-                                }}
-                              >
-                                {YoYEachMonth12.toFixed(1)}%
-                              </span>
-                            </>
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )
-                  ) : graphLoading === false ? (
-                    <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>
-                      {YoY.toFixed(2)}%
-                    </span>
-                  ) : (
-                    <></>
-                  )
-                ) : (
-                  <></>
-                )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.first ?? []))
-                    .filter((item) => item.reqdate)
-                    .map((item, idx) => (
-                      <button key={idx}>
-                        {new Date(item.reqdate).toISOString().split('T')[0]}
-                      </button>
-                    ))[0]
-                } */}
-              </td>
-            </tr>
             <tr className="row10">
-              <>
-                <InfoItemOb className="infoCol1" name="ST_DATE" />
-              </>
+              <InfoItemOb className="infoCol1" name="ST_DATE" />
 
               <td className="stDate" colSpan="3">
                 {
-                  search
+                  mainData
                     .filter((item) => item.start_dte)
 
                     .map(
@@ -2121,44 +732,31 @@ const SearchPage = () => {
                     )[0]
                 }
               </td>
-              <>
-                {/* {test2.map((item) => item.recdate)[0] == null ? (
-                <td></td>
-              ) : (
-                <td>
-                  {
-                    test2.map(
-                      (item) =>
-                        new Date(item.recdate).toISOString().split('T')[0]
-                    )[0]
-                  }
-                </td>
-              )} */}
-              </>
+              <></>
 
               <td>REORD:</td>
-              <td>{WDsearch.map((item) => item.ReordShp)}</td>
+              <td>{watchDoginfo.map((item) => item.ReordShp)}</td>
               <td style={{ background: '#f0e68c' }}>RCV_QTY</td>
 
               <td>
-                {search.length ? (
-                  value2.length ? (
+                {mainData.length ? (
+                  graphDropdownSelectedYear.length ? (
                     graphLoading === false ? (
-                      value2.length ? (
+                      graphDropdownSelectedYear.length ? (
                         <>
-                          {value2 === 'YEAR' ? (
+                          {graphDropdownSelectedYear === 'YEAR' ? (
                             lastyearRCVQty6
                           ) : (
                             <>
                               <span
                                 style={{ float: 'left', paddingLeft: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[0]}
+                                {monthlyData.map((item) => item.qtyrec)[0]}
                               </span>
                               <span
                                 style={{ float: 'right', paddingRight: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[1]}
+                                {monthlyData.map((item) => item.qtyrec)[1]}
                               </span>
                             </>
                           )}
@@ -2177,35 +775,26 @@ const SearchPage = () => {
                 ) : (
                   <></>
                 )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.sixth ?? []))
-                    .filter((item) => item.recdate)
-                    .map(
-                      (item) =>
-                        new Date(item.recdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
               </td>
               <td>
-                {search.length ? (
-                  value2.length ? (
+                {mainData.length ? (
+                  graphDropdownSelectedYear.length ? (
                     graphLoading === false ? (
-                      value2.length ? (
+                      graphDropdownSelectedYear.length ? (
                         <>
-                          {value2 === 'YEAR' ? (
+                          {graphDropdownSelectedYear === 'YEAR' ? (
                             lastyearRCVQty5
                           ) : (
                             <>
                               <span
                                 style={{ float: 'left', paddingLeft: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[2]}
+                                {monthlyData.map((item) => item.qtyrec)[2]}
                               </span>
                               <span
                                 style={{ float: 'right', paddingRight: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[3]}
+                                {monthlyData.map((item) => item.qtyrec)[3]}
                               </span>
                             </>
                           )}
@@ -2224,35 +813,26 @@ const SearchPage = () => {
                 ) : (
                   <></>
                 )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fifth ?? []))
-                    .filter((item) => item.recdate)
-                    .map(
-                      (item) =>
-                        new Date(item.recdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
               </td>
               <td>
-                {search.length ? (
-                  value2.length ? (
+                {mainData.length ? (
+                  graphDropdownSelectedYear.length ? (
                     graphLoading === false ? (
-                      value2.length ? (
+                      graphDropdownSelectedYear.length ? (
                         <>
-                          {value2 === 'YEAR' ? (
+                          {graphDropdownSelectedYear === 'YEAR' ? (
                             lastyearRCVQty4
                           ) : (
                             <>
                               <span
                                 style={{ float: 'left', paddingLeft: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[4]}
+                                {monthlyData.map((item) => item.qtyrec)[4]}
                               </span>
                               <span
                                 style={{ float: 'right', paddingRight: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[5]}
+                                {monthlyData.map((item) => item.qtyrec)[5]}
                               </span>
                             </>
                           )}
@@ -2271,35 +851,26 @@ const SearchPage = () => {
                 ) : (
                   <></>
                 )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fourth ?? []))
-                    .filter((item) => item.recdate)
-                    .map(
-                      (item) =>
-                        new Date(item.recdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
               </td>
               <td>
-                {search.length ? (
-                  value2.length ? (
+                {mainData.length ? (
+                  graphDropdownSelectedYear.length ? (
                     graphLoading === false ? (
-                      value2.length ? (
+                      graphDropdownSelectedYear.length ? (
                         <>
-                          {value2 === 'YEAR' ? (
+                          {graphDropdownSelectedYear === 'YEAR' ? (
                             lastyearRCVQty3
                           ) : (
                             <>
                               <span
                                 style={{ float: 'left', paddingLeft: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[6]}
+                                {monthlyData.map((item) => item.qtyrec)[6]}
                               </span>
                               <span
                                 style={{ float: 'right', paddingRight: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[7]}
+                                {monthlyData.map((item) => item.qtyrec)[7]}
                               </span>
                             </>
                           )}
@@ -2318,35 +889,26 @@ const SearchPage = () => {
                 ) : (
                   <></>
                 )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.third ?? []))
-                    .filter((item) => item.recdate)
-                    .map(
-                      (item) =>
-                        new Date(item.recdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
               </td>
               <td>
-                {search.length ? (
-                  value2.length ? (
+                {mainData.length ? (
+                  graphDropdownSelectedYear.length ? (
                     graphLoading === false ? (
-                      value2.length ? (
+                      graphDropdownSelectedYear.length ? (
                         <>
-                          {value2 === 'YEAR' ? (
+                          {graphDropdownSelectedYear === 'YEAR' ? (
                             lastyearRCVQty2
                           ) : (
                             <>
                               <span
                                 style={{ float: 'left', paddingLeft: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[8]}
+                                {monthlyData.map((item) => item.qtyrec)[8]}
                               </span>
                               <span
                                 style={{ float: 'right', paddingRight: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[9]}
+                                {monthlyData.map((item) => item.qtyrec)[9]}
                               </span>
                             </>
                           )}
@@ -2365,35 +927,26 @@ const SearchPage = () => {
                 ) : (
                   <></>
                 )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.second ?? []))
-                    .filter((item) => item.recdate)
-                    .map(
-                      (item) =>
-                        new Date(item.recdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
               </td>
               <td>
-                {search.length ? (
-                  value2.length ? (
+                {mainData.length ? (
+                  graphDropdownSelectedYear.length ? (
                     graphLoading === false ? (
-                      value2.length ? (
+                      graphDropdownSelectedYear.length ? (
                         <>
-                          {value2 === 'YEAR' ? (
+                          {graphDropdownSelectedYear === 'YEAR' ? (
                             lastyearRCVQty
                           ) : (
                             <>
                               <span
                                 style={{ float: 'left', paddingLeft: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[10]}
+                                {monthlyData.map((item) => item.qtyrec)[10]}
                               </span>
                               <span
                                 style={{ float: 'right', paddingRight: '4px' }}
                               >
-                                {monthData.map((item) => item.qtyrec)[11]}
+                                {monthlyData.map((item) => item.qtyrec)[11]}
                               </span>
                             </>
                           )}
@@ -2412,61 +965,31 @@ const SearchPage = () => {
                 ) : (
                   <></>
                 )}
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.first ?? []))
-                    .filter((item) => item.recdate)
-                    .map(
-                      (item) =>
-                        new Date(item.recdate).toISOString().split('T')[0]
-                    )[0]
-                } */}
               </td>
             </tr>
 
             <tr className="row11">
-              <>
-                {search.length > 0 ? (
-                  <td className="PRL">
-                    {PRLmin} - {PRLmax}
-                  </td>
-                ) : (
-                  <td></td>
-                )}
-              </>
+              {mainData.length > 0 ? (
+                <td className="PRL">
+                  {PRLmin} - {PRLmax}
+                </td>
+              ) : (
+                <td></td>
+              )}
 
               <td colSpan="2" className="price">
                 {
-                  search
+                  mainData
                     .filter((item) => typeof item.price === 'number')
                     .map((item, idx) => (
                       <Fragment key={idx}>PRICE: ${item.price}</Fragment>
                     ))[0]
                 }
               </td>
-              <>
-                {/* {test2.map((item) => item.recdate)[0] == null ? (
-                <td></td>
-              ) : (
-                <td>{Math.floor(Difference_In_Days)} days</td>
-              )} */}
-              </>
+              <></>
 
-              <td>Class: {search.map((item) => item.class)[0]}</td>
-              <>
-                {/* {test2.map((item) => item.recdate)[0] == null ? (
-                <td></td>
-              ) : (
-                <td>
-                  {
-                    test2.map(
-                      (item) =>
-                        new Date(item.recdate).toISOString().split('T')[0]
-                    )[0]
-                  }{' '}
-                </td>
-              )} */}
-              </>
+              <td>Class: {mainData.map((item) => item.class)[0]}</td>
+              <></>
 
               <td colSpan="2">
                 <DatePicker
@@ -2481,52 +1004,17 @@ const SearchPage = () => {
               <td className="prv30">{past365c}</td>
               <td></td>
 
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.sixth ?? []))
-                    .filter((item) => item.portn)
-                    .map((item) => item.portn)[0]
-                } */}
-              </td>
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fifth ?? []))
-                    .filter((item) => item.portn)
-                    .map((item) => item.portn)[0]
-                } */}
-              </td>
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fourth ?? []))
-                    .filter((item) => item.portn)
-                    .map((item) => item.portn)[0]
-                } */}
-              </td>
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.third ?? []))
-                    .filter((item) => item.portn)
-                    .map((item) => item.portn)[0]
-                } */}
-              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td
                 className="prv30"
                 style={{ background: '#f4a460', fontSize: '10px' }}
               >
                 OH_FORECAST
               </td>
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.first ?? []))
-                    .filter((item) => item.portn)
-                    .map((item) => item.portn)[0]
-                } */}
-              </td>
+              <td></td>
             </tr>
 
             <tr className="row12">
@@ -2744,32 +1232,17 @@ const SearchPage = () => {
                 )}
               </>
 
-              <>
-                {/* waiting & rcvd table  */}
-                {/* {selectedItem.length > 0 ? (
-                test2.map((item) => item.recdate)[0] == null ? (
-                  <td style={{ color: 'red' }}>WAITING</td>
-                ) : (
-                  <td style={{ color: 'green' }}>RCVD</td>
-                )
-              ) : (
-                <td></td>
-              )} */}
-              </>
+              <></>
 
               <td>
                 Vend:{' '}
                 {
-                  search.map((item) =>
+                  mainData.map((item) =>
                     item.reorderPointO.map((item) => item.vendno)
                   )[0]
                 }
               </td>
-              <>
-                {/* <td id="recDte" className="recDateSel_cal">
-                {new Date().toISOString().split('T')[0]}
-              </td> */}
-              </>
+              <></>
 
               <td colSpan="2">
                 <DatePicker
@@ -2790,38 +1263,10 @@ const SearchPage = () => {
 
               <td></td>
 
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.sixth ?? []))
-                    .filter((item) => item.invno)
-                    .map((item) => item.invno)[0]
-                } */}
-              </td>
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fifth ?? []))
-                    .filter((item) => item.invno)
-                    .map((item) => item.invno)[0]
-                } */}
-              </td>
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fourth ?? []))
-                    .filter((item) => item.invno)
-                    .map((item) => item.invno)[0]
-                } */}
-              </td>
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.third ?? []))
-                    .filter((item) => item.invno)
-                    .map((item) => item.invno)[0]
-                } */}
-              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>
                 {/* forecast datepicker */}
                 <DatePicker
@@ -2831,21 +1276,8 @@ const SearchPage = () => {
                   selected={forecastDatePicker}
                   onChange={(date) => setForecasteDatePicker(date)}
                 />
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.second ?? []))
-                    .filter((item) => item.invno)
-                    .map((item) => item.invno)[0]
-                } */}
               </td>
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.first ?? []))
-                    .filter((item) => item.invno)
-                    .map((item) => item.invno)[0]
-                } */}
-              </td>
+              <td></td>
             </tr>
           </tbody>
 
@@ -2855,145 +1287,26 @@ const SearchPage = () => {
               <td>OH</td>
 
               <td style={{ background: '#f4a460' }}>REORDER</td>
-              <td>
-                {/*POS initial && Warning error*/}
-                {/* <div className="App">
-                  <select
-                    className="border border-zinc-500"
-                    name="item-selected"
-                    value={selectedItem}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                  >
-                    
-
-                    <option>POS_</option>
-
-                    <option>
-                      {
-                        search
-                          .flatMap((item) => [item].concat(item.first ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
-
-                    <option>
-                      {
-                        search
-                          .flatMap((item) => [item].concat(item.second ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
-
-                    <option>
-                      {
-                        search
-                          .flatMap((item) => [item].concat(item.third ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
-
-                    <option>
-                      {
-                        search
-                          .flatMap((item) => [item].concat(item.fourth ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
-
-                    <option>
-                      {
-                        search
-                          .flatMap((item) => [item].concat(item.fifth ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
-
-                    <option>
-                      {
-                        search
-                          .flatMap((item) => [item].concat(item.sixth ?? []))
-                          .filter((item) => item.purno)
-                          .map((item) => item.purno)[0]
-                      }
-                    </option>
-                  </select>
-                </div> */}
-                PENDING
-              </td>
+              <td>PENDING</td>
 
               <td colSpan={2}>{Math.floor(Difference_In_Days2)} days</td>
               <td>SOLD30</td>
               <td>SOLD90</td>
               <td>SOLD365</td>
               <td style={{ fontSize: '12px' }}>AVG_SOLD(1Y)</td>
-              <td>
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.sixth ?? []))
-                    .filter((item) => item.purno)
-                    .map((item) => item.purno)[0]
-                } */}
-                AVG_LEAD
-              </td>
-              <td>
-                MAX_LEAD
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fifth ?? []))
-                    .filter((item) => item.purno)
-                    .map((item) => item.purno)[0]
-                } */}
-              </td>
-              <td>
-                BO_lastRCV
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.fourth ?? []))
-                    .filter((item) => item.purno)
-                    .map((item) => item.purno)[0]
-                } */}
-              </td>
-              <td>
-                Suggested
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.third ?? []))
-                    .filter((item) => item.purno)
-                    .map((item) => item.purno)[0]
-                } */}
-              </td>
-              <td>
-                +{Difference_In_PostDayresult} days
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.second ?? []))
-                    .filter((item) => item.purno)
-                    .map((item) => item.purno)[0]
-                } */}
-              </td>
-              <td>
-                FoSuggested
-                {/* {
-                  search
-                    .flatMap((item) => [item].concat(item.first ?? []))
-                    .filter((item) => item.purno)
-                    .map((item) => item.purno)[0]
-                } */}
-              </td>
+              <td>AVG_LEAD</td>
+              <td>MAX_LEAD</td>
+              <td>BO_lastRCV</td>
+              <td>Suggested</td>
+              <td>+{Difference_In_PostDayresult} days</td>
+              <td>FoSuggested</td>
             </tr>
           </tbody>
 
           <MainTable
             loading={loading}
-            searchLength={search.length}
-            search={search}
+            searchLength={mainData.length}
+            mainData={mainData}
             onHandTotal={onHandTotal}
             reOrderTotal={reOrderTotal}
             pendingTotal={pendingTotal}
@@ -3015,6 +1328,7 @@ const SearchPage = () => {
             FosuggestedQty={FosuggestedQty}
             foSuggestedTotal={foSuggestedTotal}
             result2={result2}
+            eachItemClick={eachItemClick}
           />
         </table>
       </div>
@@ -3024,10 +1338,9 @@ const SearchPage = () => {
             eachItemGraph={eachItemGraph}
             setIsOpen={setIsOpen}
             isOpen={isOpen}
-            graphLine={graphLine}
             eachItemGraphMonth={eachItemGraphMonth}
             graphLoading2={graphLoading2}
-            search={search}
+            mainData={mainData}
           />
         </div>
       )}

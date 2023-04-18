@@ -20,7 +20,7 @@ const ColorTab = ({
   eachItemGraph,
   eachItemGraphMonth,
   graphLoading2,
-  search,
+  mainData,
 }) => {
   const [value3, setValue3] = useState('');
   const handleChangeitemByMonth = (e) => {
@@ -174,7 +174,7 @@ const ColorTab = ({
           ))}
         </select>
         TOTAL:{' '}
-        {search.length ? (
+        {mainData.length ? (
           value3.length ? (
             graphLoading2 === false ? (
               value3.length ? (

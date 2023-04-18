@@ -26,10 +26,10 @@ const Row1 = ({
   handleKeyPress,
   setfilteredDate,
   handleButton,
-  imageClicked,
-  value2,
+  mainImg,
+  graphDropdownSelectedYear,
   graphLoading,
-  graphLine,
+  graphAllYearData,
   monthLine,
   monthLinePrv,
   pieChart,
@@ -69,7 +69,6 @@ const Row1 = ({
       <td className="infoCol1" style={{ textAlign: 'left' }}>
         ITEM:
       </td>
-
       <td className="nameSection" colSpan="2">
         <input
           className=" border border-zinc-500 "
@@ -81,7 +80,6 @@ const Row1 = ({
           autoComplete="off"
           onKeyPress={handleKeyPress}
         />
-
         <>
           {filteredData.length !== 0 && (
             <span className="dataResult absolute">
@@ -116,7 +114,7 @@ const Row1 = ({
             // eslint-disable-next-line jsx-a11y/alt-text
             <img
               style={{ width: '250px', height: '320px' }}
-              src={imageClicked}
+              src={mainImg}
               className="mainImage  "
             />
           }
@@ -139,15 +137,15 @@ const Row1 = ({
             height: '100%',
           }}
         >
-          {value2.length ? (
+          {graphDropdownSelectedYear.length ? (
             graphLoading === false ? (
-              value2.length ? (
-                value2 === 'YEAR' ? (
+              graphDropdownSelectedYear.length ? (
+                graphDropdownSelectedYear === 'YEAR' ? (
                   <ResponsiveContainer width="100%" height="100%">
                     <ComposedChart
                       width={500}
                       height={300}
-                      data={graphLine}
+                      data={graphAllYearData}
                       margin={{
                         top: 5,
                         right: 30,
@@ -162,7 +160,7 @@ const Row1 = ({
                       <Legend />
                       <Bar
                         name="PO rec"
-                        data={graphLine}
+                        data={graphAllYearData}
                         barSize={4}
                         fill="#ffb366"
                         dataKey="qtyrec"
@@ -192,7 +190,6 @@ const Row1 = ({
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" allowDuplicatedCategory={false} />
                       <YAxis />
-
                       <Tooltip />
                       <Legend />
                       <Bar
@@ -202,9 +199,8 @@ const Row1 = ({
                         fill="#ffb366"
                         dataKey="qtyrec"
                       />
-
                       <Line
-                        name={Number(value2)}
+                        name={Number(graphDropdownSelectedYear)}
                         data={monthLine}
                         type="monotone"
                         dataKey="qtyshp"
@@ -213,7 +209,7 @@ const Row1 = ({
                       />
                       {monthLinePrv.some((entry) => entry.qtyshp) ? (
                         <Line
-                          name={Number(value2) - 1}
+                          name={Number(graphDropdownSelectedYear) - 1}
                           data={monthLinePrv}
                           type="monotone"
                           dataKey="qtyshp"
@@ -235,7 +231,7 @@ const Row1 = ({
               <ComposedChart
                 width={500}
                 height={300}
-                data={graphLine}
+                data={graphAllYearData}
                 margin={{
                   top: 5,
                   right: 30,
@@ -250,12 +246,11 @@ const Row1 = ({
                 <Legend />
                 <Bar
                   name="PO rec"
-                  data={graphLine}
+                  data={graphAllYearData}
                   barSize={4}
                   fill="#ffb366"
                   dataKey="qtyrec"
                 />
-
                 <Line
                   type="monotone"
                   dataKey="qtyshp"
@@ -268,7 +263,6 @@ const Row1 = ({
             <>Loading...</>
           )}
         </div>
-
         <div
           style={{
             position: 'absolute',

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-
 import { sum, sumBy } from 'lodash';
 
 const Table3Total = ({
-  search,
-  WDsearch2,
+  mainData,
+  watchDoginfo2,
   selectedDatePicker,
   suggestedQty,
   amounts,
@@ -29,22 +28,24 @@ const Table3Total = ({
   const round = (num) => (isNaN(num) ? 0 : Math.round(num));
   useEffect(() => {
     const calculateTotals = () => {
-      const totalColorsFilter = search.filter((item) => item.itemkey2);
+      const totalColorsFilter = mainData.filter((item) => item.itemkey2);
       const totalColors = totalColorsFilter.length;
 
-      const totalOnHandfilter = search.map((item) => item.onhand);
+      const totalOnHandfilter = mainData.map((item) => item.onhand);
       const totalOnHand = sum(totalOnHandfilter);
 
       //REORDER DATA
-      const totalreOrderfilter = search.map((item) =>
-        WDsearch2.find((item2) => item2.Color.trim() === item.itemkey2.trim())
+      const totalreOrderfilter = mainData.map((item) =>
+        watchDoginfo2.find(
+          (item2) => item2.Color.trim() === item.itemkey2.trim()
+        )
       );
       const totalreOrder = sum(
         totalreOrderfilter.map((item) => (item === undefined ? 0 : item.WMA))
       );
 
       const totalPending = sumBy(
-        search.map((item) => sumBy(item.pendingDataO, 'pending'))
+        mainData.map((item) => sumBy(item.pendingDataO, 'pending'))
       );
 
       const totalCalendarQty = sumBy(
@@ -55,30 +56,32 @@ const Table3Total = ({
       );
 
       const totalSold30 = sumBy(
-        search.map((item) => sumBy(item.sold30, 'qtyshp'))
+        mainData.map((item) => sumBy(item.sold30, 'qtyshp'))
       );
 
       const totalSold90 = sumBy(
-        search.map((item) => sumBy(item.sold90, 'qtyshp'))
+        mainData.map((item) => sumBy(item.sold90, 'qtyshp'))
       );
 
       const totalSold365 = sumBy(
-        search.map((item) => sumBy(item.sold365, 'qtyshp'))
+        mainData.map((item) => sumBy(item.sold365, 'qtyshp'))
       );
 
       const totalavg_lead_time =
-        sumBy(search.map((item) => sumBy(item.poLeadTimeO, 'avg_lead_time'))) /
-        search.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
+        sumBy(
+          mainData.map((item) => sumBy(item.poLeadTimeO, 'avg_lead_time'))
+        ) / mainData.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
 
       const totalmax_lead_time =
-        sumBy(search.map((item) => sumBy(item.poLeadTimeO, 'max_lead_time'))) /
-        search.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
+        sumBy(
+          mainData.map((item) => sumBy(item.poLeadTimeO, 'max_lead_time'))
+        ) / mainData.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
 
       const totalavg_sold365 = sumBy(
-        search.map((item) => sumBy(item.reorderPointO, 'avg_qtyshp'))
+        mainData.map((item) => sumBy(item.reorderPointO, 'avg_qtyshp'))
       );
       const totalBO_lastRCV = sumBy(
-        search.map((item) => sumBy(item.bofromLastRcvO, 'qtybo'))
+        mainData.map((item) => sumBy(item.bofromLastRcvO, 'qtybo'))
       );
 
       const totalSuggestedQty = sum(suggestedQty.map((value) => round(value)));
@@ -113,8 +116,8 @@ const Table3Total = ({
 
     calculateTotals();
   }, [
-    search,
-    WDsearch2,
+    mainData,
+    watchDoginfo2,
     selectedDatePicker,
     suggestedQty,
     amounts,
@@ -142,34 +145,3 @@ const Table3Total = ({
 
 export default Table3Total;
 
-//total PO qty
-// const totalItems7 = sumBy(
-//   search.map((item) => sumBy(item.sixth, 'qtyord'))
-// );
-// const totalItems8 = sumBy(
-//   search.map((item) => sumBy(item.fifth, 'qtyord'))
-// );
-// const totalItems9 = sumBy(
-//   search.map((item) => sumBy(item.fourth, 'qtyord'))
-// );
-// const totalItems10 = sumBy(
-//   search.map((item) => sumBy(item.third, 'qtyord'))
-// );
-// const totalItems11 = sumBy(
-//   search.map((item) => sumBy(item.second, 'qtyord'))
-// );
-// const totalItems12 = sumBy(
-//   search.map((item) => sumBy(item.first, 'qtyord'))
-// );
-
-//total POS_
-// const filteredItems3 = mergeByKey.map((item) => item.qtyord);
-// const totalItems3 = sum(filteredItems3);
-
-// const totalSold60 = sumBy(
-//   search.map((item) => sumBy(item.sold60, 'qtyshp'))
-// );
-
-// const totalItemsFromRCVD = sumBy(
-//   selectedData.map((item) => sumBy(item.new, 'qtyshp'))
-// );

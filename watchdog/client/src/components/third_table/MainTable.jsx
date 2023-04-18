@@ -4,7 +4,7 @@ import BlankPage from './BlankPage';
 const MainTable = ({
   loading,
   searchLength,
-  search,
+  mainData,
   onHandTotal,
   reOrderTotal,
   pendingTotal,
@@ -26,6 +26,7 @@ const MainTable = ({
   FosuggestedQty,
   foSuggestedTotal,
   result2,
+  eachItemClick
 }) => {
   const round = (num) => (isNaN(num) ? 0 : Math.round(num));
   if (loading) {
@@ -43,7 +44,7 @@ const MainTable = ({
       <tbody id="tt" className="table3">
         <tr>
           <td style={{ padding: '0' }}>
-            {search
+            {mainData
               .filter((item) => item.itemkey2)
               .map((item, idx) => (
                 <div
@@ -58,7 +59,7 @@ const MainTable = ({
             <div style={{ textAlign: 'left' }}>TOTAL</div>
           </td>
           <td style={{ padding: '0' }}>
-            {search
+            {mainData
               .filter(
                 (item) =>
                   typeof item.onhand === 'number' || item.onhand === null
@@ -79,30 +80,9 @@ const MainTable = ({
             )}
             <div>{reOrderTotal}</div>
           </td>
-          {/* {selectedItem.length > 0 ? (
-                  <td style={{ padding: '0' }}>
-                    {mergeByKey.map((item, idx) => (
-                      <div key={idx}>{item.qtyord}</div>
-                    ))}
-                    <div>{totalItems3}</div>
-                  </td>
-                ) : (
-                  <td style={{ padding: '0' }}>
-                    {search.map((item, idx) =>
-                      item.first.length ? (
-                        item.first.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtyord}</div>
-                        ))
-                      ) : (
-                        <div key={idx}></div>
-                      )
-                    )}
 
-                    <div>{totalItems12}</div>
-                  </td>
-                )} */}
           <td style={{ padding: '0' }}>
-            {search.map((item, idx) =>
+            {mainData.map((item, idx) =>
               item.pendingDataO.length ? (
                 item.pendingDataO.map((item2, idx2) => (
                   <div key={idx2}>{item2.pending}</div>
@@ -113,33 +93,7 @@ const MainTable = ({
             )}
             <div>{pendingTotal}</div>
           </td>
-          {/*sold amount regarding RCVD date //loading && render table cell */}
-          {/* <td style={{ padding: '0' }}>
-                  {test2.length
-                    ? loadingDatapick === false
-                      ? test2.map((item) => item.recdate)[0] == null
-                        ? search.map((item, idx) => (
-                            <div key={idx}>{item.purno}</div>
-                          ))
-                        : selectedData.map((item, idx) =>
-                            item.new.length ? (
-                              item.new.map((item, idx2) => (
-                                <div key={idx2}>{item.qtyshp}</div>
-                              ))
-                            ) : (
-                              <div key={idx}></div>
-                            )
-                          )
-                      : search.map((item, idx) => (
-                          <div key={idx}>Loading...</div>
-                        ))
-                    : loadingDatapick === false
-                    ? search.map((item, idx) => (
-                        <div key={idx}>{item.purno}</div>
-                      ))
-                    : search.map((item, idx) => <div key={idx}>Loading</div>)}
-                  <div>{totalItemsFromRCVD}</div>
-                </td> */}
+
           <td style={{ padding: '0' }}>
             {selectedDatePicker.length
               ? loadingDatePicker === false
@@ -152,10 +106,10 @@ const MainTable = ({
                       <div key={idx}>0</div>
                     )
                   )
-                : search.map((item, idx) => <div key={idx}>Loading...</div>)
+                : mainData.map((item, idx) => <div key={idx}>Loading...</div>)
               : loadingDatePicker === false
-              ? search.map((item, idx) => <div key={idx}>{item.purno}</div>)
-              : search.map((item, idx) => <div key={idx}>Loading</div>)}
+              ? mainData.map((item, idx) => <div key={idx}>{item.purno}</div>)
+              : mainData.map((item, idx) => <div key={idx}>Loading</div>)}
             <div>{calendarQtyTotal}</div>
           </td>
           <td style={{ padding: '0' }}>
@@ -170,15 +124,15 @@ const MainTable = ({
                       <div key={idx}>0</div>
                     )
                   )
-                : search.map((item, idx) => <div key={idx}>Loading...</div>)
+                : mainData.map((item, idx) => <div key={idx}>Loading...</div>)
               : loadingDatePicker === false
-              ? search.map((item, idx) => <div key={idx}>{item.purno}</div>)
-              : search.map((item, idx) => <div key={idx}>Loading</div>)}
+              ? mainData.map((item, idx) => <div key={idx}>{item.purno}</div>)
+              : mainData.map((item, idx) => <div key={idx}>Loading</div>)}
             <div>{calendarBOTotal}</div>
           </td>
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
-            {search.map((item, idx) =>
+            {mainData.map((item, idx) =>
               item.sold30.length ? (
                 item.sold30.map((item2, idx2) => (
                   <div key={idx2}>{item2.qtyshp}</div>
@@ -190,7 +144,7 @@ const MainTable = ({
             <div>{sold30Total}</div>
           </td>
           <td style={{ padding: '0' }}>
-            {search.map((item, idx) =>
+            {mainData.map((item, idx) =>
               item.sold90.length ? (
                 item.sold90.map((item2, idx2) => (
                   <div key={idx2}>{item2.qtyshp}</div>
@@ -202,7 +156,7 @@ const MainTable = ({
             <div>{sold90Total}</div>
           </td>
           <td style={{ padding: '0' }}>
-            {search.map((item, idx) =>
+            {mainData.map((item, idx) =>
               item.sold365.length ? (
                 item.sold365.map((item2, idx2) => (
                   <div key={idx2}>{item2.qtyshp}</div>
@@ -214,7 +168,7 @@ const MainTable = ({
             <div>{sold365Total}</div>
           </td>
           <td style={{ padding: '0' }}>
-            {search.map((item, idx) =>
+            {mainData.map((item, idx) =>
               item.reorderPointO.length ? (
                 item.reorderPointO.map((item2, idx2) => (
                   <div key={idx2}>{item2.avg_qtyshp.toFixed(2)}</div>
@@ -225,21 +179,9 @@ const MainTable = ({
             )}
             <div>{avg_sold365Total.toFixed(2)}</div>
           </td>
-          {/*column table with nested array */}
-          {/* <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.sixth.length ? (
-                      item.sixth.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyord}</div>
-                      ))
-                    ) : (
-                      <div key={idx}></div>
-                    )
-                  )}
-                  <div>{totalItems7}</div>
-                </td> */}
+
           <td style={{ padding: '0' }}>
-            {search.map((item, idx) =>
+            {mainData.map((item, idx) =>
               item.poLeadTimeO.length ? (
                 item.poLeadTimeO.map((item2, idx2) => (
                   <div key={idx2}>{item2.avg_lead_time} days</div>
@@ -250,21 +192,9 @@ const MainTable = ({
             )}
             <div>{round(avg_lead_timeTotal)} days</div>
           </td>
-          {/*column table with nested array */}
-          {/* <td style={{ padding: '0' }}>
-                  {search.map((item, idx) =>
-                    item.fifth.length ? (
-                      item.fifth.map((item2, idx2) => (
-                        <div key={idx2}>{item2.qtyord}</div>
-                      ))
-                    ) : (
-                      <div key={idx}></div>
-                    )
-                  )}
-                  <div>{totalItems8}</div>
-                </td> */}
+
           <td style={{ padding: '0' }}>
-            {search.map((item, idx) =>
+            {mainData.map((item, idx) =>
               item.poLeadTimeO.length ? (
                 item.poLeadTimeO.map((item2, idx2) => (
                   <div key={idx2}>{item2.max_lead_time} days</div>
@@ -277,17 +207,7 @@ const MainTable = ({
           </td>
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
-            {/* {search.map((item, idx) =>
-                      item.fourth.length ? (
-                        item.fourth.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtyord}</div>
-                        ))
-                      ) : (
-                        <div key={idx}></div>
-                      )
-                    )}
-                    <div>{totalItems9}</div> */}
-            {search.map((item, idx) =>
+            {mainData.map((item, idx) =>
               item.bofromLastRcvO.length ? (
                 item.bofromLastRcvO.map((item2, idx2) => (
                   <div key={idx2}>{item2.qtybo}</div>
@@ -300,16 +220,6 @@ const MainTable = ({
           </td>
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
-            {/* {search.map((item, idx) =>
-                      item.third.length ? (
-                        item.third.map((item2, idx2) => (
-                          <div key={idx2}>{item2.qtyord}</div>
-                        ))
-                      ) : (
-                        <div key={idx}></div>
-                      )
-                    )}
-                    <div>{totalItems10}</div> */}
             {suggestedQty.map((value, index) => (
               <div key={`qty-${index}`}>{round(value)}</div>
             ))}
@@ -327,23 +237,6 @@ const MainTable = ({
           </td>
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
-            {/* {search.map((item, idx) =>
-                      item.first.length ? (
-                        item.first.map((item2, idx2) => (
-                          <div key={idx2} style={{ borderRightWidth: '1px' }}>
-                            {item2.qtyord}
-                          </div>
-                        ))
-                      ) : (
-                        <div
-                          key={idx}
-                          style={{ borderRightWidth: '1px' }}
-                        ></div>
-                      )
-                    )}
-                    <div style={{ borderRightWidth: '1px' }}>
-                      {totalItems12}
-                    </div> */}
             {FosuggestedQty.map((num, index) => (
               <div
                 key={`qty-${index}`}

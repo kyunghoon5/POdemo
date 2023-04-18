@@ -1,6 +1,7 @@
 import React from 'react';
   
 const BlankPage = () => {
+  
   return (
     <>
       <tbody className="firstBody">
@@ -669,7 +670,7 @@ const BlankPage = () => {
           <td></td>
           <td></td>
           <td></td>
-        </tr>       
+        </tr>
       </tbody>
     </>
   );
