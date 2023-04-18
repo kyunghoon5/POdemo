@@ -1,6 +1,6 @@
 SELECT
 	
-  A.itemkey2, 
+ 
   A.descrip  
   
   
@@ -9,7 +9,7 @@ FROM
     SELECT	
 
      
-      A.itemkey2, 
+     
       A.descrip
 
     FROM 
@@ -23,9 +23,7 @@ FROM
       --and A.class not in ('RB', 'AA', 'Z')
     group by 
        
-      A.itemkey2, 
+     
       A.descrip
 	  
   ) A  
-ORDER BY 
-  itemkey2 asc
