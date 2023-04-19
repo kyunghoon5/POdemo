@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
-import '../tableAll.css';
+import '../../styles/common.css';
+
 
 import {
   Line,
