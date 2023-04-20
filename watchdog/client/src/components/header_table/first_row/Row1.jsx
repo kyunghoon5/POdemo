@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../../styles/common.css';
+import '../../../styles/common.css';
 
 
 import {
@@ -21,13 +21,9 @@ const BASE_URL = import.meta.env.VITE_DB_URL;
 const Row1 = ({
   record,
   setRecord,
-  suggest,
-  setSuggest,
   filteredData,
   handleKeyPress,
   setfilteredDate,
-  handleButton,
-  mainImg,
   graphDropdownSelectedYear,
   graphLoading,
   graphAllYearData,
@@ -36,7 +32,12 @@ const Row1 = ({
   pieChart,
   COLORS,
   maxVal,
+  handleButton,
+  mainImg,
 }) => {
+
+
+  const [suggest, setSuggest] = useState([]);
   const itemDataAPI = async () => {
     return await axios
       .get(`${BASE_URL}searchAuto`)

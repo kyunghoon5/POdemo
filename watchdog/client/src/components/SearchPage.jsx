@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import axios from 'axios';
+
 import '../styles/common.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -11,24 +11,23 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import { zipWith, sumBy } from 'lodash';
 import Table3Total from './math/Table3Total';
-import Row1 from './first_table/Row1';
+import Row1 from './header_table/first_row/Row1';
 import MainTable from './third_table/MainTable';
-import Row2 from './first_table/Row2';
-import Row3 from './first_table/Row3';
-import Row4 from './first_table/Row4';
-import Row5 from './first_table/Row5';
-import Row6 from './first_table/Row6';
-import Row7 from './first_table/Row7';
-import Row8 from './first_table/Row8';
-import Row9 from './first_table/Row9';
-import useAPIData from '../apis/API';
-
-const BASE_URL = import.meta.env.VITE_DB_URL;
+import Row2 from './header_table/Row2';
+import Row3 from './header_table/Row3';
+import Row4 from './header_table/Row4';
+import Row5 from './header_table/Row5';
+import Row6 from './header_table/Row6';
+import Row7 from './header_table/Row7';
+import Row8 from './header_table/Row8';
+import Row9 from './header_table/Row9';
+import useAPIData from '../api/API';
 
 const SearchPage = () => {
   const [record, setRecord] = useState('');
   const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
+  const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
   const {
     mainData,
     loading,
@@ -62,20 +61,19 @@ const SearchPage = () => {
     graphByItemF,
     graphByItemMonth,
     graphByItemMonthF,
-    handleDownload17,
     pieChart,
     pieChartF,
-  } = useAPIData(record, startDatePicker, endDatePicker);
+    selforecastDatePicker,
+    handleDownload17,
+  } = useAPIData(record, startDatePicker, endDatePicker, forecastDatePicker);
 
   const round = (num) => (isNaN(num) ? 0 : Math.round(num));
-
-  const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
 
   //searchSuggest
-  const [suggest, setSuggest] = useState([]);
+
   const [filteredData, setfilteredDate] = useState([]);
 
   //DATE buttonSearch console
@@ -344,26 +342,6 @@ const SearchPage = () => {
 
   const [suggestedQtyTotal, setsuggestedQtyTotal] = useState(0);
 
-  //forecast
-  const [selforecastDatePicker, setselforecastDatePicker] = useState([]);
-
-  useEffect(() => {
-    const fetchData4 = async () => {
-      if (mainData.length === 0) {
-        return;
-      }
-
-      const searchedRecord = record.toLowerCase();
-      const endDate = forecastDatePicker.toISOString().split('T')[0];
-
-      const response = await axios.get(
-        `${BASE_URL}poForecast?descrip=${searchedRecord}&endDate=${endDate}`
-      );
-      setselforecastDatePicker(response.data);
-    };
-    fetchData4();
-  }, [forecastDatePicker, mainData]);
-
   const sumReqForcast = selforecastDatePicker.map((item) =>
     sumBy(item.poForecast, 'ORDEREDa')
   );
@@ -487,8 +465,6 @@ const SearchPage = () => {
             <Row1
               record={record}
               setRecord={setRecord}
-              suggest={suggest}
-              setSuggest={setSuggest}
               filteredData={filteredData}
               handleKeyPress={handleKeyPress}
               mainImg={mainImg}
@@ -1140,7 +1116,7 @@ const SearchPage = () => {
               <td>BO_lastRCV</td>
               <td>Suggested</td>
               <td>+{Difference_In_PostDayresult} days</td>
-              <td>FoSuggested</td>
+              <td>Needed</td>
             </tr>
           </tbody>
 

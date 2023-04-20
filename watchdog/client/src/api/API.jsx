@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
+
 const BASE_URL = import.meta.env.VITE_DB_URL;
 
-const API = (record, startDatePicker, endDatePicker) => {
+const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
   const [mainData, setMainData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [mainImg, setMainImg] = useState();
@@ -170,6 +171,47 @@ const API = (record, startDatePicker, endDatePicker) => {
       });
   };
 
+  
+
+  const pieChartF = async () => {
+    const searchedRecord = record.toLowerCase();
+    await axios
+      .get(`${BASE_URL}pieChart?descrip=${searchedRecord}`)
+      .then((response) => {
+        setpieChart(response.data);
+      });
+  };
+
+  //forecast
+  const [selforecastDatePicker, setselforecastDatePicker] = useState([]);
+  useEffect(() => {
+    const fetchData4 = async () => {
+      if (mainData.length === 0) {
+        return;
+      }
+
+      const searchedRecord = record.toLowerCase();
+      const endDate = forecastDatePicker.toISOString().split('T')[0];
+
+      const response = await axios.get(
+        `${BASE_URL}poForecast?descrip=${searchedRecord}&endDate=${endDate}`
+      );
+      setselforecastDatePicker(response.data);
+    };
+    fetchData4();
+  }, [forecastDatePicker, mainData]);
+
+  const [suggest, setSuggest] = useState([]);
+  const itemDataAPI = async () => {
+    return await axios
+      .get(`${BASE_URL}searchAuto`)
+      .then((response) => setSuggest(response.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    itemDataAPI();
+  }, []);
+
   const handleDownload17 = () => {
     axios({
       url: `${BASE_URL}downloadItemReorderPoint`,
@@ -185,14 +227,8 @@ const API = (record, startDatePicker, endDatePicker) => {
     });
   };
 
-  const pieChartF = async () => {
-    const searchedRecord = record.toLowerCase();
-    await axios
-      .get(`${BASE_URL}pieChart?descrip=${searchedRecord}`)
-      .then((response) => {
-        setpieChart(response.data);
-      });
-  };
+
+ 
 
   return {
     mainData,
@@ -231,6 +267,10 @@ const API = (record, startDatePicker, endDatePicker) => {
     handleDownload17,
     pieChart,
     pieChartF,
+    selforecastDatePicker,
+    suggest,
+    setSuggest,
+   
   };
 };
 
