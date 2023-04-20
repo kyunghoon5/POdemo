@@ -104,7 +104,7 @@ const path = require('path');
 // });
 
 app.get('/downloadItemReorderPoint', (req, res) => {
-  const file = path.join(__dirname, '../../Data/itemReorderList.xlsx');
+  const file = path.join(__dirname, '../../../Data/itemReorderList.xlsx');
   res.download(file);
 });
 
