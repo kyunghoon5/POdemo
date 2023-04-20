@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-
 const BASE_URL = import.meta.env.VITE_DB_URL;
 
 const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
@@ -171,8 +170,6 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
       });
   };
 
-  
-
   const pieChartF = async () => {
     const searchedRecord = record.toLowerCase();
     await axios
@@ -227,9 +224,6 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
     });
   };
 
-
- 
-
   return {
     mainData,
     loading,
@@ -270,7 +264,6 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
     selforecastDatePicker,
     suggest,
     setSuggest,
-   
   };
 };
 

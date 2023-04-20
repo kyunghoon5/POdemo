@@ -1,48 +1,46 @@
 import React from 'react';
-import useAPIData from '../../../api/API'
 
-const SearchButton = () => {
-
-  const {
-    searchMainData,
-    imageAPI,
-    itemRecords,
-    soldPercentageAPI,
-    graphAllYearDataAPI,
-    chartEachYearDataAPI,
-    graphByItemF,
-    graphByItemMonthF,
-    watchDogAPI,
-    newitemRecords,
-    pieChartF,
-  } = useAPIData();
-
-
-const handleButton = () => {
-  searchMainData();
-  imageAPI();
-  itemRecords();
-  soldPercentageAPI();
-  graphAllYearDataAPI();
-  chartEachYearDataAPI();
-  graphByItemF();
-  graphByItemMonthF();
-  watchDogAPI();
-  setfilteredDate([]);
-  newitemRecords();
-  pieChartF();
-  reset();
-};
+const SearchButton = ({
+  searchMainData,
+  imageAPI,
+  itemRecords,
+  soldPercentageAPI,
+  graphAllYearDataAPI,
+  chartEachYearDataAPI,
+  graphByItemF,
+  graphByItemMonthF,
+  watchDogAPI,
+  newitemRecords,
+  pieChartF,
+  reset,
+}) => {
+  const handleButton = () => {
+    setfilteredDate([]);
+    searchMainData();
+    imageAPI();
+    itemRecords();
+    soldPercentageAPI();
+    graphAllYearDataAPI();
+    chartEachYearDataAPI();
+    graphByItemF();
+    graphByItemMonthF();
+    watchDogAPI();
+    newitemRecords();
+    pieChartF();
+    reset();
+  };
 
   return (
-    <button
-      onClick={() => {
-        handleButton();
-      }}
-      className="btn1name"
-    >
-      SUBMIT
-    </button>
+    <td className="btn1">
+      <button
+        onClick={() => {
+          handleButton();
+        }}
+        className="btn1name"
+      >
+        SUBMIT
+      </button>
+    </td>
   );
 };
 

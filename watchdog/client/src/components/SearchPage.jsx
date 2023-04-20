@@ -23,6 +23,7 @@ import Row8 from './header_table/Row8';
 import Row9 from './header_table/Row9';
 import useAPIData from '../api/API';
 
+
 const SearchPage = () => {
   const [record, setRecord] = useState('');
   const [startDatePicker, setStartDatePicker] = useState(new Date());
@@ -65,6 +66,7 @@ const SearchPage = () => {
     pieChartF,
     selforecastDatePicker,
     handleDownload17,
+    suggest
   } = useAPIData(record, startDatePicker, endDatePicker, forecastDatePicker);
 
   const round = (num) => (isNaN(num) ? 0 : Math.round(num));
@@ -477,7 +479,22 @@ const SearchPage = () => {
               COLORS={COLORS}
               maxVal={maxVal}
               setfilteredDate={setfilteredDate}
-              handleButton={handleButton}
+              // handleButton={handleButton}
+              searchMainData={searchMainData}
+              imageAPI={imageAPI}
+              itemRecords={itemRecords}
+              soldPercentageAPI={soldPercentageAPI}
+              graphAllYearDataAPI={graphAllYearDataAPI}
+              chartEachYearDataAPI={chartEachYearDataAPI}
+              graphByItemF={graphByItemF}
+              graphByItemMonthF={graphByItemMonthF}
+              watchDogAPI={watchDogAPI}
+            
+              newitemRecords={newitemRecords}
+              pieChartF={pieChartF}
+              reset={reset}
+              suggest={suggest}
+              
             />
             <Row2 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
             <Row3 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
