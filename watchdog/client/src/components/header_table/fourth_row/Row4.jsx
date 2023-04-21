@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-const Row4 = ({InfoItemOb, mainData}) => {
+const Row4 = ({ InfoItemOb, mainData }) => {
   return (
     <tr className="row4">
       <InfoItemOb className="infoCol1" name="TYPE:" />
@@ -9,6 +9,6 @@ const Row4 = ({InfoItemOb, mainData}) => {
       </td>
     </tr>
   );
-}
+};
 
-export default Row4
+export default Row4;

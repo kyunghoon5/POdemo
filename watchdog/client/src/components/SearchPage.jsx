@@ -1,4 +1,4 @@
-import React, { useState,  Fragment, useEffect } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 
 import '../styles/common.css';
 import DatePicker from 'react-datepicker';
@@ -11,22 +11,19 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import { zipWith, sumBy } from 'lodash';
 import Table3Total from './math/Table3Total';
-import Row1 from './header_table/first_row/Row1';
-import MainTable from './third_table/MainTable';
-import Row2 from './header_table/Row2';
-import Row3 from './header_table/Row3';
-import Row4 from './header_table/Row4';
-import Row5 from './header_table/Row5';
-import Row6 from './header_table/Row6';
-import Row7 from './header_table/Row7';
-import Row8 from './header_table/Row8';
-import Row9 from './header_table/Row9';
+import Row1 from './header_table/first_row';
+import MainTable from './body_table/MainTable';
+import Row2 from './header_table/second_row/Row2';
+import Row3 from './header_table/third_row/Row3';
+import Row4 from './header_table/fourth_row/Row4';
+import Row5 from './header_table/fifth_row/Row5';
+import Row6 from './header_table/sixth_row/Row6';
+import Row7 from './header_table/seventh_row/Row7';
+import Row8 from './header_table/eighth_row/Row8';
+import Row9 from './header_table/nineth_row/Row9';
 import useAPIData from '../api/API';
 
-
 const SearchPage = () => {
-  const [record, setRecord] = useState('');
-  
   const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
   const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
@@ -67,8 +64,11 @@ const SearchPage = () => {
     pieChartF,
     selforecastDatePicker,
     handleDownload17,
-    suggest
-  } = useAPIData(record, startDatePicker, endDatePicker, forecastDatePicker);
+    suggest,
+    setMainImg,
+    record,
+    setRecord,
+  } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
 
   const round = (num) => (isNaN(num) ? 0 : Math.round(num));
 
@@ -78,13 +78,6 @@ const SearchPage = () => {
   //searchSuggest
 
   const [filteredData, setfilteredData] = useState([]);
-
-
-
-
-
-
-
 
   //DATE buttonSearch console
   const getDate = (day) => {
@@ -103,9 +96,6 @@ const SearchPage = () => {
     setSelectedSold(soldPercentageDropdownValue);
   };
 
-
-
-
   //dropdownlist list reset
   const reset = () => {
     setSelectedSold([]);
@@ -115,27 +105,7 @@ const SearchPage = () => {
     setnewitemRank([]);
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleButton();
-    }
-  };
-
-  const handleButton = () => {
-    searchMainData();
-    imageAPI();
-    itemRecords();
-    soldPercentageAPI();
-    graphAllYearDataAPI();
-    chartEachYearDataAPI();
-    graphByItemF();
-    graphByItemMonthF();
-    watchDogAPI();
-    setfilteredData([]);
-    newitemRecords();
-    pieChartF();
-    reset();
-  };
+  
 
   const lastyearSoldQty = graphAllYearData.map((item) => item.qtyshp).at(-1);
   const lastyearSoldQty2 = graphAllYearData.map((item) => item.qtyshp).at(-2);
@@ -476,10 +446,11 @@ const SearchPage = () => {
         <table id="tb1" className="table1">
           <tbody>
             <Row1
+              setMainImg={setMainImg}
               record={record}
               setRecord={setRecord}
               filteredData={filteredData}
-              handleKeyPress={handleKeyPress}
+             
               mainImg={mainImg}
               graphDropdownSelectedYear={graphDropdownSelectedYear}
               graphLoading={graphLoading}

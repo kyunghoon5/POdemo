@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 
 const BASE_URL = import.meta.env.VITE_DB_URL;
 
-const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
+const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
+  const [record, setRecord] = useState('');
   const [mainData, setMainData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [mainImg, setMainImg] = useState();
@@ -19,7 +20,7 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
   const [newitemLoading, setnewitemLoading] = useState(false);
   const [pieChart, setpieChart] = useState([]);
 
-  const searchMainData = () => {
+  const searchMainData = (record) => {
     const searchedRecord = record.toLowerCase();
     setLoading(true);
     axios
@@ -35,12 +36,14 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
   };
 
   //image
-  const imageAPI = () => {
+  const imageAPI = (record) => {
     setMainImg(`http://img.vanessahair.com/sales/${record}.jpg`);
   };
 
+  
+
   //select & option dropdown soldPercentage
-  const soldPercentageAPI = () => {
+  const soldPercentageAPI = (record) => {
     const searchedRecord = record.toLowerCase();
     setloadingsoldP(true);
     axios
@@ -53,7 +56,7 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
   };
 
   //watchdogAPI
-  const watchDogAPI = async () => {
+  const watchDogAPI = async (record) => {
     const searchedRecord = record.toLowerCase();
     const promises = [
       await axios.get(
@@ -92,7 +95,7 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
   }, [startDatePicker, endDatePicker, mainData]);
 
   //itemrank
-  const itemRecords = async () => {
+  const itemRecords = async (record) => {
     const searchedRecord = record.toLowerCase();
     setitemLoading(true);
     await axios
@@ -104,7 +107,7 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
       });
   };
 
-  const newitemRecords = async () => {
+  const newitemRecords = async (record) => {
     const searchedRecord = record.toLowerCase();
     setnewitemLoading(true);
     await axios
@@ -117,7 +120,7 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
 
   const [graphLoading, setGraphLoading] = useState(false);
   const [graphAllYearData, setGraphAllYearData] = useState([]);
-  const graphAllYearDataAPI = async () => {
+  const graphAllYearDataAPI = async (record) => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading(true);
     await axios
@@ -130,7 +133,7 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
   };
 
   const [chartbyEachYearData, setChartbyEachYearData] = useState([]);
-  const chartEachYearDataAPI = async () => {
+  const chartEachYearDataAPI = async (record) => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading(true);
     await axios
@@ -145,7 +148,7 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
   //item by color graph
   const [graphLoading2, setGraphLoading2] = useState(false);
   const [graphByItem, setGraphByItem] = useState([]);
-  const graphByItemF = async () => {
+  const graphByItemF = async (record) => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading2(true);
     await axios
@@ -158,7 +161,7 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
   };
 
   const [graphByItemMonth, setGraphByItemMonth] = useState([]);
-  const graphByItemMonthF = async () => {
+  const graphByItemMonthF = async (record) => {
     const searchedRecord = record.toLowerCase();
     setGraphLoading2(true);
     await axios
@@ -170,7 +173,7 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
       });
   };
 
-  const pieChartF = async () => {
+  const pieChartF = async (record) => {
     const searchedRecord = record.toLowerCase();
     await axios
       .get(`${BASE_URL}pieChart?descrip=${searchedRecord}`)
@@ -224,9 +227,6 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
     });
   };
 
- 
-
-
   return {
     mainData,
     loading,
@@ -267,6 +267,8 @@ const API = (record, startDatePicker, endDatePicker, forecastDatePicker) => {
     selforecastDatePicker,
     suggest,
     setSuggest,
+    record,
+    setRecord,
   };
 };
 

@@ -54,7 +54,6 @@ const Graph = ({
                     fill="#ffb366"
                     dataKey="qtyrec"
                   />
-
                   <Line
                     type="monotone"
                     dataKey="qtyshp"

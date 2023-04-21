@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { sum } from 'lodash';
 const Row7 = ({
   InfoItemOb,
@@ -8,25 +8,23 @@ const Row7 = ({
   graphAllYearData,
   mainData,
   graphLoading,
-  
   monthLine,
   monthlyData,
-  
 }) => {
   const graphDropdownHandler = (e) => {
     const graphDropdownValue = e.target.value;
     setGraphDropdownSelectedYear(graphDropdownValue); // update the value of graphDropdownSelectedYear
   };
 
-   const graphYearlyTotal = sum(graphAllYearData.map((item) => item.qtyshp));
-   const graphMonthlyTotal = sum(monthLine.map((item) => item.qtyshp));
+  const graphYearlyTotal = sum(graphAllYearData.map((item) => item.qtyshp));
+  const graphMonthlyTotal = sum(monthLine.map((item) => item.qtyshp));
 
-    const lastyear = graphAllYearData.map((item) => item.year).at(-1);
-    const lastyear2 = graphAllYearData.map((item) => item.year).at(-2);
-    const lastyear3 = graphAllYearData.map((item) => item.year).at(-3);
-    const lastyear4 = graphAllYearData.map((item) => item.year).at(-4);
-    const lastyear5 = graphAllYearData.map((item) => item.year).at(-5);
-    const lastyear6 = graphAllYearData.map((item) => item.year).at(-6);
+  const lastyear = graphAllYearData.map((item) => item.year).at(-1);
+  const lastyear2 = graphAllYearData.map((item) => item.year).at(-2);
+  const lastyear3 = graphAllYearData.map((item) => item.year).at(-3);
+  const lastyear4 = graphAllYearData.map((item) => item.year).at(-4);
+  const lastyear5 = graphAllYearData.map((item) => item.year).at(-5);
+  const lastyear6 = graphAllYearData.map((item) => item.year).at(-6);
   return (
     <tr className="row7">
       <InfoItemOb className="infoCol1" name="FIBER:" />
@@ -50,7 +48,6 @@ const Row7 = ({
           }}
         ></span>
       </td>
-
       <td>
         GRAPH
         <select
@@ -66,7 +63,6 @@ const Row7 = ({
           ))}
         </select>
       </td>
-
       {mainData.length ? (
         graphDropdownSelectedYear.length ? (
           graphLoading === false ? (
@@ -90,7 +86,6 @@ const Row7 = ({
       ) : (
         <td></td>
       )}
-
       <td style={{ background: '#f0e68c' }}>
         {mainData.length ? (
           graphDropdownSelectedYear.length ? (
@@ -112,7 +107,6 @@ const Row7 = ({
           <>YEAR</>
         )}
       </td>
-
       <td>
         {mainData.length ? (
           graphDropdownSelectedYear.length ? (
@@ -147,7 +141,6 @@ const Row7 = ({
           <></>
         )}
       </td>
-
       <td>
         {mainData.length ? (
           graphDropdownSelectedYear.length ? (
@@ -322,4 +315,4 @@ const Row7 = ({
   );
 };
 
-export default Row7
+export default Row7;

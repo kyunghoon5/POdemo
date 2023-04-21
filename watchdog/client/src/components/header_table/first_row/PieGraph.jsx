@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Tooltip,
   Legend,
@@ -8,15 +8,13 @@ import {
   Cell,
 } from 'recharts';
 
-const PieGraph = ({pieChart, maxVal,COLORS }) => {
+const PieGraph = ({ pieChart, maxVal, COLORS }) => {
   return (
     <div
       style={{
         position: 'absolute',
-
         width: '30%',
         height: '100%',
-
         right: '1px',
       }}
     >

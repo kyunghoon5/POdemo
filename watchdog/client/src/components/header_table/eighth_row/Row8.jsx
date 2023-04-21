@@ -9,23 +9,20 @@ const Row8 = ({
   loadingsoldP,
   graphDropdownSelectedYear,
   graphLoading,
-  graphAllYearData, 
+  graphAllYearData,
   monthlyData,
 }) => {
-
   const lastyearSoldQty = graphAllYearData.map((item) => item.qtyshp).at(-1);
   const lastyearSoldQty2 = graphAllYearData.map((item) => item.qtyshp).at(-2);
   const lastyearSoldQty3 = graphAllYearData.map((item) => item.qtyshp).at(-3);
   const lastyearSoldQty4 = graphAllYearData.map((item) => item.qtyshp).at(-4);
   const lastyearSoldQty5 = graphAllYearData.map((item) => item.qtyshp).at(-5);
   const lastyearSoldQty6 = graphAllYearData.map((item) => item.qtyshp).at(-6);
- 
+
   return (
     <tr className="row8">
       <InfoItemOb className="infoCol1" name="DGN DTE:" />
-
       <td colSpan="3" className="dgnDte"></td>
-
       <td style={{ textAlign: 'center' }}>
         SOLD
         <select
@@ -140,9 +137,7 @@ const Row8 = ({
           <td></td>
         )}
       </>
-
       <td style={{ background: '#f0e68c' }}>SOLD_QTY</td>
-
       <td>
         {mainData.length ? (
           graphDropdownSelectedYear.length ? (

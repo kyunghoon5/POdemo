@@ -8,7 +8,6 @@ const Row1 = ({
   record,
   setRecord,
   filteredData,
-  handleKeyPress,
   setfilteredData,
   graphDropdownSelectedYear,
   graphLoading,
@@ -18,9 +17,7 @@ const Row1 = ({
   pieChart,
   COLORS,
   maxVal,
-  mainImg,
   searchMainData,
-  imageAPI,
   itemRecords,
   soldPercentageAPI,
   graphAllYearDataAPI,
@@ -32,13 +29,28 @@ const Row1 = ({
   pieChartF,
   reset,
   suggest,
+  imageAPI,
+  mainImg,
 }) => {
-  const onSearch = (record1) => {
-    setRecord(record1); // set the input value to the clicked suggestion
-    setfilteredData([]);
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      setfilteredData([]);
+      searchMainData(record);
+      imageAPI(record);
+      itemRecords(record);
+      soldPercentageAPI(record);
+      graphAllYearDataAPI(record);
+      chartEachYearDataAPI(record);
+      graphByItemF(record);
+      graphByItemMonthF(record);
+      watchDogAPI(record);
+      newitemRecords(record);
+      pieChartF(record);
+      reset();
+    }
   };
 
-  const handleitemDataFilter = (e) => {
+  const handleInput = (e) => {
     const searchWord = e.target.value;
     setRecord(searchWord);
     const newFilter = suggest.filter((value) => {
@@ -51,6 +63,7 @@ const Row1 = ({
       setfilteredData(newFilter);
     }
   };
+
   return (
     <tr className="row1">
       <td className="infoCol1" style={{ textAlign: 'left' }}>
@@ -63,7 +76,7 @@ const Row1 = ({
           placeholder="Search item name here"
           type="text"
           value={record}
-          onChange={handleitemDataFilter}
+          onChange={handleInput}
           autoComplete="off"
           onKeyPress={handleKeyPress}
         />
@@ -75,7 +88,20 @@ const Row1 = ({
                   key={idx}
                   className="dropdown-row"
                   onClick={() => {
-                    onSearch(item.descrip);
+                    setRecord(item.descrip);
+                    setfilteredData([]);
+                    imageAPI(item.descrip);
+                    searchMainData(item.descrip);
+                    itemRecords(item.descrip);
+                    soldPercentageAPI(item.descrip);
+                    graphAllYearDataAPI(item.descrip);
+                    chartEachYearDataAPI(item.descrip);
+                    graphByItemF(item.descrip);
+                    graphByItemMonthF(item.descrip);
+                    watchDogAPI(item.descrip);
+                    newitemRecords(item.descrip);
+                    pieChartF(item.descrip);
+                    reset();
                   }}
                 >
                   {item.descrip}
@@ -85,8 +111,8 @@ const Row1 = ({
           )}
         </>
       </td>
-
       <SearchButton
+        record={record}
         searchMainData={searchMainData}
         imageAPI={imageAPI}
         itemRecords={itemRecords}

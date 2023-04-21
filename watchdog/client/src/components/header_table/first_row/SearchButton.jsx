@@ -14,20 +14,21 @@ const SearchButton = ({
   pieChartF,
   reset,
   setfilteredData,
+  record,
 }) => {
   const handleButton = () => {
     setfilteredData([]);
-    searchMainData();
-    imageAPI();
-    itemRecords();
-    soldPercentageAPI();
-    graphAllYearDataAPI();
-    chartEachYearDataAPI();
-    graphByItemF();
-    graphByItemMonthF();
-    watchDogAPI();
-    newitemRecords();
-    pieChartF();
+    searchMainData(record);
+    imageAPI(record);
+    itemRecords(record);
+    soldPercentageAPI(record);
+    graphAllYearDataAPI(record);
+    chartEachYearDataAPI(record);
+    graphByItemF(record);
+    graphByItemMonthF(record);
+    watchDogAPI(record);
+    newitemRecords(record);
+    pieChartF(record);
     reset();
   };
 
