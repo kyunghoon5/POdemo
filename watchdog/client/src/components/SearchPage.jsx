@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState,  Fragment, useEffect } from 'react';
 
 import '../styles/common.css';
 import DatePicker from 'react-datepicker';
@@ -26,6 +26,7 @@ import useAPIData from '../api/API';
 
 const SearchPage = () => {
   const [record, setRecord] = useState('');
+  
   const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
   const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
@@ -76,7 +77,14 @@ const SearchPage = () => {
 
   //searchSuggest
 
-  const [filteredData, setfilteredDate] = useState([]);
+  const [filteredData, setfilteredData] = useState([]);
+
+
+
+
+
+
+
 
   //DATE buttonSearch console
   const getDate = (day) => {
@@ -94,6 +102,9 @@ const SearchPage = () => {
     const soldPercentageDropdownValue = e.target.value;
     setSelectedSold(soldPercentageDropdownValue);
   };
+
+
+
 
   //dropdownlist list reset
   const reset = () => {
@@ -120,7 +131,7 @@ const SearchPage = () => {
     graphByItemF();
     graphByItemMonthF();
     watchDogAPI();
-    setfilteredDate([]);
+    setfilteredData([]);
     newitemRecords();
     pieChartF();
     reset();
@@ -478,8 +489,7 @@ const SearchPage = () => {
               pieChart={pieChart}
               COLORS={COLORS}
               maxVal={maxVal}
-              setfilteredDate={setfilteredDate}
-              // handleButton={handleButton}
+              setfilteredData={setfilteredData}
               searchMainData={searchMainData}
               imageAPI={imageAPI}
               itemRecords={itemRecords}
@@ -489,12 +499,10 @@ const SearchPage = () => {
               graphByItemF={graphByItemF}
               graphByItemMonthF={graphByItemMonthF}
               watchDogAPI={watchDogAPI}
-            
               newitemRecords={newitemRecords}
               pieChartF={pieChartF}
               reset={reset}
               suggest={suggest}
-              
             />
             <Row2 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
             <Row3 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />

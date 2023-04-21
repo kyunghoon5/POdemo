@@ -13,9 +13,10 @@ const SearchButton = ({
   newitemRecords,
   pieChartF,
   reset,
+  setfilteredData,
 }) => {
   const handleButton = () => {
-    setfilteredDate([]);
+    setfilteredData([]);
     searchMainData();
     imageAPI();
     itemRecords();

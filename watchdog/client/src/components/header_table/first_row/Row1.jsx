@@ -1,17 +1,15 @@
-
 import '../../../styles/common.css';
 import SearchButton from './SearchButton';
 import MainImg from './MainImg';
 import Graph from './Graph';
 import PieGraph from './PieGraph';
 
-
 const Row1 = ({
   record,
   setRecord,
   filteredData,
   handleKeyPress,
-  setfilteredDate,
+  setfilteredData,
   graphDropdownSelectedYear,
   graphLoading,
   graphAllYearData,
@@ -34,12 +32,10 @@ const Row1 = ({
   pieChartF,
   reset,
   suggest,
- }) => {
-
-
+}) => {
   const onSearch = (record1) => {
     setRecord(record1); // set the input value to the clicked suggestion
-    setfilteredDate([]);
+    setfilteredData([]);
   };
 
   const handleitemDataFilter = (e) => {
@@ -50,9 +46,9 @@ const Row1 = ({
     });
 
     if (searchWord === '') {
-      setfilteredDate([]);
+      setfilteredData([]);
     } else {
-      setfilteredDate(newFilter);
+      setfilteredData(newFilter);
     }
   };
   return (
@@ -103,6 +99,7 @@ const Row1 = ({
         newitemRecords={newitemRecords}
         pieChartF={pieChartF}
         reset={reset}
+        setfilteredData={setfilteredData}
       />
       <MainImg mainImg={mainImg} />
       <td
