@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Line,
   XAxis,
@@ -17,6 +18,7 @@ const Graph = ({
   graphAllYearData,
   monthLine,
   monthLinePrv,
+  mainData
 }) => {
   return (
     <div
@@ -25,8 +27,8 @@ const Graph = ({
         width: '70%',
         height: '100%',
       }}
-    >
-      {graphDropdownSelectedYear.length ? (
+    >      
+    {mainData.length ? graphDropdownSelectedYear.length ? (
         graphLoading === false ? (
           graphDropdownSelectedYear.length ? (
             graphDropdownSelectedYear === 'YEAR' ? (
@@ -149,7 +151,8 @@ const Graph = ({
         </ResponsiveContainer>
       ) : (
         <>Loading...</>
-      )}
+      ): (<></>)}
+     
     </div>
   );
 };

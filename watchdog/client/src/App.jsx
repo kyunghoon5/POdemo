@@ -1,9 +1,9 @@
-import SearchPage from './components/SearchPage';
+import Watchdog from './components/Watchdog';
 
 function App() {
   return (
     <>
-      <SearchPage />
+      <Watchdog />
     </>
   );
 }

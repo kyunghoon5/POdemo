@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { sum, sumBy } from 'lodash';
-
+import useMath from '../../utils/math/Math';
+//test to pass function to useState hook
 const Table3Total = ({
   mainData,
   watchDoginfo2,
@@ -25,7 +26,7 @@ const Table3Total = ({
   setoh_forecastTotal,
   setfoSuggestedTotal,
 }) => {
-  const round = (num) => (isNaN(num) ? 0 : Math.round(num));
+  const { round } = useMath();
   useEffect(() => {
     const calculateTotals = () => {
       const totalColorsFilter = mainData.filter((item) => item.itemkey2);
@@ -144,4 +145,3 @@ const Table3Total = ({
 };
 
 export default Table3Total;
-

@@ -14,7 +14,8 @@ const SearchButton = ({
   pieChartF,
   reset,
   setfilteredData,
-  record,
+  record,setGraphDropdownSelectedYear
+ 
 }) => {
   const handleButton = () => {
     setfilteredData([]);
@@ -30,6 +31,7 @@ const SearchButton = ({
     newitemRecords(record);
     pieChartF(record);
     reset();
+    setGraphDropdownSelectedYear('YEAR');
   };
 
   return (

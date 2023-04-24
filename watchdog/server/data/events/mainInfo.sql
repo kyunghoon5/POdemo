@@ -35,6 +35,7 @@ FROM
       --and A.class in ('RB')
       --Exclude RB
       --and A.class not in ('RB', 'AA', 'Z')
+	 and  a.class is not null
     group by 
     a.class,
       A.itemkey2, 

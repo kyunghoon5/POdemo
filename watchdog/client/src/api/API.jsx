@@ -40,8 +40,6 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
     setMainImg(`http://img.vanessahair.com/sales/${record}.jpg`);
   };
 
-  
-
   //select & option dropdown soldPercentage
   const soldPercentageAPI = (record) => {
     const searchedRecord = record.toLowerCase();

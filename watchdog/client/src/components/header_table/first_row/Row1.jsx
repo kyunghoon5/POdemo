@@ -5,6 +5,7 @@ import Graph from './Graph';
 import PieGraph from './PieGraph';
 
 const Row1 = ({
+  mainData,
   record,
   setRecord,
   filteredData,
@@ -27,10 +28,14 @@ const Row1 = ({
   watchDogAPI,
   newitemRecords,
   pieChartF,
-  reset,
   suggest,
   imageAPI,
   mainImg,
+  setSelectedSold,
+  setGraphDropdownSelectedYear,
+  setWatchDoginfo,
+  setitemRank,
+  setnewitemRank,
 }) => {
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -47,7 +52,16 @@ const Row1 = ({
       newitemRecords(record);
       pieChartF(record);
       reset();
+     setGraphDropdownSelectedYear('YEAR')
     }
+  };
+
+  const reset = () => {
+    setSelectedSold([]);
+    setGraphDropdownSelectedYear([]);
+    setWatchDoginfo([]);
+    setitemRank([]);
+    setnewitemRank([]);
   };
 
   const handleInput = (e) => {
@@ -102,6 +116,7 @@ const Row1 = ({
                     newitemRecords(item.descrip);
                     pieChartF(item.descrip);
                     reset();
+                    setGraphDropdownSelectedYear('YEAR');
                   }}
                 >
                   {item.descrip}
@@ -126,6 +141,9 @@ const Row1 = ({
         pieChartF={pieChartF}
         reset={reset}
         setfilteredData={setfilteredData}
+        setGraphDropdownSelectedYear={setGraphDropdownSelectedYear}
+     
+       
       />
       <MainImg mainImg={mainImg} />
       <td
@@ -138,6 +156,7 @@ const Row1 = ({
         }}
       >
         <Graph
+        mainData={mainData}
           graphDropdownSelectedYear={graphDropdownSelectedYear}
           graphLoading={graphLoading}
           graphAllYearData={graphAllYearData}

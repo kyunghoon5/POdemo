@@ -13,18 +13,97 @@ const Row7 = ({
 }) => {
   const graphDropdownHandler = (e) => {
     const graphDropdownValue = e.target.value;
-    setGraphDropdownSelectedYear(graphDropdownValue); // update the value of graphDropdownSelectedYear
+    setGraphDropdownSelectedYear(graphDropdownValue);
+    // update the value of graphDropdownSelectedYear
   };
 
   const graphYearlyTotal = sum(graphAllYearData.map((item) => item.qtyshp));
   const graphMonthlyTotal = sum(monthLine.map((item) => item.qtyshp));
 
-  const lastyear = graphAllYearData.map((item) => item.year).at(-1);
-  const lastyear2 = graphAllYearData.map((item) => item.year).at(-2);
-  const lastyear3 = graphAllYearData.map((item) => item.year).at(-3);
-  const lastyear4 = graphAllYearData.map((item) => item.year).at(-4);
-  const lastyear5 = graphAllYearData.map((item) => item.year).at(-5);
-  const lastyear6 = graphAllYearData.map((item) => item.year).at(-6);
+  const numYears = graphAllYearData.length;
+  const eachYears = [];
+  for (let i = 1; i <= 6; i++) {
+    const index = numYears - i;
+    if (index >= 0) {
+      eachYears.push(graphAllYearData[index].year);
+    } else {
+      eachYears.push(undefined);
+    }
+  }
+
+  const renderData = () => {
+    if (!mainData.length) {
+      return (
+        <>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </>
+      );
+    }
+
+    if (graphLoading) {
+      return (
+        <>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </>
+      );
+    }
+
+    const selectedYear = mainData.length ? (
+      graphDropdownSelectedYear === 'YEAR'
+    ) : (
+      <></>
+    );
+
+    const total = selectedYear ? graphYearlyTotal : graphMonthlyTotal;
+    const label = selectedYear ? 'YEAR' : 'MONTH';
+
+    const years = [];
+    for (let i = 1; i <= 6; i++) {
+      const index = numYears - i;
+      if (index >= 0) {
+        years.push(graphAllYearData[index].year);
+      } else {
+        years.push(undefined);
+      }
+    }
+    const yearLabels = years
+      .reverse()
+      .map((year, i) => <td key={i}>{year}</td>);
+
+
+
+
+  const months = monthlyData.map((month) => month.name);
+  const monthlyLabels = months.map((name, index) => (
+    <td key={index}>
+      <span style={{ float: index % 2 === 0 ? 'left' : 'right', paddingLeft: '4px' }}>{name}</span>
+    </td>
+  ));
+    console.log(monthlyLabels);
+
+    return (
+      <>
+        <td>{total}</td>
+        <td style={{ background: '#f0e68c' }}>{label}</td>
+        {selectedYear ? yearLabels : monthlyLabels}
+      </>
+    );
+  };
+
   return (
     <tr className="row7">
       <InfoItemOb className="infoCol1" name="FIBER:" />
@@ -114,7 +193,7 @@ const Row7 = ({
               graphDropdownSelectedYear.length ? (
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
-                    lastyear6
+                    eachYears[5]
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
@@ -133,7 +212,7 @@ const Row7 = ({
               <></>
             )
           ) : graphLoading === false ? (
-            <>{lastyear6}</>
+            <>{eachYears[5]}</>
           ) : (
             <></>
           )
@@ -148,7 +227,7 @@ const Row7 = ({
               graphDropdownSelectedYear.length ? (
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
-                    lastyear5
+                    eachYears[4]
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
@@ -167,7 +246,7 @@ const Row7 = ({
               <></>
             )
           ) : graphLoading === false ? (
-            <>{lastyear5}</>
+            <>{eachYears[4]}</>
           ) : (
             <></>
           )
@@ -182,7 +261,7 @@ const Row7 = ({
               graphDropdownSelectedYear.length ? (
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
-                    lastyear4
+                    eachYears[3]
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
@@ -201,7 +280,7 @@ const Row7 = ({
               <></>
             )
           ) : graphLoading === false ? (
-            <>{lastyear4}</>
+            <>{eachYears[3]}</>
           ) : (
             <></>
           )
@@ -216,7 +295,7 @@ const Row7 = ({
               graphDropdownSelectedYear.length ? (
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
-                    lastyear3
+                    eachYears[2]
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
@@ -235,7 +314,7 @@ const Row7 = ({
               <></>
             )
           ) : graphLoading === false ? (
-            <>{lastyear3}</>
+            <>{eachYears[2]}</>
           ) : (
             <></>
           )
@@ -250,7 +329,7 @@ const Row7 = ({
               graphDropdownSelectedYear.length ? (
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
-                    lastyear2
+                    eachYears[1]
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
@@ -269,7 +348,7 @@ const Row7 = ({
               <></>
             )
           ) : graphLoading === false ? (
-            <>{lastyear2}</>
+            <>{eachYears[1]}</>
           ) : (
             <></>
           )
@@ -284,7 +363,7 @@ const Row7 = ({
               graphDropdownSelectedYear.length ? (
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
-                    lastyear
+                    eachYears[0]
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
@@ -303,7 +382,7 @@ const Row7 = ({
               <></>
             )
           ) : graphLoading === false ? (
-            <>{lastyear}</>
+            <>{eachYears[0]}</>
           ) : (
             <></>
           )
@@ -311,6 +390,7 @@ const Row7 = ({
           <></>
         )}
       </td>
+      <>{renderData()}</>
     </tr>
   );
 };

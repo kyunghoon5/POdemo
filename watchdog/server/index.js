@@ -1,5 +1,3 @@
-//express
-
 var express = require('express');
 var app = express();
 const sql = require('mssql');
@@ -132,10 +130,10 @@ app.get('/mergeData', async (req, res) => {
     // let request1 = new sql.Request(sqlPool);
 
     // Query the two servers for data
-  //   const result1 = await request1.query(`
-  // `);
+    //   const result1 = await request1.query(`
+    // `);
 
-  //   const result11 = await request1.query(``);
+    //   const result11 = await request1.query(``);
 
     // Connect to both servers
     const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
@@ -300,7 +298,9 @@ app.get('/mergeData', async (req, res) => {
           (item) => item.itemkey2 === obj.itemkey2
         );
 
-        const numbers18 = bofromLastRcvO.filter((item)=>item.itemkey2 === obj.itemkey2)
+        const numbers18 = bofromLastRcvO.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
 
         if (!numbers7.length) {
           // obj.first = numbers;
@@ -415,7 +415,11 @@ app.get('/mergeData', async (req, res) => {
           max_lead_time: num.max_lead_time,
         }));
 
-        obj.bofromLastRcvO = numbers18.map((num)=> ({itemkey2: num.itemkey2,last_rec: num.last_rec, qtybo: num.qtybo}))
+        obj.bofromLastRcvO = numbers18.map((num) => ({
+          itemkey2: num.itemkey2,
+          last_rec: num.last_rec,
+          qtybo: num.qtybo,
+        }));
 
         return obj;
       });
@@ -437,7 +441,6 @@ app.get('/mergeData', async (req, res) => {
       poPendingData.recordset,
       poLeadTime.recordset,
       bofromLastRcv.recordset
-
     );
     //console.log(result);
     // Sort the merged results by ID
