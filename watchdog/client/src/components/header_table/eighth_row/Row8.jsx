@@ -12,6 +12,37 @@ const Row8 = ({
   graphAllYearData,
   monthlyData,
 }) => {
+  const renderData = () => {
+    if (!mainData.length) {
+      return (
+        <>
+          <td></td>
+          <td style={{ background: '#f0e68c' }}>SOLD_QTY</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </>
+      );
+    }
+
+    if (graphLoading) {
+      return (
+        <>
+          <td></td>
+          <td style={{ background: '#f0e68c' }}>SOLD_QTY</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </>
+      );
+    }
+  };
   const lastyearSoldQty = graphAllYearData.map((item) => item.qtyshp).at(-1);
   const lastyearSoldQty2 = graphAllYearData.map((item) => item.qtyshp).at(-2);
   const lastyearSoldQty3 = graphAllYearData.map((item) => item.qtyshp).at(-3);

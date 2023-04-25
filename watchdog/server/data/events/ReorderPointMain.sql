@@ -1,10 +1,14 @@
+WITH BOTranTmp as (SELECT * FROM BOTran WHERE convert(date,invdte) >= Dateadd(day, -365, Getdate()))
+
 SELECT
+
   a.vendno,
   A.descrip,  
   A.itemkey2,   
   A.qtyshp, 
   --avg excluded weekends and holidays
-  a.qtyshp/365 as avg_qtyshp
+ ( a.qtyshp +ISNULL((SELECT SUM(qtybo) FROM BOTranTmp WHERE descrip = A.descrip and itemkey2= a.itemkey2), 0))/365 as avg_qtyshp,
+  ISNULL((SELECT SUM(qtybo) FROM BOTranTmp WHERE descrip = A.descrip and itemkey2= a.itemkey2), 0) as qtybo
 
 FROM 
   (
@@ -27,7 +31,7 @@ FROM
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       --and A.class in ('RB')
       --Exclude RB
-      and A.class not in ('AA', 'Z')	 and A.descrip='${req.query.descrip}'
+      and A.class not in ('AA', 'Z')	   and A.descrip='${req.query.descrip}'
 	  
     GROUP BY      
       A.itemkey2, 
@@ -38,4 +42,4 @@ WHERE
   qtyshp > 0
   AND cost <= price 
 ORDER BY 
-  itemkey2 ASC
+  descrip ASC

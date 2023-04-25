@@ -20,8 +20,8 @@ const Table3Total = ({
   setsold365Total,
   setavg_sold365Total,
   setavg_lead_timeTotal,
-  setmax_leadtimeTotal,
-  setBO_lastRCVTotal,
+  
+ 
   setsuggestedQtyTotal,
   setoh_forecastTotal,
   setfoSuggestedTotal,
@@ -73,18 +73,14 @@ const Table3Total = ({
           mainData.map((item) => sumBy(item.poLeadTimeO, 'avg_lead_time'))
         ) / mainData.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
 
-      const totalmax_lead_time =
-        sumBy(
-          mainData.map((item) => sumBy(item.poLeadTimeO, 'max_lead_time'))
-        ) / mainData.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
+    
 
       const totalavg_sold365 = sumBy(
-        mainData.map((item) => sumBy(item.reorderPointO, 'avg_qtyshp'))
-      );
-      const totalBO_lastRCV = sumBy(
-        mainData.map((item) => sumBy(item.bofromLastRcvO, 'qtybo'))
-      );
-
+        mainData.map((item) => sumBy(item.reorderPointO, 'avg_qtyshp'))) /
+          mainData.reduce((a, v) => (a = a + v.reorderPointO.length), 0)
+      
+      
+        
       const totalSuggestedQty = sum(suggestedQty.map((value) => round(value)));
 
       const totaloh_forecast = amounts.reduce(
@@ -108,8 +104,8 @@ const Table3Total = ({
       setsold365Total(totalSold365);
       setavg_sold365Total(totalavg_sold365);
       setavg_lead_timeTotal(totalavg_lead_time);
-      setmax_leadtimeTotal(totalmax_lead_time);
-      setBO_lastRCVTotal(totalBO_lastRCV);
+    
+    
       setsuggestedQtyTotal(totalSuggestedQty);
       setoh_forecastTotal(totaloh_forecast);
       setfoSuggestedTotal(totalFoSuggested);
@@ -134,8 +130,8 @@ const Table3Total = ({
     setsold365Total,
     setavg_sold365Total,
     setavg_lead_timeTotal,
-    setmax_leadtimeTotal,
-    setBO_lastRCVTotal,
+   
+    
     setsuggestedQtyTotal,
     setoh_forecastTotal,
     setfoSuggestedTotal,

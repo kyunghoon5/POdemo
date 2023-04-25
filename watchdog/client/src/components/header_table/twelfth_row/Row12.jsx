@@ -1,23 +1,21 @@
 import React from 'react';
 
 import DatePicker from 'react-datepicker';
-import useDate from '../../../utils/date/DateFile'
+import useDate from '../../../utils/date/DateFile';
 const Row12 = ({
   mainData,
   itemRank,
   endDatePicker,
   forecastDatePicker,
-  
+
   newitemRank,
   newitemLoading,
   setForecasteDatePicker,
   itemLoading,
   setEndDatePicker,
 }) => {
-  const {getDate} = useDate()
+  const { getDate } = useDate();
   const past365c = getDate(365);
- 
-
 
   const newOrOld = () => {
     if (mainData.length === 0) {
@@ -217,7 +215,7 @@ const Row12 = ({
         ) : (
           <td>Loading...</td>
         )
-      ) : (itemLoading === false || newitemLoading === false) ? (
+      ) : itemLoading === false || newitemLoading === false ? (
         <td></td>
       ) : (
         <td>Loading...</td>
@@ -243,17 +241,18 @@ const Row12 = ({
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td></td>
-      <td>
+      <td colSpan={2}>
         <DatePicker
-          className="w-20 border-2 border-zinc-500 text-center text-sm"
+          className="border-2 border-zinc-500 text-center text-"
           minDate={new Date()}
           maxDate={new Date().setDate(new Date().getDate() + 365)}
           selected={forecastDatePicker}
           onChange={(date) => setForecasteDatePicker(date)}
         />
       </td>
+
+      <td></td>
+
       <td></td>
     </tr>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { zipWith, sumBy } from 'lodash';
 import '../styles/common.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -18,11 +18,11 @@ import Row12 from './header_table/twelfth_row/Row12';
 import ColorTab from './body_table/ColorTab';
 import MainTable from './body_table/MainTable';
 import Table3Total from './body_table/Table3Total';
-import TreeViewDownload from './excel_download/TreeViewDownload';
 import useDate from '../utils/date/DateFile';
 import useAPIData from '../api/API';
-import useMath from '../utils/math/Math'
+import useMath from '../utils/math/Math';
 import SubTable from './body_table/SubTable';
+import Alert_Table from './alert_table/Alert_Table';
 
 const Watchdog = () => {
   const [startDatePicker, setStartDatePicker] = useState(new Date());
@@ -71,9 +71,7 @@ const Watchdog = () => {
     setRecord,
   } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
   const { date } = useDate();
-  const { round } = useMath()
-
-
+  const { round } = useMath();
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
@@ -111,8 +109,6 @@ const Watchdog = () => {
 
   const [graphDropdownSelectedYear, setGraphDropdownSelectedYear] =
     useState('');
-
-    
 
   const monthLine = chartbyEachYearData.filter(
     (item) => item.year === Number(graphDropdownSelectedYear)
@@ -270,8 +266,6 @@ const Watchdog = () => {
   const [sold365Total, setsold365Total] = useState(0);
   const [avg_sold365Total, setavg_sold365Total] = useState(0);
   const [avg_lead_timeTotal, setavg_lead_timeTotal] = useState(0);
-  const [max_leadtimeTotal, setmax_leadtimeTotal] = useState(0);
-  const [BO_lastRCVTotal, setBO_lastRCVTotal] = useState(0);
 
   const suggestedQtyavg_qty = mainData.map((item) =>
     item.reorderPointO.map((item) => Number(item.avg_qtyshp))
@@ -279,15 +273,11 @@ const Watchdog = () => {
   const suggestedQtyavg_lead = mainData.map((item) =>
     item.poLeadTimeO.map((item) => Number(item.avg_lead_time))
   );
-  const suggestedBo = mainData.map((item) =>
-    item.bofromLastRcvO.map((item) => Number(item.qtybo))
-  );
 
   const suggestedQty = zipWith(
     suggestedQtyavg_qty,
     suggestedQtyavg_lead,
-    suggestedBo,
-    (qty, lead, bo) => qty * lead + bo
+    (qty, lead) => qty * lead
   ).reduce((acc, curr) => acc.concat(curr), []);
 
   const [suggestedQtyTotal, setsuggestedQtyTotal] = useState(0);
@@ -352,14 +342,14 @@ const Watchdog = () => {
       ? zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
 
+
   const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
 
   const FosuggestedQty = zipWith(
     suggestedQtyavg_qty,
     suggestedQtyavg_lead,
-    suggestedBo,
     amounts,
-    (qty, lead, bo, am) => qty * lead + bo - am
+    (qty, lead, am) => qty * lead - am
   ).reduce((acc, curr) => acc.concat(curr), []);
 
   const [foSuggestedTotal, setfoSuggestedTotal] = useState(0);
@@ -385,8 +375,6 @@ const Watchdog = () => {
         setpendingTotal={setpendingTotal}
         setavg_sold365Total={setavg_sold365Total}
         setavg_lead_timeTotal={setavg_lead_timeTotal}
-        setmax_leadtimeTotal={setmax_leadtimeTotal}
-        setBO_lastRCVTotal={setBO_lastRCVTotal}
         setsuggestedQtyTotal={setsuggestedQtyTotal}
         setoh_forecastTotal={setoh_forecastTotal}
         setfoSuggestedTotal={setfoSuggestedTotal}
@@ -395,7 +383,7 @@ const Watchdog = () => {
         <table id="tb1" className="table1">
           <tbody>
             <Row1
-            mainData={mainData}
+              mainData={mainData}
               setMainImg={setMainImg}
               record={record}
               setRecord={setRecord}
@@ -427,7 +415,6 @@ const Watchdog = () => {
               setWatchDoginfo={setWatchDoginfo}
               setitemRank={setitemRank}
               setnewitemRank={setnewitemRank}
-              
             />
             <Row2 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
             <Row3 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
@@ -541,8 +528,6 @@ const Watchdog = () => {
             sold365Total={sold365Total}
             avg_sold365Total={avg_sold365Total}
             avg_lead_timeTotal={avg_lead_timeTotal}
-            max_leadtimeTotal={max_leadtimeTotal}
-            BO_lastRCVTotal={BO_lastRCVTotal}
             suggestedQty={suggestedQty}
             suggestedQtyTotal={suggestedQtyTotal}
             amounts={amounts}
@@ -566,8 +551,10 @@ const Watchdog = () => {
           />
         </div>
       )}
-
-      <TreeViewDownload handleDownload17={handleDownload17} />
+      <div className="pl-10 ">
+        <Alert_Table />
+        {/* <TreeViewDownload handleDownload17={handleDownload17} /> */}
+      </div>
     </div>
   );
 };

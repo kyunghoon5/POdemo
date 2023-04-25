@@ -58,11 +58,16 @@ const Row11 = ({mainData, startDatePicker, setStartDatePicker }) => {
 
       <td></td>
       <td></td>
-      <td></td>
-      <td></td>
-      <td className="prv30" style={{ background: '#f4a460', fontSize: '10px' }}>
+      <td
+        className="prv30"
+        style={{ background: '#f4a460', fontSize: '10px' }}
+        colSpan={2}
+      >
         OH_FORECAST
       </td>
+     
+      <td></td>
+
       <td></td>
     </tr>
   );

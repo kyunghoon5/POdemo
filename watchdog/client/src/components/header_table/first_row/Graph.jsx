@@ -1,5 +1,5 @@
 import React from 'react';
-
+//hard coding
 import {
   Line,
   XAxis,

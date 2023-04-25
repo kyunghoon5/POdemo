@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Row6 = ({ InfoItemOb, watchDoginfo }) => {
+
   return (
     <tr className="row6">
       <InfoItemOb className="infoCol1" name="LENGTH:" />

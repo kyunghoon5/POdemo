@@ -1,5 +1,7 @@
 import React from 'react';
 import BlankPage from './BlankPage';
+import useMath from '../../utils/math/Math';
+import useDate from '../../utils/date/DateFile';
 
 const MainTable = ({
   loading,
@@ -17,8 +19,6 @@ const MainTable = ({
   sold365Total,
   avg_sold365Total,
   avg_lead_timeTotal,
-  max_leadtimeTotal,
-  BO_lastRCVTotal,
   suggestedQty,
   suggestedQtyTotal,
   amounts,
@@ -26,9 +26,11 @@ const MainTable = ({
   FosuggestedQty,
   foSuggestedTotal,
   result2,
-  eachItemClick
+  eachItemClick,
 }) => {
-  const round = (num) => (isNaN(num) ? 0 : Math.round(num));
+  const { round } = useMath();
+  const { daysToDate } = useDate();
+
   if (loading) {
     return (
       <tbody>
@@ -187,38 +189,12 @@ const MainTable = ({
                   <div key={idx2}>{item2.avg_lead_time} days</div>
                 ))
               ) : (
-                <div key={idx}>0 days</div>
+                <div key={idx}>0 day</div>
               )
             )}
             <div>{round(avg_lead_timeTotal)} days</div>
           </td>
 
-          <td style={{ padding: '0' }}>
-            {mainData.map((item, idx) =>
-              item.poLeadTimeO.length ? (
-                item.poLeadTimeO.map((item2, idx2) => (
-                  <div key={idx2}>{item2.max_lead_time} days</div>
-                ))
-              ) : (
-                <div key={idx}>0 days</div>
-              )
-            )}
-            <div>{round(max_leadtimeTotal)} days</div>
-          </td>
-          {/*column table with nested array */}
-          <td style={{ padding: '0' }}>
-            {mainData.map((item, idx) =>
-              item.bofromLastRcvO.length ? (
-                item.bofromLastRcvO.map((item2, idx2) => (
-                  <div key={idx2}>{item2.qtybo}</div>
-                ))
-              ) : (
-                <div key={idx}>0</div>
-              )
-            )}
-            <div>{BO_lastRCVTotal}</div>
-          </td>
-          {/*column table with nested array */}
           <td style={{ padding: '0' }}>
             {suggestedQty.map((value, index) => (
               <div key={`qty-${index}`}>{round(value)}</div>
@@ -233,7 +209,10 @@ const MainTable = ({
                 {round(num)}
               </div>
             ))}
-            <div>{oh_forecastTotal}</div>
+
+            <div className={oh_forecastTotal < 0 ? 'negative-amount' : ''}>
+              {oh_forecastTotal}
+            </div>
           </td>
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
@@ -247,6 +226,21 @@ const MainTable = ({
             ))}
             <div>{round(foSuggestedTotal)}</div>
           </td>
+          {/*column table with nested array */}
+          <td style={{ padding: '0' }}>
+            {mainData.map((item, idx) =>
+              item.poLeadTimeO.length ? (
+                item.poLeadTimeO.map((item2, idx2) => (
+                  <div key={idx2}>{daysToDate(item2.avg_lead_time)}</div>
+                ))
+              ) : (
+                <div key={idx}>{undefined}</div>
+              )
+            )}
+            <div></div>
+          </td>
+          {/*column table with nested array */}
+          <td></td>
         </tr>
       </tbody>
     );

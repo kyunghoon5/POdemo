@@ -18,10 +18,11 @@ const SubTable = ({
         <td>SOLD365</td>
         <td style={{ fontSize: '12px' }}>AVG_SOLD(1Y)</td>
         <td>AVG_LEAD</td>
-        <td>MAX_LEAD</td>
-        <td>BO_lastRCV</td>
-        <td>Suggested</td>
-        <td>+{Difference_In_PostDayresult} days</td>
+
+        <td>SuggestedOH</td>
+        <td colSpan={2}>+{Difference_In_PostDayresult} days</td>
+        
+        <td>OrderToday</td>
         <td>Needed</td>
       </tr>
     </tbody>
