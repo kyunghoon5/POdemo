@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import BlankPage from './BlankPage';
 import useMath from '../../utils/math/Math';
 import useDate from '../../utils/date/DateFile';
@@ -204,7 +204,7 @@ const MainTable = ({
             <div>{suggestedQtyTotal}</div>
           </td>
 
-        <td style={{ padding: '0' }}>
+          <td style={{ padding: '0' }}>
             {suggestedQty.every((value) => value === 0) ? (
               <>
                 {amounts.map((num, idx) => (
@@ -223,21 +223,20 @@ const MainTable = ({
               </>
             )}
           </td>
-          {/*column table with nested array */}
           <td style={{ padding: '0' }}>
-            {suggestedQty.every((value ) => value === 0) ? (
+            {suggestedQty.every((value) => value === 0) ? (
               <>
                 {FosuggestedQty.map((num, index) => (
                   <>
                     <div key={index}>0</div>
                   </>
                 ))}
-                <div ></div>
+                <div></div>
               </>
             ) : (
               <>
                 {FosuggestedQty.map((num, index2) => (
-                  <>
+                  <Fragment key={index2}>
                     <span style={{ float: 'left', fontSize: '11px' }}>
                       {num < 0 ? 'overstock' : num === 0 ? '' : 'needed'}
                     </span>
@@ -253,12 +252,13 @@ const MainTable = ({
                     >
                       {round(num)}
                     </div>
-                  </>
+                  </Fragment>
                 ))}
                 <div></div>
               </>
             )}
           </td>
+          
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
             {mainData.map((item, idx) =>

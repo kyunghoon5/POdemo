@@ -40,7 +40,7 @@ const Row11 = ({mainData, startDatePicker, setStartDatePicker }) => {
       </td>
       <></>
 
-      <td>Class: {mainData.map((item) => item.class)[0]}</td>
+      <td>Class: {mainData.map((item) => item.itemClass.map((item)=>item.class))[0]}</td>
       <></>
 
       <td colSpan="2">

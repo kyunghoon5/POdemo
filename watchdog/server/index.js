@@ -236,7 +236,12 @@ app.get('/mergeData', async (req, res) => {
 
     const poLeadTime = await request2.query(poLeadTimeQuery);
 
-  
+    const itemClassQuery = await loadQ.itemClass.replace(
+      '${req.query.descrip}',
+      req.query.descrip
+    );
+
+    const itemClassData = await request2.query(itemClassQuery);
 
     // Combine the two results into a single array
     const mergedResults = [...result2.recordset];
@@ -260,7 +265,7 @@ app.get('/mergeData', async (req, res) => {
       reorderPointO,
       pendingDataO,
       poLeadTimeO,
-     
+      itemClass
     ) => {
       return arr1.map((obj) => {
         // const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
@@ -293,7 +298,10 @@ app.get('/mergeData', async (req, res) => {
           (item) => item.itemkey2 === obj.itemkey2
         );
 
-      
+        const number18 = itemClass.filter(
+          (item) => item.itemkey2 === obj.itemkey2
+        );
+
         if (!numbers7.length) {
           // obj.first = numbers;
           // obj.second = numbers2;
@@ -308,7 +316,8 @@ app.get('/mergeData', async (req, res) => {
           obj.reorderPointO = numbers15;
           obj.pendingDataO = numbers16;
           obj.poLeadTimeO = numbers17;
-        
+          obj.itemClass = number18;
+
           return obj;
         }
         // obj.first = numbers.map((num) => ({
@@ -394,7 +403,7 @@ app.get('/mergeData', async (req, res) => {
           vendno: num.vendno,
           qtyshp: num.qtyshp,
           avg_qtyshp: num.avg_qtyshp,
-          qtybo: num.qtyshp
+          qtybo: num.qtyshp,
         }));
 
         obj.pendingDataO = numbers16.map((num) => ({
@@ -408,7 +417,11 @@ app.get('/mergeData', async (req, res) => {
           max_lead_time: num.max_lead_time,
         }));
 
-       
+        obj.itemClass = number18.map((num) => ({
+          descrip: num.descrip,
+          class: num.class,
+        }));
+
         return obj;
       });
     };
@@ -428,7 +441,7 @@ app.get('/mergeData', async (req, res) => {
       reOrderPointMain.recordset,
       poPendingData.recordset,
       poLeadTime.recordset,
-  
+      itemClassData.recordset
     );
     //console.log(result);
     // Sort the merged results by ID

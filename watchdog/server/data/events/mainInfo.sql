@@ -1,5 +1,5 @@
 SELECT
-a.class,
+
   A.itemkey2, 
   A.descrip,
   A.onhand,
@@ -11,7 +11,7 @@ a.class,
 FROM 
   (
     SELECT		
-	a.class,
+	
       A.itemkey2, 
       A.descrip,
 	  isnull( (SELECT sum(onhand)
@@ -37,7 +37,7 @@ FROM
       --and A.class not in ('RB', 'AA', 'Z')
 	 and  a.class is not null
     group by 
-    a.class,
+   
       A.itemkey2, 
       A.descrip
 	  
