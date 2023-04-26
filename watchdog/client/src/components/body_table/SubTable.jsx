@@ -20,7 +20,7 @@ const SubTable = ({
         <td>AVG_LEAD</td>
 
         <td>SuggestedOH</td>
-        <td colSpan={2}>+{Difference_In_PostDayresult} days</td>
+        <td colSpan={2}>+{Difference_In_PostDayresult-1} days</td>
         
         <td>OrderToday</td>
         <td>Needed</td>

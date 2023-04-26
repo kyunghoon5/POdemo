@@ -111,10 +111,10 @@ const Graph = ({
               </ResponsiveContainer>
             )
           ) : (
-            <td></td>
+            <></>
           )
         ) : (
-          <td>Loading...</td>
+          <>Loading...</>
         )
       ) : graphLoading === false ? (
         <ResponsiveContainer width="100%" height="100%">

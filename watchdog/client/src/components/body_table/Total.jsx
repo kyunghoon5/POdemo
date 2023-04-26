@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { sum, sumBy } from 'lodash';
 import useMath from '../../utils/math/Math';
 //test to pass function to useState hook
-const Table3Total = ({
+const Total = ({
   mainData,
   watchDoginfo2,
   selectedDatePicker,
   suggestedQty,
   amounts,
+  amounts2,
   FosuggestedQty,
   setColorTotal,
   setonHandTotal,
@@ -20,11 +21,11 @@ const Table3Total = ({
   setsold365Total,
   setavg_sold365Total,
   setavg_lead_timeTotal,
-  
- 
+
   setsuggestedQtyTotal,
   setoh_forecastTotal,
   setfoSuggestedTotal,
+  set_NeededTotal,
 }) => {
   const { round } = useMath();
   useEffect(() => {
@@ -73,20 +74,24 @@ const Table3Total = ({
           mainData.map((item) => sumBy(item.poLeadTimeO, 'avg_lead_time'))
         ) / mainData.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
 
-    
+      const totalavg_sold365 =
+        sumBy(mainData.map((item) => sumBy(item.reorderPointO, 'avg_qtyshp'))) /
+        mainData.reduce((a, v) => (a = a + v.reorderPointO.length), 0);
 
-      const totalavg_sold365 = sumBy(
-        mainData.map((item) => sumBy(item.reorderPointO, 'avg_qtyshp'))) /
-          mainData.reduce((a, v) => (a = a + v.reorderPointO.length), 0)
-      
-      
-        
       const totalSuggestedQty = sum(suggestedQty.map((value) => round(value)));
 
       const totaloh_forecast = amounts.reduce(
-        (sum, num) => (num < 0 ? round(sum + num) : sum),
+        (sum, num) => (num > 0 ? round(sum + num) : sum),
         0
       );
+
+      const total_Needed = amounts2.reduce((sum, arr) => {
+        const arrSum = arr.reduce(
+          (arrSum, num) => arrSum + (num < 0 ? num : 0),
+          0
+        );
+        return sum + arrSum;
+      }, 0);
 
       const totalFoSuggested = FosuggestedQty.reduce(
         (sum, num) => (num > 0 ? round(sum + num) : sum),
@@ -104,11 +109,11 @@ const Table3Total = ({
       setsold365Total(totalSold365);
       setavg_sold365Total(totalavg_sold365);
       setavg_lead_timeTotal(totalavg_lead_time);
-    
-    
+
       setsuggestedQtyTotal(totalSuggestedQty);
       setoh_forecastTotal(totaloh_forecast);
       setfoSuggestedTotal(totalFoSuggested);
+      set_NeededTotal(total_Needed);
     };
 
     calculateTotals();
@@ -130,14 +135,14 @@ const Table3Total = ({
     setsold365Total,
     setavg_sold365Total,
     setavg_lead_timeTotal,
-   
-    
+
     setsuggestedQtyTotal,
     setoh_forecastTotal,
     setfoSuggestedTotal,
+    set_NeededTotal,
   ]);
 
   return <div></div>;
 };
 
-export default Table3Total;
+export default Total;

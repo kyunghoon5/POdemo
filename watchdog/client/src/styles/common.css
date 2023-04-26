@@ -79,8 +79,13 @@
   text-align: right;
 }
 
-.negative-amount {
-  background-color: rgb(242, 135, 135);
+.overstock-amount {
+  background-color: rgb(186, 182, 151);
+
+}
+.needed-amount{
+  background-color: rgb(238, 165, 156);
+
 }
 
 .dataResult {

@@ -22,11 +22,13 @@ const MainTable = ({
   suggestedQty,
   suggestedQtyTotal,
   amounts,
+  amounts2,
   oh_forecastTotal,
   FosuggestedQty,
   foSuggestedTotal,
   result2,
   eachItemClick,
+  neededTotal,
 }) => {
   const { round } = useMath();
   const { daysToDate } = useDate();
@@ -201,30 +203,61 @@ const MainTable = ({
             ))}
             <div>{suggestedQtyTotal}</div>
           </td>
-          {/*column table with nested array */}
-          <td style={{ padding: '0' }}>
-            {/* forecast render */}
-            {amounts.map((num, idx) => (
-              <div key={idx} className={num < 0 ? 'negative-amount' : ''}>
-                {round(num)}
-              </div>
-            ))}
 
-            <div className={oh_forecastTotal < 0 ? 'negative-amount' : ''}>
-              {oh_forecastTotal}
-            </div>
+        <td style={{ padding: '0' }}>
+            {suggestedQty.every((value) => value === 0) ? (
+              <>
+                {amounts.map((num, idx) => (
+                  <div key={idx}>0</div>
+                ))}
+                <div>0</div>
+              </>
+            ) : (
+              <>
+                {amounts.map((num, idx2) => (
+                  <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
+                    {round(num)}
+                  </div>
+                ))}
+                <div>{oh_forecastTotal}</div>
+              </>
+            )}
           </td>
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
-            {FosuggestedQty.map((num, index) => (
-              <div
-                key={`qty-${index}`}
-                className={num < 0 ? 'negative-amount' : ''}
-              >
-                {round(num)}
-              </div>
-            ))}
-            <div>{round(foSuggestedTotal)}</div>
+            {suggestedQty.every((value ) => value === 0) ? (
+              <>
+                {FosuggestedQty.map((num, index) => (
+                  <>
+                    <div key={index}>0</div>
+                  </>
+                ))}
+                <div ></div>
+              </>
+            ) : (
+              <>
+                {FosuggestedQty.map((num, index2) => (
+                  <>
+                    <span style={{ float: 'left', fontSize: '11px' }}>
+                      {num < 0 ? 'overstock' : num === 0 ? '' : 'needed'}
+                    </span>
+                    <div
+                      key={`qty-${index2}`}
+                      className={
+                        num < 0
+                          ? 'overstock-amount'
+                          : num === 0
+                          ? ''
+                          : 'needed-amount'
+                      }
+                    >
+                      {round(num)}
+                    </div>
+                  </>
+                ))}
+                <div></div>
+              </>
+            )}
           </td>
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
@@ -240,7 +273,29 @@ const MainTable = ({
             <div></div>
           </td>
           {/*column table with nested array */}
-          <td></td>
+          <td style={{ padding: '0' }}>
+            {suggestedQty.every((value) => value === 0) ? (
+              <>
+                {amounts2.map((num, idx) => (
+                  <div key={idx}>0</div>
+                ))}
+                <div >0</div>
+              </>
+            ) : (
+              <>
+                {amounts2.map((num, idx2) => (
+                  <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
+                    {num < 0 ? Math.abs(num) : undefined}
+                  </div>
+                ))}
+
+                <div className={oh_forecastTotal < 0 ? '' : 'needed-amount'}>
+                  {Math.abs(neededTotal)}
+                </div>
+              </>
+            )}
+          </td>
+
         </tr>
       </tbody>
     );
