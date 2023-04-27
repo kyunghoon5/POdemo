@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { zipWith, sumBy,add } from 'lodash';
+import { zipWith, sumBy, add } from 'lodash';
 import '../styles/common.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -286,8 +286,6 @@ const Watchdog = () => {
     sumBy(item.poForecast, 'ORDEREDa')
   );
 
-  
-
   const eachItemNeededDate = mainData.map((item) =>
     item.poLeadTimeO.length
       ? item.poLeadTimeO.map((item2) =>
@@ -296,16 +294,13 @@ const Watchdog = () => {
       : undefined
   );
 
- 
-
-
   const Difference_In_PostDayresult2 = eachItemNeededDate.map((item) =>
     round(item / (1000 * 3600 * 24))
   );
 
-  const Difference_In_PostDecimalDayresult2 = eachItemNeededDate.map((item) =>
-   Math.round((item / (1000 * 3600 * 24) / 30)*10)/10
-  ); 
+  const Difference_In_PostDecimalDayresult2 = eachItemNeededDate.map(
+    (item) => Math.round((item / (1000 * 3600 * 24) / 30) * 10) / 10
+  );
 
   const onhandCal2 = mainData.map((item) => Number(item.onhand));
 
@@ -319,64 +314,54 @@ const Watchdog = () => {
     (arr1, arr2) => arr1.map((elem) => elem * arr2)
   );
 
-  const poPoendingData =  mainData.map((item, idx) =>
-              item.pendingDataO.length ? (
-                item.pendingDataO.map((item2) => (
-                  item2.pending))):(undefined))
+  const poPoendingData = mainData.map((item, idx) =>
+    item.pendingDataO.length
+      ? item.pendingDataO.map((item2) => item2.pending)
+      : undefined
+  );
 
   const onhnadWithRVG2 = zipWith(onhandCal2, poPoendingData, (x, y) =>
     round(add(x, y))
   );
 
-
-  
-
   const Cal302 = mainData.map((item) =>
-    item.sold30.map(
-      (item) => Number(item.qtyshp) 
-    )
+    item.sold30.map((item) => Number(item.qtyshp))
   );
 
-    const multipliedData2 = zipWith(
-      Cal302,
-      Difference_In_PostDecimalDayresult2,
-      (arr1, arr2) => arr1.map((elem) => elem * arr2)
-    );
-   
+  const multipliedData2 = zipWith(
+    Cal302,
+    Difference_In_PostDecimalDayresult2,
+    (arr1, arr2) => arr1.map((elem) => elem * arr2)
+  );
+
   const Cal602 = mainData.map((item) =>
-    item.sold60.map(
-      (item) => Number(item.qtyshp / 2) 
-    )
+    item.sold60.map((item) => Number(item.qtyshp / 2))
   );
 
-   const multipliedData3 = zipWith(
-     Cal602,
-     Difference_In_PostDecimalDayresult2,
-     (arr1, arr2) => arr1.map((elem) => elem * arr2)
-   );
+  const multipliedData3 = zipWith(
+    Cal602,
+    Difference_In_PostDecimalDayresult2,
+    (arr1, arr2) => arr1.map((elem) => elem * arr2)
+  );
 
   const Cal902 = mainData.map((item) =>
-    item.sold90.map(
-      (item) => Number(item.qtyshp / 3) 
-    )
+    item.sold90.map((item) => Number(item.qtyshp / 3))
   );
-   const multipliedData4 = zipWith(
-     Cal902,
-     Difference_In_PostDecimalDayresult2,
-     (arr1, arr2) => arr1.map((elem) => elem * arr2)
-   );
+  const multipliedData4 = zipWith(
+    Cal902,
+    Difference_In_PostDecimalDayresult2,
+    (arr1, arr2) => arr1.map((elem) => elem * arr2)
+  );
 
   const Cal3652 = mainData.map((item) =>
-    item.sold365.map(
-      (item) => Number(item.qtyshp / 12) 
-    )
+    item.sold365.map((item) => Number(item.qtyshp / 12))
   );
 
-     const multipliedData5 = zipWith(
-       Cal3652,
-       Difference_In_PostDecimalDayresult2,
-       (arr1, arr2) => arr1.map((elem) => elem * arr2)
-     );
+  const multipliedData5 = zipWith(
+    Cal3652,
+    Difference_In_PostDecimalDayresult2,
+    (arr1, arr2) => arr1.map((elem) => elem * arr2)
+  );
 
   const amounts2 =
     Difference_In_PostDecimalDayresult2 <= 1
@@ -401,9 +386,7 @@ const Watchdog = () => {
           arr2.map((elem) => round(arr1 - elem))
         );
 
-         const [neededTotal, set_NeededTotal] = useState(0);
-
-     
+  const [neededTotal, set_NeededTotal] = useState(0);
 
   const postDay = forecastDatePicker;
   const Difference_In_PostDay = postDay.getTime() - date.getTime();
@@ -450,7 +433,7 @@ const Watchdog = () => {
       (item) => Number(item.qtyshp / 12) * Difference_In_PostDecimalDayresult
     )
   );
- 
+
   const amounts =
     Difference_In_PostDecimalDayresult <= 1
       ? zipWith(onhnadWithRVG, dayCal, (x, y) => round(x - y))
@@ -463,9 +446,7 @@ const Watchdog = () => {
         Difference_In_PostDecimalDayresult < 3
       ? zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
-    
 
-     
   const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
 
   const FosuggestedQty = zipWith(

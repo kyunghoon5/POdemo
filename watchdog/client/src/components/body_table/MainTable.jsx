@@ -196,7 +196,6 @@ const MainTable = ({
             )}
             <div>{round(avg_lead_timeTotal)} days</div>
           </td>
-
           <td style={{ padding: '0' }}>
             {suggestedQty.map((value, index) => (
               <div key={`qty-${index}`}>{round(value)}</div>
@@ -223,13 +222,12 @@ const MainTable = ({
               </>
             )}
           </td>
+
           <td style={{ padding: '0' }}>
             {suggestedQty.every((value) => value === 0) ? (
               <>
                 {FosuggestedQty.map((num, index) => (
-                  <>
-                    <div key={index}>0</div>
-                  </>
+                  <div key={index}>0</div>
                 ))}
                 <div></div>
               </>
@@ -258,7 +256,6 @@ const MainTable = ({
               </>
             )}
           </td>
-          
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
             {mainData.map((item, idx) =>
@@ -279,7 +276,7 @@ const MainTable = ({
                 {amounts2.map((num, idx) => (
                   <div key={idx}>0</div>
                 ))}
-                <div >0</div>
+                <div>0</div>
               </>
             ) : (
               <>
@@ -295,7 +292,6 @@ const MainTable = ({
               </>
             )}
           </td>
-
         </tr>
       </tbody>
     );

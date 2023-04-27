@@ -17,209 +17,193 @@ const Row12 = ({
   const { getDate } = useDate();
   const past365c = getDate(365);
 
+ 
+
   const newOrOld = () => {
     if (mainData.length === 0) {
       return;
     }
-    if (
+    const result =
       mainData
         .filter((item) => item.start_dte)
         .map(
           (item) => new Date(item.start_dte).toISOString().split('T')[0]
-        )[0] > past365c
-    ) {
-      return 'NEW';
-    } else {
-      return 'OLD';
-    }
+        )[0] < past365c
+        ? 'OLD'
+        : mainData.some((item) =>
+            item.firstOrderItem.some((value) => value !== 0)
+          )
+        ? 'FIRST ORDER'
+        : 'NEW';
+    return result;
   };
+
+
+ let better;
+
+ Promise.all([itemRank, newitemRank]).then(([itemRank, newitemRank]) => {
+  // itemRankLoaded 계산
+  const itemRankLoaded = itemRank
+    .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+    .filter((item) => item.percentile);
+
+  // itemRankRBLoaded 계산
+  const itemRankRBLoaded = itemRank
+    .flatMap((item) => [item].concat(item.rankRB ?? []))
+    .filter((item) => item.percentile);
+
+  const newitemRankLoaded = newitemRank;
+  newitemRank.map((item) => item.percentile);
+  const isLoading = itemLoading || newitemLoading;
+ 
+ let better;
+  if (!isLoading) {
+    if (
+      itemRankLoaded.some((item) => item.percentile >= 0) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0)
+    ) {
+      better = (
+        <td style={{ background: '#90ee90', fontWeight: 'bold' }}>new</td>
+      );
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.93) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.93) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.93)
+    ) {
+      better = (
+        <td style={{ background: '#90ee90', fontWeight: 'bold' }}>old</td>
+      );
+  }
+  else{
+    better= (<td></td>)
+  }
+  
+} else{ better=<td></td>}})
+
+  const itemRankLoaded = itemRank
+    .flatMap((item) => [item].concat(item.ranknonRB ?? []))
+    .filter((item) => item.percentile);
+  const itemRankRBLoaded = itemRank
+    .flatMap((item) => [item].concat(item.rankRB ?? []))
+    .filter((item) => item.percentile);
+
+  const newitemRankLoaded = newitemRank;
+  newitemRank.map((item) => item.percentile);
+  const isLoading = itemLoading || newitemLoading;
+
+
+  let result;
+
+  if (!isLoading) {
+    if (
+      itemRankLoaded.some((item) => item.percentile >= 0.98) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.98) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.98)
+    ) {
+      result = (
+        <td style={{ background: '#90ee90', fontWeight: 'bold' }}>A+</td>
+      );
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.93) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.93) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.93)
+    ) {
+      result = <td style={{ background: '#90ee90', fontWeight: 'bold' }}>A</td>;
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.9) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.9) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.9)
+    ) {
+      result = (
+        <td style={{ background: '#90ee90', fontWeight: 'bold' }}>A-</td>
+      );
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.87) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.87) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.87)
+    ) {
+      result = (
+        <td style={{ background: '#87cefa', fontWeight: 'bold' }}>B+</td>
+      );
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.83) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.83) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.83)
+    ) {
+      result = <td style={{ background: '#87cefa', fontWeight: 'bold' }}>B</td>;
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.8) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.8) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.8)
+    ) {
+      result = (
+        <td style={{ background: '#87cefa', fontWeight: 'bold' }}>B-</td>
+      );
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.77) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.77) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.77)
+    ) {
+      result = (
+        <td style={{ background: '#ffa500', fontWeight: 'bold' }}>C+</td>
+      );
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.73) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.73) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.73)
+    ) {
+      result = <td style={{ background: '#ffa500', fontWeight: 'bold' }}>C</td>;
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.7) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.7) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.7)
+    ) {
+      result = (
+        <td style={{ background: '#ffa500', fontWeight: 'bold' }}>C-</td>
+      );
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.67) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.67) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.67)
+    ) {
+      result = (
+        <td style={{ background: '#ff4500', fontWeight: 'bold' }}>D+</td>
+      );
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.63) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.63) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.63)
+    ) {
+      result = <td style={{ background: '#ff4500', fontWeight: 'bold' }}>D</td>;
+    } else if (
+      itemRankLoaded.some((item) => item.percentile >= 0.6) ||
+      itemRankRBLoaded.some((item) => item.percentile >= 0.6) ||
+      newitemRankLoaded.some((item) => item.percentile >= 0.6)
+    ) {
+      result = (
+        <td style={{ background: '#ff4500', fontWeight: 'bold' }}>D-</td>
+      );
+    } else if (
+      itemRankLoaded.some((item) => item.percentile < 0.6 >= 0) ||
+      itemRankRBLoaded.some((item) => item.percentile < 0.6 >= 0) ||
+      newitemRankLoaded.some((item) => item.percentile < 0.6 >= 0)
+    ) {
+      result = <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>F</td>;
+    } else {
+      result = <td></td>;
+    }
+  } else {
+    result = <td>Loading...</td>;
+  }
 
   return (
     <tr className="row12">
       <td className="newOrOld">{newOrOld()}</td>
       <td>GRADE</td>
-      {itemRank.length ? (
-        itemLoading === false || newitemLoading === false ? (
-          itemRank
-            .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-            .filter((item) => item.percentile)
-            .map((item) => item.percentile * 100)[0] > 98 ||
-          itemRank
-            .flatMap((item) => [item].concat(item.rankRB ?? []))
-            .filter((item) => item.percentile)
-            .map((item) => item.percentile * 100)[0] > 98 ||
-          newitemRank
-            .flatMap((item) => [item].concat(item.descrip ?? []))
-            .filter((item) => item.percentile)
-            .map((item) => item.percentile * 100)[0] > 98 ? (
-            <td style={{ background: '#90ee90', fontWeight: 'bold' }}>A+</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 93 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 93 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 93 ? (
-            <td style={{ background: '#90ee90', fontWeight: 'bold' }}>A</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 90 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 90 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 90 ? (
-            <td style={{ background: '#90ee90', fontWeight: 'bold' }}>A-</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 87 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 87 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 87 ? (
-            <td style={{ background: '#87cefa', fontWeight: 'bold' }}>B+</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 83 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 83 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 83 ? (
-            <td style={{ background: '#87cefa', fontWeight: 'bold' }}>B</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 80 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 80 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 80 ? (
-            <td style={{ background: '#87cefa', fontWeight: 'bold' }}>B-</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 77 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 77 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 77 ? (
-            <td style={{ background: '#ffa500', fontWeight: 'bold' }}>C+</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 73 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 73 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 73 ? (
-            <td style={{ background: '#ffa500', fontWeight: 'bold' }}>C</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 70 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 70 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 70 ? (
-            <td style={{ background: '#ffa500', fontWeight: 'bold' }}>C-</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 67 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 67 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 67 ? (
-            <td style={{ background: '#ff4500', fontWeight: 'bold' }}>D+</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 63 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 63 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 63 ? (
-            <td style={{ background: '#ff4500', fontWeight: 'bold' }}>D</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 60 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 60 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] > 60 ? (
-            <td style={{ background: '#ff4500', fontWeight: 'bold' }}>D-</td>
-          ) : itemRank
-              .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] <= 60 ||
-            itemRank
-              .flatMap((item) => [item].concat(item.rankRB ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] <= 60 ||
-            newitemRank
-              .flatMap((item) => [item].concat(item.descrip ?? []))
-              .filter((item) => item.percentile)
-              .map((item) => item.percentile * 100)[0] <= 60 ? (
-            <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>F</td>
-          ) : (
-            <td>Loading...</td>
-          )
-        ) : (
-          <td>Loading...</td>
-        )
-      ) : itemLoading === false || newitemLoading === false ? (
-        <td></td>
-      ) : (
-        <td>Loading...</td>
-      )}
+      
+  {result}
+
       <td>
         Vend:{' '}
         {

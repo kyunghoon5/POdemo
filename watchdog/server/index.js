@@ -243,6 +243,13 @@ app.get('/mergeData', async (req, res) => {
 
     const itemClassData = await request2.query(itemClassQuery);
 
+     const firstOrderitemQuery = await loadQ.firstOrderItem.replace(
+       '${req.query.descrip}',
+       req.query.descrip
+     );
+
+     const firstOrderitemData = await request2.query(firstOrderitemQuery);
+
     // Combine the two results into a single array
     const mergedResults = [...result2.recordset];
 
@@ -265,7 +272,9 @@ app.get('/mergeData', async (req, res) => {
       reorderPointO,
       pendingDataO,
       poLeadTimeO,
-      itemClass
+      itemClass,
+      firstOrderitem
+      
     ) => {
       return arr1.map((obj) => {
         // const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
@@ -302,6 +311,10 @@ app.get('/mergeData', async (req, res) => {
           (item) => item.itemkey2 === obj.itemkey2
         );
 
+         const number19 = firstOrderitem.filter(
+           (item) => item.descrip === obj.descrip
+         );
+
         if (!numbers7.length) {
           // obj.first = numbers;
           // obj.second = numbers2;
@@ -317,6 +330,7 @@ app.get('/mergeData', async (req, res) => {
           obj.pendingDataO = numbers16;
           obj.poLeadTimeO = numbers17;
           obj.itemClass = number18;
+          obj.firstOrderItem = number19;
 
           return obj;
         }
@@ -422,6 +436,12 @@ app.get('/mergeData', async (req, res) => {
           class: num.class,
         }));
 
+        
+        obj.firstOrderItem = number19.map((num) => ({
+          descrip: num.descrip,
+          start_date: num.start_date,
+        }));
+
         return obj;
       });
     };
@@ -441,7 +461,8 @@ app.get('/mergeData', async (req, res) => {
       reOrderPointMain.recordset,
       poPendingData.recordset,
       poLeadTime.recordset,
-      itemClassData.recordset
+      itemClassData.recordset,
+      firstOrderitemData.recordset
     );
     //console.log(result);
     // Sort the merged results by ID
