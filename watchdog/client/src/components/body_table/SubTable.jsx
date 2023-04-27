@@ -1,10 +1,25 @@
 import React from 'react'
+import useDate from '../../utils/date/DateFile'
 
 const SubTable = ({
   colorTotal,
   Difference_In_Days2,
   Difference_In_PostDayresult,
+  mainData
 }) => {
+   const { getDate } = useDate();
+   const past365c = getDate(365);
+
+   const changeForNew =  mainData
+          .filter((item) => item.start_dte)
+          .map(
+            (item) => new Date(item.start_dte).toISOString().split('T')[0]
+          )[0] > past365c ? (
+          <td >SOLDNEW</td>
+        ) : (
+          <td>SOLD365</td>
+        )
+
   return (
     <tbody id="tb2" className="table2">
       <tr>
@@ -15,13 +30,15 @@ const SubTable = ({
         <td colSpan={2}>{Math.floor(Difference_In_Days2)} days</td>
         <td>SOLD30</td>
         <td>SOLD90</td>
-        <td>SOLD365</td>
+      {changeForNew}
+       
+
         <td style={{ fontSize: '12px' }}>AVG_SOLD(1Y)</td>
         <td>AVG_LEAD</td>
 
         <td>SuggestedOH</td>
         <td colSpan={2}>+{Difference_In_PostDayresult} days</td>
-        
+
         <td>OrderToday</td>
         <td>Needed</td>
       </tr>

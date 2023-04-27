@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { sum, sumBy } from 'lodash';
 import useMath from '../../utils/math/Math';
 //test to pass function to useState hook
@@ -26,6 +26,7 @@ const Total = ({
   setoh_forecastTotal,
   setfoSuggestedTotal,
   set_NeededTotal,
+  setTotalNewItemKeyForecast,
 }) => {
   const { round } = useMath();
   useEffect(() => {
@@ -98,6 +99,14 @@ const Total = ({
         0
       );
 
+      const totalNewItemKy = sumBy(
+        mainData.map((item) =>
+          sumBy(item.newitemkeyForecast, 'total_qty_difference')
+        )
+      );
+
+   
+
       setColorTotal(totalColors);
       setonHandTotal(totalOnHand);
       setreOrderTotal(totalreOrder);
@@ -114,6 +123,8 @@ const Total = ({
       setoh_forecastTotal(totaloh_forecast);
       setfoSuggestedTotal(totalFoSuggested);
       set_NeededTotal(total_Needed);
+
+      setTotalNewItemKeyForecast(totalNewItemKy);
     };
 
     calculateTotals();
@@ -140,6 +151,7 @@ const Total = ({
     setoh_forecastTotal,
     setfoSuggestedTotal,
     set_NeededTotal,
+    setTotalNewItemKeyForecast,
   ]);
 
   return <div></div>;

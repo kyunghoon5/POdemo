@@ -29,9 +29,43 @@ const MainTable = ({
   result2,
   eachItemClick,
   neededTotal,
+  totalNewItemKeyForecast,
 }) => {
   const { round } = useMath();
-  const { daysToDate } = useDate();
+  const { daysToDate, getDate } = useDate();
+  const past365c = getDate(365);
+
+  const change365New =
+    mainData
+      .filter((item) => item.start_dte)
+      .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
+    past365c ? (
+      <>
+        {mainData.map((item) =>
+          item.newitemkeyForecast.map((item2, idx2) =>
+            item2.total_qty_difference === null ? (
+              <div key={idx2}>0</div>
+            ) : (
+              <div key={idx2}>{item2.total_qty_difference}</div>
+            )
+          )
+        )}
+        <div>{totalNewItemKeyForecast}</div>
+      </>
+    ) : (
+      <>
+        {mainData.map((item, idx) =>
+          item.sold365.length ? (
+            item.sold365.map((item2, idx2) => (
+              <div key={idx2}>{item2.qtyshp}</div>
+            ))
+          ) : (
+            <div key={idx}>0</div>
+          )
+        )}
+        <div>{sold365Total}</div>
+      </>
+    );
 
   if (loading) {
     return (
@@ -159,18 +193,7 @@ const MainTable = ({
             )}
             <div>{sold90Total}</div>
           </td>
-          <td style={{ padding: '0' }}>
-            {mainData.map((item, idx) =>
-              item.sold365.length ? (
-                item.sold365.map((item2, idx2) => (
-                  <div key={idx2}>{item2.qtyshp}</div>
-                ))
-              ) : (
-                <div key={idx}>0</div>
-              )
-            )}
-            <div>{sold365Total}</div>
-          </td>
+          <td style={{ padding: '0' }}>{change365New}</td>
           <td style={{ padding: '0' }}>
             {mainData.map((item, idx) =>
               item.reorderPointO.length ? (

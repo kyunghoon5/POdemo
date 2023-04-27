@@ -19,6 +19,21 @@ const Row11 = ({mainData, startDatePicker, setStartDatePicker }) => {
    const PRLmin = Math.min(...filteredItemsPWithoutZero);
 
    const PRLmax = Math.max(...filteredItemsP);
+
+
+   const changeDateforNew = mainData
+        .filter((item) => item.start_dte)
+        .map(
+          (item) => new Date(item.start_dte).toISOString().split('T')[0]
+        )[0] > past365c ? (
+        mainData
+          .filter((item) => item.start_dte)
+          .map((item) => (
+            <td>{new Date(item.start_dte).toISOString().split('T')[0]}</td>
+          ))[0]
+      ) : (
+        <td className="prv30">{past365c}</td>
+      )
   return (
     <tr className="row11">
       {mainData.length > 0 ? (
@@ -40,7 +55,10 @@ const Row11 = ({mainData, startDatePicker, setStartDatePicker }) => {
       </td>
       <></>
 
-      <td>Class: {mainData.map((item) => item.itemClass.map((item)=>item.class))[0]}</td>
+      <td>
+        Class:{' '}
+        {mainData.map((item) => item.itemClass.map((item) => item.class))[0]}
+      </td>
       <></>
 
       <td colSpan="2">
@@ -53,7 +71,8 @@ const Row11 = ({mainData, startDatePicker, setStartDatePicker }) => {
 
       <td className="prv30">{past30c}</td>
       <td className="prv30">{past90c}</td>
-      <td className="prv30">{past365c}</td>
+      {changeDateforNew}
+
       <td></td>
 
       <td></td>
@@ -65,7 +84,7 @@ const Row11 = ({mainData, startDatePicker, setStartDatePicker }) => {
       >
         OH_FORECAST
       </td>
-     
+
       <td></td>
 
       <td></td>

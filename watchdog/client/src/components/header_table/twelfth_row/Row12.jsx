@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import DatePicker from 'react-datepicker';
 import useDate from '../../../utils/date/DateFile';
@@ -17,8 +17,6 @@ const Row12 = ({
   const { getDate } = useDate();
   const past365c = getDate(365);
 
- 
-
   const newOrOld = () => {
     if (mainData.length === 0) {
       return;
@@ -28,58 +26,18 @@ const Row12 = ({
         .filter((item) => item.start_dte)
         .map(
           (item) => new Date(item.start_dte).toISOString().split('T')[0]
-        )[0] < past365c
-        ? 'OLD'
-        : mainData.some((item) =>
-            item.firstOrderItem.some((value) => value !== 0)
-          )
-        ? 'FIRST ORDER'
-        : 'NEW';
+        )[0] < past365c ? (
+        'OLD'
+      ) : mainData.some((item) =>
+          item.firstOrderItem.some((value) => value !== 0)
+        ) ? (
+        'First Order'
+      ) : (
+        'NEW'
+      );
     return result;
   };
-
-
- let better;
-
- Promise.all([itemRank, newitemRank]).then(([itemRank, newitemRank]) => {
-  // itemRankLoaded 계산
-  const itemRankLoaded = itemRank
-    .flatMap((item) => [item].concat(item.ranknonRB ?? []))
-    .filter((item) => item.percentile);
-
-  // itemRankRBLoaded 계산
-  const itemRankRBLoaded = itemRank
-    .flatMap((item) => [item].concat(item.rankRB ?? []))
-    .filter((item) => item.percentile);
-
-  const newitemRankLoaded = newitemRank;
-  newitemRank.map((item) => item.percentile);
-  const isLoading = itemLoading || newitemLoading;
- 
- let better;
-  if (!isLoading) {
-    if (
-      itemRankLoaded.some((item) => item.percentile >= 0) ||
-      itemRankRBLoaded.some((item) => item.percentile >= 0) ||
-      newitemRankLoaded.some((item) => item.percentile >= 0)
-    ) {
-      better = (
-        <td style={{ background: '#90ee90', fontWeight: 'bold' }}>new</td>
-      );
-    } else if (
-      itemRankLoaded.some((item) => item.percentile >= 0.93) ||
-      itemRankRBLoaded.some((item) => item.percentile >= 0.93) ||
-      newitemRankLoaded.some((item) => item.percentile >= 0.93)
-    ) {
-      better = (
-        <td style={{ background: '#90ee90', fontWeight: 'bold' }}>old</td>
-      );
-  }
-  else{
-    better= (<td></td>)
-  }
   
-} else{ better=<td></td>}})
 
   const itemRankLoaded = itemRank
     .flatMap((item) => [item].concat(item.ranknonRB ?? []))
@@ -91,7 +49,6 @@ const Row12 = ({
   const newitemRankLoaded = newitemRank;
   newitemRank.map((item) => item.percentile);
   const isLoading = itemLoading || newitemLoading;
-
 
   let result;
 
@@ -199,10 +156,10 @@ const Row12 = ({
 
   return (
     <tr className="row12">
-      <td className="newOrOld">{newOrOld()}</td>
+      <td className="newOrOld ">{newOrOld()}</td>
       <td>GRADE</td>
-      
-  {result}
+
+      {result}
 
       <td>
         Vend:{' '}

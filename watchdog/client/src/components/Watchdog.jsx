@@ -73,6 +73,7 @@ const Watchdog = () => {
   const { date, formatDate } = useDate();
   const { round } = useMath();
 
+
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
 
@@ -266,6 +267,7 @@ const Watchdog = () => {
   const [sold365Total, setsold365Total] = useState(0);
   const [avg_sold365Total, setavg_sold365Total] = useState(0);
   const [avg_lead_timeTotal, setavg_lead_timeTotal] = useState(0);
+  const [totalNewItemKeyForecast, setTotalNewItemKeyForecast] = useState(0);
 
   const suggestedQtyavg_qty = mainData.map((item) =>
     item.reorderPointO.map((item) => Number(item.avg_qtyshp))
@@ -447,6 +449,7 @@ const Watchdog = () => {
       ? zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
 
+      
   const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
 
   const FosuggestedQty = zipWith(
@@ -484,6 +487,7 @@ const Watchdog = () => {
         setsuggestedQtyTotal={setsuggestedQtyTotal}
         setoh_forecastTotal={setoh_forecastTotal}
         setfoSuggestedTotal={setfoSuggestedTotal}
+        setTotalNewItemKeyForecast={setTotalNewItemKeyForecast}
       />
       <div>
         <table id="tb1" className="table1">
@@ -616,6 +620,7 @@ const Watchdog = () => {
             colorTotal={colorTotal}
             Difference_In_Days2={Difference_In_Days2}
             Difference_In_PostDayresult={Difference_In_PostDayresult}
+            mainData={mainData}
           />
 
           <MainTable
@@ -644,6 +649,7 @@ const Watchdog = () => {
             result2={result2}
             eachItemClick={eachItemClick}
             neededTotal={neededTotal}
+            totalNewItemKeyForecast={totalNewItemKeyForecast}
           />
         </table>
       </div>
