@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import BlankPage from './BlankPage';
 import useMath from '../../utils/math/Math';
 import useDate from '../../utils/date/DateFile';
+import useNewItemCal from '../../utils/math/NewItemCal'
 
 const MainTable = ({
   loading,
@@ -33,7 +34,10 @@ const MainTable = ({
 }) => {
   const { round } = useMath();
   const { daysToDate, getDate } = useDate();
+  const { suggestedQty2 } = useNewItemCal(mainData);
   const past365c = getDate(365);
+
+  
 
   const change365New =
     mainData
@@ -67,6 +71,24 @@ const MainTable = ({
       </>
     );
 
+
+    const changeSuggestedNew =
+      mainData
+        .filter((item) => item.start_dte)
+        .map(
+          (item) => new Date(item.start_dte).toISOString().split('T')[0]
+        )[0] > past365c ? (
+        <>{suggestedQty2.map((item,idx)=>(<div key={idx}>{round(item)}</div>))}
+        <div></div>
+        </>
+      ) : (
+        <>
+          {suggestedQty.map((value, index) => (
+            <div key={`qty-${index}`}>{round(value)}</div>
+          ))}
+          <div>{suggestedQtyTotal}</div>
+        </>
+      );
   if (loading) {
     return (
       <tbody>
@@ -193,7 +215,9 @@ const MainTable = ({
             )}
             <div>{sold90Total}</div>
           </td>
+
           <td style={{ padding: '0' }}>{change365New}</td>
+
           <td style={{ padding: '0' }}>
             {mainData.map((item, idx) =>
               item.reorderPointO.length ? (
@@ -219,12 +243,8 @@ const MainTable = ({
             )}
             <div>{round(avg_lead_timeTotal)} days</div>
           </td>
-          <td style={{ padding: '0' }}>
-            {suggestedQty.map((value, index) => (
-              <div key={`qty-${index}`}>{round(value)}</div>
-            ))}
-            <div>{suggestedQtyTotal}</div>
-          </td>
+
+          <td style={{ padding: '0' }}>{changeSuggestedNew}</td>
 
           <td style={{ padding: '0' }}>
             {suggestedQty.every((value) => value === 0) ? (

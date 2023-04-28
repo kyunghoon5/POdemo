@@ -47,7 +47,7 @@ const Row12 = ({
     .filter((item) => item.percentile);
 
   const newitemRankLoaded = newitemRank;
-  newitemRank.map((item) => item.percentile);
+ 
   const isLoading = itemLoading || newitemLoading;
 
   let result;
@@ -147,8 +147,10 @@ const Row12 = ({
       newitemRankLoaded.some((item) => item.percentile < 0.6 >= 0)
     ) {
       result = <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>F</td>;
-    } else {
-      result = <td></td>;
+    }  else {
+      result = (
+        <td style={{ background: '#f5f5dc', fontWeight: 'bold' }}>Sale</td>
+      );
     }
   } else {
     result = <td>Loading...</td>;
@@ -158,16 +160,12 @@ const Row12 = ({
     <tr className="row12">
       <td className="newOrOld ">{newOrOld()}</td>
       <td>GRADE</td>
-
-      {result}
+    {mainData.length ? (result) : <td></td>}
+     
 
       <td>
         Vend:{' '}
-        {
-          mainData.map((item) =>
-            item.reorderPointO.map((item) => item.vendno)
-          )[0]
-        }
+        {mainData.map((item) => item.itemClass.map((item) => item.vendno))[0]}
       </td>
       <td colSpan="2">
         <DatePicker

@@ -237,8 +237,8 @@ app.get('/mergeData', async (req, res) => {
     const poLeadTime = await request2.query(poLeadTimeQuery);
 
     const itemClassQuery = await loadQ.itemClass.replace(
-      '${req.query.descrip}',
-      req.query.descrip
+      /\${req\.query\.descrip}/g,
+      req.query.descrip || ''
     );
 
     const itemClassData = await request2.query(itemClassQuery);
@@ -446,6 +446,7 @@ app.get('/mergeData', async (req, res) => {
         obj.itemClass = number18.map((num) => ({
           descrip: num.descrip,
           class: num.class,
+          vendno: num.vendno,
         }));
 
         obj.firstOrderItem = number19.map((num) => ({
@@ -481,6 +482,7 @@ app.get('/mergeData', async (req, res) => {
       firstOrderitemData.recordset,
       newItemForecastData.recordset
     );
+
     //console.log(result);
     // Sort the merged results by ID
 

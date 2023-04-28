@@ -1,39 +1,37 @@
-import React, {Fragment} from 'react'
+import React, { Fragment } from 'react';
 import DatePicker from 'react-datepicker';
-import useDate from '../../../utils/date/DateFile'
+import useDate from '../../../utils/date/DateFile';
 
-const Row11 = ({mainData, startDatePicker, setStartDatePicker }) => {
-  const {getDate} = useDate()
+const Row11 = ({ mainData, startDatePicker, setStartDatePicker }) => {
+  const { getDate } = useDate();
   const past30c = getDate(30);
   const past90c = getDate(90);
   const past365c = getDate(365);
 
-
   //min & max cost
-   const filteredItemsP = mainData.map((item) => item.mincost && item.maxcost);
+  const filteredItemsP = mainData.map((item) => item.mincost && item.maxcost);
 
-   const filteredItemsPWithoutZero = filteredItemsP.filter(
-     (value) => value !== null
-   );
+  const filteredItemsPWithoutZero = filteredItemsP.filter(
+    (value) => value !== null
+  );
 
-   const PRLmin = Math.min(...filteredItemsPWithoutZero);
+  const PRLmin = Math.min(...filteredItemsPWithoutZero);
 
-   const PRLmax = Math.max(...filteredItemsP);
+  const PRLmax = Math.max(...filteredItemsP);
 
-
-   const changeDateforNew = mainData
+  const changeDateforNew =
+    mainData
+      .filter((item) => item.start_dte)
+      .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
+    past365c ? (
+      mainData
         .filter((item) => item.start_dte)
-        .map(
-          (item) => new Date(item.start_dte).toISOString().split('T')[0]
-        )[0] > past365c ? (
-        mainData
-          .filter((item) => item.start_dte)
-          .map((item) => (
-            <td>{new Date(item.start_dte).toISOString().split('T')[0]}</td>
-          ))[0]
-      ) : (
-        <td className="prv30">{past365c}</td>
-      )
+        .map((item) => (
+          <td>{new Date(item.start_dte).toISOString().split('T')[0]}</td>
+        ))[0]
+    ) : (
+      <td className="prv30">{past365c}</td>
+    );
   return (
     <tr className="row11">
       {mainData.length > 0 ? (
@@ -90,6 +88,6 @@ const Row11 = ({mainData, startDatePicker, setStartDatePicker }) => {
       <td></td>
     </tr>
   );
-}
+};
 
-export default Row11
+export default Row11;

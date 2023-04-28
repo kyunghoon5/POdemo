@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { zipWith, sumBy, add, omitBy } from 'lodash';
+import { zipWith, sumBy, add } from 'lodash';
 import '../styles/common.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -23,6 +23,7 @@ import useAPIData from '../api/API';
 import useMath from '../utils/math/Math';
 import SubTable from './body_table/SubTable';
 import Alert_Table from './alert_table/Alert_Table';
+import useNewItemCal from '../utils/math/NewItemCal';
 
 const Watchdog = () => {
   const [startDatePicker, setStartDatePicker] = useState(new Date());
@@ -71,9 +72,12 @@ const Watchdog = () => {
     record,
     setRecord,
   } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
-
+ 
   const { date, formatDate } = useDate();
   const { round } = useMath();
+
+  
+
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
@@ -325,6 +329,7 @@ const Watchdog = () => {
   const suggestedQtyavg_lead = mainData.map((item) =>
     item.poLeadTimeO.map((item) => Number(item.avg_lead_time))
   );
+  
 
   const suggestedQty = zipWith(
     suggestedQtyavg_qty,
