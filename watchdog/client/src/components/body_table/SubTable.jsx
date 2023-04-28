@@ -4,7 +4,7 @@ import useDate from '../../utils/date/DateFile'
 const SubTable = ({
   colorTotal,
   Difference_In_Days2,
-  Difference_In_PostDayresult,
+  daysDifference,
   mainData
 }) => {
    const { getDate } = useDate();
@@ -30,14 +30,13 @@ const SubTable = ({
         <td colSpan={2}>{Math.floor(Difference_In_Days2)} days</td>
         <td>SOLD30</td>
         <td>SOLD90</td>
-      {changeForNew}
-       
+        {changeForNew}
 
         <td style={{ fontSize: '12px' }}>AVG_SOLD(1Y)</td>
         <td>AVG_LEAD</td>
 
         <td>SuggestedOH</td>
-        <td colSpan={2}>+{Difference_In_PostDayresult} days</td>
+        <td colSpan={2}>+{daysDifference} days</td>
 
         <td>OrderToday</td>
         <td>Needed</td>

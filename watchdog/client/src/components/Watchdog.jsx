@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { zipWith, sumBy, add } from 'lodash';
+import { zipWith, sumBy, add, omitBy } from 'lodash';
 import '../styles/common.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -17,7 +17,7 @@ import Row11 from './header_table/eleventh_row/Row11';
 import Row12 from './header_table/twelfth_row/Row12';
 import ColorTab from './body_table/ColorTab';
 import MainTable from './body_table/MainTable';
-import Table3Total from './body_table/Total';
+import Total from './body_table/Total';
 import useDate from '../utils/date/DateFile';
 import useAPIData from '../api/API';
 import useMath from '../utils/math/Math';
@@ -28,6 +28,7 @@ const Watchdog = () => {
   const [startDatePicker, setStartDatePicker] = useState(new Date());
   const [endDatePicker, setEndDatePicker] = useState(new Date());
   const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
+
   const {
     mainData,
     loading,
@@ -70,9 +71,9 @@ const Watchdog = () => {
     record,
     setRecord,
   } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
+
   const { date, formatDate } = useDate();
   const { round } = useMath();
-
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
@@ -154,66 +155,115 @@ const Watchdog = () => {
     );
   });
 
-  const YoYEachMonth =
-    (monthlyData.map((item) => item.qtyshp)[0] /
-      PrvmonthData.map((item) => item.qtyshp)[0] -
-      1) *
-    100;
-  const YoYEachMonth2 =
-    (monthlyData.map((item) => item.qtyshp)[1] /
-      PrvmonthData.map((item) => item.qtyshp)[1] -
-      1) *
-    100;
-  const YoYEachMonth3 =
-    (monthlyData.map((item) => item.qtyshp)[2] /
-      PrvmonthData.map((item) => item.qtyshp)[2] -
-      1) *
-    100;
-  const YoYEachMonth4 =
-    (monthlyData.map((item) => item.qtyshp)[3] /
-      PrvmonthData.map((item) => item.qtyshp)[3] -
-      1) *
-    100;
-  const YoYEachMonth5 =
-    (monthlyData.map((item) => item.qtyshp)[4] /
-      PrvmonthData.map((item) => item.qtyshp)[4] -
-      1) *
-    100;
-  const YoYEachMonth6 =
-    (monthlyData.map((item) => item.qtyshp)[5] /
-      PrvmonthData.map((item) => item.qtyshp)[5] -
-      1) *
-    100;
-  const YoYEachMonth7 =
-    (monthlyData.map((item) => item.qtyshp)[6] /
-      PrvmonthData.map((item) => item.qtyshp)[6] -
-      1) *
-    100;
-  const YoYEachMonth8 =
-    (monthlyData.map((item) => item.qtyshp)[7] /
-      PrvmonthData.map((item) => item.qtyshp)[7] -
-      1) *
-    100;
-  const YoYEachMonth9 =
-    (monthlyData.map((item) => item.qtyshp)[8] /
-      PrvmonthData.map((item) => item.qtyshp)[8] -
-      1) *
-    100;
-  const YoYEachMonth10 =
-    (monthlyData.map((item) => item.qtyshp)[9] /
-      PrvmonthData.map((item) => item.qtyshp)[9] -
-      1) *
-    100;
-  const YoYEachMonth11 =
-    (monthlyData.map((item) => item.qtyshp)[10] /
-      PrvmonthData.map((item) => item.qtyshp)[10] -
-      1) *
-    100;
-  const YoYEachMonth12 =
-    (monthlyData.map((item) => item.qtyshp)[11] /
-      PrvmonthData.map((item) => item.qtyshp)[11] -
-      1) *
-    100;
+  //   const YoYEachMonth = [];
+  // for (let i = 0; i < 12; i++) {
+  // YoYEachMonth.push(
+  // (monthlyData[i].qtyshp / PrvmonthData[i].qtyshp - 1) * 100
+  // );
+
+  const prevMonthQtyShp = PrvmonthData.map((item) => item.qtyshp)[0];
+
+  const YoYEachMonth = prevMonthQtyShp
+    ? (monthlyData.map((item) => item.qtyshp)[0] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[0] / prevMonthQtyShp - 1) * 100
+    : 0;
+
+  const prevMonthQtyShp2 = PrvmonthData.map((item) => item.qtyshp)[1];
+
+  const YoYEachMonth2 = prevMonthQtyShp2
+    ? (monthlyData.map((item) => item.qtyshp)[1] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[1] / prevMonthQtyShp2 - 1) *
+      100
+    : 0;
+  const prevMonthQtyShp3 = PrvmonthData.map((item) => item.qtyshp)[2];
+
+  const YoYEachMonth3 = prevMonthQtyShp3
+    ? (monthlyData.map((item) => item.qtyshp)[2] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[2] / prevMonthQtyShp3 - 1) *
+      100
+    : 0;
+  const prevMonthQtyShp4 = PrvmonthData.map((item) => item.qtyshp)[3];
+
+  const YoYEachMonth4 = prevMonthQtyShp4
+    ? (monthlyData.map((item) => item.qtyshp)[3] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[3] / prevMonthQtyShp4 - 1) *
+      100
+    : 0;
+
+  const prevMonthQtyShp5 = PrvmonthData.map((item) => item.qtyshp)[4];
+
+  const YoYEachMonth5 = prevMonthQtyShp5
+    ? (monthlyData.map((item) => item.qtyshp)[4] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[4] / prevMonthQtyShp5 - 1) *
+      100
+    : 0;
+  const prevMonthQtyShp6 = PrvmonthData.map((item) => item.qtyshp)[5];
+
+  const YoYEachMonth6 = prevMonthQtyShp6
+    ? (monthlyData.map((item) => item.qtyshp)[5] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[5] / prevMonthQtyShp6 - 1) *
+      100
+    : 0;
+
+  const prevMonthQtyShp7 = PrvmonthData.map((item) => item.qtyshp)[6];
+
+  const YoYEachMonth7 = prevMonthQtyShp7
+    ? (monthlyData.map((item) => item.qtyshp)[6] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[6] / prevMonthQtyShp7 - 1) *
+      100
+    : 0;
+
+  const prevMonthQtyShp8 = PrvmonthData.map((item) => item.qtyshp)[7];
+
+  const YoYEachMonth8 = prevMonthQtyShp8
+    ? (monthlyData.map((item) => item.qtyshp)[7] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[7] / prevMonthQtyShp8 - 1) *
+      100
+    : 0;
+
+  const prevMonthQtyShp9 = PrvmonthData.map((item) => item.qtyshp)[8];
+
+  const YoYEachMonth9 = prevMonthQtyShp9
+    ? (monthlyData.map((item) => item.qtyshp)[8] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[8] / prevMonthQtyShp9 - 1) *
+      100
+    : 0;
+
+  const prevMonthQtyShp10 = PrvmonthData.map((item) => item.qtyshp)[9];
+
+  const YoYEachMonth10 = prevMonthQtyShp10
+    ? (monthlyData.map((item) => item.qtyshp)[9] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[9] / prevMonthQtyShp10 - 1) *
+      100
+    : 0;
+
+  const prevMonthQtyShp11 = PrvmonthData.map((item) => item.qtyshp)[10];
+
+  const YoYEachMonth11 = prevMonthQtyShp11
+    ? (monthlyData.map((item) => item.qtyshp)[10] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[10] / prevMonthQtyShp11 - 1) *
+      100
+    : 0;
+
+  const prevMonthQtyShp12 = PrvmonthData.map((item) => item.qtyshp)[11];
+
+  const YoYEachMonth12 = prevMonthQtyShp12
+    ? (monthlyData.map((item) => item.qtyshp)[11] == 0
+        ? undefined
+        : monthlyData.map((item) => item.qtyshp)[11] / prevMonthQtyShp12 - 1) *
+      100
+    : 0;
 
   const [eachItemGraph, setEachItemGraph] = useState([]);
   const [eachItemGraphMonth, setEachItemGraphMonth] = useState([]);
@@ -390,66 +440,52 @@ const Watchdog = () => {
 
   const [neededTotal, set_NeededTotal] = useState(0);
 
-  const postDay = forecastDatePicker;
-  const Difference_In_PostDay = postDay.getTime() - date.getTime();
-
-  const Difference_In_PostDayresult = round(
-    Difference_In_PostDay / (1000 * 3600 * 24)
+  const forecastDate = forecastDatePicker;
+  const daysDifference = Math.round(
+    (forecastDate.getTime() - date.getTime()) / (1000 * 3600 * 24)
   );
 
-  const Difference_In_PostDecimalDayresult =
-    Math.round((Difference_In_PostDayresult / 30) * 10) / 10;
+  const monthsDifference = Math.round((daysDifference / 30) * 10) / 10;
 
-  const onhandCal = mainData.map((item) => Number(item.onhand));
+  const onHandInventory = mainData.map((item) => Number(item.onhand));
 
   const dayCal = mainData.map((item) =>
-    item.sold30.map(
-      (item) => Number(item.qtyshp / 30) * Difference_In_PostDayresult
-    )
+    item.sold30.map((item) => Number(item.qtyshp / 30) * daysDifference)
   );
 
-  const onhnadWithRVG = zipWith(onhandCal, sumReqForcast, (x, y) => x + y).map(
-    (num) => round(num)
-  );
+  const onhnadWithRVG = zipWith(
+    onHandInventory,
+    sumReqForcast,
+    (x, y) => x + y
+  ).map((num) => round(num));
 
   const Cal30 = mainData.map((item) =>
-    item.sold30.map(
-      (item) => Number(item.qtyshp) * Difference_In_PostDecimalDayresult
-    )
+    item.sold30.map((item) => Number(item.qtyshp) * monthsDifference)
   );
 
   const Cal60 = mainData.map((item) =>
-    item.sold60.map(
-      (item) => Number(item.qtyshp / 2) * Difference_In_PostDecimalDayresult
-    )
+    item.sold60.map((item) => Number(item.qtyshp / 2) * monthsDifference)
   );
 
   const Cal90 = mainData.map((item) =>
-    item.sold90.map(
-      (item) => Number(item.qtyshp / 3) * Difference_In_PostDecimalDayresult
-    )
+    item.sold90.map((item) => Number(item.qtyshp / 3) * monthsDifference)
   );
 
   const Cal365 = mainData.map((item) =>
-    item.sold365.map(
-      (item) => Number(item.qtyshp / 12) * Difference_In_PostDecimalDayresult
-    )
+    item.sold365.map((item) => Number(item.qtyshp / 12) * monthsDifference)
   );
 
   const amounts =
-    Difference_In_PostDecimalDayresult <= 1
+    monthsDifference <= 1
       ? zipWith(onhnadWithRVG, dayCal, (x, y) => round(x - y))
-      : Difference_In_PostDecimalDayresult <= 1
+      : monthsDifference <= 1
       ? zipWith(onhnadWithRVG, Cal30, (x, y) => round(x - y))
-      : Difference_In_PostDecimalDayresult > 1 &&
-        Difference_In_PostDecimalDayresult <= 2
+      : monthsDifference > 1 && monthsDifference <= 2
       ? zipWith(onhnadWithRVG, Cal60, (x, y) => round(x - y))
-      : Difference_In_PostDecimalDayresult > 2 &&
-        Difference_In_PostDecimalDayresult < 3
+      : monthsDifference > 2 && monthsDifference < 3
       ? zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
 
-      
   const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
 
   const FosuggestedQty = zipWith(
@@ -462,195 +498,153 @@ const Watchdog = () => {
   const [foSuggestedTotal, setfoSuggestedTotal] = useState(0);
   //new or old item
 
+  const Props = {
+    mainData,
+    watchDoginfo2,
+    selectedDatePicker,
+    suggestedQty,
+    amounts,
+    amounts2,
+    set_NeededTotal,
+    FosuggestedQty,
+    setColorTotal,
+    setonHandTotal,
+    setreOrderTotal,
+    setcalendarQtyTotal,
+    setcalendarBOTotal,
+    setsold30Total,
+    setsold90Total,
+    setsold365Total,
+    setpendingTotal,
+    setavg_sold365Total,
+    setavg_lead_timeTotal,
+    setsuggestedQtyTotal,
+    setoh_forecastTotal,
+    setfoSuggestedTotal,
+    setTotalNewItemKeyForecast,
+    setMainImg,
+    record,
+    setRecord,
+    filteredData,
+    mainImg,
+    graphDropdownSelectedYear,
+    graphLoading,
+    graphAllYearData,
+    monthLine,
+    monthLinePrv,
+    pieChart,
+    COLORS,
+    maxVal,
+    setfilteredData,
+    searchMainData,
+    imageAPI,
+    itemRecords,
+    soldPercentageAPI,
+    graphAllYearDataAPI,
+    chartEachYearDataAPI,
+    graphByItemF,
+    graphByItemMonthF,
+    watchDogAPI,
+    newitemRecords,
+    pieChartF,
+    suggest,
+    setSelectedSold,
+    setWatchDoginfo,
+    setitemRank,
+    setnewitemRank,
+    InfoItemOb,
+    watchDoginfo,
+    setGraphDropdownSelectedYear,
+    monthlyData,
+    selectedSold,
+    soldPercentageHandler,
+    selectedSoldPercentage,
+    loadingsoldP,
+    YoYEachMonth,
+    YoYEachMonth2,
+    YoYEachMonth3,
+    YoYEachMonth4,
+    YoYEachMonth5,
+    YoYEachMonth6,
+    YoYEachMonth7,
+    YoYEachMonth8,
+    YoYEachMonth9,
+    YoYEachMonth10,
+    YoYEachMonth11,
+    YoYEachMonth12,
+    YoY6,
+    YoY5,
+    YoY4,
+    YoY3,
+    YoY2,
+    YoY,
+    lastyearRCVQty6,
+    lastyearRCVQty5,
+    lastyearRCVQty4,
+    lastyearRCVQty3,
+    lastyearRCVQty2,
+    lastyearRCVQty,
+    startDatePicker,
+    setStartDatePicker,
+    itemRank,
+    endDatePicker,
+    forecastDatePicker,
+    newitemRank,
+    newitemLoading,
+    setForecasteDatePicker,
+    itemLoading,
+    setEndDatePicker,
+    colorTotal,
+    Difference_In_Days2,
+    daysDifference,
+    loading,
+    onHandTotal,
+    reOrderTotal,
+    pendingTotal,
+    loadingDatePicker,
+    calendarQtyTotal,
+    calendarBOTotal,
+    sold30Total,
+    sold90Total,
+    sold365Total,
+    avg_sold365Total,
+    avg_lead_timeTotal,
+    suggestedQty,
+    suggestedQtyTotal,
+    amounts,
+    amounts2,
+    oh_forecastTotal,
+    FosuggestedQty,
+    foSuggestedTotal,
+    result2,
+    eachItemClick,
+    neededTotal,
+    totalNewItemKeyForecast,
+  };
+
   return (
     <div className="search flex w-full p-4">
-      <Table3Total
-        mainData={mainData}
-        watchDoginfo2={watchDoginfo2}
-        selectedDatePicker={selectedDatePicker}
-        suggestedQty={suggestedQty}
-        amounts={amounts}
-        amounts2={amounts2}
-        set_NeededTotal={set_NeededTotal}
-        FosuggestedQty={FosuggestedQty}
-        setColorTotal={setColorTotal}
-        setonHandTotal={setonHandTotal}
-        setreOrderTotal={setreOrderTotal}
-        setcalendarQtyTotal={setcalendarQtyTotal}
-        setcalendarBOTotal={setcalendarBOTotal}
-        setsold30Total={setsold30Total}
-        setsold90Total={setsold90Total}
-        setsold365Total={setsold365Total}
-        setpendingTotal={setpendingTotal}
-        setavg_sold365Total={setavg_sold365Total}
-        setavg_lead_timeTotal={setavg_lead_timeTotal}
-        setsuggestedQtyTotal={setsuggestedQtyTotal}
-        setoh_forecastTotal={setoh_forecastTotal}
-        setfoSuggestedTotal={setfoSuggestedTotal}
-        setTotalNewItemKeyForecast={setTotalNewItemKeyForecast}
-      />
+      <Total {...Props} />
       <div>
         <table id="tb1" className="table1">
           <tbody>
-            <Row1
-              mainData={mainData}
-              setMainImg={setMainImg}
-              record={record}
-              setRecord={setRecord}
-              filteredData={filteredData}
-              mainImg={mainImg}
-              graphDropdownSelectedYear={graphDropdownSelectedYear}
-              graphLoading={graphLoading}
-              graphAllYearData={graphAllYearData}
-              monthLine={monthLine}
-              monthLinePrv={monthLinePrv}
-              pieChart={pieChart}
-              COLORS={COLORS}
-              maxVal={maxVal}
-              setfilteredData={setfilteredData}
-              searchMainData={searchMainData}
-              imageAPI={imageAPI}
-              itemRecords={itemRecords}
-              soldPercentageAPI={soldPercentageAPI}
-              graphAllYearDataAPI={graphAllYearDataAPI}
-              chartEachYearDataAPI={chartEachYearDataAPI}
-              graphByItemF={graphByItemF}
-              graphByItemMonthF={graphByItemMonthF}
-              watchDogAPI={watchDogAPI}
-              newitemRecords={newitemRecords}
-              pieChartF={pieChartF}
-              suggest={suggest}
-              setSelectedSold={setSelectedSold}
-              setGraphDropdownSelectedYear={setGraphDropdownSelectedYear}
-              setWatchDoginfo={setWatchDoginfo}
-              setitemRank={setitemRank}
-              setnewitemRank={setnewitemRank}
-            />
+            <Row1 {...Props} />
             <Row2 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
             <Row3 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
             <Row4 InfoItemOb={InfoItemOb} mainData={mainData} />
             <Row5 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
             <Row6 InfoItemOb={InfoItemOb} watchDoginfo={watchDoginfo} />
-            <Row7
-              InfoItemOb={InfoItemOb}
-              watchDoginfo={watchDoginfo}
-              setGraphDropdownSelectedYear={setGraphDropdownSelectedYear}
-              graphDropdownSelectedYear={graphDropdownSelectedYear}
-              graphAllYearData={graphAllYearData}
-              mainData={mainData}
-              graphLoading={graphLoading}
-              monthLine={monthLine}
-              monthlyData={monthlyData}
-            />
-
-            <Row8
-              InfoItemOb={InfoItemOb}
-              selectedSold={selectedSold}
-              soldPercentageHandler={soldPercentageHandler}
-              selectedSoldPercentage={selectedSoldPercentage}
-              mainData={mainData}
-              loadingsoldP={loadingsoldP}
-              graphDropdownSelectedYear={graphDropdownSelectedYear}
-              graphLoading={graphLoading}
-              monthlyData={monthlyData}
-              graphAllYearData={graphAllYearData}
-            />
-
-            <Row9
-              InfoItemOb={InfoItemOb}
-              watchDoginfo={watchDoginfo}
-              mainData={mainData}
-              graphDropdownSelectedYear={graphDropdownSelectedYear}
-              graphLoading={graphLoading}
-              YoYEachMonth={YoYEachMonth}
-              YoYEachMonth2={YoYEachMonth2}
-              YoYEachMonth3={YoYEachMonth3}
-              YoYEachMonth4={YoYEachMonth4}
-              YoYEachMonth5={YoYEachMonth5}
-              YoYEachMonth6={YoYEachMonth6}
-              YoYEachMonth7={YoYEachMonth7}
-              YoYEachMonth8={YoYEachMonth8}
-              YoYEachMonth9={YoYEachMonth9}
-              YoYEachMonth10={YoYEachMonth10}
-              YoYEachMonth11={YoYEachMonth11}
-              YoYEachMonth12={YoYEachMonth12}
-              YoY6={YoY6}
-              YoY5={YoY5}
-              YoY4={YoY4}
-              YoY3={YoY3}
-              YoY2={YoY2}
-              YoY={YoY}
-            />
-
-            <Row10
-              InfoItemOb={InfoItemOb}
-              mainData={mainData}
-              watchDoginfo={watchDoginfo}
-              graphDropdownSelectedYear={graphDropdownSelectedYear}
-              graphLoading={graphLoading}
-              monthlyData={monthlyData}
-              lastyearRCVQty6={lastyearRCVQty6}
-              lastyearRCVQty5={lastyearRCVQty5}
-              lastyearRCVQty4={lastyearRCVQty4}
-              lastyearRCVQty3={lastyearRCVQty3}
-              lastyearRCVQty2={lastyearRCVQty2}
-              lastyearRCVQty={lastyearRCVQty}
-            />
-
-            <Row11
-              mainData={mainData}
-              startDatePicker={startDatePicker}
-              setStartDatePicker={setStartDatePicker}
-            />
-
-            <Row12
-              mainData={mainData}
-              itemRank={itemRank}
-              endDatePicker={endDatePicker}
-              forecastDatePicker={forecastDatePicker}
-              newitemRank={newitemRank}
-              newitemLoading={newitemLoading}
-              setForecasteDatePicker={setForecasteDatePicker}
-              itemLoading={itemLoading}
-              setEndDatePicker={setEndDatePicker}
-            />
+            <Row7 {...Props} />
+            <Row8 {...Props} />
+            <Row9 {...Props} />
+            <Row10 {...Props} />
+            <Row11 {...Props} />
+            <Row12 {...Props} />
           </tbody>
 
-          <SubTable
-            colorTotal={colorTotal}
-            Difference_In_Days2={Difference_In_Days2}
-            Difference_In_PostDayresult={Difference_In_PostDayresult}
-            mainData={mainData}
-          />
+          <SubTable {...Props} />
 
-          <MainTable
-            loading={loading}
-            searchLength={mainData.length}
-            mainData={mainData}
-            onHandTotal={onHandTotal}
-            reOrderTotal={reOrderTotal}
-            pendingTotal={pendingTotal}
-            selectedDatePicker={selectedDatePicker}
-            loadingDatePicker={loadingDatePicker}
-            calendarQtyTotal={calendarQtyTotal}
-            calendarBOTotal={calendarBOTotal}
-            sold30Total={sold30Total}
-            sold90Total={sold90Total}
-            sold365Total={sold365Total}
-            avg_sold365Total={avg_sold365Total}
-            avg_lead_timeTotal={avg_lead_timeTotal}
-            suggestedQty={suggestedQty}
-            suggestedQtyTotal={suggestedQtyTotal}
-            amounts={amounts}
-            amounts2={amounts2}
-            oh_forecastTotal={oh_forecastTotal}
-            FosuggestedQty={FosuggestedQty}
-            foSuggestedTotal={foSuggestedTotal}
-            result2={result2}
-            eachItemClick={eachItemClick}
-            neededTotal={neededTotal}
-            totalNewItemKeyForecast={totalNewItemKeyForecast}
-          />
+          <MainTable {...Props} searchLength={mainData.length} />
         </table>
       </div>
       {isOpen && (

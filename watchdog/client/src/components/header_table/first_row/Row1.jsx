@@ -52,7 +52,7 @@ const Row1 = ({
       newitemRecords(record);
       pieChartF(record);
       reset();
-     setGraphDropdownSelectedYear('YEAR')
+      setGraphDropdownSelectedYear('YEAR');
     }
   };
 
@@ -142,8 +142,6 @@ const Row1 = ({
         reset={reset}
         setfilteredData={setfilteredData}
         setGraphDropdownSelectedYear={setGraphDropdownSelectedYear}
-     
-       
       />
       <MainImg mainImg={mainImg} />
       <td
@@ -156,7 +154,7 @@ const Row1 = ({
         }}
       >
         <Graph
-        mainData={mainData}
+          mainData={mainData}
           graphDropdownSelectedYear={graphDropdownSelectedYear}
           graphLoading={graphLoading}
           graphAllYearData={graphAllYearData}

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import {omitBy}from 'lodash'
 
 const Row9 = ({
   InfoItemOb,
@@ -51,7 +52,7 @@ const Row9 = ({
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
                     <span style={{ color: YoY6 >= 0 ? 'green' : 'red' }}>
-                      {YoY6.toFixed(2)}%
+                      {YoY6 ? <>{YoY6.toFixed(2)}%</> : undefined}
                     </span>
                   ) : (
                     <>
@@ -63,7 +64,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth.toFixed(1)}%
+                        {YoYEachMonth ? (
+                          <>{YoYEachMonth?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                       <span
                         style={{
@@ -73,7 +76,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth2.toFixed(1)}%
+                        {YoYEachMonth2 ? (
+                          <>{YoYEachMonth2?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                     </>
                   )}
@@ -86,7 +91,7 @@ const Row9 = ({
             )
           ) : graphLoading === false ? (
             <span style={{ color: YoY6 >= 0 ? 'green' : 'red' }}>
-              {YoY6.toFixed(1)}%
+              {YoY6 ? <>{YoY6.toFixed(2)}%</> : undefined}
             </span>
           ) : (
             <></>
@@ -103,7 +108,7 @@ const Row9 = ({
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
                     <span style={{ color: YoY5 >= 0 ? 'green' : 'red' }}>
-                      {YoY5.toFixed(2)}%
+                      {YoY5 ? <>{YoY5.toFixed(2)}%</> : undefined}
                     </span>
                   ) : (
                     <>
@@ -115,7 +120,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth3.toFixed(1)}%
+                        {YoYEachMonth3 ? (
+                          <>{YoYEachMonth3?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                       <span
                         style={{
@@ -125,7 +132,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth4.toFixed(1)}%
+                        {YoYEachMonth4 ? (
+                          <>{YoYEachMonth4?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                     </>
                   )}
@@ -138,7 +147,7 @@ const Row9 = ({
             )
           ) : graphLoading === false ? (
             <span style={{ color: YoY5 >= 0 ? 'green' : 'red' }}>
-              {YoY5.toFixed(2)}%
+              {YoY5 ? <>{YoY5.toFixed(2)}%</> : undefined}
             </span>
           ) : (
             <></>
@@ -155,7 +164,7 @@ const Row9 = ({
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
                     <span style={{ color: YoY4 >= 0 ? 'green' : 'red' }}>
-                      {YoY4.toFixed(2)}%
+                      {YoY4 ? <>{YoY4.toFixed(2)}%</> : undefined}
                     </span>
                   ) : (
                     <>
@@ -167,7 +176,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth5.toFixed(1)}%
+                        {YoYEachMonth5 ? (
+                          <>{YoYEachMonth5?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                       <span
                         style={{
@@ -177,7 +188,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth6.toFixed(1)}%
+                        {YoYEachMonth6 ? (
+                          <>{YoYEachMonth6?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                     </>
                   )}
@@ -190,7 +203,7 @@ const Row9 = ({
             )
           ) : graphLoading === false ? (
             <span style={{ color: YoY4 >= 0 ? 'green' : 'red' }}>
-              {YoY4.toFixed(2)}%
+              {YoY4 ? <>{YoY4.toFixed(2)}%</> : undefined}
             </span>
           ) : (
             <></>
@@ -207,7 +220,7 @@ const Row9 = ({
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
                     <span style={{ color: YoY3 >= 0 ? 'green' : 'red' }}>
-                      {YoY3.toFixed(2)}%
+                      {YoY3 ? <>{YoY3.toFixed(2)}%</> : undefined}
                     </span>
                   ) : (
                     <>
@@ -219,7 +232,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth7.toFixed(1)}%
+                        {YoYEachMonth7 ? (
+                          <>{YoYEachMonth7?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                       <span
                         style={{
@@ -229,7 +244,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth8.toFixed(1)}%
+                        {YoYEachMonth8 ? (
+                          <>{YoYEachMonth8?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                     </>
                   )}
@@ -242,7 +259,7 @@ const Row9 = ({
             )
           ) : graphLoading === false ? (
             <span style={{ color: YoY3 >= 0 ? 'green' : 'red' }}>
-              {YoY3.toFixed(2)}%
+              {YoY3 ? <>{YoY3.toFixed(2)}%</> : undefined}
             </span>
           ) : (
             <></>
@@ -259,7 +276,7 @@ const Row9 = ({
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
                     <span style={{ color: YoY2 >= 0 ? 'green' : 'red' }}>
-                      {YoY2.toFixed(2)}%
+                      {YoY2 ? <>{YoY2.toFixed(2)}%</> : undefined}
                     </span>
                   ) : (
                     <>
@@ -271,7 +288,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth9.toFixed(1)}%
+                        {YoYEachMonth9 ? (
+                          <>{YoYEachMonth9?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                       <span
                         style={{
@@ -281,7 +300,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth10.toFixed(1)}%
+                        {YoYEachMonth10 ? (
+                          <>{YoYEachMonth10?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                     </>
                   )}
@@ -294,7 +315,7 @@ const Row9 = ({
             )
           ) : graphLoading === false ? (
             <span style={{ color: YoY2 >= 0 ? 'green' : 'red' }}>
-              {YoY2.toFixed(2)}%
+              {YoY2 ? <>{YoY2.toFixed(2)}%</> : undefined}
             </span>
           ) : (
             <></>
@@ -311,7 +332,7 @@ const Row9 = ({
                 <>
                   {graphDropdownSelectedYear === 'YEAR' ? (
                     <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>
-                      {YoY.toFixed(2)}%
+                      {YoY ? <>{YoY.toFixed(2)}%</> : undefined}
                     </span>
                   ) : (
                     <>
@@ -323,7 +344,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth11.toFixed(1)}%
+                        {YoYEachMonth11 ? (
+                          <>{YoYEachMonth11?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                       <span
                         style={{
@@ -333,7 +356,9 @@ const Row9 = ({
                           fontSize: '10px',
                         }}
                       >
-                        {YoYEachMonth12.toFixed(1)}%
+                        {YoYEachMonth12 ? (
+                          <>{YoYEachMonth12?.toFixed(1)}%</>
+                        ) : undefined}
                       </span>
                     </>
                   )}
@@ -346,7 +371,7 @@ const Row9 = ({
             )
           ) : graphLoading === false ? (
             <span style={{ color: YoY >= 0 ? 'green' : 'red' }}>
-              {YoY.toFixed(2)}%
+              {YoY ? <>{YoY.toFixed(2)}%</> : undefined}
             </span>
           ) : (
             <></>

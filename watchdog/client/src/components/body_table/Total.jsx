@@ -21,7 +21,6 @@ const Total = ({
   setsold365Total,
   setavg_sold365Total,
   setavg_lead_timeTotal,
-
   setsuggestedQtyTotal,
   setoh_forecastTotal,
   setfoSuggestedTotal,
@@ -29,6 +28,7 @@ const Total = ({
   setTotalNewItemKeyForecast,
 }) => {
   const { round } = useMath();
+
   useEffect(() => {
     const calculateTotals = () => {
       const totalColorsFilter = mainData.filter((item) => item.itemkey2);
@@ -105,8 +105,6 @@ const Total = ({
         )
       );
 
-   
-
       setColorTotal(totalColors);
       setonHandTotal(totalOnHand);
       setreOrderTotal(totalreOrder);
@@ -146,7 +144,6 @@ const Total = ({
     setsold365Total,
     setavg_sold365Total,
     setavg_lead_timeTotal,
-
     setsuggestedQtyTotal,
     setoh_forecastTotal,
     setfoSuggestedTotal,
@@ -154,7 +151,7 @@ const Total = ({
     setTotalNewItemKeyForecast,
   ]);
 
-  return <div></div>;
+  return;
 };
 
 export default Total;

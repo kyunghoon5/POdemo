@@ -12,43 +12,13 @@ const Row8 = ({
   graphAllYearData,
   monthlyData,
 }) => {
-  const renderData = () => {
-    if (!mainData.length) {
-      return (
-        <>
-          <td></td>
-          <td style={{ background: '#f0e68c' }}>SOLD_QTY</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </>
-      );
-    }
-
-    if (graphLoading) {
-      return (
-        <>
-          <td></td>
-          <td style={{ background: '#f0e68c' }}>SOLD_QTY</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </>
-      );
-    }
-  };
   const lastyearSoldQty = graphAllYearData.map((item) => item.qtyshp).at(-1);
   const lastyearSoldQty2 = graphAllYearData.map((item) => item.qtyshp).at(-2);
   const lastyearSoldQty3 = graphAllYearData.map((item) => item.qtyshp).at(-3);
   const lastyearSoldQty4 = graphAllYearData.map((item) => item.qtyshp).at(-4);
   const lastyearSoldQty5 = graphAllYearData.map((item) => item.qtyshp).at(-5);
   const lastyearSoldQty6 = graphAllYearData.map((item) => item.qtyshp).at(-6);
+ 
 
   return (
     <tr className="row8">
@@ -59,87 +29,29 @@ const Row8 = ({
         <select
           className="border border-zinc-500"
           value={selectedSold}
-          onChange={(e) => {
-            soldPercentageHandler(e);
-          }}
+          onChange={soldPercentageHandler}
         >
-          <option
-            value={
-              selectedSoldPercentage.map((item) =>
-                item.soldPercentage.map((item) =>
-                  item.soldtotal_percentage ? item.soldtotal_percentagee : 0
-                )
-              )[0]
-            }
-          >
-            All
-          </option>
-          <option
-            value={
-              selectedSoldPercentage.map((item) =>
-                item.soldPercentage.map((item) =>
-                  item.sold7_percentage ? item.sold7_percentage : 0
-                )
-              )[0]
-            }
-          >
-            7
-          </option>
-          <option
-            value={
-              selectedSoldPercentage.map((item) =>
-                item.soldPercentage.map((item) => item.sold30_percentage)
-              )[0]
-            }
-          >
-            30
-          </option>
-          <option
-            value={
-              selectedSoldPercentage.map((item) =>
-                item.soldPercentage.map((item) =>
-                  item.sold60_percentage ? item.sold60_percentage : 0
-                )
-              )[0]
-            }
-          >
-            60
-          </option>
-          <option
-            value={
-              selectedSoldPercentage.map((item) =>
-                item.soldPercentage.map((item) =>
-                  item.sold90_percentage ? item.sold90_percentage : 0
-                )
-              )[0]
-            }
-          >
-            90
-          </option>
-          <option
-            value={
-              selectedSoldPercentage.map((item) =>
-                item.soldPercentage.map((item) =>
-                  item.sold6M_percentage ? item.sold6M_percentage : 0
-                )
-              )[0]
-            }
-          >
-            6M
-          </option>
-          <option
-            value={
-              selectedSoldPercentage.map((item) =>
-                item.soldPercentage.map((item) =>
-                  item.sold365_percentage ? item.sold365_percentage : 0
-                )
-              )[0]
-            }
-          >
-            1Y
-          </option>
+          {[
+            { value: 'All', key: 'soldtotal_percentage' },
+            { value: '7', key: 'sold7_percentage' },
+            { value: '30', key: 'sold30_percentage' },
+            { value: '60', key: 'sold60_percentage' },
+            { value: '90', key: 'sold90_percentage' },
+            { value: '6M', key: 'sold6M_percentage' },
+            { value: '1Y', key: 'sold365_percentage' },
+          ].map(({ value, key }) => (
+            <option
+              key={key}
+              value={selectedSoldPercentage
+                .map((item) => item.soldPercentage[0][key] || 0)
+                .toString()}
+            >
+              {value}
+            </option>
+          ))}
         </select>
       </td>
+
       <>
         {mainData.length ? (
           selectedSold.length ? (
@@ -180,10 +92,20 @@ const Row8 = ({
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[0]}
+                        {monthlyData.map((item) => item.qtyshp)[0] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[0] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[0] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[0]
+                          : undefined}
                       </span>
                       <span style={{ float: 'right', paddingRight: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[1]}
+                        {monthlyData.map((item) => item.qtyshp)[1] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[1] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[1] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[1]
+                          : undefined}
                       </span>
                     </>
                   )}
@@ -214,10 +136,21 @@ const Row8 = ({
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[2]}
+                        {monthlyData.map((item) => item.qtyshp)[2] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[2] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[2] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[2]
+                          : undefined}
                       </span>
+
                       <span style={{ float: 'right', paddingRight: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[3]}
+                        {monthlyData.map((item) => item.qtyshp)[3] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[3] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[3] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[3]
+                          : undefined}
                       </span>
                     </>
                   )}
@@ -248,10 +181,20 @@ const Row8 = ({
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[4]}
+                        {monthlyData.map((item) => item.qtyshp)[4] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[4] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[4] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[4]
+                          : undefined}
                       </span>
                       <span style={{ float: 'right', paddingRight: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[5]}
+                        {monthlyData.map((item) => item.qtyshp)[5] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[5] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[5] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[5]
+                          : undefined}
                       </span>
                     </>
                   )}
@@ -282,10 +225,20 @@ const Row8 = ({
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[6]}
+                        {monthlyData.map((item) => item.qtyshp)[6] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[6] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[6] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[6]
+                          : undefined}
                       </span>
                       <span style={{ float: 'right', paddingRight: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[7]}
+                        {monthlyData.map((item) => item.qtyshp)[7] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[7] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[7] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[7]
+                          : undefined}
                       </span>
                     </>
                   )}
@@ -316,10 +269,20 @@ const Row8 = ({
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[8]}
+                        {monthlyData.map((item) => item.qtyshp)[8] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[8] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[8] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[8]
+                          : undefined}
                       </span>
                       <span style={{ float: 'right', paddingRight: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[9]}
+                        {monthlyData.map((item) => item.qtyshp)[9] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[9] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[9] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[9]
+                          : undefined}
                       </span>
                     </>
                   )}
@@ -350,10 +313,20 @@ const Row8 = ({
                   ) : (
                     <>
                       <span style={{ float: 'left', paddingLeft: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[10]}
+                        {monthlyData.map((item) => item.qtyshp)[10] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[10] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[10] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[10]
+                          : undefined}
                       </span>
                       <span style={{ float: 'right', paddingRight: '4px' }}>
-                        {monthlyData.map((item) => item.qtyshp)[11]}
+                        {monthlyData.map((item) => item.qtyshp)[11] !== null &&
+                        monthlyData.map((item) => item.qtyshp)[11] !==
+                          undefined &&
+                        monthlyData.map((item) => item.qtyshp)[11] !== 0
+                          ? monthlyData.map((item) => item.qtyshp)[11]
+                          : undefined}
                       </span>
                     </>
                   )}

@@ -74,56 +74,20 @@ const Row7 = ({
       .reverse()
       .map((year, i) => <td key={i}>{year}</td>);
 
+
+    
     const monthlyLabels = (
       <>
-        <td>
-          <span style={{ float: 'left', paddingLeft: '4px' }}>
-            {monthlyData.map((item) => item.name)[0]}
-          </span>
-          <span style={{ float: 'right', paddingRight: '4px' }}>
-            {monthlyData.map((item) => item.name)[1]}
-          </span>
-        </td>
-        <td>
-          <span style={{ float: 'left', paddingLeft: '4px' }}>
-            {monthlyData.map((item) => item.name)[2]}
-          </span>
-          <span style={{ float: 'right', paddingRight: '4px' }}>
-            {monthlyData.map((item) => item.name)[3]}
-          </span>
-        </td>
-        <td>
-          <span style={{ float: 'left', paddingLeft: '4px' }}>
-            {monthlyData.map((item) => item.name)[4]}
-          </span>
-          <span style={{ float: 'right', paddingRight: '4px' }}>
-            {monthlyData.map((item) => item.name)[5]}
-          </span>
-        </td>
-        <td>
-          <span style={{ float: 'left', paddingLeft: '4px' }}>
-            {monthlyData.map((item) => item.name)[6]}
-          </span>
-          <span style={{ float: 'right', paddingRight: '4px' }}>
-            {monthlyData.map((item) => item.name)[7]}
-          </span>
-        </td>
-        <td>
-          <span style={{ float: 'left', paddingLeft: '4px' }}>
-            {monthlyData.map((item) => item.name)[8]}
-          </span>
-          <span style={{ float: 'right', paddingRight: '4px' }}>
-            {monthlyData.map((item) => item.name)[9]}
-          </span>
-        </td>
-        <td>
-          <span style={{ float: 'left', paddingLeft: '4px' }}>
-            {monthlyData.map((item) => item.name)[10]}
-          </span>
-          <span style={{ float: 'right', paddingRight: '4px' }}>
-            {monthlyData.map((item) => item.name)[11]}
-          </span>
-        </td>
+        {[0, 2, 4, 6, 8, 10].map((index) => (
+          <td key={index}>
+            <span style={{ float: 'left', paddingLeft: '4px' }}>
+              {monthlyData[index].name}
+            </span>
+            <span style={{ float: 'right', paddingRight: '4px' }}>
+              {monthlyData[index + 1].name}
+            </span>
+          </td>
+        ))}
       </>
     );
 
