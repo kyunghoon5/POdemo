@@ -160,8 +160,7 @@ const Row12 = ({
     <tr className="row12">
       <td className="newOrOld ">{newOrOld()}</td>
       <td>GRADE</td>
-    {mainData.length ? (result) : <td></td>}
-     
+      {mainData.length ? result : <td></td>}
 
       <td>
         Vend:{' '}
@@ -171,6 +170,7 @@ const Row12 = ({
         <DatePicker
           className="border-2 border-zinc-500 text-center text-"
           selected={endDatePicker}
+          maxDate={new Date()}
           onChange={(date) => setEndDatePicker(date)}
         />
       </td>

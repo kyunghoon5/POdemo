@@ -63,6 +63,7 @@ const Row11 = ({ mainData, startDatePicker, setStartDatePicker }) => {
         <DatePicker
           className="border-2 border-zinc-500 text-center"
           selected={startDatePicker}
+          maxDate={new Date()}
           onChange={(date) => setStartDatePicker(date)}
         />
       </td>

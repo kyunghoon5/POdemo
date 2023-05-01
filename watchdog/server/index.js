@@ -429,7 +429,7 @@ app.get('/mergeData', async (req, res) => {
           vendno: num.vendno,
           qtyshp: num.qtyshp,
           avg_qtyshp: num.avg_qtyshp,
-          qtybo: num.qtyshp,
+          qtybo: num.qtybo,
         }));
 
         obj.pendingDataO = numbers16.map((num) => ({
@@ -457,6 +457,7 @@ app.get('/mergeData', async (req, res) => {
         obj.newitemkeyForecast = number20.map((num) => ({
           itemkey2: num.itemkey2,
           total_qty_difference: num.total_qty_difference,
+          qtybo: num.qtybo
         }));
 
         return obj;

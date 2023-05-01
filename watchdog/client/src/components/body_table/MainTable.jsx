@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import BlankPage from './BlankPage';
 import useMath from '../../utils/math/Math';
 import useDate from '../../utils/date/DateFile';
-import useNewItemCal from '../../utils/math/NewItemCal'
+import useNewItemCal from '../../utils/math/NewItemCal';
 
 const MainTable = ({
   loading,
@@ -22,24 +22,29 @@ const MainTable = ({
   avg_lead_timeTotal,
   suggestedQty,
   suggestedQtyTotal,
-  amounts,
-  amounts2,
+  oldOH_Forecast_Left,
+  oldNeededCal,
   oh_forecastTotal,
   FosuggestedQty,
   foSuggestedTotal,
   result2,
   eachItemClick,
   neededTotal,
-  totalNewItemKeyForecast,
+  totalNewItem_365_Sold,
+  totalNewItem_AVG_SOLD,
+  totalNew_SuggestedOH,
+  NewOH_ForecastLeft,
+  new_oh_forecastTotal,
+  NewOH_ForecastRight,
+  NewNeededCal,
+  NewneededTotal,
 }) => {
   const { round } = useMath();
   const { daysToDate, getDate } = useDate();
-  const { suggestedQty2 } = useNewItemCal(mainData);
+  const { suggestedOHForNewItem, NewItem_Qty_avg } = useNewItemCal(mainData);
   const past365c = getDate(365);
 
-  
-
-  const change365New =
+  const change365_to_New =
     mainData
       .filter((item) => item.start_dte)
       .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
@@ -54,7 +59,7 @@ const MainTable = ({
             )
           )
         )}
-        <div>{totalNewItemKeyForecast}</div>
+        <div>{totalNewItem_365_Sold}</div>
       </>
     ) : (
       <>
@@ -71,24 +76,225 @@ const MainTable = ({
       </>
     );
 
+  const changeAVG_SOLDNew =
+    mainData
+      .filter((item) => item.start_dte)
+      .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
+    past365c ? (
+      <>
+        {NewItem_Qty_avg.map((item, idx) => (
+          <div key={idx}>{Number(item).toFixed(2)}</div>
+        ))}
 
-    const changeSuggestedNew =
-      mainData
-        .filter((item) => item.start_dte)
-        .map(
-          (item) => new Date(item.start_dte).toISOString().split('T')[0]
-        )[0] > past365c ? (
-        <>{suggestedQty2.map((item,idx)=>(<div key={idx}>{round(item)}</div>))}
-        <div></div>
-        </>
-      ) : (
-        <>
-          {suggestedQty.map((value, index) => (
-            <div key={`qty-${index}`}>{round(value)}</div>
-          ))}
-          <div>{suggestedQtyTotal}</div>
-        </>
-      );
+        <div>{totalNewItem_AVG_SOLD}</div>
+      </>
+    ) : (
+      <>
+        {mainData.map((item, idx) =>
+          item.reorderPointO.length ? (
+            item.reorderPointO.map((item2, idx2) => (
+              <div key={idx2}>{item2.avg_qtyshp.toFixed(2)}</div>
+            ))
+          ) : (
+            <div key={idx}>0</div>
+          )
+        )}
+        <div>{avg_sold365Total.toFixed(2)}</div>
+      </>
+    );
+
+  const changeSuggestedOH =
+    mainData
+      .filter((item) => item.start_dte)
+      .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
+    past365c ? (
+      <>
+        {suggestedOHForNewItem.map((item, idx) => (
+          <div key={idx}>{round(item)}</div>
+        ))}
+        <div>{totalNew_SuggestedOH}</div>
+      </>
+    ) : (
+      <>
+        {suggestedQty.map((value, index) => (
+          <div key={`qty-${index}`}>{round(value)}</div>
+        ))}
+        <div>{suggestedQtyTotal}</div>
+      </>
+    );
+
+  const changeOH_ForecastNew =
+    mainData
+      .filter((item) => item.start_dte)
+      .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
+    past365c ? (
+      <>
+        {suggestedQty.every((value) => value === 0) ? (
+          <>
+            {NewOH_ForecastLeft.map((num, idx) => (
+              <div key={idx}>0</div>
+            ))}
+            <div>0</div>
+          </>
+        ) : (
+          <>
+            {NewOH_ForecastLeft.map((num, idx2) => (
+              <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
+                {round(num)}
+              </div>
+            ))}
+            <div>{new_oh_forecastTotal}</div>
+          </>
+        )}
+      </>
+    ) : (
+      <>
+        {suggestedQty.every((value) => value === 0) ? (
+          <>
+            {oldOH_Forecast_Left.map((num, idx) => (
+              <div key={idx}>0</div>
+            ))}
+            <div>0</div>
+          </>
+        ) : (
+          <>
+            {oldOH_Forecast_Left.map((num, idx2) => (
+              <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
+                {round(num)}
+              </div>
+            ))}
+            <div>{oh_forecastTotal}</div>
+          </>
+        )}
+      </>
+    );
+
+  const changeOH_Forecast_OorN =
+    mainData
+      .filter((item) => item.start_dte)
+      .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
+    past365c ? (
+      <>
+        {suggestedQty.every((value) => value === 0) ? (
+          <>
+            {NewOH_ForecastRight.map((num, index) => (
+              <div key={index}>0</div>
+            ))}
+            <div></div>
+          </>
+        ) : (
+          <>
+            {NewOH_ForecastRight.map((num, index2) => (
+              <Fragment key={index2}>
+                <span style={{ float: 'left', fontSize: '11px' }}>
+                  {num < 0 ? 'overstock' : num === 0 ? '' : 'needed'}
+                </span>
+                <div
+                  key={`qty-${index2}`}
+                  className={
+                    num < 0
+                      ? 'overstock-amount'
+                      : num === 0
+                      ? ''
+                      : 'needed-amount'
+                  }
+                >
+                  {round(num)}
+                </div>
+              </Fragment>
+            ))}
+            <div></div>
+          </>
+        )}
+      </>
+    ) : (
+      <>
+        {suggestedQty.every((value) => value === 0) ? (
+          <>
+            {FosuggestedQty.map((num, index) => (
+              <div key={index}>0</div>
+            ))}
+            <div></div>
+          </>
+        ) : (
+          <>
+            {FosuggestedQty.map((num, index2) => (
+              <Fragment key={index2}>
+                <span style={{ float: 'left', fontSize: '11px' }}>
+                  {num < 0 ? 'overstock' : num === 0 ? '' : 'needed'}
+                </span>
+                <div
+                  key={`qty-${index2}`}
+                  className={
+                    num < 0
+                      ? 'overstock-amount'
+                      : num === 0
+                      ? ''
+                      : 'needed-amount'
+                  }
+                >
+                  {round(num)}
+                </div>
+              </Fragment>
+            ))}
+            <div></div>
+          </>
+        )}
+      </>
+    );
+
+  const changeNew_Needed =
+    mainData
+      .filter((item) => item.start_dte)
+      .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
+    past365c ? (
+      <>
+        {suggestedQty.every((value) => value === 0) ? (
+          <>
+            {NewNeededCal.map((num, idx) => (
+              <div key={idx}>0</div>
+            ))}
+            <div>0</div>
+          </>
+        ) : (
+          <>
+            {NewNeededCal.map((num, idx2) => (
+              <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
+                {num < 0 ? Math.abs(num) : undefined}
+              </div>
+            ))}
+
+            <div className={oh_forecastTotal < 0 ? '' : 'needed-amount'}>
+              {Math.abs(NewneededTotal)}
+            </div>
+          </>
+        )}
+      </>
+    ) : (
+      <>
+        {suggestedQty.every((value) => value === 0) ? (
+          <>
+            {oldNeededCal.map((num, idx) => (
+              <div key={idx}>0</div>
+            ))}
+            <div>0</div>
+          </>
+        ) : (
+          <>
+            {oldNeededCal.map((num, idx2) => (
+              <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
+                {num < 0 ? Math.abs(num) : undefined}
+              </div>
+            ))}
+
+            <div className={oh_forecastTotal < 0 ? '' : 'needed-amount'}>
+              {Math.abs(neededTotal)}
+            </div>
+          </>
+        )}
+      </>
+    );
+
   if (loading) {
     return (
       <tbody>
@@ -172,6 +378,7 @@ const MainTable = ({
               : mainData.map((item, idx) => <div key={idx}>Loading</div>)}
             <div>{calendarQtyTotal}</div>
           </td>
+
           <td style={{ padding: '0' }}>
             {selectedDatePicker.length
               ? loadingDatePicker === false
@@ -216,20 +423,9 @@ const MainTable = ({
             <div>{sold90Total}</div>
           </td>
 
-          <td style={{ padding: '0' }}>{change365New}</td>
-
-          <td style={{ padding: '0' }}>
-            {mainData.map((item, idx) =>
-              item.reorderPointO.length ? (
-                item.reorderPointO.map((item2, idx2) => (
-                  <div key={idx2}>{item2.avg_qtyshp.toFixed(2)}</div>
-                ))
-              ) : (
-                <div key={idx}>0</div>
-              )
-            )}
-            <div>{avg_sold365Total.toFixed(2)}</div>
-          </td>
+          <td style={{ padding: '0' }}>{change365_to_New}</td>
+          {/* 23 */}
+          <td style={{ padding: '0' }}>{changeAVG_SOLDNew}</td>
 
           <td style={{ padding: '0' }}>
             {mainData.map((item, idx) =>
@@ -244,61 +440,12 @@ const MainTable = ({
             <div>{round(avg_lead_timeTotal)} days</div>
           </td>
 
-          <td style={{ padding: '0' }}>{changeSuggestedNew}</td>
+          <td style={{ padding: '0' }}>{changeSuggestedOH}</td>
 
-          <td style={{ padding: '0' }}>
-            {suggestedQty.every((value) => value === 0) ? (
-              <>
-                {amounts.map((num, idx) => (
-                  <div key={idx}>0</div>
-                ))}
-                <div>0</div>
-              </>
-            ) : (
-              <>
-                {amounts.map((num, idx2) => (
-                  <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
-                    {round(num)}
-                  </div>
-                ))}
-                <div>{oh_forecastTotal}</div>
-              </>
-            )}
-          </td>
+          <td style={{ padding: '0' }}>{changeOH_ForecastNew}</td>
 
-          <td style={{ padding: '0' }}>
-            {suggestedQty.every((value) => value === 0) ? (
-              <>
-                {FosuggestedQty.map((num, index) => (
-                  <div key={index}>0</div>
-                ))}
-                <div></div>
-              </>
-            ) : (
-              <>
-                {FosuggestedQty.map((num, index2) => (
-                  <Fragment key={index2}>
-                    <span style={{ float: 'left', fontSize: '11px' }}>
-                      {num < 0 ? 'overstock' : num === 0 ? '' : 'needed'}
-                    </span>
-                    <div
-                      key={`qty-${index2}`}
-                      className={
-                        num < 0
-                          ? 'overstock-amount'
-                          : num === 0
-                          ? ''
-                          : 'needed-amount'
-                      }
-                    >
-                      {round(num)}
-                    </div>
-                  </Fragment>
-                ))}
-                <div></div>
-              </>
-            )}
-          </td>
+          <td style={{ padding: '0' }}>{changeOH_Forecast_OorN}</td>
+
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>
             {mainData.map((item, idx) =>
@@ -312,29 +459,9 @@ const MainTable = ({
             )}
             <div></div>
           </td>
-          {/*column table with nested array */}
-          <td style={{ padding: '0' }}>
-            {suggestedQty.every((value) => value === 0) ? (
-              <>
-                {amounts2.map((num, idx) => (
-                  <div key={idx}>0</div>
-                ))}
-                <div>0</div>
-              </>
-            ) : (
-              <>
-                {amounts2.map((num, idx2) => (
-                  <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
-                    {num < 0 ? Math.abs(num) : undefined}
-                  </div>
-                ))}
 
-                <div className={oh_forecastTotal < 0 ? '' : 'needed-amount'}>
-                  {Math.abs(neededTotal)}
-                </div>
-              </>
-            )}
-          </td>
+          {/*column table with nested array */}
+          <td style={{ padding: '0' }}>{changeNew_Needed}</td>
         </tr>
       </tbody>
     );

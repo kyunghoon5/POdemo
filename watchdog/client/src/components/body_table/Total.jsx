@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { sum, sumBy } from 'lodash';
 import useMath from '../../utils/math/Math';
+import useNewItemCal from '../../utils/math/NewItemCal';
 //test to pass function to useState hook
 const Total = ({
   mainData,
   watchDoginfo2,
   selectedDatePicker,
   suggestedQty,
-  amounts,
-  amounts2,
+  oldOH_Forecast_Left,
+  oldNeededCal,
   FosuggestedQty,
   setColorTotal,
   setonHandTotal,
@@ -23,11 +24,18 @@ const Total = ({
   setavg_lead_timeTotal,
   setsuggestedQtyTotal,
   setoh_forecastTotal,
-  setfoSuggestedTotal,
+  set_New_NeededTotal,
+
   set_NeededTotal,
-  setTotalNewItemKeyForecast,
+  setTotalNewItem_365_Sold,
+  setTotalNewItem_AVG_SOLD,
+  setTotalNew_SuggestedOH,
+  setNew_oh_forecastTotal,
+  NewOH_ForecastLeft,
+  NewNeededCal,
 }) => {
   const { round } = useMath();
+  const { NewItem_Qty_avg, suggestedOHForNewItem } = useNewItemCal(mainData);
 
   useEffect(() => {
     const calculateTotals = () => {
@@ -70,39 +78,56 @@ const Total = ({
         mainData.map((item) => sumBy(item.sold365, 'qtyshp'))
       );
 
+      const totalAVG_SOLD =
+        sumBy(mainData.map((item) => sumBy(item.reorderPointO, 'avg_qtyshp'))) /
+        mainData.reduce((a, v) => (a = a + v.reorderPointO.length), 0);
+
       const totalavg_lead_time =
         sumBy(
           mainData.map((item) => sumBy(item.poLeadTimeO, 'avg_lead_time'))
         ) / mainData.reduce((a, v) => (a = a + v.poLeadTimeO.length), 0);
 
-      const totalavg_sold365 =
-        sumBy(mainData.map((item) => sumBy(item.reorderPointO, 'avg_qtyshp'))) /
-        mainData.reduce((a, v) => (a = a + v.reorderPointO.length), 0);
-
       const totalSuggestedQty = sum(suggestedQty.map((value) => round(value)));
 
-      const totaloh_forecast = amounts.reduce(
+      const totaloh_forecast = oldOH_Forecast_Left.reduce(
         (sum, num) => (num > 0 ? round(sum + num) : sum),
         0
       );
 
-      const total_Needed = amounts2.reduce((sum, arr) => {
+      const totalNewoh_forecast = NewOH_ForecastLeft.reduce(
+        (sum, num) => (num > 0 ? round(sum + num) : sum),
+        0
+      );
+
+      const total_Needed = oldNeededCal.reduce((sum, arr) => {
         const arrSum = arr.reduce(
           (arrSum, num) => arrSum + (num < 0 ? num : 0),
           0
         );
         return sum + arrSum;
       }, 0);
+      const total_New_Needed = NewNeededCal.reduce((sum, num) => {
+        const arrSum = sum + (num < 0 ? num : 0);
+        return arrSum;
+      }, 0);
 
-      const totalFoSuggested = FosuggestedQty.reduce(
-        (sum, num) => (num > 0 ? round(sum + num) : sum),
-        0
-      );
-
-      const totalNewItemKy = sumBy(
+      const totalNew365 = sumBy(
         mainData.map((item) =>
           sumBy(item.newitemkeyForecast, 'total_qty_difference')
         )
+      );
+
+      const nonZeroItems = NewItem_Qty_avg.filter(
+        (item) => item.reduce((a, v) => a + v, 0) !== 0
+      );
+      const lengthOfNonZeroItems = nonZeroItems.length;
+
+      const totalNew_AVG_SOLD = (
+        sum(NewItem_Qty_avg.map((item) => sumBy(item))) / lengthOfNonZeroItems
+      ).toFixed(2);
+
+      const totalNew_SuggestedOH = sum(
+        suggestedOHForNewItem.map((item) => round(item))
       );
 
       setColorTotal(totalColors);
@@ -114,15 +139,19 @@ const Total = ({
       setsold30Total(totalSold30);
       setsold90Total(totalSold90);
       setsold365Total(totalSold365);
-      setavg_sold365Total(totalavg_sold365);
+      setavg_sold365Total(totalAVG_SOLD);
       setavg_lead_timeTotal(totalavg_lead_time);
 
       setsuggestedQtyTotal(totalSuggestedQty);
       setoh_forecastTotal(totaloh_forecast);
-      setfoSuggestedTotal(totalFoSuggested);
+
       set_NeededTotal(total_Needed);
 
-      setTotalNewItemKeyForecast(totalNewItemKy);
+      setTotalNewItem_365_Sold(totalNew365);
+      setTotalNewItem_AVG_SOLD(totalNew_AVG_SOLD);
+      setTotalNew_SuggestedOH(totalNew_SuggestedOH);
+      setNew_oh_forecastTotal(totalNewoh_forecast);
+      set_New_NeededTotal(total_New_Needed);
     };
 
     calculateTotals();
@@ -131,7 +160,7 @@ const Total = ({
     watchDoginfo2,
     selectedDatePicker,
     suggestedQty,
-    amounts,
+    oldOH_Forecast_Left,
     FosuggestedQty,
     setColorTotal,
     setonHandTotal,
@@ -146,9 +175,13 @@ const Total = ({
     setavg_lead_timeTotal,
     setsuggestedQtyTotal,
     setoh_forecastTotal,
-    setfoSuggestedTotal,
+
     set_NeededTotal,
-    setTotalNewItemKeyForecast,
+    setTotalNewItem_365_Sold,
+    setTotalNewItem_AVG_SOLD,
+    setTotalNew_SuggestedOH,
+    setNew_oh_forecastTotal,
+    set_New_NeededTotal,
   ]);
 
   return;

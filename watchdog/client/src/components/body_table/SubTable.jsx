@@ -35,7 +35,7 @@ const SubTable = ({
         <td>AVG_SOLD</td>
         <td>AVG_LEAD</td>
 
-        <td>SuggestedOH</td>
+        <td>Suggested</td>
         <td colSpan={2}>+{daysDifference} days</td>
 
         <td>OrderToday</td>

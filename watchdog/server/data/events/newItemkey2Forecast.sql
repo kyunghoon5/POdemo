@@ -1,11 +1,13 @@
-
+WITH BOTranTmp as (SELECT * FROM BOTran WHERE convert(date,invdte) >= Dateadd(day, -365, Getdate()))
 
 SELECT
 A.descrip,
 a.itemkey2,
-A.start_dte
-,(SELECT  
+A.start_dte,
+(ISNULL((SELECT SUM(qtybo) 
+FROM BOTranTmp WHERE descrip = A.descrip and itemkey2= a.itemkey2), 0)) as qtybo,
 
+(SELECT  
 SUM(query1.all_qtyshp - query2.total_qtyshp)
 FROM
 (SELECT
@@ -32,6 +34,7 @@ t.custno,
 t.itemkey2,
 t.descrip,
 sum(t.qtyshp) AS total_qtyshp
+
 FROM
 [BYT_LEG].[dbo].[artran10c] t
 INNER JOIN (

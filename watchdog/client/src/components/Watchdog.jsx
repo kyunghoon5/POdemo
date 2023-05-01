@@ -72,12 +72,9 @@ const Watchdog = () => {
     record,
     setRecord,
   } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
- 
+
   const { date, formatDate } = useDate();
   const { round } = useMath();
-
-  
-
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
@@ -321,7 +318,9 @@ const Watchdog = () => {
   const [sold365Total, setsold365Total] = useState(0);
   const [avg_sold365Total, setavg_sold365Total] = useState(0);
   const [avg_lead_timeTotal, setavg_lead_timeTotal] = useState(0);
-  const [totalNewItemKeyForecast, setTotalNewItemKeyForecast] = useState(0);
+  const [totalNewItem_365_Sold, setTotalNewItem_365_Sold] = useState(0);
+  const [totalNewItem_AVG_SOLD, setTotalNewItem_AVG_SOLD] = useState(0);
+  const [totalNew_SuggestedOH, setTotalNew_SuggestedOH] = useState(0);
 
   const suggestedQtyavg_qty = mainData.map((item) =>
     item.reorderPointO.map((item) => Number(item.avg_qtyshp))
@@ -329,7 +328,6 @@ const Watchdog = () => {
   const suggestedQtyavg_lead = mainData.map((item) =>
     item.poLeadTimeO.map((item) => Number(item.avg_lead_time))
   );
-  
 
   const suggestedQty = zipWith(
     suggestedQtyavg_qty,
@@ -420,7 +418,7 @@ const Watchdog = () => {
     (arr1, arr2) => arr1.map((elem) => elem * arr2)
   );
 
-  const amounts2 =
+  const oldNeededCal =
     Difference_In_PostDecimalDayresult2 <= 1
       ? zipWith(onhnadWithRVG2, multipliedData, (arr1, arr2) =>
           arr2.map((elem) => round(arr1 - elem))
@@ -444,7 +442,9 @@ const Watchdog = () => {
         );
 
   const [neededTotal, set_NeededTotal] = useState(0);
+  const [NewneededTotal, set_New_NeededTotal] = useState(0);
 
+  
   const forecastDate = forecastDatePicker;
   const daysDifference = Math.round(
     (forecastDate.getTime() - date.getTime()) / (1000 * 3600 * 24)
@@ -480,7 +480,7 @@ const Watchdog = () => {
     item.sold365.map((item) => Number(item.qtyshp / 12) * monthsDifference)
   );
 
-  const amounts =
+  const oldOH_Forecast_Left =
     monthsDifference <= 1
       ? zipWith(onhnadWithRVG, dayCal, (x, y) => round(x - y))
       : monthsDifference <= 1
@@ -491,25 +491,35 @@ const Watchdog = () => {
       ? zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
 
+  const {
+    NewOH_ForecastLeft,
+
+    NewNeededCal,
+    NewOH_ForecastRight,
+  } = useNewItemCal(mainData, forecastDatePicker, sumReqForcast);
+
   const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
+  const [new_oh_forecastTotal, setNew_oh_forecastTotal] = useState(0);
 
   const FosuggestedQty = zipWith(
     suggestedQtyavg_qty,
     suggestedQtyavg_lead,
-    amounts,
+    oldOH_Forecast_Left,
     (qty, lead, am) => qty * lead - am
   ).reduce((acc, curr) => acc.concat(curr), []);
 
-  const [foSuggestedTotal, setfoSuggestedTotal] = useState(0);
-  //new or old item
-
   const Props = {
+    NewneededTotal,
+    set_New_NeededTotal,
+    NewNeededCal,
+    NewOH_ForecastRight,
     mainData,
     watchDoginfo2,
     selectedDatePicker,
     suggestedQty,
-    amounts,
-    amounts2,
+    oldOH_Forecast_Left,
+    oldNeededCal,
+    NewOH_ForecastLeft,
     set_NeededTotal,
     FosuggestedQty,
     setColorTotal,
@@ -525,8 +535,13 @@ const Watchdog = () => {
     setavg_lead_timeTotal,
     setsuggestedQtyTotal,
     setoh_forecastTotal,
-    setfoSuggestedTotal,
-    setTotalNewItemKeyForecast,
+    setNew_oh_forecastTotal,
+    
+    new_oh_forecastTotal,
+    setTotalNewItem_365_Sold,
+    setTotalNewItem_AVG_SOLD,
+    setTotalNew_SuggestedOH,
+    totalNewItem_AVG_SOLD,
     setMainImg,
     record,
     setRecord,
@@ -614,17 +629,16 @@ const Watchdog = () => {
     sold365Total,
     avg_sold365Total,
     avg_lead_timeTotal,
-    suggestedQty,
+
     suggestedQtyTotal,
-    amounts,
-    amounts2,
+
     oh_forecastTotal,
-    FosuggestedQty,
-    foSuggestedTotal,
+
     result2,
     eachItemClick,
     neededTotal,
-    totalNewItemKeyForecast,
+    totalNewItem_365_Sold,
+    totalNew_SuggestedOH,
   };
 
   return (
