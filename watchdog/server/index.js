@@ -23,6 +23,8 @@ const poForecast = require('./routes/poForecast');
 const searchSuggest = require('./routes/searchSuggest');
 const newItemRank = require('./routes/newitemRank');
 const pieChartQ = require('./routes/pieChartQuarter');
+const itemAlertOld = require('./routes/itemAlertOld');
+
 const dotenv = require('dotenv');
 dotenv.config();
 const { host_url3, host_url4 } = process.env;
@@ -34,72 +36,6 @@ const proxy = createProxyMiddleware({
   changeOrigin: true,
 });
 const path = require('path');
-
-// app.get('/download', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/RB Rank.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadnonRB', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/nonRB Rank.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadNewItem', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/newItem Rank.xlsx');
-//   res.download(file);
-// });
-// app.get('/download1Q', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/1Q.xlsx');
-//   res.download(file);
-// });
-// app.get('/download2Q', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/2Q.xlsx');
-//   res.download(file);
-// });
-// app.get('/download3Q', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/3Q.xlsx');
-//   res.download(file);
-// });
-// app.get('/download4Q', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/4Q.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadCheck2021', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/2020-2021 change_rate.xlsx');
-//   res.download(file);
-// });
-
-// app.get('/downloadCheck2022', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/2021-2022 change_rate.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadXSHORT', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/size rank/XSHORT.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadSHORT', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/size rank/SHORT.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadMIDSHORT', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/size rank/MID_SHORT.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadMID', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/size rank/MID.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadMIDLONG', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/size rank/MID_LONG.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadLONG', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/size rank/LONG.xlsx');
-//   res.download(file);
-// });
-// app.get('/downloadXLONG', (req, res) => {
-//   const file = path.join(__dirname, '../../Data/size rank/XLONG.xlsx');
-//   res.download(file);
-// });
 
 app.get('/downloadItemReorderPoint', (req, res) => {
   const file = path.join(__dirname, '../../../Data/itemReorderList.xlsx');
@@ -120,6 +56,8 @@ app.use('/poForecast', poForecast);
 app.use('/searchAuto', searchSuggest);
 app.use('/newItemRank', newItemRank);
 app.use('/pieChart', pieChartQ);
+app.use('/itemAlertOld', itemAlertOld);
+
 const utils = require('./data/utils');
 
 // Define an endpoint for merging data from both servers
@@ -457,7 +395,7 @@ app.get('/mergeData', async (req, res) => {
         obj.newitemkeyForecast = number20.map((num) => ({
           itemkey2: num.itemkey2,
           total_qty_difference: num.total_qty_difference,
-          qtybo: num.qtybo
+          qtybo: num.qtybo,
         }));
 
         return obj;
@@ -510,7 +448,7 @@ app.get('/mergeData', async (req, res) => {
   }
 });
 
-// Start the server on port 3000
-app.listen(8082, host_url4, () => {
+// Start the server on port 8082
+app.listen(8082, host_url4,  () => {
   console.log('Server listening on port 8082');
 });

@@ -225,7 +225,20 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
     });
   };
 
+  const [itemAlertOld, setItemAlertOld] = useState([]);
+
+  const itemAlertOldAPI = async () => {
+    return await axios
+      .get(`${BASE_URL}itemAlertOld`)
+      .then((response) => setItemAlertOld(response.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    itemAlertOldAPI();
+  }, []);
+
   return {
+    itemAlertOld,
     mainData,
     loading,
     searchMainData,

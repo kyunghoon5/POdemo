@@ -71,6 +71,7 @@ const Watchdog = () => {
     setMainImg,
     record,
     setRecord,
+    itemAlertOld,
   } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
 
   const { date, formatDate } = useDate();
@@ -444,7 +445,6 @@ const Watchdog = () => {
   const [neededTotal, set_NeededTotal] = useState(0);
   const [NewneededTotal, set_New_NeededTotal] = useState(0);
 
-  
   const forecastDate = forecastDatePicker;
   const daysDifference = Math.round(
     (forecastDate.getTime() - date.getTime()) / (1000 * 3600 * 24)
@@ -536,7 +536,7 @@ const Watchdog = () => {
     setsuggestedQtyTotal,
     setoh_forecastTotal,
     setNew_oh_forecastTotal,
-    
+
     new_oh_forecastTotal,
     setTotalNewItem_365_Sold,
     setTotalNewItem_AVG_SOLD,
@@ -639,6 +639,7 @@ const Watchdog = () => {
     neededTotal,
     totalNewItem_365_Sold,
     totalNew_SuggestedOH,
+    itemAlertOld,
   };
 
   return (
@@ -679,9 +680,10 @@ const Watchdog = () => {
         </div>
       )}
       <div className="pl-10 ">
-        <Alert_Table />
+        <Alert_Table {...Props}/>
         {/* <TreeViewDownload handleDownload17={handleDownload17} /> */}
       </div>
+     
     </div>
   );
 };
