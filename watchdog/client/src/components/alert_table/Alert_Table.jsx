@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -16,6 +16,7 @@ const Alert_Table = ({
   const [showOldItem, setOldItem] = useState(false);
   const [showNewItem, setNewItem] = useState(false);
   const [showFirstItem, setFirstItem] = useState(false);
+    const [currentPage, setCurrentPage] = useState(0);
 
   // useEffect(() => {
   //   const data = itemAlertOld.map((item, index) => ({
@@ -27,6 +28,7 @@ const Alert_Table = ({
   //   }));
   //   setData(data);
   // }, [itemAlertOld]);
+ 
 
   const handleDataButtonClick = () => {
     setShowData(true);
@@ -169,7 +171,7 @@ const Alert_Table = ({
                       paginationModel: { page: 0, pageSize: 10 },
                     },
                   }}
-                  pageSizeOptions={[5, 10]}
+                  pageSizeOptions={[10, 25]}
                 />
               )}
             </div>
@@ -196,7 +198,7 @@ const Alert_Table = ({
                     pagination: {
                       paginationModel: { page: 0, pageSize: 10 },
                     },
-                  }}
+                  }}                
                   pageSizeOptions={[5, 10]}
                 />
               )}

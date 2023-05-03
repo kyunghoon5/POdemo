@@ -1,12 +1,11 @@
-select 
+select
   (SELECT TOP 1 vendno FROM potran10c WHERE descrip = b.descrip ) as vendno,
 	   (SELECT TOP 1 class FROM artran10c WHERE descrip = b.descrip ) as class,
-  b.descrip, 
-  isnull( b.total_qty_difference,0) as qtyshp,
-  
- b.fristb as start_dte
- 
 
+  b.descrip, 
+   b.total_qty_difference as qtyshp,
+  b.start_dte
+  
  
 from 
   (
@@ -19,7 +18,6 @@ from
                 WHERE  descrip = A.descrip  and price >0) AS price ,
       A.descrip, 
       A.start_dte, 
-	  a.fristb,
   
       (
         SELECT 
@@ -101,9 +99,10 @@ from
     FROM 
       (
         SELECT 
+		
+	
           A.descrip, 
-          MIN(recdate) AS start_dte,
-		   (select min(recdate) from potran10c where descrip = a.descrip having max(recdate)=min(recdate)) as fristb
+          MIN(recdate) AS start_dte 
 
         FROM 
           artran10c A 
@@ -113,6 +112,7 @@ from
           AND A.itemkey2 NOT IN ('_MANUAL_INVOICE') 
         GROUP BY 
           A.descrip 
+		 
         HAVING 
           MIN(p.recdate) >= DATEADD(
             year, 
@@ -121,7 +121,7 @@ from
           )
       ) A 
     where 
-      a.start_dte is not null and a.fristb is not null
+      a.start_dte is not null
   ) b 
 where 
  cost <= price

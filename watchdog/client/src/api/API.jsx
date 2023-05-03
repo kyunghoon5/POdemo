@@ -280,12 +280,15 @@ const [loadingFirstOrder, setLoadingFirstOrder] = useState(false);
 
          .catch((err) => console.log(err));
      };
+
+     
   useEffect(() => {
     itemAlertOldAPI();
     itemoldOrderAPI();
     itemNewOrderAPI();
     itemFirstOrderAPI();
   }, []);
+  
 
   return {
     itemAlertOld,

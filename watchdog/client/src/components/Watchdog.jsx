@@ -26,9 +26,16 @@ import Alert_Table from './alert_table/Alert_Table';
 import useNewItemCal from '../utils/math/NewItemCal';
 
 const Watchdog = () => {
-  const [startDatePicker, setStartDatePicker] = useState(new Date());
-  const [endDatePicker, setEndDatePicker] = useState(new Date());
-  const [forecastDatePicker, setForecasteDatePicker] = useState(new Date());
+  const { date, formatDate } = useDate();
+  const [startDatePicker, setStartDatePicker] = useState(
+    new Date(new Date().setHours(0, 0, 0, 0))
+  );
+  const [endDatePicker, setEndDatePicker] = useState(
+    new Date(new Date().setHours(0, 0, 0, 0))
+  );
+  const [forecastDatePicker, setForecasteDatePicker] = useState(
+    new Date(new Date().setHours(0, 0, 0, 0))
+  );
 
   const {
     mainData,
@@ -82,7 +89,7 @@ const Watchdog = () => {
     loadingFirstOrder,
   } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
 
-  const { date, formatDate } = useDate();
+  
   const { round } = useMath();
 
   // toggle Color Tab
@@ -374,8 +381,10 @@ const Watchdog = () => {
       ? item.poLeadTimeO.map((item2) =>
           new Date(formatDate(item2.avg_lead_time)).getTime()
         ) - date.getTime()
-      : undefined
+      : undefined      
   );
+
+
 
   const Difference_In_PostDayresult2 = eachItemNeededDate.map((item) =>
     round(item / (1000 * 3600 * 24))
@@ -450,6 +459,7 @@ const Watchdog = () => {
     Difference_In_PostDayresult2,
     (arr1, arr2) => arr1.map((elem) => elem * arr2)
   );
+  
 
   const oldNeededCal =
     Difference_In_PostDayresult2 <= 30
@@ -476,6 +486,7 @@ const Watchdog = () => {
   const [NewneededTotal, set_New_NeededTotal] = useState(0);
 
   const forecastDate = forecastDatePicker;
+  console.log(startDatePicker);
   const daysDifference = Math.round(
     (forecastDate.getTime() - date.getTime()) / (1000 * 3600 * 24)
   );
