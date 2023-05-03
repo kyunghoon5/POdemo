@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { zipWith, sumBy, add } from 'lodash';
 import '../styles/common.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -80,6 +80,25 @@ const Watchdog = () => {
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
 
+   const printableRef = useRef(null);
+
+   function printTable() {
+     const table = document.getElementById('tb1');
+     const win = window.open('', '', 'height=700,width=700');
+
+     win.document.write('<html><head>');
+     win.document.write(
+       '<style>table {width: 100%; border-collapse: collapse;} td, th {border: 1px solid black; padding: 5px;} </style>'
+     );
+     win.document.write('</head><body>');
+    
+     win.document.write(table.outerHTML);
+     win.document.write('</body></html>');
+
+     win.print();
+     win.close();
+   }
+
   //searchSuggest
   const [filteredData, setfilteredData] = useState([]);
 
@@ -88,6 +107,8 @@ const Watchdog = () => {
     const soldPercentageDropdownValue = e.target.value;
     setSelectedSold(soldPercentageDropdownValue);
   };
+
+
 
   const lastyearSoldQty = graphAllYearData.map((item) => item.qtyshp).at(-1);
   const lastyearSoldQty2 = graphAllYearData.map((item) => item.qtyshp).at(-2);
@@ -645,7 +666,7 @@ const Watchdog = () => {
   return (
     <div className="search flex w-full p-4">
       <Total {...Props} />
-      <div>
+      <div ref={printableRef}>
         <table id="tb1" className="table1">
           <tbody>
             <Row1 {...Props} />
@@ -680,10 +701,10 @@ const Watchdog = () => {
         </div>
       )}
       <div className="pl-10 ">
-        <Alert_Table {...Props}/>
+        <button onClick={printTable}>Print</button>
+        <Alert_Table {...Props} />
         {/* <TreeViewDownload handleDownload17={handleDownload17} /> */}
       </div>
-     
     </div>
   );
 };

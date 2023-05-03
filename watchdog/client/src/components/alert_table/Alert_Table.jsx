@@ -6,13 +6,34 @@ import { DataGrid } from '@mui/x-data-grid';
 const Alert_Table = ({ itemAlertOld }) => {
   const [showData, setShowData] = useState(false);
    const [showOldItem, setOldItem] = useState(false);
+   const [showNewItem, setNewItem] = useState(false)
+
+    // useEffect(() => {
+    //   const data = itemAlertOld.map((item, index) => ({
+    //     id: index,
+    //     vendno: item.vendno,
+    //     descrip: item.descrip,
+    //     itemkey2: item.itemkey2,
+    //     needed: item.needed,
+    //   }));
+    //   setData(data);
+    // }, [itemAlertOld]);
 
   const handleDataButtonClick = () => {
     setShowData(true);
+    setOldItem(false);
+    setNewItem(false)
   };
-    const handleOldItemButtonClick = () => {
-      setOldItem(true);
-    };
+  const handleOldItemButtonClick = () => {
+    setOldItem(true);
+    setShowData(false);
+    setNewItem(false);
+  };
+  const handleNewItemButtonClick = () => {
+    setNewItem(true);
+    setOldItem(false);
+    setShowData(false);
+  };
 
   const columns = [
     { field: 'vendno', headerName: 'Vendno', width: 100 },
@@ -41,32 +62,82 @@ const Alert_Table = ({ itemAlertOld }) => {
       )
     );
 
-     let content;
-     if (showOldItem) {
-       content = (
-         <>
-           <div className="pt-2 pb-2">OLD ITEM</div>
-           <div
-             className="flex-col flex bg-gray-200 text-black
-         h-[700px] w-[480px] border-none overflow-y-scroll"
-           >
-             4123
-           </div>
-         </>
-       );
-     } else if (showData) {
-       content = (
-         <>
-           <div className="pt-2 pb-2">ITEM ALERT</div>
-           <div
-             className="flex-col flex bg-gray-200 text-black
-         h-[670px] w-[480px] border-none overflow-y-scroll"
-           >
-             {/* Add your data here */}
-           </div>
-         </>
-       );
-     }
+      let content;
+      switch (true) {
+        case showOldItem:
+          content = (
+            <>
+              <div className="pt-2 pb-2">OLD ITEM</div>
+              <div
+                className="flex-col flex bg-gray-200 text-black
+            h-[700px] w-[480px] border-none overflow-y-scroll"
+              >
+                4123
+              </div>
+            </>
+          );
+          break;
+        case showData:
+          content = (
+            <>
+              <div className="pt-2 pb-2">ITEM ALERT</div>
+              <div
+                className="flex-col flex bg-gray-200 text-black
+            h-[670px] w-[480px] border-none overflow-y-scroll"
+              >
+                <DataGrid
+                  rows={data}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10]}
+                />
+              </div>
+            </>
+          );
+          break;
+          case showNewItem :
+            content = (
+            <>
+              <div className="pt-2 pb-2">New ITEM</div>
+              <div
+                className="flex-col flex bg-gray-200 text-black
+            h-[700px] w-[480px] border-none overflow-y-scroll"
+              >
+                123
+              </div>
+            </>
+          );
+          break;
+
+        default:
+           content = (
+      <>
+        <div className="pt-2 pb-2">ITEM ALERT</div>
+        <div
+          className="flex-col flex bg-gray-200 text-black
+          h-[670px] w-[480px] border-none overflow-y-scroll"
+        >
+          <DataGrid
+            rows={data}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+          />
+        </div>
+      </>
+    );
+    break;
+
+
+      }
 
     
        
@@ -96,7 +167,11 @@ const Alert_Table = ({ itemAlertOld }) => {
         >
           OLD ITEM
         </Button>
-        <Button variant="outlined" size="medium">
+        <Button
+          variant="outlined"
+          size="medium"
+          onClick={handleNewItemButtonClick}
+        >
           NEW ITEM
         </Button>
         <Button variant="outlined" size="medium">
@@ -104,38 +179,7 @@ const Alert_Table = ({ itemAlertOld }) => {
         </Button>
       </div>
 
-      {showData && (
-        <>
-          <div className="pt-2 pb-2">ITEM ALERT</div>
-          <div
-            className="flex-col flex bg-gray-200 text-black
-         h-[670px] w-[480px] border-none overflow-y-scroll"
-          >
-            <DataGrid
-              rows={data}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
-                },
-              }}
-              pageSizeOptions={[5, 10]}
-            />
-          </div>
-        </>
-      )}
-
-      {showOldItem && (
-        <>
-          <div className="pt-2 pb-2">OLD ITEM</div>
-          <div
-            className="flex-col flex bg-gray-200 text-black
-         h-[700px] w-[480px] border-none overflow-y-scroll"
-          >
-            4123
-          </div>
-        </>
-      )}
+      {content}
     </div>
   );
 };
