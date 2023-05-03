@@ -24,6 +24,9 @@ const searchSuggest = require('./routes/searchSuggest');
 const newItemRank = require('./routes/newitemRank');
 const pieChartQ = require('./routes/pieChartQuarter');
 const itemAlertOld = require('./routes/itemAlertOld');
+const itemOldOrder = require('./routes/oldItemControlPanel');
+const itemNewOrder = require('./routes/newItemControlPanel')
+const itemFirstOrder = require('./routes/firstItemControlPanel')
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -57,6 +60,9 @@ app.use('/searchAuto', searchSuggest);
 app.use('/newItemRank', newItemRank);
 app.use('/pieChart', pieChartQ);
 app.use('/itemAlertOld', itemAlertOld);
+app.use('/itemOldOrder', itemOldOrder)
+app.use('/itemNewOrder', itemNewOrder)
+app.use('/itemFirstOrder',itemFirstOrder)
 
 const utils = require('./data/utils');
 

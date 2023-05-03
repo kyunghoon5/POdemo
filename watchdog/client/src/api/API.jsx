@@ -7,6 +7,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
   const [record, setRecord] = useState('');
   const [mainData, setMainData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingAlert, setLoadingAlert] = useState(false);
   const [mainImg, setMainImg] = useState();
   const [selectedSoldPercentage, setSelectedSoldPercentage] = useState([]);
   const [loadingsoldP, setloadingsoldP] = useState(false);
@@ -204,6 +205,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
     return await axios
       .get(`${BASE_URL}searchAuto`)
       .then((response) => setSuggest(response.data))
+      
       .catch((err) => console.log(err));
   };
   useEffect(() => {
@@ -228,13 +230,61 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
   const [itemAlertOld, setItemAlertOld] = useState([]);
 
   const itemAlertOldAPI = async () => {
+    setLoadingAlert(true);
     return await axios
       .get(`${BASE_URL}itemAlertOld`)
-      .then((response) => setItemAlertOld(response.data))
+      .then((response) => {setItemAlertOld(response.data)
+      setLoadingAlert(false);})
+      
+      .catch((err) => console.log(err));
+      
+  };
+  const [itemoldOrder, setItemOldOrder] = useState([]);
+    const [loadingOldOrder, setLoadingOldOrder] = useState(false);
+
+  const itemoldOrderAPI = async () => {
+   setLoadingOldOrder(true)
+    return await axios
+      .get(`${BASE_URL}itemOldOrder`)
+      .then((response) => {
+        setItemOldOrder(response.data);
+       setLoadingOldOrder(false)
+      })
+
       .catch((err) => console.log(err));
   };
+   const [itemNewOrder, setItemNewOrder] = useState([]);
+const [loadingNewOrder, setLoadingNewOrder] = useState(false);
+   const itemNewOrderAPI = async () => {
+    setLoadingNewOrder(true)
+     return await axios
+       .get(`${BASE_URL}itemNewOrder`)
+       .then((response) => {
+         setItemNewOrder(response.data);
+      setLoadingNewOrder(false)
+       })
+
+       .catch((err) => console.log(err));
+   };
+    
+     const [itemFirstOrder, setItemFirstOrder] = useState([]);
+const [loadingFirstOrder, setLoadingFirstOrder] = useState(false);
+     const itemFirstOrderAPI = async () => {
+     setLoadingFirstOrder(true)
+       return await axios
+         .get(`${BASE_URL}itemFirstOrder`)
+         .then((response) => {
+           setItemFirstOrder(response.data);
+         setLoadingFirstOrder(false)
+         })
+
+         .catch((err) => console.log(err));
+     };
   useEffect(() => {
     itemAlertOldAPI();
+    itemoldOrderAPI();
+    itemNewOrderAPI();
+    itemFirstOrderAPI();
   }, []);
 
   return {
@@ -280,6 +330,13 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
     setSuggest,
     record,
     setRecord,
+    loadingAlert,
+    itemFirstOrder,
+    itemNewOrder,
+    itemoldOrder,
+    loadingOldOrder,
+    loadingNewOrder,
+    loadingFirstOrder,
   };
 };
 

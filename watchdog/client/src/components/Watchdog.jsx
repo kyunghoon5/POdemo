@@ -72,6 +72,14 @@ const Watchdog = () => {
     record,
     setRecord,
     itemAlertOld,
+    loadingAlert,
+
+    itemFirstOrder,
+    itemNewOrder,
+    itemoldOrder,
+    loadingOldOrder,
+    loadingNewOrder,
+    loadingFirstOrder,
   } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
 
   const { date, formatDate } = useDate();
@@ -80,24 +88,24 @@ const Watchdog = () => {
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
 
-   const printableRef = useRef(null);
+  const printableRef = useRef(null);
 
-   function printTable() {
-     const table = document.getElementById('tb1');
-     const win = window.open('', '', 'height=700,width=700');
+  function printTable() {
+    const table = document.getElementById('tb1');
+    const win = window.open('', '', 'height=700,width=700');
 
-     win.document.write('<html><head>');
-     win.document.write(
-       '<style>table {width: 100%; border-collapse: collapse;} td, th {border: 1px solid black; padding: 5px;} </style>'
-     );
-     win.document.write('</head><body>');
-    
-     win.document.write(table.outerHTML);
-     win.document.write('</body></html>');
+    win.document.write('<html><head>');
+    win.document.write(
+      '<style>table {width: 100%; border-collapse: collapse;} td, th {border: 1px solid black; padding: 5px;} </style>'
+    );
+    win.document.write('</head><body>');
 
-     win.print();
-     win.close();
-   }
+    win.document.write(table.outerHTML);
+    win.document.write('</body></html>');
+
+    win.print();
+    win.close();
+  }
 
   //searchSuggest
   const [filteredData, setfilteredData] = useState([]);
@@ -107,8 +115,6 @@ const Watchdog = () => {
     const soldPercentageDropdownValue = e.target.value;
     setSelectedSold(soldPercentageDropdownValue);
   };
-
-
 
   const lastyearSoldQty = graphAllYearData.map((item) => item.qtyshp).at(-1);
   const lastyearSoldQty2 = graphAllYearData.map((item) => item.qtyshp).at(-2);
@@ -375,11 +381,10 @@ const Watchdog = () => {
     round(item / (1000 * 3600 * 24))
   );
 
-  const Difference_In_PostDecimalDayresult2 = eachItemNeededDate.map(
-    (item) => Math.round((item / (1000 * 3600 * 24) / 30) * 10) / 10
-  );
-
   const onhandCal2 = mainData.map((item) => Number(item.onhand));
+    const QtyBackOrder = mainData.map((item) =>
+      item.reorderPointO.map((item) => Number(item.qtybo))
+    );
 
   const dayCal2 = mainData.map((item) =>
     item.sold30.map((item) => Number(item.qtyshp / 30))
@@ -402,60 +407,64 @@ const Watchdog = () => {
   );
 
   const Cal302 = mainData.map((item) =>
-    item.sold30.map((item) => Number(item.qtyshp))
+    item.sold30.map((item) => Number(item.qtyshp / 30))
   );
 
   const multipliedData2 = zipWith(
     Cal302,
-    Difference_In_PostDecimalDayresult2,
+    Difference_In_PostDayresult2,
     (arr1, arr2) => arr1.map((elem) => elem * arr2)
   );
 
   const Cal602 = mainData.map((item) =>
-    item.sold60.map((item) => Number(item.qtyshp / 2))
+    item.sold60.map((item) => Number(item.qtyshp / 60))
   );
 
   const multipliedData3 = zipWith(
     Cal602,
-    Difference_In_PostDecimalDayresult2,
+    Difference_In_PostDayresult2,
     (arr1, arr2) => arr1.map((elem) => elem * arr2)
   );
 
   const Cal902 = mainData.map((item) =>
-    item.sold90.map((item) => Number(item.qtyshp / 3))
+    item.sold90.map((item) => Number(item.qtyshp / 90))
   );
   const multipliedData4 = zipWith(
     Cal902,
-    Difference_In_PostDecimalDayresult2,
+    Difference_In_PostDayresult2,
     (arr1, arr2) => arr1.map((elem) => elem * arr2)
   );
 
-  const Cal3652 = mainData.map((item) =>
-    item.sold365.map((item) => Number(item.qtyshp / 12))
+  const Cal3652f = mainData.map((item) =>
+    item.sold365.map((item) => Number(item.qtyshp))
   );
+  const Cal3652 = zipWith(Cal3652f, QtyBackOrder, (a, b) =>
+    zipWith(a, b, (c, d) => {
+      return ((c + d) / 365) ;
+    })
+  );
+  
 
   const multipliedData5 = zipWith(
     Cal3652,
-    Difference_In_PostDecimalDayresult2,
+    Difference_In_PostDayresult2,
     (arr1, arr2) => arr1.map((elem) => elem * arr2)
   );
 
   const oldNeededCal =
-    Difference_In_PostDecimalDayresult2 <= 1
+    Difference_In_PostDayresult2 <= 30
       ? zipWith(onhnadWithRVG2, multipliedData, (arr1, arr2) =>
           arr2.map((elem) => round(arr1 - elem))
         )
-      : Difference_In_PostDecimalDayresult2 <= 1
+      : Difference_In_PostDayresult2 <= 30
       ? zipWith(onhnadWithRVG2, multipliedData2, (arr1, arr2) =>
           arr2.map((elem) => round(arr1 - elem))
         )
-      : Difference_In_PostDecimalDayresult2 > 1 &&
-        Difference_In_PostDecimalDayresult2 <= 2
+      : Difference_In_PostDayresult2 > 30 && Difference_In_PostDayresult2 <= 60
       ? zipWith(onhnadWithRVG2, multipliedData3, (arr1, arr2) =>
           arr2.map((elem) => round(arr1 - elem))
         )
-      : Difference_In_PostDecimalDayresult2 > 2 &&
-        Difference_In_PostDecimalDayresult2 < 3
+      : Difference_In_PostDayresult2 > 60 && Difference_In_PostDayresult2 < 90
       ? zipWith(onhnadWithRVG2, multipliedData4, (arr1, arr2) =>
           arr2.map((elem) => round(arr1 - elem))
         )
@@ -471,8 +480,6 @@ const Watchdog = () => {
     (forecastDate.getTime() - date.getTime()) / (1000 * 3600 * 24)
   );
 
-  const monthsDifference = Math.round((daysDifference / 30) * 10) / 10;
-
   const onHandInventory = mainData.map((item) => Number(item.onhand));
 
   const dayCal = mainData.map((item) =>
@@ -484,31 +491,40 @@ const Watchdog = () => {
     sumReqForcast,
     (x, y) => x + y
   ).map((num) => round(num));
+  
 
   const Cal30 = mainData.map((item) =>
-    item.sold30.map((item) => Number(item.qtyshp) * monthsDifference)
+    item.sold30.map((item) => Number(item.qtyshp / 30) * daysDifference)
   );
 
+  
+
   const Cal60 = mainData.map((item) =>
-    item.sold60.map((item) => Number(item.qtyshp / 2) * monthsDifference)
+    item.sold60.map((item) => Number(item.qtyshp / 60) * daysDifference)
   );
 
   const Cal90 = mainData.map((item) =>
-    item.sold90.map((item) => Number(item.qtyshp / 3) * monthsDifference)
+    item.sold90.map((item) => Number(item.qtyshp / 90) * daysDifference)
   );
 
-  const Cal365 = mainData.map((item) =>
-    item.sold365.map((item) => Number(item.qtyshp / 12) * monthsDifference)
+
+  const Cal365f = mainData.map((item) =>
+    item.sold365.map((item) => Number(item.qtyshp))
+  );
+  const Cal365 = zipWith(Cal365f, QtyBackOrder, (a, b) =>
+    zipWith(a, b, (c, d) => {
+      return ((c + d) / 365) * daysDifference;
+    })
   );
 
   const oldOH_Forecast_Left =
-    monthsDifference <= 1
+    daysDifference <= 30
       ? zipWith(onhnadWithRVG, dayCal, (x, y) => round(x - y))
-      : monthsDifference <= 1
+      : daysDifference <= 30
       ? zipWith(onhnadWithRVG, Cal30, (x, y) => round(x - y))
-      : monthsDifference > 1 && monthsDifference <= 2
+      : daysDifference > 30 && daysDifference <= 60
       ? zipWith(onhnadWithRVG, Cal60, (x, y) => round(x - y))
-      : monthsDifference > 2 && monthsDifference < 3
+      : daysDifference > 60 && daysDifference < 90
       ? zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
 
@@ -661,6 +677,13 @@ const Watchdog = () => {
     totalNewItem_365_Sold,
     totalNew_SuggestedOH,
     itemAlertOld,
+    loadingAlert,
+    itemFirstOrder,
+    itemNewOrder,
+    itemoldOrder,
+    loadingOldOrder,
+    loadingNewOrder,
+    loadingFirstOrder,
   };
 
   return (
@@ -701,7 +724,7 @@ const Watchdog = () => {
         </div>
       )}
       <div className="pl-10 ">
-        <button onClick={printTable}>Print</button>
+        {/* <button onClick={printTable}>Print</button> */}
         <Alert_Table {...Props} />
         {/* <TreeViewDownload handleDownload17={handleDownload17} /> */}
       </div>

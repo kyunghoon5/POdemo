@@ -50,12 +50,16 @@ const MainTable = ({
       .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
     past365c ? (
       <>
-        {mainData.map((item) =>
-          item.newitemkeyForecast.map((item2, idx2) =>
-            item2.total_qty_difference === null ? (
-              <div key={idx2}>0</div>
-            ) : (
-              <div key={idx2}>{item2.total_qty_difference}</div>
+        {mainData.map((item, idx) =>
+          item.newitemkeyForecast.length === 0 ? (
+            <div key={idx}>0</div>
+          ) : (
+            item.newitemkeyForecast.map((item2, idx2) =>
+              item2.total_qty_difference === null ? (
+                <div key={idx2}>0</div>
+              ) : (
+                <div key={idx2}>{item2.total_qty_difference}</div>
+              )
             )
           )
         )}
@@ -85,6 +89,7 @@ const MainTable = ({
         {NewItem_Qty_avg.map((item, idx) => (
           <div key={idx}>{Number(item).toFixed(2)}</div>
         ))}
+       
 
         <div>{totalNewItem_AVG_SOLD}</div>
       </>
