@@ -27,6 +27,7 @@ const itemAlertOld = require('./routes/itemAlertOld');
 const itemOldOrder = require('./routes/oldItemControlPanel');
 const itemNewOrder = require('./routes/newItemControlPanel')
 const itemFirstOrder = require('./routes/firstItemControlPanel')
+const newItemkey2Forecast = require('./routes/newItemkey2Forecast')
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -63,6 +64,7 @@ app.use('/itemAlertOld', itemAlertOld);
 app.use('/itemOldOrder', itemOldOrder)
 app.use('/itemNewOrder', itemNewOrder)
 app.use('/itemFirstOrder',itemFirstOrder)
+app.use('/newItemKey2Forecast', newItemkey2Forecast)
 
 const utils = require('./data/utils');
 
@@ -70,7 +72,7 @@ const utils = require('./data/utils');
 app.get('/mergeData', async (req, res) => {
   try {
     // Connect to both servers
-    const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
+    // const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
     // let request1 = new sql.Request(sqlPool);
 
     // Query the two servers for data
@@ -80,8 +82,8 @@ app.get('/mergeData', async (req, res) => {
     //   const result11 = await request1.query(``);
 
     // Connect to both servers
-    const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
-    let request2 = new sql.Request(sqlPool2);
+    const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
+    let request1 = new sql.Request(sqlPool);
     const loadQ = await utils.loadSqlQueries('events');
     const mainInfoQuery = await loadQ.mainInfo.replace(
       '${req.query.descrip}',
@@ -90,31 +92,31 @@ app.get('/mergeData', async (req, res) => {
 
     // Query the two servers for data
     //main query
-    const result2 = await request2.query(mainInfoQuery);
+    const result2 = await request1.query(mainInfoQuery);
 
     const sold30Query = await loadQ.sold30.replace(
       '${req.query.descrip}',
       req.query.descrip
     );
-    const result2Sold30 = await request2.query(sold30Query);
+    const result2Sold30 = await request1.query(sold30Query);
 
     const sold60Query = await loadQ.sold60.replace(
       '${req.query.descrip}',
       req.query.descrip
     );
-    const result2Sold60 = await request2.query(sold60Query);
+    const result2Sold60 = await request1.query(sold60Query);
 
     const sold90Query = await loadQ.sold90.replace(
       '${req.query.descrip}',
       req.query.descrip
     );
-    const result2Sold90 = await request2.query(sold90Query);
+    const result2Sold90 = await request1.query(sold90Query);
 
     const sold365Query = await loadQ.sold365.replace(
       '${req.query.descrip}',
       req.query.descrip
     );
-    const result2Sold365 = await request2.query(sold365Query);
+    const result2Sold365 = await request1.query(sold365Query);
 
     // rank non RB
     //Seach value parsing into query
@@ -122,35 +124,35 @@ app.get('/mergeData', async (req, res) => {
     //   '${req.query.descrip}',
     //   req.query.descrip
     // );
-    // const result21 = await request2.query(purnoFirstQuery);
+    // const result21 = await request1.query(purnoFirstQuery);
 
     // //Seach value parsing into query
     // const purnoSecondQuery = await loadQ.purnoSecond.replace(
     //   '${req.query.descrip}',
     //   req.query.descrip
     // );
-    // const result22 = await request2.query(purnoSecondQuery);
+    // const result22 = await request1.query(purnoSecondQuery);
 
     // //Seach value parsing into query
     // const purnoThirdQuery = await loadQ.purnoThird.replace(
     //   '${req.query.descrip}',
     //   req.query.descrip
     // );
-    // const result23 = await request2.query(purnoThirdQuery);
+    // const result23 = await request1.query(purnoThirdQuery);
 
     // //Seach value parsing into query
     // const purnoFourthQuery = await loadQ.purnoFourth.replace(
     //   '${req.query.descrip}',
     //   req.query.descrip
     // );
-    // const result24 = await request2.query(purnoFourthQuery);
+    // const result24 = await request1.query(purnoFourthQuery);
 
     // //Seach value parsing into query
     // const purnoFifthQuery = await loadQ.purnoFifth.replace(
     //   '${req.query.descrip}',
     //   req.query.descrip
     // );
-    // const result25 = await request2.query(purnoFifthQuery);
+    // const result25 = await request1.query(purnoFifthQuery);
 
     // //Seach value parsing into query
     // const purnoSixthQuery = await loadQ.purnoSixth.replace(
@@ -158,64 +160,51 @@ app.get('/mergeData', async (req, res) => {
     //   req.query.descrip
     // );
 
-    // const result26 = await request2.query(purnoSixthQuery);
+    // const result26 = await request1.query(purnoSixthQuery);
 
     const reOrderPointMainQuery = await loadQ.ReorderPointMain.replace(
       '${req.query.descrip}',
       req.query.descrip
     );
-    const reOrderPointMain = await request2.query(reOrderPointMainQuery);
+    const reOrderPointMain = await request1.query(reOrderPointMainQuery);
 
     const poPendingDataQuery = await loadQ.POpendingData.replace(
       '${req.query.descrip}',
       req.query.descrip
     );
 
-    const poPendingData = await request2.query(poPendingDataQuery);
+    const poPendingData = await request1.query(poPendingDataQuery);
 
     const poLeadTimeQuery = await loadQ.POleadTime.replace(
       '${req.query.descrip}',
       req.query.descrip
     );
 
-    const poLeadTime = await request2.query(poLeadTimeQuery);
+    const poLeadTime = await request1.query(poLeadTimeQuery);
 
     const itemClassQuery = await loadQ.itemClass.replace(
       /\${req\.query\.descrip}/g,
       req.query.descrip || ''
     );
 
-    const itemClassData = await request2.query(itemClassQuery);
+    const itemClassData = await request1.query(itemClassQuery);
 
     const firstOrderitemQuery = await loadQ.firstOrderItem.replace(
       '${req.query.descrip}',
       req.query.descrip
     );
 
-    const firstOrderitemData = await request2.query(firstOrderitemQuery);
+    const firstOrderitemData = await request1.query(firstOrderitemQuery);
 
-    const newItemForecastQuery = await loadQ.newItemkey2Forecast.replace(
-      '${req.query.descrip}',
-      req.query.descrip
-    );
 
-    const newItemForecastData = await request2.query(newItemForecastQuery);
 
-    // Combine the two results into a single array
+    
     const mergedResults = [...result2.recordset];
 
-    // for (var i = 0; i < result2.recordset.length; i++){
-    //   console.log(result2.recordset[i].itemkey2)}
-
-    //obj recursive merge + POorder
+  
     const mergeArrays = (
       arr1,
-      // arr2,
-      // arr3,
-      // arr4,
-      // arr5,
-      // arr6,
-      // arr7,
+
       sold30,
       sold60,
       sold90,
@@ -225,15 +214,9 @@ app.get('/mergeData', async (req, res) => {
       poLeadTimeO,
       itemClass,
       firstOrderitem,
-      newitemkeyForecast
+      
     ) => {
       return arr1.map((obj) => {
-        // const numbers = arr2.filter((nums) => nums.itemkey2 === obj.itemkey2);
-        // const numbers2 = arr3.filter((item) => item.itemkey2 === obj.itemkey2);
-        // const numbers3 = arr4.filter((item) => item.itemkey2 === obj.itemkey2);
-        // const numbers4 = arr5.filter((item) => item.itemkey2 === obj.itemkey2);
-        // const numbers5 = arr6.filter((item) => item.itemkey2 === obj.itemkey2);
-        // const numbers6 = arr7.filter((item) => item.itemkey2 === obj.itemkey2);
         const numbers7 = sold30.filter(
           (item) => item.itemkey2 === obj.itemkey2
         );
@@ -265,18 +248,10 @@ app.get('/mergeData', async (req, res) => {
         const number19 = firstOrderitem.filter(
           (item) => item.descrip === obj.descrip
         );
+      
 
-        const number20 = newitemkeyForecast.filter(
-          (item) => item.itemkey2 === obj.itemkey2
-        );
 
         if (!numbers7.length) {
-          // obj.first = numbers;
-          // obj.second = numbers2;
-          // obj.third = numbers3;
-          // obj.fourth = numbers4;
-          // obj.fifth = numbers5;
-          // obj.sixth = numbers6;
           obj.sold30 = numbers7;
           obj.sold60 = numbers14;
           obj.sold90 = numbers12;
@@ -286,76 +261,9 @@ app.get('/mergeData', async (req, res) => {
           obj.poLeadTimeO = numbers17;
           obj.itemClass = number18;
           obj.firstOrderItem = number19;
-          obj.newitemkeyForecast = number20;
-
+   
           return obj;
         }
-        // obj.first = numbers.map((num) => ({
-        //   itemkey2: num.itemkey2,
-        //   purno: num.purno,
-        //   qtyord: num.qtyord,
-        //   portn: num.portn,
-        //   purdate: num.purdate,
-        //   shpdate: num.shpdate,
-        //   reqdate: num.reqdate,
-        //   recdate: num.recdate,
-        //   invno: num.invno,
-        // }));
-        // obj.second = numbers2.map((num) => ({
-        //   itemkey2: num.itemkey2,
-        //   purno: num.purno,
-        //   qtyord: num.qtyord,
-        //   portn: num.portn,
-        //   purdate: num.purdate,
-        //   shpdate: num.shpdate,
-        //   reqdate: num.reqdate,
-        //   recdate: num.recdate,
-        //   invno: num.invno,
-        // }));
-        // obj.third = numbers3.map((num) => ({
-        //   itemkey2: num.itemkey2,
-        //   purno: num.purno,
-        //   qtyord: num.qtyord,
-        //   portn: num.portn,
-        //   purdate: num.purdate,
-        //   shpdate: num.shpdate,
-        //   reqdate: num.reqdate,
-        //   recdate: num.recdate,
-        //   invno: num.invno,
-        // }));
-        // obj.fourth = numbers4.map((num) => ({
-        //   itemkey2: num.itemkey2,
-        //   purno: num.purno,
-        //   qtyord: num.qtyord,
-        //   portn: num.portn,
-        //   purdate: num.purdate,
-        //   shpdate: num.shpdate,
-        //   reqdate: num.reqdate,
-        //   recdate: num.recdate,
-        //   invno: num.invno,
-        // }));
-        // obj.fifth = numbers5.map((num) => ({
-        //   itemkey2: num.itemkey2,
-        //   purno: num.purno,
-        //   qtyord: num.qtyord,
-        //   portn: num.portn,
-        //   purdate: num.purdate,
-        //   shpdate: num.shpdate,
-        //   reqdate: num.reqdate,
-        //   recdate: num.recdate,
-        //   invno: num.invno,
-        // }));
-        // obj.sixth = numbers6.map((num) => ({
-        //   itemkey2: num.itemkey2,
-        //   purno: num.purno,
-        //   qtyord: num.qtyord,
-        //   portn: num.portn,
-        //   purdate: num.purdate,
-        //   shpdate: num.shpdate,
-        //   reqdate: num.reqdate,
-        //   recdate: num.recdate,
-        //   invno: num.invno,
-        // }));
 
         obj.sold30 = numbers7.map((num) => ({
           qtyshp: num.qtyshp,
@@ -397,12 +305,7 @@ app.get('/mergeData', async (req, res) => {
           descrip: num.descrip,
           start_date: num.start_date,
         }));
-
-        obj.newitemkeyForecast = number20.map((num) => ({
-          itemkey2: num.itemkey2,
-          total_qty_difference: num.total_qty_difference,
-          qtybo: num.qtybo,
-        }));
+     
 
         return obj;
       });
@@ -410,12 +313,6 @@ app.get('/mergeData', async (req, res) => {
 
     const result = mergeArrays(
       result2.recordset,
-      // result21.recordset,
-      // result22.recordset,
-      // result23.recordset,
-      // result24.recordset,
-      // result25.recordset,
-      // result26.recordset,
       result2Sold30.recordset,
       result2Sold60.recordset,
       result2Sold90.recordset,
@@ -425,11 +322,10 @@ app.get('/mergeData', async (req, res) => {
       poLeadTime.recordset,
       itemClassData.recordset,
       firstOrderitemData.recordset,
-      newItemForecastData.recordset
+
     );
 
-    //console.log(result);
-    // Sort the merged results by ID
+   
 
     if (req.query.descrip) {
       const descrips = req.query.descrip;
@@ -438,14 +334,14 @@ app.get('/mergeData', async (req, res) => {
       );
 
       if (result) {
-        // Return the matching object to the client
+        
         res.send(result);
       } else {
-        // If no object with the specified ID is found, return a 404 error
+   
         res.status(404).send('Object not found');
       }
     } else {
-      // If no eventId query parameter is provided, return the merged results array
+
       res.send(mergedResults);
     }
   } catch (error) {

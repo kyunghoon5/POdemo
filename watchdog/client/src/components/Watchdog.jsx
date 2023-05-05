@@ -23,7 +23,8 @@ import useAPIData from '../api/API';
 import useMath from '../utils/math/Math';
 import SubTable from './body_table/SubTable';
 import Alert_Table from './alert_table/Alert_Table';
-import useNewItemCal from '../utils/math/NewItemCal';
+
+
 
 const Watchdog = () => {
   const { date, formatDate } = useDate();
@@ -38,6 +39,7 @@ const Watchdog = () => {
   );
 
   const {
+    newitemkey2ForecastAPI,
     mainData,
     loading,
     searchMainData,
@@ -87,9 +89,10 @@ const Watchdog = () => {
     loadingOldOrder,
     loadingNewOrder,
     loadingFirstOrder,
+    newitemkey2Forecast,
+   
   } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
 
-  
   const { round } = useMath();
 
   // toggle Color Tab
@@ -381,19 +384,17 @@ const Watchdog = () => {
       ? item.poLeadTimeO.map((item2) =>
           new Date(formatDate(item2.avg_lead_time)).getTime()
         ) - date.getTime()
-      : undefined      
+      : undefined
   );
-
-
 
   const Difference_In_PostDayresult2 = eachItemNeededDate.map((item) =>
     round(item / (1000 * 3600 * 24))
   );
 
   const onhandCal2 = mainData.map((item) => Number(item.onhand));
-    const QtyBackOrder = mainData.map((item) =>
-      item.reorderPointO.map((item) => Number(item.qtybo))
-    );
+  const QtyBackOrder = mainData.map((item) =>
+    item.reorderPointO.map((item) => Number(item.qtybo))
+  );
 
   const dayCal2 = mainData.map((item) =>
     item.sold30.map((item) => Number(item.qtyshp / 30))
@@ -449,17 +450,15 @@ const Watchdog = () => {
   );
   const Cal3652 = zipWith(Cal3652f, QtyBackOrder, (a, b) =>
     zipWith(a, b, (c, d) => {
-      return ((c + d) / 365) ;
+      return (c + d) / 365;
     })
   );
-  
 
   const multipliedData5 = zipWith(
     Cal3652,
     Difference_In_PostDayresult2,
     (arr1, arr2) => arr1.map((elem) => elem * arr2)
   );
-  
 
   const oldNeededCal =
     Difference_In_PostDayresult2 <= 30
@@ -486,7 +485,7 @@ const Watchdog = () => {
   const [NewneededTotal, set_New_NeededTotal] = useState(0);
 
   const forecastDate = forecastDatePicker;
-  console.log(startDatePicker);
+
   const daysDifference = Math.round(
     (forecastDate.getTime() - date.getTime()) / (1000 * 3600 * 24)
   );
@@ -502,13 +501,10 @@ const Watchdog = () => {
     sumReqForcast,
     (x, y) => x + y
   ).map((num) => round(num));
-  
 
   const Cal30 = mainData.map((item) =>
     item.sold30.map((item) => Number(item.qtyshp / 30) * daysDifference)
   );
-
-  
 
   const Cal60 = mainData.map((item) =>
     item.sold60.map((item) => Number(item.qtyshp / 60) * daysDifference)
@@ -517,7 +513,6 @@ const Watchdog = () => {
   const Cal90 = mainData.map((item) =>
     item.sold90.map((item) => Number(item.qtyshp / 90) * daysDifference)
   );
-
 
   const Cal365f = mainData.map((item) =>
     item.sold365.map((item) => Number(item.qtyshp))
@@ -538,16 +533,112 @@ const Watchdog = () => {
       : daysDifference > 60 && daysDifference < 90
       ? zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
+//huu
+ const startDateToTime = mainData
+   .filter((item) => item.start_dte)
+   .map((item) => new Date(item.start_dte).getTime())
+   .sort((a, b) => a - b)[0];
 
-  const {
-    NewOH_ForecastLeft,
+ const gapTime = startDateToTime - date.getTime();
+ const gapTimeCal = gapTime / (1000 * 3600 * 24);
+ const gapTimeMath = Math.abs(Math.round(gapTimeCal));
 
-    NewNeededCal,
-    NewOH_ForecastRight,
-  } = useNewItemCal(mainData, forecastDatePicker, sumReqForcast);
+ const NewItem_Qty_avg = newitemkey2Forecast.map((item) =>
+   item.newitemkeyForecast.map(
+     (item) => (item.total_qty_difference + item.qtybo) / gapTimeMath
+   )
+ );
+
+ //duplicated
+ const suggestedQtyavg_lead2 = mainData.map((item) =>
+   item.poLeadTimeO.map((item) => Number(item.avg_lead_time))
+ );
+
+ const suggestedOHForNewItem = zipWith(
+   NewItem_Qty_avg,
+   suggestedQtyavg_lead2,
+   (qty, lead) => qty * lead
+ ).reduce((acc, curr) => acc.concat(curr), []);
+
+ //OH_FORECAST for New Item
+ const forecastDate2 = forecastDatePicker;
+ const daysDifference2 = Math.round(
+   (forecastDate2 - date.getTime()) / (1000 * 3600 * 24)
+ );
+
+
+ const onHandInventory2 = mainData.map((item) => Number(item.onhand));
+
+ const onhnadWithRVG3 = zipWith(
+   onHandInventory2,
+   sumReqForcast,
+   (x, y) => x + y
+ ).map((num) => round(num));
+
+ const dayCal223 = newitemkey2Forecast.map(
+   (item) =>
+     item.newitemkeyForecast.map(
+       (item) => (item.total_qty_difference + item.qtybo) / gapTimeMath
+     ) * daysDifference
+ );
+
+ const dayCal224 = newitemkey2Forecast.map((item) =>
+   item.newitemkeyForecast.map(
+     (item) => (item.total_qty_difference + item.qtybo) / gapTimeMath
+   )
+ );
+
+ const NewOH_ForecastLeft = zipWith(onhnadWithRVG3, dayCal223, (x, y) =>
+   round(x - y)
+ );
+
+ const NewOH_ForecastRight = zipWith(
+   NewItem_Qty_avg,
+   suggestedQtyavg_lead2,
+   NewOH_ForecastLeft,
+   (qty, lead, am) => qty * lead - am
+ ).reduce((acc, curr) => acc.concat(curr), []);
+
+ //new Item Needed
+ const eachItemNeededDate2 = mainData.map((item) =>
+   item.poLeadTimeO.length
+     ? item.poLeadTimeO.map((item2) =>
+         new Date(formatDate(item2.avg_lead_time)).getTime()
+       ) - date.getTime()
+     : undefined
+ );
+ const Difference_In_PostDayresult3 = eachItemNeededDate2.map((item) =>
+   round(item / (1000 * 3600 * 24))
+ );
+
+ const multipliedData32 = zipWith(
+   dayCal224,
+   Difference_In_PostDayresult3,
+   (arr1, arr2) => arr1 * arr2
+ );
+
+ const Difference_In_PostDecimalDayresult2 = eachItemNeededDate2.map(
+   (item) => Math.round((item / (1000 * 3600 * 24) / 30) * 10) / 10
+ );
+
+ const poPoendingData2 = mainData.map((item, idx) =>
+   item.pendingDataO.length
+     ? item.pendingDataO.map((item2) => item2.pending)
+     : undefined
+ );
+
+ const onhnadWithRVG22 = zipWith(onHandInventory2, poPoendingData2, (x, y) =>
+   round(add(x, y))
+ );
+
+ const NewNeededCal = zipWith(onhnadWithRVG22, multipliedData32, (arr1, arr2) =>
+   round(arr1 - arr2)
+ );
+ 
 
   const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
   const [new_oh_forecastTotal, setNew_oh_forecastTotal] = useState(0);
+
 
   const FosuggestedQty = zipWith(
     suggestedQtyavg_qty,
@@ -695,11 +786,16 @@ const Watchdog = () => {
     loadingOldOrder,
     loadingNewOrder,
     loadingFirstOrder,
+    newitemkey2Forecast,
+    newitemkey2ForecastAPI,
+    NewItem_Qty_avg,
+    suggestedOHForNewItem,
   };
 
   return (
     <div className="search flex w-full p-4">
       <Total {...Props} />
+    
       <div ref={printableRef}>
         <table id="tb1" className="table1">
           <tbody>

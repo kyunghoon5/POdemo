@@ -20,18 +20,18 @@ router.get('/', async (req, res) => {
   const endDate = req.query.endDate;
   const loadQ = await utils.loadSqlQueries('events');
   // Connect to both servers
+  // const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
+  // let request1 = new sql.Request(sqlPool);
+
   const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
+
   let request1 = new sql.Request(sqlPool);
-
-  const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
-
-  let request2 = new sql.Request(sqlPool2);
   const POdropdownData1Query = await loadQ.POdropdownData1.replace(
     '${req.query.descrip}',
     req.query.descrip
   );
 
-  const result2 = await request2.query(POdropdownData1Query);
+  const result2 = await request1.query(POdropdownData1Query);
 
  const POdropdownData2Query = await loadQ.POdropdownData2.replace(
    /\${req\.query\.descrip}/g,
@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
    .replace(/\${endDate}/g, req.query.endDate || '');
 
 
-  const result21 = await request2.query(POdropdownData2Query);
+  const result21 = await request1.query(POdropdownData2Query);
   const mergedResults = [...result2.recordset];
 
   const mergeArrays = (arr1, arr2) => {

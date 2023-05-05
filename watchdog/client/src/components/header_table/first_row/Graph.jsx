@@ -21,7 +21,7 @@ const Graph = ({
   mainData
 }) => {
   return (
-    <div
+    <div className='pt-3'
       style={{
         position: 'absolute',
         width: '70%',

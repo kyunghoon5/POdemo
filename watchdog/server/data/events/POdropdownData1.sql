@@ -14,7 +14,7 @@ FROM
 
     FROM 
       artran10c A 
-    WHERE invdte >= Dateadd(year, -50, Getdate())
+    WHERE invdte >= Dateadd(year, -5, Getdate())
       and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
       and A.itemkey2 not in ('_MANUAL_INVOICE') 
       and A.descrip='${req.query.descrip}'

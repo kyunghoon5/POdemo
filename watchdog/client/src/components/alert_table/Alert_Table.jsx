@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
+import '../../styles/controlPanel.css';
 
 const Alert_Table = ({
   itemAlertOld,
@@ -16,7 +17,7 @@ const Alert_Table = ({
   const [showOldItem, setOldItem] = useState(false);
   const [showNewItem, setNewItem] = useState(false);
   const [showFirstItem, setFirstItem] = useState(false);
-    const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   // useEffect(() => {
   //   const data = itemAlertOld.map((item, index) => ({
@@ -28,7 +29,6 @@ const Alert_Table = ({
   //   }));
   //   setData(data);
   // }, [itemAlertOld]);
- 
 
   const handleDataButtonClick = () => {
     setShowData(true);
@@ -54,15 +54,30 @@ const Alert_Table = ({
     setOldItem(false);
     setShowData(false);
   };
+  const [paginationModel, setPaginationModel] = React.useState({
+    pageSize: 25,
+    page: 0,
+  });
 
   const columns = [
-    { field: 'vendno', headerName: 'Vendno', width: 100 },
-    { field: 'descrip', headerName: 'Descrip', width: 130 },
+    {
+      field: 'vendno',
+      headerName: 'Vendno',
+      width: 80,
+      cellClassName: 'custom-cell',
+    },
+    {
+      field: 'descrip',
+      headerName: 'Descrip',
+      width: 120,
+      cellClassName: 'custom-cell',
+    },
     {
       field: 'needed',
       headerName: 'Needed',
       type: 'number',
       width: 120,
+      cellClassName: 'custom-cell',
     },
   ];
 
@@ -75,7 +90,7 @@ const Alert_Table = ({
   }));
 
   const OldItemColumns = [
-    { field: 'vendno', headerName: 'Vendno', width: 80 },
+    { field: 'vendno', headerName: 'Vendno', width: 70 },
     { field: 'class', headerName: 'Class', width: 80 },
     { field: 'descrip', headerName: 'Descrip', width: 120 },
     { field: 'qtyshp', headerName: 'Qtyshp', type: 'number', width: 100 },
@@ -100,7 +115,7 @@ const Alert_Table = ({
   }));
 
   const NewItemColumns = [
-    { field: 'vendno', headerName: 'Vendno', width: 80 },
+    { field: 'vendno', headerName: 'Vendno', width: 70 },
     { field: 'class', headerName: 'Class', width: 80 },
     { field: 'descrip', headerName: 'Descrip', width: 120 },
     { field: 'qtyshp', headerName: 'Qtyshp', type: 'number', width: 100 },
@@ -125,7 +140,7 @@ const Alert_Table = ({
   }));
 
   const FirstItemColumns = [
-    { field: 'vendno', headerName: 'Vendno', width: 80 },
+    { field: 'vendno', headerName: 'Vendno', width: 70 },
     { field: 'class', headerName: 'Class', width: 80 },
     { field: 'descrip', headerName: 'Descrip', width: 120 },
     { field: 'qtyshp', headerName: 'Qtyshp', type: 'number', width: 100 },
@@ -157,7 +172,7 @@ const Alert_Table = ({
           <div className="pt-4 pb-2 font-semibold">ITEM ALERT</div>
           <div
             className="flex-col flex bg-gray-200 text-black
-            h-[670px] w-[480px] border-none overflow-y-scroll"
+            h-[750px] w-[495px] border-none overflow-y-scroll"
           >
             <div>
               {loadingAlert ? (
@@ -165,13 +180,10 @@ const Alert_Table = ({
               ) : (
                 <DataGrid
                   rows={data}
+                  rowHeight={25}
                   columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 10 },
-                    },
-                  }}
-                  pageSizeOptions={[10, 25]}
+                  paginationModel={paginationModel}
+                  onPaginationModelChange={setPaginationModel}
                 />
               )}
             </div>
@@ -185,7 +197,7 @@ const Alert_Table = ({
           <div className="pt-4 pb-2 font-semibold">OLD ITEM</div>
           <div
             className="flex-col flex bg-gray-200 text-black
-            h-[670px] w-[480px] border-none overflow-y-scroll"
+            h-[750px] w-[495px] border-none overflow-y-scroll"
           >
             <div>
               {loadingOldOrder ? (
@@ -194,12 +206,9 @@ const Alert_Table = ({
                 <DataGrid
                   rows={OldItemData}
                   columns={OldItemColumns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 10 },
-                    },
-                  }}                
-                  pageSizeOptions={[5, 10]}
+                  rowHeight={25}
+                  paginationModel={paginationModel}
+                  onPaginationModelChange={setPaginationModel}
                 />
               )}
             </div>
@@ -213,7 +222,7 @@ const Alert_Table = ({
           <div className="pt-4 pb-2 font-semibold">NEW ITEM</div>
           <div
             className="flex-col flex bg-gray-200 text-black
-            h-[670px] w-[480px] border-none overflow-y-scroll"
+            h-[750px] w-[495px] border-none overflow-y-scroll"
           >
             <div>
               {loadingNewOrder ? (
@@ -222,12 +231,9 @@ const Alert_Table = ({
                 <DataGrid
                   rows={NewItemData}
                   columns={NewItemColumns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 10 },
-                    },
-                  }}
-                  pageSizeOptions={[5, 10]}
+                  rowHeight={25}
+                  paginationModel={paginationModel}
+                  onPaginationModelChange={setPaginationModel}
                 />
               )}
             </div>
@@ -241,7 +247,7 @@ const Alert_Table = ({
           <div className="pt-4 pb-2 font-semibold">FIRST ORDER ITEM</div>
           <div
             className="flex-col flex bg-gray-200 text-black
-            h-[670px] w-[480px] border-none overflow-y-scroll"
+             h-[750px] w-[495px] border-none overflow-y-scroll"
           >
             <div>
               {loadingFirstOrder ? (
@@ -250,12 +256,9 @@ const Alert_Table = ({
                 <DataGrid
                   rows={FirstItemData}
                   columns={FirstItemColumns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 10 },
-                    },
-                  }}
-                  pageSizeOptions={[5, 10]}
+                  rowHeight={25}
+                  paginationModel={paginationModel}
+                  onPaginationModelChange={setPaginationModel}
                 />
               )}
             </div>
@@ -270,7 +273,7 @@ const Alert_Table = ({
           <div className="pt-4 pb-2 font-semibold">ITEM ALERT</div>
           <div
             className="flex-col flex bg-gray-200 text-black
-          h-[670px] w-[480px] border-none overflow-y-scroll"
+           h-[750px] w-[495px] border-none overflow-y-scroll"
           >
             <div>
               {loadingAlert ? (
@@ -279,12 +282,9 @@ const Alert_Table = ({
                 <DataGrid
                   rows={data}
                   columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 10 },
-                    },
-                  }}
-                  pageSizeOptions={[5, 10]}
+                  rowHeight={25}
+                  paginationModel={paginationModel}
+                  onPaginationModelChange={setPaginationModel}
                 />
               )}
             </div>

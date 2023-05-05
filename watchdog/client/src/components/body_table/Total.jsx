@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { sum, sumBy } from 'lodash';
 import useMath from '../../utils/math/Math';
-import useNewItemCal from '../../utils/math/NewItemCal';
+
 //test to pass function to useState hook
 const Total = ({
   mainData,
@@ -33,9 +33,12 @@ const Total = ({
   setNew_oh_forecastTotal,
   NewOH_ForecastLeft,
   NewNeededCal,
+  newitemkey2Forecast,
+  NewItem_Qty_avg,
+  suggestedOHForNewItem,
 }) => {
   const { round } = useMath();
-  const { NewItem_Qty_avg, suggestedOHForNewItem } = useNewItemCal(mainData);
+
 
   useEffect(() => {
     const calculateTotals = () => {
@@ -112,7 +115,7 @@ const Total = ({
       }, 0);
 
       const totalNew365 = sumBy(
-        mainData.map((item) =>
+        newitemkey2Forecast.map((item) =>
           sumBy(item.newitemkeyForecast, 'total_qty_difference')
         )
       );

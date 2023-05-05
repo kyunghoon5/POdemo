@@ -20,18 +20,18 @@ router.get('/', async (req, res) => {
   const endDate = req.query.endDate;
   const loadQ = await utils.loadSqlQueries('events');
   // Connect to both servers
+  // const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
+  // let request1 = new sql.Request(sqlPool);
+
   const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
   let request1 = new sql.Request(sqlPool);
-
-  const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
-  let request2 = new sql.Request(sqlPool2);
 
   const itemRankAllDataQuery = await loadQ.itemRankAllData.replace(
     '${req.query.descrip}',
     req.query.descrip
   );
 
-  const result2 = await request2.query(itemRankAllDataQuery);
+  const result2 = await request1.query(itemRankAllDataQuery);
 
   const itemRankNonRBQuery = await loadQ.itemRankNonRB.replace(
     '${req.query.descrip}',

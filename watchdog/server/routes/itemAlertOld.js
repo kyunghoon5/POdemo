@@ -20,17 +20,17 @@ router.get('/', async (req, res) => {
   const endDate = req.query.endDate;
   const loadQ = await utils.loadSqlQueries('events');
   // Connect to both servers
+  // const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
+  // let request1 = new sql.Request(sqlPool);
+
   const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
   let request1 = new sql.Request(sqlPool);
-
-  const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
-  let request2 = new sql.Request(sqlPool2);
 
   const itemAlertQuery = await loadQ.itemAlertforOld.replace(
     '${req.query.descrip}',
     req.query.descrip
   );
-  const result2 = await request2.query(itemAlertQuery);
+  const result2 = await request1.query(itemAlertQuery);
   //trim
   const mergedResults = [...result2.recordset].map((row) => {
     const trimmedRow = {};

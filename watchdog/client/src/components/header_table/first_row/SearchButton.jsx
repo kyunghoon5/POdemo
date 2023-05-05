@@ -14,12 +14,14 @@ const SearchButton = ({
   pieChartF,
   reset,
   setfilteredData,
-  record,setGraphDropdownSelectedYear
+  record,setGraphDropdownSelectedYear,
+  newitemkey2ForecastAPI
  
 }) => {
   const handleButton = () => {
     setfilteredData([]);
     searchMainData(record);
+    newitemkey2ForecastAPI(record)
     imageAPI(record);
     itemRecords(record);
     soldPercentageAPI(record);

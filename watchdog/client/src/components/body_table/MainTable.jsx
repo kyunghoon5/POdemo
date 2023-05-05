@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import BlankPage from './BlankPage';
 import useMath from '../../utils/math/Math';
 import useDate from '../../utils/date/DateFile';
-import useNewItemCal from '../../utils/math/NewItemCal';
+
 
 const MainTable = ({
   loading,
@@ -38,10 +38,13 @@ const MainTable = ({
   NewOH_ForecastRight,
   NewNeededCal,
   NewneededTotal,
+  newitemkey2Forecast,
+  suggestedOHForNewItem,
+  NewItem_Qty_avg,
 }) => {
   const { round } = useMath();
   const { daysToDate, getDate } = useDate();
-  const { suggestedOHForNewItem, NewItem_Qty_avg } = useNewItemCal(mainData);
+ 
   const past365c = getDate(365);
 
   const change365_to_New =
@@ -50,7 +53,7 @@ const MainTable = ({
       .map((item) => new Date(item.start_dte).toISOString().split('T')[0])[0] >
     past365c ? (
       <>
-        {mainData.map((item, idx) =>
+        {newitemkey2Forecast.map((item, idx) =>
           item.newitemkeyForecast.length === 0 ? (
             <div key={idx}>0</div>
           ) : (
@@ -89,7 +92,6 @@ const MainTable = ({
         {NewItem_Qty_avg.map((item, idx) => (
           <div key={idx}>{Number(item).toFixed(2)}</div>
         ))}
-       
 
         <div>{totalNewItem_AVG_SOLD}</div>
       </>

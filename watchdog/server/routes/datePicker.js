@@ -20,17 +20,17 @@ router.get('/', async (req, res) => {
   const endDate = req.query.endDate;
    const loadQ = await utils.loadSqlQueries('events');
   // Connect to both servers
+  // const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
+  // let request1 = new sql.Request(sqlPool);
+
   const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
   let request1 = new sql.Request(sqlPool);
-
-  const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
-  let request2 = new sql.Request(sqlPool2);
    const calendarDatePick1Query = await loadQ.calendarDatePick1.replace(
      '${req.query.descrip}',
      req.query.descrip
    );
 
-  const result2 = await request2.query(calendarDatePick1Query);
+  const result2 = await request1.query(calendarDatePick1Query);
 
    const calendarDatePick2Query = await loadQ.calendarDatePick2
      .replace(/\${req\.query\.descrip}/g, req.query.descrip || '')
@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
      .replace(/\${endDate}/g, req.query.endDate || '');
      
 
-  const result21 = await request2.query(calendarDatePick2Query);
+  const result21 = await request1.query(calendarDatePick2Query);
   const mergedResults = [...result2.recordset];
 
   const mergeArrays = (arr1, arr2) => {

@@ -36,11 +36,13 @@ const Row1 = ({
   setWatchDoginfo,
   setitemRank,
   setnewitemRank,
+  newitemkey2ForecastAPI,
 }) => {
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       setfilteredData([]);
       searchMainData(record);
+      newitemkey2ForecastAPI(record);
       imageAPI(record);
       itemRecords(record);
       soldPercentageAPI(record);
@@ -106,6 +108,7 @@ const Row1 = ({
                     setfilteredData([]);
                     imageAPI(item.descrip);
                     searchMainData(item.descrip);
+                    newitemkey2ForecastAPI(item.descrip);
                     itemRecords(item.descrip);
                     soldPercentageAPI(item.descrip);
                     graphAllYearDataAPI(item.descrip);
@@ -129,6 +132,7 @@ const Row1 = ({
       <SearchButton
         record={record}
         searchMainData={searchMainData}
+        newitemkey2ForecastAPI={newitemkey2ForecastAPI}
         imageAPI={imageAPI}
         itemRecords={itemRecords}
         soldPercentageAPI={soldPercentageAPI}

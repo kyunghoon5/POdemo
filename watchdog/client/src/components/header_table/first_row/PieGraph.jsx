@@ -10,8 +10,7 @@ import {
 
 const PieGraph = ({ pieChart, maxVal, COLORS }) => {
   return (
-    <div
-      style={{
+    <div       style={{
         position: 'absolute',
         width: '30%',
         height: '100%',
@@ -56,7 +55,7 @@ const PieGraph = ({ pieChart, maxVal, COLORS }) => {
                   textAnchor={x > cx ? 'start' : 'end'}
                   dominantBaseline="central"
                 >
-                  <tspan dx={x > cx ? -31 : 30} dy={3}>
+                  <tspan dx={x > cx ? -37 : 31} dy={4}>
                     {quarter}Q({percent})
                   </tspan>
                 </text>

@@ -205,7 +205,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
     return await axios
       .get(`${BASE_URL}searchAuto`)
       .then((response) => setSuggest(response.data))
-      
+
       .catch((err) => console.log(err));
   };
   useEffect(() => {
@@ -233,68 +233,84 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
     setLoadingAlert(true);
     return await axios
       .get(`${BASE_URL}itemAlertOld`)
-      .then((response) => {setItemAlertOld(response.data)
-      setLoadingAlert(false);})
-      
-      .catch((err) => console.log(err));
-      
-  };
-  const [itemoldOrder, setItemOldOrder] = useState([]);
-    const [loadingOldOrder, setLoadingOldOrder] = useState(false);
-
-  const itemoldOrderAPI = async () => {
-   setLoadingOldOrder(true)
-    return await axios
-      .get(`${BASE_URL}itemOldOrder`)
       .then((response) => {
-        setItemOldOrder(response.data);
-       setLoadingOldOrder(false)
+        setItemAlertOld(response.data);
+        setLoadingAlert(false);
       })
 
       .catch((err) => console.log(err));
   };
-   const [itemNewOrder, setItemNewOrder] = useState([]);
-const [loadingNewOrder, setLoadingNewOrder] = useState(false);
-   const itemNewOrderAPI = async () => {
-    setLoadingNewOrder(true)
-     return await axios
-       .get(`${BASE_URL}itemNewOrder`)
-       .then((response) => {
-         setItemNewOrder(response.data);
-      setLoadingNewOrder(false)
-       })
+  const [itemoldOrder, setItemOldOrder] = useState([]);
+  const [loadingOldOrder, setLoadingOldOrder] = useState(false);
 
-       .catch((err) => console.log(err));
-   };
-    
-     const [itemFirstOrder, setItemFirstOrder] = useState([]);
-const [loadingFirstOrder, setLoadingFirstOrder] = useState(false);
-     const itemFirstOrderAPI = async () => {
-     setLoadingFirstOrder(true)
-       return await axios
-         .get(`${BASE_URL}itemFirstOrder`)
-         .then((response) => {
-           setItemFirstOrder(response.data);
-         setLoadingFirstOrder(false)
-         })
+  const itemoldOrderAPI = async () => {
+    setLoadingOldOrder(true);
+    return await axios
+      .get(`${BASE_URL}itemOldOrder`)
+      .then((response) => {
+        setItemOldOrder(response.data);
+        setLoadingOldOrder(false);
+      })
 
-         .catch((err) => console.log(err));
-     };
+      .catch((err) => console.log(err));
+  };
+  const [itemNewOrder, setItemNewOrder] = useState([]);
+  const [loadingNewOrder, setLoadingNewOrder] = useState(false);
+  const itemNewOrderAPI = async () => {
+    setLoadingNewOrder(true);
+    return await axios
+      .get(`${BASE_URL}itemNewOrder`)
+      .then((response) => {
+        setItemNewOrder(response.data);
+        setLoadingNewOrder(false);
+      })
 
-     
+      .catch((err) => console.log(err));
+  };
+
+  const [itemFirstOrder, setItemFirstOrder] = useState([]);
+  const [loadingFirstOrder, setLoadingFirstOrder] = useState(false);
+  const itemFirstOrderAPI = async () => {
+    setLoadingFirstOrder(true);
+    return await axios
+      .get(`${BASE_URL}itemFirstOrder`)
+      .then((response) => {
+        setItemFirstOrder(response.data);
+        setLoadingFirstOrder(false);
+      })
+
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     itemAlertOldAPI();
     itemoldOrderAPI();
     itemNewOrderAPI();
     itemFirstOrderAPI();
   }, []);
-  
+
+  const [newitemkey2Forecast, setNewitemKey2Forecast] = useState([]);
+
+  const newitemkey2ForecastAPI = async (record) => {
+    const searchedRecord = record.toLowerCase();
+
+    await axios
+      .get(`${BASE_URL}newItemKey2Forecast?descrip=${searchedRecord}`)
+      .then((response) => {
+        setNewitemKey2Forecast(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return {
+    newitemkey2Forecast,
     itemAlertOld,
     mainData,
     loading,
     searchMainData,
+    newitemkey2ForecastAPI,
     mainImg,
     imageAPI,
     selectedSoldPercentage,

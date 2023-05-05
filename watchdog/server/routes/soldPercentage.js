@@ -18,25 +18,25 @@ const utils = require('../data/utils');
 router.get('/', async (req, res) => {
   const startDate = req.query.startDate;
   const endDate = req.query.endDate;
-   const loadQ = await utils.loadSqlQueries('events');
+  const loadQ = await utils.loadSqlQueries('events');
   // Connect to both servers
+  // const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
+  // let request1 = new sql.Request(sqlPool);
+
   const sqlPool = await mssql.GetCreateIfNotExistPool(configServer1);
   let request1 = new sql.Request(sqlPool);
 
-  const sqlPool2 = await mssql.GetCreateIfNotExistPool(configServer2);
-  let request2 = new sql.Request(sqlPool2);
+  const soldPercentage1Query = await loadQ.soldPercentage1.replace(
+    '${req.query.descrip}',
+    req.query.descrip
+  );
+  const result2 = await request1.query(soldPercentage1Query);
 
-   const soldPercentage1Query = await loadQ.soldPercentage1.replace(
-     '${req.query.descrip}',
-     req.query.descrip
-   );
-  const result2 = await request2.query(soldPercentage1Query);
-
-   const soldPercentage2Query = await loadQ.soldPercentage2.replace(
-     '${req.query.descrip}',
-     req.query.descrip
-   );
-  const result21 = await request2.query(soldPercentage2Query);
+  const soldPercentage2Query = await loadQ.soldPercentage2.replace(
+    '${req.query.descrip}',
+    req.query.descrip
+  );
+  const result21 = await request1.query(soldPercentage2Query);
   const mergedResults = [...result2.recordset];
 
   const mergeArrays = (arr1, arr2) => {

@@ -2,10 +2,18 @@ import React from 'react';
 import useDate from '../date/DateFile';
 import { zipWith, add } from 'lodash';
 import useMath from './Math';
+import useAPI from '../../api/API'
 
-const NewItemCal = (mainData, forecastDatePicker, sumReqForcast) => {
+const NewItemCal = (
+  mainData,
+  forecastDatePicker,
+  sumReqForcast,
+  
+) => {
   const { date, formatDate } = useDate();
   const { round } = useMath();
+
+
 
   const startDateToTime = mainData
     .filter((item) => item.start_dte)
@@ -39,7 +47,7 @@ const NewItemCal = (mainData, forecastDatePicker, sumReqForcast) => {
     (forecastDate - date.getTime()) / (1000 * 3600 * 24)
   );
 
-  const monthsDifference = Math.round((daysDifference / 30) * 10) / 10;
+
 
   const onHandInventory = mainData.map((item) => Number(item.onhand));
 
