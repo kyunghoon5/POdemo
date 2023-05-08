@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
-import { DataGrid } from '@mui/x-data-grid';
-import '../../styles/controlPanel.css';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from '@mui/x-data-grid';
+
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
+    </GridToolbarContainer>
+  );
+}
 
 const Alert_Table = ({
   itemAlertOld,
@@ -18,17 +29,6 @@ const Alert_Table = ({
   const [showNewItem, setNewItem] = useState(false);
   const [showFirstItem, setFirstItem] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-
-  // useEffect(() => {
-  //   const data = itemAlertOld.map((item, index) => ({
-  //     id: index,
-  //     vendno: item.vendno,
-  //     descrip: item.descrip,
-  //     itemkey2: item.itemkey2,
-  //     needed: item.needed,
-  //   }));
-  //   setData(data);
-  // }, [itemAlertOld]);
 
   const handleDataButtonClick = () => {
     setShowData(true);
@@ -184,6 +184,9 @@ const Alert_Table = ({
                   columns={columns}
                   paginationModel={paginationModel}
                   onPaginationModelChange={setPaginationModel}
+                  slots={{
+                    toolbar: CustomToolbar,
+                  }}
                 />
               )}
             </div>
@@ -209,6 +212,9 @@ const Alert_Table = ({
                   rowHeight={25}
                   paginationModel={paginationModel}
                   onPaginationModelChange={setPaginationModel}
+                  slots={{
+                    toolbar: CustomToolbar,
+                  }}
                 />
               )}
             </div>
@@ -234,6 +240,9 @@ const Alert_Table = ({
                   rowHeight={25}
                   paginationModel={paginationModel}
                   onPaginationModelChange={setPaginationModel}
+                  slots={{
+                    toolbar: CustomToolbar,
+                  }}
                 />
               )}
             </div>
@@ -259,6 +268,9 @@ const Alert_Table = ({
                   rowHeight={25}
                   paginationModel={paginationModel}
                   onPaginationModelChange={setPaginationModel}
+                  slots={{
+                    toolbar: CustomToolbar,
+                  }}
                 />
               )}
             </div>
@@ -285,6 +297,9 @@ const Alert_Table = ({
                   rowHeight={25}
                   paginationModel={paginationModel}
                   onPaginationModelChange={setPaginationModel}
+                  slots={{
+                    toolbar: CustomToolbar,
+                  }}
                 />
               )}
             </div>

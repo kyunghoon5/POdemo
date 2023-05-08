@@ -3,6 +3,7 @@ import SearchButton from './SearchButton';
 import MainImg from './MainImg';
 import Graph from './Graph';
 import PieGraph from './PieGraph';
+import React, { useState } from 'react';
 
 const Row1 = ({
   mainData,
@@ -37,6 +38,8 @@ const Row1 = ({
   setitemRank,
   setnewitemRank,
   newitemkey2ForecastAPI,
+
+
 }) => {
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -55,6 +58,7 @@ const Row1 = ({
       pieChartF(record);
       reset();
       setGraphDropdownSelectedYear('YEAR');
+  
     }
   };
 
@@ -64,22 +68,31 @@ const Row1 = ({
     setWatchDoginfo([]);
     setitemRank([]);
     setnewitemRank([]);
+    
   };
+  const [pasted, setPasted] = useState(false);
 
   const handleInput = (e) => {
     const searchWord = e.target.value;
-    setRecord(searchWord);
-    const newFilter = suggest.filter((value) => {
-      return value.descrip.toLowerCase().includes(searchWord.toLowerCase());
-    });
+    if (!pasted) {
+      setRecord(searchWord);
+      const newFilter = suggest.filter((value) => {
+        return value.descrip.toLowerCase().includes(searchWord.toLowerCase());
+      });
 
-    if (searchWord === '') {
-      setfilteredData([]);
-    } else {
-      setfilteredData(newFilter);
+      if (searchWord === '') {
+        setfilteredData([]);
+      } else {
+        setfilteredData(newFilter);
+      }
     }
+    setPasted(false);
   };
 
+  const handlePaste = () => {
+    setPasted(true);
+    alert('Copy and Paste Blocked!');
+  };
   return (
     <tr className="row1">
       <td className="infoCol1" style={{ textAlign: 'left' }}>
@@ -95,6 +108,7 @@ const Row1 = ({
           onChange={handleInput}
           autoComplete="off"
           onKeyPress={handleKeyPress}
+          onPaste={handlePaste}
         />
         <>
           {filteredData.length !== 0 && (
@@ -120,6 +134,7 @@ const Row1 = ({
                     pieChartF(item.descrip);
                     reset();
                     setGraphDropdownSelectedYear('YEAR');
+                   
                   }}
                 >
                   {item.descrip}
@@ -130,6 +145,7 @@ const Row1 = ({
         </>
       </td>
       <SearchButton
+       
         record={record}
         searchMainData={searchMainData}
         newitemkey2ForecastAPI={newitemkey2ForecastAPI}

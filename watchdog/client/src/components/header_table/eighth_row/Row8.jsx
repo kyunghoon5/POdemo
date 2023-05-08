@@ -26,7 +26,7 @@ const Row8 = ({
       <td colSpan="3" className="dgnDte"></td>
       <td style={{ textAlign: 'center' }}>
         SOLD
-        <select
+        {/* <select
           className="border border-zinc-500"
           value={selectedSold}
           onChange={soldPercentageHandler}
@@ -49,7 +49,7 @@ const Row8 = ({
               {value}
             </option>
           ))}
-        </select>
+        </select> */}
       </td>
 
       <>

@@ -183,19 +183,20 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
 
   //forecast
   const [selforecastDatePicker, setselforecastDatePicker] = useState([]);
+  const [ForecastloadingDatePicker, setForecastloadingDatePicker] = useState(
+    []
+  );
+
   useEffect(() => {
     const fetchData4 = async () => {
-      if (mainData.length === 0) {
-        return;
-      }
-
       const searchedRecord = record.toLowerCase();
       const endDate = forecastDatePicker.toISOString().split('T')[0];
-
+      setForecastloadingDatePicker(true);
       const response = await axios.get(
         `${BASE_URL}poForecast?descrip=${searchedRecord}&endDate=${endDate}`
       );
       setselforecastDatePicker(response.data);
+      setForecastloadingDatePicker(false);
     };
     fetchData4();
   }, [forecastDatePicker, mainData]);
@@ -211,21 +212,6 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
   useEffect(() => {
     itemDataAPI();
   }, []);
-
-  const handleDownload17 = () => {
-    axios({
-      url: `${BASE_URL}downloadItemReorderPoint`,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'ItemReorderPoint.xlsx');
-      document.body.appendChild(link);
-      link.click();
-    });
-  };
 
   const [itemAlertOld, setItemAlertOld] = useState([]);
 
@@ -305,6 +291,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
   };
 
   return {
+    setNewitemKey2Forecast,
     newitemkey2Forecast,
     itemAlertOld,
     mainData,
@@ -341,7 +328,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
     graphByItemF,
     graphByItemMonth,
     graphByItemMonthF,
-    handleDownload17,
+
     pieChart,
     pieChartF,
     selforecastDatePicker,
@@ -356,6 +343,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
     loadingOldOrder,
     loadingNewOrder,
     loadingFirstOrder,
+    ForecastloadingDatePicker,
   };
 };
 

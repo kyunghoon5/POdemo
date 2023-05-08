@@ -10,7 +10,8 @@ import {
 
 const PieGraph = ({ pieChart, maxVal, COLORS }) => {
   return (
-    <div       style={{
+    <div
+      style={{
         position: 'absolute',
         width: '30%',
         height: '100%',
@@ -18,7 +19,7 @@ const PieGraph = ({ pieChart, maxVal, COLORS }) => {
       }}
     >
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
+        <PieChart width={400} height={200}>
           <Pie
             data={pieChart}
             dataKey="qtyshp"
@@ -55,7 +56,7 @@ const PieGraph = ({ pieChart, maxVal, COLORS }) => {
                   textAnchor={x > cx ? 'start' : 'end'}
                   dominantBaseline="central"
                 >
-                  <tspan dx={x > cx ? -37 : 31} dy={4}>
+                  <tspan dx={x > cx ? -25 : 31} dy={0}>
                     {quarter}Q({percent})
                   </tspan>
                 </text>
@@ -74,7 +75,7 @@ const PieGraph = ({ pieChart, maxVal, COLORS }) => {
             ))}
           </Pie>
           <Tooltip formatter={(value) => [value, 'qtyshp']} />
-          <Legend />
+          {/* <Legend /> */}
         </PieChart>
       </ResponsiveContainer>
     </div>

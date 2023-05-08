@@ -41,10 +41,12 @@ const MainTable = ({
   newitemkey2Forecast,
   suggestedOHForNewItem,
   NewItem_Qty_avg,
+  ForecastloadingDatePicker,
+  selforecastDatePicker,
 }) => {
   const { round } = useMath();
   const { daysToDate, getDate } = useDate();
- 
+
   const past365c = getDate(365);
 
   const change365_to_New =
@@ -165,11 +167,18 @@ const MainTable = ({
           </>
         ) : (
           <>
-            {oldOH_Forecast_Left.map((num, idx2) => (
+            {selforecastDatePicker.length
+              ? ForecastloadingDatePicker === false
+                ? oldOH_Forecast_Left.map((num, idx2) => (
               <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
                 {round(num)}
               </div>
-            ))}
+            ))
+                : mainData.map((item, idx) => <div key={idx}>Loading...</div>)
+              : ForecastloadingDatePicker === false
+              ? mainData.map((item, idx) => <div key={idx}>{item.purno}</div>)
+              : mainData.map((item, idx) => <div key={idx}>Loading</div>)}
+           
             <div>{oh_forecastTotal}</div>
           </>
         )}
@@ -225,25 +234,29 @@ const MainTable = ({
           </>
         ) : (
           <>
-            {FosuggestedQty.map((num, index2) => (
-              <Fragment key={index2}>
-                <span style={{ float: 'left', fontSize: '11px' }}>
-                  {num < 0 ? 'overstock' : num === 0 ? '' : 'needed'}
-                </span>
-                <div
-                  key={`qty-${index2}`}
-                  className={
-                    num < 0
-                      ? 'overstock-amount'
-                      : num === 0
-                      ? ''
-                      : 'needed-amount'
-                  }
-                >
-                  {round(num)}
-                </div>
-              </Fragment>
-            ))}
+            {selforecastDatePicker.length
+              ? ForecastloadingDatePicker === false
+                ? FosuggestedQty.map((num, index2) => (
+                    <Fragment key={index2}>
+                      <span style={{ float: 'left', fontSize: '11px' }}>
+                        {num < 0 ? 'overstock' : num === 0 ? '' : 'needed'}
+                      </span>
+                      <div
+                        key={`qty-${index2}`}
+                        className={
+                          num < 0
+                            ? 'overstock-amount'
+                            : num === 0
+                            ? ''
+                            : 'needed-amount'
+                        }
+                      >
+                        {round(num)}
+                      </div>
+                    </Fragment>
+                  ))
+                : mainData.map((item, idx) => <div key={idx}>Loading...</div>)
+              : ForecastloadingDatePicker === false}
             <div></div>
           </>
         )}

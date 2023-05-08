@@ -14,14 +14,15 @@ const SearchButton = ({
   pieChartF,
   reset,
   setfilteredData,
-  record,setGraphDropdownSelectedYear,
-  newitemkey2ForecastAPI
- 
+  record,
+  setGraphDropdownSelectedYear,
+  newitemkey2ForecastAPI,
+  fetchData4,
 }) => {
   const handleButton = () => {
     setfilteredData([]);
     searchMainData(record);
-    newitemkey2ForecastAPI(record)
+    newitemkey2ForecastAPI(record);
     imageAPI(record);
     itemRecords(record);
     soldPercentageAPI(record);
@@ -34,6 +35,7 @@ const SearchButton = ({
     pieChartF(record);
     reset();
     setGraphDropdownSelectedYear('YEAR');
+  
   };
 
   return (
