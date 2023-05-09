@@ -23,12 +23,17 @@ const Alert_Table = ({
   loadingOldOrder,
   loadingNewOrder,
   loadingFirstOrder,
+  itemFirstOrderAPI,
+  loadedFirstOrder,
+  itemNewOrderAPI,
+  loadedNewOrder,
+  itemoldOrderAPI,
+  loadedOldOrder,
 }) => {
   const [showData, setShowData] = useState(false);
   const [showOldItem, setOldItem] = useState(false);
   const [showNewItem, setNewItem] = useState(false);
   const [showFirstItem, setFirstItem] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
 
   const handleDataButtonClick = () => {
     setShowData(true);
@@ -41,18 +46,28 @@ const Alert_Table = ({
     setShowData(false);
     setNewItem(false);
     setFirstItem(false);
+    if (!loadedOldOrder) {
+      itemoldOrderAPI();
+    }
   };
   const handleNewItemButtonClick = () => {
     setNewItem(true);
     setOldItem(false);
     setShowData(false);
     setFirstItem(false);
+    if (!loadedNewOrder) {
+      itemNewOrderAPI();
+    }
   };
   const handleFirstItemButtonClick = () => {
     setFirstItem(true);
     setNewItem(false);
     setOldItem(false);
     setShowData(false);
+
+    if (!loadedFirstOrder) {
+      itemFirstOrderAPI();
+    }
   };
   const [paginationModel, setPaginationModel] = React.useState({
     pageSize: 25,
@@ -169,25 +184,27 @@ const Alert_Table = ({
     case showData:
       content = (
         <>
-          <div className="pt-4 pb-2 font-semibold">ITEM ALERT</div>
+          <div className="pt-4 pb-2 text-center font-semibold">ITEM ALERT</div>
           <div
-            className="flex-col flex bg-gray-200 text-black
-            h-[750px] w-[495px] border-none overflow-y-scroll"
+            className="flex-col flex  text-black
+            h-[790px] w-[495px] border-none "
           >
             <div>
               {loadingAlert ? (
                 <p>Loading...</p>
               ) : (
-                <DataGrid
-                  rows={data}
-                  rowHeight={25}
-                  columns={columns}
-                  paginationModel={paginationModel}
-                  onPaginationModelChange={setPaginationModel}
-                  slots={{
-                    toolbar: CustomToolbar,
-                  }}
-                />
+                <>
+                  <DataGrid
+                    rows={data}
+                    rowHeight={25}
+                    columns={columns}
+                    paginationModel={paginationModel}
+                    onPaginationModelChange={setPaginationModel}
+                    slots={{
+                      toolbar: CustomToolbar,
+                    }}
+                  />
+                </>
               )}
             </div>
           </div>
@@ -197,10 +214,10 @@ const Alert_Table = ({
     case showOldItem:
       content = (
         <>
-          <div className="pt-4 pb-2 font-semibold">OLD ITEM</div>
+          <div className="pt-4 pb-2 text-center font-semibold">OLD ITEM</div>
           <div
-            className="flex-col flex bg-gray-200 text-black
-            h-[750px] w-[495px] border-none overflow-y-scroll"
+            className="flex-col flex  text-black
+            h-[790px] w-[495px] border-none "
           >
             <div>
               {loadingOldOrder ? (
@@ -225,10 +242,10 @@ const Alert_Table = ({
     case showNewItem:
       content = (
         <>
-          <div className="pt-4 pb-2 font-semibold">NEW ITEM</div>
+          <div className="pt-4 pb-2 text-center font-semibold">NEW ITEM</div>
           <div
-            className="flex-col flex bg-gray-200 text-black
-            h-[750px] w-[495px] border-none overflow-y-scroll"
+            className="flex-col flex  text-black
+            h-[790px] w-[495px] border-none "
           >
             <div>
               {loadingNewOrder ? (
@@ -253,10 +270,12 @@ const Alert_Table = ({
     case showFirstItem:
       content = (
         <>
-          <div className="pt-4 pb-2 font-semibold">FIRST ORDER ITEM</div>
+          <div className="pt-4 pb-2 text-center font-semibold">
+            FIRST ORDER ITEM
+          </div>
           <div
-            className="flex-col flex bg-gray-200 text-black
-             h-[750px] w-[495px] border-none overflow-y-scroll"
+            className="flex-col flex  text-black
+            h-[790px] w-[495px] border-none "
           >
             <div>
               {loadingFirstOrder ? (
@@ -282,10 +301,10 @@ const Alert_Table = ({
     default:
       content = (
         <>
-          <div className="pt-4 pb-2 font-semibold">ITEM ALERT</div>
+          <div className="pt-4 pb-2 text-center font-semibold">ITEM ALERT</div>
           <div
-            className="flex-col flex bg-gray-200 text-black
-           h-[750px] w-[495px] border-none overflow-y-scroll"
+            className="flex-col flex  text-black
+            h-[790px] w-[495px] border-none "
           >
             <div>
               {loadingAlert ? (

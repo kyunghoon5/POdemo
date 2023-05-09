@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useDate from '../../utils/date/DateFile';
+
 
 const SubTable = ({
   colorTotal,
   Difference_In_Days2,
   daysDifference,
   mainData,
+  setIsOpenM,
+  isOpenM,
+  inputRef,
 }) => {
   const { getDate } = useDate();
   const past365c = getDate(365);
@@ -19,6 +23,10 @@ const SubTable = ({
     ) : (
       <td>SOLD365</td>
     );
+      const handleButtonClick = () => {
+        setIsOpenM(!isOpenM);
+        
+      };
 
   return (
     <tbody id="tb2" className="table2">
@@ -33,7 +41,16 @@ const SubTable = ({
         {changeForNew}
 
         <td>AVG_SOLD</td>
-        <td>AVG_LEAD</td>
+        <td className="  text-xs">
+          AVG_LEAD{' '}
+          <button
+            onClick={handleButtonClick}
+            className="bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white  px-1 border border-blue-500 hover:border-transparent rounded"
+          >
+            M
+          </button>
+        
+        </td>
 
         <td>Suggested</td>
         <td colSpan={2}>+{daysDifference} days</td>

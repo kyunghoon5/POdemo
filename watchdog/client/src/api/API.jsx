@@ -228,6 +228,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
   };
   const [itemoldOrder, setItemOldOrder] = useState([]);
   const [loadingOldOrder, setLoadingOldOrder] = useState(false);
+   const [loadedOldOrder, setLoadedOldOrder] = useState(false);
 
   const itemoldOrderAPI = async () => {
     setLoadingOldOrder(true);
@@ -236,12 +237,14 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
       .then((response) => {
         setItemOldOrder(response.data);
         setLoadingOldOrder(false);
+        setLoadedOldOrder(true)
       })
 
       .catch((err) => console.log(err));
   };
   const [itemNewOrder, setItemNewOrder] = useState([]);
   const [loadingNewOrder, setLoadingNewOrder] = useState(false);
+    const [loadedNewOrder, setLoadedNewOrder] = useState(false);
   const itemNewOrderAPI = async () => {
     setLoadingNewOrder(true);
     return await axios
@@ -249,6 +252,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
       .then((response) => {
         setItemNewOrder(response.data);
         setLoadingNewOrder(false);
+        setLoadedNewOrder(true)
       })
 
       .catch((err) => console.log(err));
@@ -256,6 +260,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
 
   const [itemFirstOrder, setItemFirstOrder] = useState([]);
   const [loadingFirstOrder, setLoadingFirstOrder] = useState(false);
+  const [loadedFirstOrder, setLoadedFirstOrder] = useState(false);
   const itemFirstOrderAPI = async () => {
     setLoadingFirstOrder(true);
     return await axios
@@ -263,6 +268,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
       .then((response) => {
         setItemFirstOrder(response.data);
         setLoadingFirstOrder(false);
+        setLoadedFirstOrder(true);
       })
 
       .catch((err) => console.log(err));
@@ -270,9 +276,6 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
 
   useEffect(() => {
     itemAlertOldAPI();
-    itemoldOrderAPI();
-    itemNewOrderAPI();
-    itemFirstOrderAPI();
   }, []);
 
   const [newitemkey2Forecast, setNewitemKey2Forecast] = useState([]);
@@ -344,6 +347,12 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
     loadingNewOrder,
     loadingFirstOrder,
     ForecastloadingDatePicker,
+    itemFirstOrderAPI,
+    loadedFirstOrder,
+    itemNewOrderAPI,
+    loadedNewOrder,
+    itemoldOrderAPI,
+    loadedOldOrder,
   };
 };
 

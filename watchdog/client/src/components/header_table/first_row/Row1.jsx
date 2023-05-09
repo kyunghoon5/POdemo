@@ -3,14 +3,12 @@ import SearchButton from './SearchButton';
 import MainImg from './MainImg';
 import Graph from './Graph';
 import PieGraph from './PieGraph';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const Row1 = ({
   mainData,
   record,
   setRecord,
-  filteredData,
-  setfilteredData,
   graphDropdownSelectedYear,
   graphLoading,
   graphAllYearData,
@@ -38,9 +36,9 @@ const Row1 = ({
   setitemRank,
   setnewitemRank,
   newitemkey2ForecastAPI,
-
-
 }) => {
+  //searchSuggest
+  const [filteredData, setfilteredData] = useState([]);
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       setfilteredData([]);
@@ -58,9 +56,28 @@ const Row1 = ({
       pieChartF(record);
       reset();
       setGraphDropdownSelectedYear('YEAR');
-  
     }
   };
+
+
+
+const handleKeyDown = (event) => {
+  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+    event.preventDefault();
+    const currentIndex = filteredData.findIndex(
+      (item) => item.descrip === record
+    );
+    const nextIndex =
+      (currentIndex +
+        (event.key === 'ArrowDown' ? 1 : -1) +
+        filteredData.length) %
+      filteredData.length;
+    setRecord(filteredData[nextIndex].descrip);
+
+    
+  }
+};
+  
 
   const reset = () => {
     setSelectedSold([]);
@@ -68,16 +85,26 @@ const Row1 = ({
     setWatchDoginfo([]);
     setitemRank([]);
     setnewitemRank([]);
-    
   };
   const [pasted, setPasted] = useState(false);
 
   const handleInput = (e) => {
     const searchWord = e.target.value;
     if (!pasted) {
-      setRecord(searchWord);
+      setRecord(e.target.value);
       const newFilter = suggest.filter((value) => {
-        return value.descrip.toLowerCase().includes(searchWord.toLowerCase());
+        return value.descrip.toLowerCase().startsWith(searchWord.toLowerCase());
+      });
+
+      if (searchWord === '') {
+        setfilteredData([]);
+      } else {
+        setfilteredData(newFilter);
+      }
+    } else if (pasted) {
+      setRecord(e.target.value.trim());
+      const newFilter = suggest.filter((value) => {
+        return value.descrip.toLowerCase().startsWith(searchWord.toLowerCase());
       });
 
       if (searchWord === '') {
@@ -91,8 +118,24 @@ const Row1 = ({
 
   const handlePaste = () => {
     setPasted(true);
-    alert('Copy and Paste Blocked!');
   };
+
+
+
+   const dropdownRef = useRef(null);
+
+   useEffect(() => {
+     function handleClickOutside(event) {
+       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+         setfilteredData([]);
+       }
+     }
+     document.addEventListener('click', handleClickOutside);
+     return () => {
+       document.removeEventListener('click', handleClickOutside);
+     };
+   }, [dropdownRef]);
+
   return (
     <tr className="row1">
       <td className="infoCol1" style={{ textAlign: 'left' }}>
@@ -106,13 +149,14 @@ const Row1 = ({
           type="text"
           value={record}
           onChange={handleInput}
+          onKeyDown={handleKeyDown}
           autoComplete="off"
           onKeyPress={handleKeyPress}
           onPaste={handlePaste}
         />
         <>
           {filteredData.length !== 0 && (
-            <span className="dataResult absolute">
+            <span className="dataResult absolute" ref={dropdownRef}>
               {filteredData.slice(0, 15).map((item, idx) => (
                 <span
                   key={idx}
@@ -134,7 +178,6 @@ const Row1 = ({
                     pieChartF(item.descrip);
                     reset();
                     setGraphDropdownSelectedYear('YEAR');
-                   
                   }}
                 >
                   {item.descrip}
@@ -145,7 +188,6 @@ const Row1 = ({
         </>
       </td>
       <SearchButton
-       
         record={record}
         searchMainData={searchMainData}
         newitemkey2ForecastAPI={newitemkey2ForecastAPI}

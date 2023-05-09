@@ -28,11 +28,12 @@ FROM
     WHERE
       descrip NOT IN ('SHIP', 'CALENDAR', 'BROCHURE')
       AND itemkey2 NOT IN ('_MANUAL_INVOICE')
-      AND descrip IN ('tops c dekee')
+   AND descrip='${req.query.descrip}'
       --RB only
       --AND class IN ('RB')
       --Exclude RB
       --AND class NOT IN ('RB', 'AA', 'Z')
+	  
   ) B
   LEFT JOIN artran10c A ON B.descrip = A.descrip AND MONTH(A.invdte) = Months.month AND CONVERT(DATE, A.invdte) BETWEEN (SELECT MIN(recdate) FROM potran10c WHERE descrip = A.descrip) AND GETDATE()
 GROUP BY

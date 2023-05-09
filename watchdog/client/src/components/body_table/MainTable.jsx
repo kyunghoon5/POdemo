@@ -43,6 +43,7 @@ const MainTable = ({
   NewItem_Qty_avg,
   ForecastloadingDatePicker,
   selforecastDatePicker,
+  isOpenM
 }) => {
   const { round } = useMath();
   const { daysToDate, getDate } = useDate();
@@ -446,19 +447,22 @@ const MainTable = ({
           <td style={{ padding: '0' }}>{change365_to_New}</td>
           {/* 23 */}
           <td style={{ padding: '0' }}>{changeAVG_SOLDNew}</td>
-
-          <td style={{ padding: '0' }}>
-            {mainData.map((item, idx) =>
-              item.poLeadTimeO.length ? (
-                item.poLeadTimeO.map((item2, idx2) => (
-                  <div key={idx2}>{item2.avg_lead_time} days</div>
-                ))
-              ) : (
-                <div key={idx}>0 day</div>
-              )
-            )}
-            <div>{round(avg_lead_timeTotal)} days</div>
-          </td>
+          {isOpenM ? (
+            <td></td>
+          ) : (
+            <td style={{ padding: '0' }}>
+              {mainData.map((item, idx) =>
+                item.poLeadTimeO.length ? (
+                  item.poLeadTimeO.map((item2, idx2) => (
+                    <div key={idx2}>{item2.avg_lead_time} days</div>
+                  ))
+                ) : (
+                  <div key={idx}>0 day</div>
+                )
+              )}
+              <div>{round(avg_lead_timeTotal)} days</div>
+            </td>
+          )}
 
           <td style={{ padding: '0' }}>{changeSuggestedOH}</td>
 

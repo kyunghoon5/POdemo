@@ -23,9 +23,15 @@ import useAPIData from '../api/API';
 import useMath from '../utils/math/Math';
 import SubTable from './body_table/SubTable';
 import Alert_Table from './alert_table/Alert_Table';
+import { useSelector, useDispatch } from 'react-redux';
+import { decrement, increment } from '../../redux/testcomp'
+
 
 const Watchdog = () => {
+   const count = useSelector((state) => state.counter.value);
+   const dispatch = useDispatch();
   const { date, formatDate } = useDate();
+
   const [startDatePicker, setStartDatePicker] = useState(
     new Date(new Date().setHours(-1440, 0, 0, 0))
   );
@@ -87,12 +93,17 @@ const Watchdog = () => {
     loadingNewOrder,
     loadingFirstOrder,
     newitemkey2Forecast,
-   
+
     ForecastloadingDatePicker,
+    itemFirstOrderAPI,
+    loadedFirstOrder,
+    itemNewOrderAPI,
+    loadedNewOrder,
+    itemoldOrderAPI,
+    loadedOldOrder,
   } = useAPIData(startDatePicker, endDatePicker, forecastDatePicker);
 
   const { round } = useMath();
-
 
   // toggle Color Tab
   const [isOpen, setIsOpen] = useState(false);
@@ -115,10 +126,6 @@ const Watchdog = () => {
     win.print();
     win.close();
   }
- 
-
-  //searchSuggest
-  const [filteredData, setfilteredData] = useState([]);
 
   const [selectedSold, setSelectedSold] = useState('');
   const soldPercentageHandler = (e) => {
@@ -373,8 +380,6 @@ const Watchdog = () => {
     (qty, lead) => qty * lead
   ).reduce((acc, curr) => acc.concat(curr), []);
 
-
-
   const [suggestedQtyTotal, setsuggestedQtyTotal] = useState(0);
 
   const sumReqForcast = selforecastDatePicker.map((item) =>
@@ -392,7 +397,6 @@ const Watchdog = () => {
   const Difference_In_PostDayresult2 = eachItemNeededDate.map((item) =>
     round(item / (1000 * 3600 * 24))
   );
-  
 
   const onhandCal2 = mainData.map((item) => Number(item.onhand));
   const QtyBackOrder = mainData.map((item) =>
@@ -494,7 +498,6 @@ const Watchdog = () => {
   );
 
   const onHandInventory = mainData.map((item) => Number(item.onhand));
-  
 
   const dayCal = mainData.map((item) =>
     item.sold30.map((item) => Number(item.qtyshp / 30) * daysDifference)
@@ -537,9 +540,7 @@ const Watchdog = () => {
       : daysDifference > 60 && daysDifference < 90
       ? zipWith(onhnadWithRVG, Cal90, (x, y) => round(x - y))
       : zipWith(onhnadWithRVG, Cal365, (x, y) => round(x - y));
-  
-   
-        
+
   //huu
   const startDateToTime = mainData
     .filter((item) => item.start_dte)
@@ -555,7 +556,6 @@ const Watchdog = () => {
       (item) => (item.total_qty_difference + item.qtybo) / gapTimeMath
     )
   );
-
 
   //duplicated
   const suggestedQtyavg_lead2 = mainData.map((item) =>
@@ -598,7 +598,6 @@ const Watchdog = () => {
   const NewOH_ForecastLeft = zipWith(onhnadWithRVG3, dayCal223, (x, y) =>
     round(x - y)
   );
- 
 
   const NewOH_ForecastRight = zipWith(
     NewItem_Qty_avg,
@@ -654,8 +653,9 @@ const Watchdog = () => {
     oldOH_Forecast_Left,
     (qty, lead, am) => qty * lead - am
   ).reduce((acc, curr) => acc.concat(curr), []);
+const [isOpenM, setIsOpenM] = useState(false);
+ const inputRef = useRef(null);
 
-  
   const Props = {
     NewneededTotal,
     set_New_NeededTotal,
@@ -684,7 +684,6 @@ const Watchdog = () => {
     setsuggestedQtyTotal,
     setoh_forecastTotal,
     setNew_oh_forecastTotal,
-
     new_oh_forecastTotal,
     setTotalNewItem_365_Sold,
     setTotalNewItem_AVG_SOLD,
@@ -693,7 +692,6 @@ const Watchdog = () => {
     setMainImg,
     record,
     setRecord,
-    filteredData,
     mainImg,
     graphDropdownSelectedYear,
     graphLoading,
@@ -703,7 +701,6 @@ const Watchdog = () => {
     pieChart,
     COLORS,
     maxVal,
-    setfilteredData,
     searchMainData,
     imageAPI,
     itemRecords,
@@ -777,11 +774,8 @@ const Watchdog = () => {
     sold365Total,
     avg_sold365Total,
     avg_lead_timeTotal,
-
     suggestedQtyTotal,
-
     oh_forecastTotal,
-
     result2,
     eachItemClick,
     neededTotal,
@@ -801,6 +795,15 @@ const Watchdog = () => {
     suggestedOHForNewItem,
     ForecastloadingDatePicker,
     selforecastDatePicker,
+    itemFirstOrderAPI,
+    loadedFirstOrder,
+    itemNewOrderAPI,
+    loadedNewOrder,
+    itemoldOrderAPI,
+    loadedOldOrder,
+    setIsOpenM,
+    isOpenM,
+    inputRef,
   };
 
   return (
@@ -846,6 +849,7 @@ const Watchdog = () => {
         <Alert_Table {...Props} />
         {/* <TreeViewDownload handleDownload17={handleDownload17} /> */}
       </div>
+     
     </div>
   );
 };

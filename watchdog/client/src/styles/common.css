@@ -122,5 +122,14 @@
   margin: 2px 0;
 }
 
+.dropdown-row:focus,
+.dropdown-row:hover,
+.dropdown-row:active {
+  background-color: #f2f2f2;
+}
+
+
+
+
 
 

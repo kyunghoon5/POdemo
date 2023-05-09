@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 
 import DatePicker from 'react-datepicker';
 import useDate from '../../../utils/date/DateFile';
@@ -7,13 +7,19 @@ const Row12 = ({
   itemRank,
   endDatePicker,
   forecastDatePicker,
-
   newitemRank,
   newitemLoading,
   setForecasteDatePicker,
   itemLoading,
   setEndDatePicker,
+  isOpenM,
+  inputRef,
 }) => {
+  useEffect(() => {
+    if (isOpenM) {
+      inputRef.current.focus();
+    }
+  }, [isOpenM]);
   const { getDate } = useDate();
   const past365c = getDate(365);
 
@@ -26,18 +32,15 @@ const Row12 = ({
         .filter((item) => item.start_dte)
         .map(
           (item) => new Date(item.start_dte).toISOString().split('T')[0]
-        )[0] < past365c ? (
-        'OLD'
-      ) : mainData.some((item) =>
-          item.firstOrderItem.some((value) => value !== 0)
-        ) ? (
-        'First Order'
-      ) : (
-        'NEW'
-      );
+        )[0] < past365c
+        ? 'OLD'
+        : mainData.some((item) =>
+            item.firstOrderItem.some((value) => value !== 0)
+          )
+        ? 'First Order'
+        : 'NEW';
     return result;
   };
-  
 
   const itemRankLoaded = itemRank
     .flatMap((item) => [item].concat(item.ranknonRB ?? []))
@@ -47,7 +50,7 @@ const Row12 = ({
     .filter((item) => item.percentile);
 
   const newitemRankLoaded = newitemRank;
- 
+
   const isLoading = itemLoading || newitemLoading;
 
   let result;
@@ -147,7 +150,7 @@ const Row12 = ({
       newitemRankLoaded.some((item) => item.percentile < 0.6 >= 0)
     ) {
       result = <td style={{ background: '#c0c0c0', fontWeight: 'bold' }}>F</td>;
-    }  else {
+    } else {
       result = (
         <td style={{ background: '#f5f5dc', fontWeight: 'bold' }}>Sale</td>
       );
@@ -178,7 +181,19 @@ const Row12 = ({
       <td className="prv90">{new Date().toISOString().split('T')[0]}</td>
       <td className="prv365">{new Date().toISOString().split('T')[0]}</td>
       <td></td>
-      <td></td>
+      {isOpenM ? (
+        <td>
+          <input
+            ref={inputRef}
+            style={{ textAlign: 'center' }}
+            className="border border-zinc-500"
+            placeholder="days"
+            size={8}
+          />
+        </td>
+      ) : (
+        <td></td>
+      )}
       <td></td>
       <td colSpan={2}>
         <DatePicker
