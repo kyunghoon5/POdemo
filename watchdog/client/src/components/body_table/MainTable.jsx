@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
 import BlankPage from './BlankPage';
-import useMath from '../../utils/math/Math';
+import useMath from '../../utils/math/Round';
 import useDate from '../../utils/date/DateFile';
-
 
 const MainTable = ({
   loading,
@@ -25,7 +24,7 @@ const MainTable = ({
   oldOH_Forecast_Left,
   oldNeededCal,
   oh_forecastTotal,
-  FosuggestedQty,
+  oldOH_Forecast_Right,
   foSuggestedTotal,
   result2,
   eachItemClick,
@@ -43,7 +42,8 @@ const MainTable = ({
   NewItem_Qty_avg,
   ForecastloadingDatePicker,
   selforecastDatePicker,
-  isOpenM
+  isOpenM,
+  inputValue,
 }) => {
   const { round } = useMath();
   const { daysToDate, getDate } = useDate();
@@ -171,15 +171,15 @@ const MainTable = ({
             {selforecastDatePicker.length
               ? ForecastloadingDatePicker === false
                 ? oldOH_Forecast_Left.map((num, idx2) => (
-              <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
-                {round(num)}
-              </div>
-            ))
+                    <div key={idx2} className={num < 0 ? 'needed-amount' : ''}>
+                      {round(num)}
+                    </div>
+                  ))
                 : mainData.map((item, idx) => <div key={idx}>Loading...</div>)
               : ForecastloadingDatePicker === false
               ? mainData.map((item, idx) => <div key={idx}>{item.purno}</div>)
               : mainData.map((item, idx) => <div key={idx}>Loading</div>)}
-           
+
             <div>{oh_forecastTotal}</div>
           </>
         )}
@@ -228,7 +228,7 @@ const MainTable = ({
       <>
         {suggestedQty.every((value) => value === 0) ? (
           <>
-            {FosuggestedQty.map((num, index) => (
+            {oldOH_Forecast_Right.map((num, index) => (
               <div key={index}>0</div>
             ))}
             <div></div>
@@ -237,7 +237,7 @@ const MainTable = ({
           <>
             {selforecastDatePicker.length
               ? ForecastloadingDatePicker === false
-                ? FosuggestedQty.map((num, index2) => (
+                ? oldOH_Forecast_Right.map((num, index2) => (
                     <Fragment key={index2}>
                       <span style={{ float: 'left', fontSize: '11px' }}>
                         {num < 0 ? 'overstock' : num === 0 ? '' : 'needed'}
@@ -316,6 +316,8 @@ const MainTable = ({
       </>
     );
 
+  const daystoDateM = daysToDate(Number(inputValue));
+
   if (loading) {
     return (
       <tbody>
@@ -367,7 +369,6 @@ const MainTable = ({
             )}
             <div>{reOrderTotal}</div>
           </td>
-
           <td style={{ padding: '0' }}>
             {mainData.map((item, idx) =>
               item.pendingDataO.length ? (
@@ -380,7 +381,6 @@ const MainTable = ({
             )}
             <div>{pendingTotal}</div>
           </td>
-
           <td style={{ padding: '0' }}>
             {selectedDatePicker.length
               ? loadingDatePicker === false
@@ -399,7 +399,6 @@ const MainTable = ({
               : mainData.map((item, idx) => <div key={idx}>Loading</div>)}
             <div>{calendarQtyTotal}</div>
           </td>
-
           <td style={{ padding: '0' }}>
             {selectedDatePicker.length
               ? loadingDatePicker === false
@@ -443,12 +442,22 @@ const MainTable = ({
             )}
             <div>{sold90Total}</div>
           </td>
-
           <td style={{ padding: '0' }}>{change365_to_New}</td>
           {/* 23 */}
           <td style={{ padding: '0' }}>{changeAVG_SOLDNew}</td>
           {isOpenM ? (
-            <td></td>
+            <td style={{ padding: '0' }}>
+              {mainData.map((item, idx) =>
+                item.poLeadTimeO.length ? (
+                  item.poLeadTimeO.map((item2, idx2) => (
+                    <div key={idx2}>{inputValue} days</div>
+                  ))
+                ) : (
+                  <div key={idx}>0 day</div>
+                )
+              )}
+              <div></div>
+            </td>
           ) : (
             <td style={{ padding: '0' }}>
               {mainData.map((item, idx) =>
@@ -463,27 +472,37 @@ const MainTable = ({
               <div>{round(avg_lead_timeTotal)} days</div>
             </td>
           )}
-
           <td style={{ padding: '0' }}>{changeSuggestedOH}</td>
-
           <td style={{ padding: '0' }}>{changeOH_ForecastNew}</td>
-
           <td style={{ padding: '0' }}>{changeOH_Forecast_OorN}</td>
-
           {/*column table with nested array */}
-          <td style={{ padding: '0' }}>
-            {mainData.map((item, idx) =>
-              item.poLeadTimeO.length ? (
-                item.poLeadTimeO.map((item2, idx2) => (
-                  <div key={idx2}>{daysToDate(item2.avg_lead_time)}</div>
-                ))
-              ) : (
-                <div key={idx}>{undefined}</div>
-              )
-            )}
-            <div></div>
-          </td>
-
+          {isOpenM ? (
+            <td style={{ padding: '0' }}>
+              {mainData.map((item, idx) =>
+                item.poLeadTimeO.length ? (
+                  item.poLeadTimeO.map((item2, idx2) => (
+                    <div key={idx2}>{daystoDateM}</div>
+                  ))
+                ) : (
+                  <div key={idx}>{undefined}</div>
+                )
+              )}
+              <div></div>
+            </td>
+          ) : (
+            <td style={{ padding: '0' }}>
+              {mainData.map((item, idx) =>
+                item.poLeadTimeO.length ? (
+                  item.poLeadTimeO.map((item2, idx2) => (
+                    <div key={idx2}>{daysToDate(item2.avg_lead_time)}</div>
+                  ))
+                ) : (
+                  <div key={idx}>{undefined}</div>
+                )
+              )}
+              <div></div>
+            </td>
+          )}
           {/*column table with nested array */}
           <td style={{ padding: '0' }}>{changeNew_Needed}</td>
         </tr>

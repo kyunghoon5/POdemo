@@ -14,6 +14,7 @@ const Row12 = ({
   setEndDatePicker,
   isOpenM,
   inputRef,
+  handleInputChange,
 }) => {
   useEffect(() => {
     if (isOpenM) {
@@ -184,6 +185,7 @@ const Row12 = ({
       {isOpenM ? (
         <td>
           <input
+            onChange={handleInputChange}
             ref={inputRef}
             style={{ textAlign: 'center' }}
             className="border border-zinc-500"

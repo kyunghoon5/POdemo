@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import DatePicker from 'react-datepicker';
 import useDate from '../../../utils/date/DateFile';
-import useSubTable from '../../body_table/SubTable'
 
 
-const Row11 = ({ mainData, startDatePicker, setStartDatePicker,isOpenM }) => {
+
+const Row11 = ({ mainData, startDatePicker, setStartDatePicker,}) => {
 
   
   const { getDate } = useDate();
@@ -78,7 +78,7 @@ const Row11 = ({ mainData, startDatePicker, setStartDatePicker,isOpenM }) => {
 
       <td></td>
 
-      {isOpenM?  <td>Manually</td> : <td></td> }
+       <td></td> 
       <td></td>
       <td
         className="prv30"

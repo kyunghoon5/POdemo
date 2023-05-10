@@ -36,6 +36,8 @@ const Row1 = ({
   setitemRank,
   setnewitemRank,
   newitemkey2ForecastAPI,
+  setIsOpenM,
+  setInputValue,
 }) => {
   //searchSuggest
   const [filteredData, setfilteredData] = useState([]);
@@ -59,25 +61,20 @@ const Row1 = ({
     }
   };
 
-
-
-const handleKeyDown = (event) => {
-  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-    event.preventDefault();
-    const currentIndex = filteredData.findIndex(
-      (item) => item.descrip === record
-    );
-    const nextIndex =
-      (currentIndex +
-        (event.key === 'ArrowDown' ? 1 : -1) +
-        filteredData.length) %
-      filteredData.length;
-    setRecord(filteredData[nextIndex].descrip);
-
-    
-  }
-};
-  
+  const handleKeyDown = (event) => {
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      const currentIndex = filteredData.findIndex(
+        (item) => item.descrip === record
+      );
+      const nextIndex =
+        (currentIndex +
+          (event.key === 'ArrowDown' ? 1 : -1) +
+          filteredData.length) %
+        filteredData.length;
+      setRecord(filteredData[nextIndex].descrip);
+    }
+  };
 
   const reset = () => {
     setSelectedSold([]);
@@ -85,6 +82,8 @@ const handleKeyDown = (event) => {
     setWatchDoginfo([]);
     setitemRank([]);
     setnewitemRank([]);
+    setIsOpenM(false);
+    setInputValue('')
   };
   const [pasted, setPasted] = useState(false);
 
@@ -120,21 +119,19 @@ const handleKeyDown = (event) => {
     setPasted(true);
   };
 
+  const dropdownRef = useRef(null);
 
-
-   const dropdownRef = useRef(null);
-
-   useEffect(() => {
-     function handleClickOutside(event) {
-       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-         setfilteredData([]);
-       }
-     }
-     document.addEventListener('click', handleClickOutside);
-     return () => {
-       document.removeEventListener('click', handleClickOutside);
-     };
-   }, [dropdownRef]);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setfilteredData([]);
+      }
+    }
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   return (
     <tr className="row1">

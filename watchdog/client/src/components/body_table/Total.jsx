@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { sum, sumBy } from 'lodash';
-import useMath from '../../utils/math/Math';
+import useMath from '../../utils/math/Round';
 
 //test to pass function to useState hook
 const Total = ({
@@ -10,7 +10,7 @@ const Total = ({
   suggestedQty,
   oldOH_Forecast_Left,
   oldNeededCal,
-  FosuggestedQty,
+  oldOH_Forecast_Right,
   setColorTotal,
   setonHandTotal,
   setreOrderTotal,
@@ -38,7 +38,6 @@ const Total = ({
   suggestedOHForNewItem,
 }) => {
   const { round } = useMath();
-
 
   useEffect(() => {
     const calculateTotals = () => {
@@ -164,7 +163,7 @@ const Total = ({
     selectedDatePicker,
     suggestedQty,
     oldOH_Forecast_Left,
-    FosuggestedQty,
+    oldOH_Forecast_Right,
     setColorTotal,
     setonHandTotal,
     setpendingTotal,

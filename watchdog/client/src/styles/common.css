@@ -44,11 +44,17 @@
 
 @media print {
   body {
-    -webkit-print-color-adjust: exact;
-    zoom: 45%;
+    visibility: hidden;
+       -webkit-print-color-adjust: exact;
+    zoom: 75%;
+  }
+  #section-to-print {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 }
-
 .table1   td {
   padding: 0;
   padding-left: 2px;

@@ -30,6 +30,35 @@ const Alert_Table = ({
   itemoldOrderAPI,
   loadedOldOrder,
 }) => {
+
+  function printSection() {
+    // 프린트 스타일 추가
+    var style = document.createElement('style');
+    style.innerHTML =
+      '@media print {\
+    body {\
+      visibility: hidden;\
+      -webkit-print-color-adjust: exact;\
+      zoom: 75%;\
+    }\
+    #section-to-print {\
+      visibility: visible;\
+      position: absolute;\
+      left: 0;\
+      top: 0;\
+    }\
+  }';
+    document.head.appendChild(style);
+
+    // 프린트 대상 선택
+    var section = document.getElementById('section-to-print');
+
+    // 프린트 창 열기
+    window.print();
+
+    // 스타일 복원
+    document.head.removeChild(style);
+  }
   const [showData, setShowData] = useState(false);
   const [showOldItem, setOldItem] = useState(false);
   const [showNewItem, setNewItem] = useState(false);
@@ -341,14 +370,14 @@ const Alert_Table = ({
       <div className="flex space-x-2 pt-3">
         <Button
           variant="outlined"
-          size="medium"
+          size="small"
           onClick={handleDataButtonClick}
         >
           ITEM ALERT
         </Button>
         <Button
           variant="outlined"
-          size="medium"
+          size="small"
           onClick={handleOldItemButtonClick}
         >
           OLD ITEM
@@ -367,6 +396,7 @@ const Alert_Table = ({
         >
           First Order
         </Button>
+        <Button variant="outlined"  size="small" onClick={printSection}>Print</Button>
       </div>
 
       {content}
