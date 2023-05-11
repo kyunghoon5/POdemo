@@ -103,7 +103,7 @@ from
         SELECT 
           A.descrip, 
           MIN(recdate) AS start_dte,
-		   (select min(recdate) from potran10c where descrip = a.descrip having max(recdate)=min(recdate)) as fristb
+		   (select min(recdate) from potran10c where descrip = a.descrip having max(reqdate)=min(reqdate)) as fristb
 
         FROM 
           artran10c A 

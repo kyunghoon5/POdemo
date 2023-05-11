@@ -8,7 +8,9 @@ const NewItemCal = (
   forecastDatePicker,
   sumReqForcast,
   newitemkey2Forecast,
-  suggestedQtyavg_lead
+  suggestedQtyavg_lead,
+  isOpenM,
+  inputValue
 ) => {
   const { date, formatDate } = useDate();
   const { round } = useMath();
@@ -27,7 +29,6 @@ const NewItemCal = (
       (item) => (item.total_qty_difference + item.qtybo) / gapTimeMath
     )
   );
-
 
   const suggestedOHForNewItem = zipWith(
     NewItem_Qty_avg,
@@ -62,6 +63,8 @@ const NewItemCal = (
     )
   );
 
+  
+
   const NewOH_ForecastLeft = zipWith(onhnadWithRVG, dayCal223, (x, y) =>
     round(x - y)
   );
@@ -74,13 +77,22 @@ const NewItemCal = (
   ).reduce((acc, curr) => acc.concat(curr), []);
 
   //new Item Needed
-  const eachItemNeededDate = mainData.map((item) =>
-    item.poLeadTimeO.length
-      ? item.poLeadTimeO.map((item2) =>
-          new Date(formatDate(item2.avg_lead_time)).getTime()
-        ) - date.getTime()
-      : undefined
-  );
+  const eachItemNeededDate = isOpenM
+    ? mainData.map((item) =>
+        item.poLeadTimeO.length
+          ? item.poLeadTimeO.map((item2) =>
+              new Date(formatDate(Number(inputValue))).getTime()
+            ) - date.getTime()
+          : undefined
+      )
+    : mainData.map((item) =>
+        item.poLeadTimeO.length
+          ? item.poLeadTimeO.map((item2) =>
+              new Date(formatDate(item2.avg_lead_time)).getTime()
+            ) - date.getTime()
+          : undefined
+      );
+
   const Difference_In_PostDayresult2 = eachItemNeededDate.map((item) =>
     round(item / (1000 * 3600 * 24))
   );

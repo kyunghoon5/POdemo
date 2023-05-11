@@ -5,6 +5,7 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
 } from '@mui/x-data-grid';
+import { DiAptana } from 'react-icons/di';
 
 function CustomToolbar() {
   return (
@@ -30,7 +31,6 @@ const Alert_Table = ({
   itemoldOrderAPI,
   loadedOldOrder,
 }) => {
-
   function printSection() {
     // 프린트 스타일 추가
     var style = document.createElement('style');
@@ -358,21 +358,19 @@ const Alert_Table = ({
   }
 
   return (
-    <div className="pl-3 pr-3 pt-3 pb-3 h-auto w-[520px] bg-neutral-400">
-      <div className="pb-3 text-2xl font-semibold text-zinc-50 text-right">
+    <div className="pl-3 pr-3 pt-3 pb-3 h-auto w-[520px] bg-emerald-50">
+      <div className="flex justify-end pb-3 text-2xl font-semibold text-black  ">
         CONTROL PANEL
+        <DiAptana />
       </div>
+
       <div className="flex space-x-2 ">
         {/* <Button variant="outlined" size="large">
             PRINT
           </Button> */}
       </div>
       <div className="flex space-x-2 pt-3">
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={handleDataButtonClick}
-        >
+        <Button variant="outlined" size="small" onClick={handleDataButtonClick}>
           ITEM ALERT
         </Button>
         <Button
@@ -396,7 +394,9 @@ const Alert_Table = ({
         >
           First Order
         </Button>
-        <Button variant="outlined"  size="small" onClick={printSection}>Print</Button>
+        <Button variant="outlined" size="small" onClick={printSection}>
+          Print
+        </Button>
       </div>
 
       {content}

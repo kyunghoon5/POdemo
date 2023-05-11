@@ -26,7 +26,7 @@ import Alert_Table from './alert_table/Alert_Table';
 import { useSelector, useDispatch } from 'react-redux';
 import { decrement, increment } from '../../redux/testcomp';
 import useNewItemCal from '../utils/math/NewItemCal';
-import useOldItemCal from '../utils/math/OldItemCal'
+import useOldItemCal from '../utils/math/OldItemCal';
 
 const Watchdog = () => {
   const count = useSelector((state) => state.counter.value);
@@ -79,8 +79,7 @@ const Watchdog = () => {
     graphByItemMonthF,
     pieChart,
     pieChartF,
-    selforecastDatePicker,
-    handleDownload17,
+    selforecastDatePicker,    
     suggest,
     setMainImg,
     record,
@@ -94,7 +93,6 @@ const Watchdog = () => {
     loadingNewOrder,
     loadingFirstOrder,
     newitemkey2Forecast,
-
     ForecastloadingDatePicker,
     itemFirstOrderAPI,
     loadedFirstOrder,
@@ -350,15 +348,13 @@ const Watchdog = () => {
   const [totalNew_SuggestedOH, setTotalNew_SuggestedOH] = useState(0);
 
   const [isOpenM, setIsOpenM] = useState(false);
-  
+
   const [inputValue, setInputValue] = useState('');
   const suggestedQtyavg_qty = mainData.map((item) =>
     item.reorderPointO.map((item) => Number(item.avg_qtyshp))
   );
   const suggestedQtyavg_lead = isOpenM
-    ? mainData.map((item) =>
-        item.poLeadTimeO.map((item) => Number(inputValue))
-      )
+    ? mainData.map((item) => item.poLeadTimeO.map((item) => Number(inputValue)))
     : mainData.map((item) =>
         item.poLeadTimeO.map((item) => Number(item.avg_lead_time))
       );
@@ -369,30 +365,30 @@ const Watchdog = () => {
     (qty, lead) => qty * lead
   ).reduce((acc, curr) => acc.concat(curr), []);
 
-
   const [suggestedQtyTotal, setsuggestedQtyTotal] = useState(0);
 
   const sumReqForcast = selforecastDatePicker.map((item) =>
     sumBy(item.poForecast, 'ORDEREDa')
   );
 
-
-
   const [neededTotal, set_NeededTotal] = useState(0);
   const [NewneededTotal, set_New_NeededTotal] = useState(0);
 
- const {
-   oldOH_Forecast_Left,
-   oldOH_Forecast_Right,
-   daysDifference,
-   oldNeededCal,
- } = useOldItemCal(
-   mainData,
-   forecastDatePicker,
-   sumReqForcast,
-   suggestedQtyavg_qty,
-   suggestedQtyavg_lead
- );
+  //OldItem All Cal
+  const {
+    oldOH_Forecast_Left,
+    oldOH_Forecast_Right,
+    daysDifference,
+    oldNeededCal,
+  } = useOldItemCal(
+    mainData,
+    forecastDatePicker,
+    sumReqForcast,
+    suggestedQtyavg_qty,
+    suggestedQtyavg_lead,
+    isOpenM,
+    inputValue
+  );
 
   //NewItem All Cal
   const {
@@ -400,24 +396,22 @@ const Watchdog = () => {
     NewItem_Qty_avg,
     NewOH_ForecastLeft,
     NewOH_ForecastRight,
-    NewNeededCal,
+    NewNeededCal,   
   } = useNewItemCal(
     mainData,
     forecastDatePicker,
     sumReqForcast,
     newitemkey2Forecast,
-    suggestedQtyavg_lead
+    suggestedQtyavg_lead,
+    isOpenM,
+    inputValue
   );
+
 
   const [oh_forecastTotal, setoh_forecastTotal] = useState(0);
   const [new_oh_forecastTotal, setNew_oh_forecastTotal] = useState(0);
 
-
-
-
-
   const inputRef = useRef(null);
-
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);

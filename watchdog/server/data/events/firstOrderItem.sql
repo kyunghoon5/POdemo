@@ -7,6 +7,6 @@ FROM potran10c
 where descrip='${req.query.descrip}'
 GROUP BY descrip
 
-HAVING MAX(recdate)=MIN(recdate)
+HAVING MAX(reqdate)=MIN(reqdate)
 
 order by start_date desc

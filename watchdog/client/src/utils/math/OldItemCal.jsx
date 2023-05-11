@@ -8,7 +8,9 @@ const OldItemCal = (
   forecastDatePicker,
   sumReqForcast,
   suggestedQtyavg_qty,
-  suggestedQtyavg_lead
+  suggestedQtyavg_lead,
+  isOpenM,
+  inputValue
 ) => {
   const { date, formatDate } = useDate();
   const { round } = useMath();
@@ -74,13 +76,21 @@ const OldItemCal = (
   ).reduce((acc, curr) => acc.concat(curr), []);
 
   //Old NeededCal
-  const eachItemNeededDate = mainData.map((item) =>
-    item.poLeadTimeO.length
-      ? item.poLeadTimeO.map((item2) =>
-          new Date(formatDate(item2.avg_lead_time)).getTime()
-        ) - date.getTime()
-      : undefined
-  );
+  const eachItemNeededDate = isOpenM
+    ? mainData.map((item) =>
+        item.poLeadTimeO.length
+          ? item.poLeadTimeO.map((item2) =>
+              new Date(formatDate(Number(inputValue))).getTime()
+            ) - date.getTime()
+          : undefined
+      )
+    : mainData.map((item) =>
+        item.poLeadTimeO.length
+          ? item.poLeadTimeO.map((item2) =>
+              new Date(formatDate(item2.avg_lead_time)).getTime()
+            ) - date.getTime()
+          : undefined
+      );
 
   const Difference_In_PostDayresult2 = eachItemNeededDate.map((item) =>
     round(item / (1000 * 3600 * 24))

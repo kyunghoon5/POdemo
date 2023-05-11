@@ -1,5 +1,4 @@
 SELECT
-
 A.descrip,
 YEAR(A.invdte) AS year,
 SUM(A.qtyshp) AS qtyshp,
@@ -8,7 +7,6 @@ FROM
 artran10c A
 INNER JOIN (
 SELECT
-
 descrip
 FROM
 artran10c
