@@ -10,7 +10,7 @@ var _ = require('lodash');
 // Configuration for the two SQL servers
 const configServer1 = require('./sqlServer1');
 const configServer2 = require('./sqlServer2');
-const dataPick = require('./routes/dataPick');
+// const dataPick = require('./routes/dataPick');
 const datePicker = require('./routes/datePicker');
 const itemRank = require('./routes/itemRank');
 const soldPercentage = require('./routes/soldPercentage');
@@ -47,7 +47,7 @@ app.get('/downloadItemReorderPoint', (req, res) => {
 });
 
 app.use('/WatchDog', proxy);
-app.use('/dataPick', dataPick);
+// app.use('/dataPick', dataPick);
 app.use('/datePicker', datePicker);
 app.use('/itemRank', itemRank);
 app.use('/soldPercentage', soldPercentage);

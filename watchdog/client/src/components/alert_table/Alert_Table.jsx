@@ -30,6 +30,27 @@ const Alert_Table = ({
   loadedNewOrder,
   itemoldOrderAPI,
   loadedOldOrder,
+  setSelectedSold,
+  setWatchDoginfo,
+  setitemRank,
+  setnewitemRank,
+  setIsOpenM,
+  setInputValue,
+  imageAPI,
+  setRecord,
+  setfilteredData,
+  searchMainData,
+  newitemkey2ForecastAPI,
+  itemRecords,
+  soldPercentageAPI,
+  graphAllYearDataAPI,
+  chartEachYearDataAPI,
+  graphByItemF,
+  graphByItemMonthF,
+  watchDogAPI,
+  newitemRecords,
+  pieChartF,
+  setGraphDropdownSelectedYear,
 }) => {
   function printSection() {
     // 프린트 스타일 추가
@@ -209,6 +230,16 @@ const Alert_Table = ({
   }));
 
   let content;
+
+  const reset = () => {
+    setSelectedSold([]);
+    setGraphDropdownSelectedYear([]);
+    setWatchDoginfo([]);
+    setitemRank([]);
+    setnewitemRank([]);
+    setIsOpenM(false);
+    setInputValue('');
+  };
   switch (true) {
     case showData:
       content = (
@@ -228,9 +259,38 @@ const Alert_Table = ({
                     rowHeight={25}
                     columns={columns}
                     paginationModel={paginationModel}
+                    disableRowSelectionOnClick
                     onPaginationModelChange={setPaginationModel}
                     slots={{
                       toolbar: CustomToolbar,
+                    }}
+                    onCellClick={(params, event) => {
+                      imageAPI(params.row.descrip);
+                      setRecord(params.row.descrip);
+
+                      searchMainData(params.row.descrip);
+                      newitemkey2ForecastAPI(params.row.descrip);
+                      itemRecords(params.row.descrip);
+                      soldPercentageAPI(params.row.descrip);
+                      graphAllYearDataAPI(params.row.descrip);
+                      chartEachYearDataAPI(params.row.descrip);
+                      graphByItemF(params.row.descrip);
+                      graphByItemMonthF(params.row.descrip);
+                      watchDogAPI(params.row.descrip);
+                      newitemRecords(params.row.descrip);
+                      pieChartF(params.row.descrip);
+                      reset();
+                      setGraphDropdownSelectedYear('YEAR');
+                    }}
+                    sx={{
+                      // disable cell selection style
+                      '.MuiDataGrid-cell:focus': {
+                        outline: 'none',
+                      },
+                      // pointer cursor on ALL rows
+                      '& .MuiDataGrid-row:hover': {
+                        cursor: 'pointer',
+                      },
                     }}
                   />
                 </>
@@ -243,7 +303,9 @@ const Alert_Table = ({
     case showOldItem:
       content = (
         <>
-          <div className="pt-4 pb-2 text-center font-semibold">OLD ITEM</div>
+          <div className="pt-4 pb-2 text-center font-semibold">
+            EXISTING ITEM
+          </div>
           <div
             className="flex-col flex  text-black
             h-[790px] w-[495px] border-none "
@@ -258,8 +320,37 @@ const Alert_Table = ({
                   rowHeight={25}
                   paginationModel={paginationModel}
                   onPaginationModelChange={setPaginationModel}
+                  disableRowSelectionOnClick
                   slots={{
                     toolbar: CustomToolbar,
+                  }}
+                  onCellClick={(params, event) => {
+                    imageAPI(params.row.descrip);
+                    setRecord(params.row.descrip);
+
+                    searchMainData(params.row.descrip);
+                    newitemkey2ForecastAPI(params.row.descrip);
+                    itemRecords(params.row.descrip);
+                    soldPercentageAPI(params.row.descrip);
+                    graphAllYearDataAPI(params.row.descrip);
+                    chartEachYearDataAPI(params.row.descrip);
+                    graphByItemF(params.row.descrip);
+                    graphByItemMonthF(params.row.descrip);
+                    watchDogAPI(params.row.descrip);
+                    newitemRecords(params.row.descrip);
+                    pieChartF(params.row.descrip);
+                    reset();
+                    setGraphDropdownSelectedYear('YEAR');
+                  }}
+                  sx={{
+                    // disable cell selection style
+                    '.MuiDataGrid-cell:focus': {
+                      outline: 'none',
+                    },
+                    // pointer cursor on ALL rows
+                    '& .MuiDataGrid-row:hover': {
+                      cursor: 'pointer',
+                    },
                   }}
                 />
               )}
@@ -286,8 +377,37 @@ const Alert_Table = ({
                   rowHeight={25}
                   paginationModel={paginationModel}
                   onPaginationModelChange={setPaginationModel}
+                  disableRowSelectionOnClick
                   slots={{
                     toolbar: CustomToolbar,
+                  }}
+                  onCellClick={(params, event) => {
+                    imageAPI(params.row.descrip);
+                    setRecord(params.row.descrip);
+
+                    searchMainData(params.row.descrip);
+                    newitemkey2ForecastAPI(params.row.descrip);
+                    itemRecords(params.row.descrip);
+                    soldPercentageAPI(params.row.descrip);
+                    graphAllYearDataAPI(params.row.descrip);
+                    chartEachYearDataAPI(params.row.descrip);
+                    graphByItemF(params.row.descrip);
+                    graphByItemMonthF(params.row.descrip);
+                    watchDogAPI(params.row.descrip);
+                    newitemRecords(params.row.descrip);
+                    pieChartF(params.row.descrip);
+                    reset();
+                    setGraphDropdownSelectedYear('YEAR');
+                  }}
+                  sx={{
+                    // disable cell selection style
+                    '.MuiDataGrid-cell:focus': {
+                      outline: 'none',
+                    },
+                    // pointer cursor on ALL rows
+                    '& .MuiDataGrid-row:hover': {
+                      cursor: 'pointer',
+                    },
                   }}
                 />
               )}
@@ -316,8 +436,37 @@ const Alert_Table = ({
                   rowHeight={25}
                   paginationModel={paginationModel}
                   onPaginationModelChange={setPaginationModel}
+                  disableRowSelectionOnClick
                   slots={{
                     toolbar: CustomToolbar,
+                  }}
+                  onCellClick={(params, event) => {
+                    imageAPI(params.row.descrip);
+                    setRecord(params.row.descrip);
+
+                    searchMainData(params.row.descrip);
+                    newitemkey2ForecastAPI(params.row.descrip);
+                    itemRecords(params.row.descrip);
+                    soldPercentageAPI(params.row.descrip);
+                    graphAllYearDataAPI(params.row.descrip);
+                    chartEachYearDataAPI(params.row.descrip);
+                    graphByItemF(params.row.descrip);
+                    graphByItemMonthF(params.row.descrip);
+                    watchDogAPI(params.row.descrip);
+                    newitemRecords(params.row.descrip);
+                    pieChartF(params.row.descrip);
+                    reset();
+                    setGraphDropdownSelectedYear('YEAR');
+                  }}
+                  sx={{
+                    // disable cell selection style
+                    '.MuiDataGrid-cell:focus': {
+                      outline: 'none',
+                    },
+                    // pointer cursor on ALL rows
+                    '& .MuiDataGrid-row:hover': {
+                      cursor: 'pointer',
+                    },
                   }}
                 />
               )}
@@ -347,6 +496,34 @@ const Alert_Table = ({
                   onPaginationModelChange={setPaginationModel}
                   slots={{
                     toolbar: CustomToolbar,
+                  }}
+                  onCellClick={(params, event) => {
+                    imageAPI(params.row.descrip);
+                    setRecord(params.row.descrip);
+
+                    searchMainData(params.row.descrip);
+                    newitemkey2ForecastAPI(params.row.descrip);
+                    itemRecords(params.row.descrip);
+                    soldPercentageAPI(params.row.descrip);
+                    graphAllYearDataAPI(params.row.descrip);
+                    chartEachYearDataAPI(params.row.descrip);
+                    graphByItemF(params.row.descrip);
+                    graphByItemMonthF(params.row.descrip);
+                    watchDogAPI(params.row.descrip);
+                    newitemRecords(params.row.descrip);
+                    pieChartF(params.row.descrip);
+                    reset();
+                    setGraphDropdownSelectedYear('YEAR');
+                  }}
+                  sx={{
+                    // disable cell selection style
+                    '.MuiDataGrid-cell:focus': {
+                      outline: 'none',
+                    },
+                    // pointer cursor on ALL rows
+                    '& .MuiDataGrid-row:hover': {
+                      cursor: 'pointer',
+                    },
                   }}
                 />
               )}
@@ -378,8 +555,9 @@ const Alert_Table = ({
           size="small"
           onClick={handleOldItemButtonClick}
         >
-          OLD ITEM
+          <div className="text-xs">EXISTING ITEM</div>
         </Button>
+
         <Button
           variant="outlined"
           size="medium"

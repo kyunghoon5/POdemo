@@ -395,8 +395,8 @@ const Watchdog = () => {
     suggestedOHForNewItem,
     NewItem_Qty_avg,
     NewOH_ForecastLeft,
-    NewOH_ForecastRight,
     NewNeededCal,   
+    NewOH_ForecastRight,
   } = useNewItemCal(
     mainData,
     forecastDatePicker,
