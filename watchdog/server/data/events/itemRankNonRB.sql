@@ -1,41 +1,33 @@
-SELECT	 
-
- A.percentile,
-  
-  A.descrip,
-  a.qtyshp,
-  a.start_dte
-  
-FROM
-
-  (
-    SELECT		
-		PERCENT_RANK() OVER (order by sum(qtyshp) ) as percentile,	  
-            
-      A.descrip,	  
-      sum(A.qtyshp) as qtyshp			,
-	   (select min(recdate) from potran10c where descrip = a.descrip) as start_dte,
-	    (SELECT Min(cost)
+SELECT A.percentile,
+       A.descrip,
+       a.qtyshp,
+       a.start_dte
+FROM   (SELECT Percent_rank()
+                 OVER (
+                   ORDER BY Sum(qtyshp) )   AS percentile,
+               A.descrip,
+               Sum(A.qtyshp)                AS qtyshp,
+               (SELECT Min(recdate)
+                FROM   potran10c
+                WHERE  descrip = a.descrip) AS start_dte,
+               (SELECT Min(cost)
                 FROM   arinvt10
-                WHERE  descrip = A.descrip ) AS cost,
+                WHERE  descrip = A.descrip) AS cost,
                (SELECT Min(price)
                 FROM   arinvt10
-                WHERE  descrip = A.descrip and price >0 ) AS price 
-    FROM 
-      artran10c A 
-    WHERE convert(date,invdte) >= Dateadd(year, -1, Getdate())
-	
-      and A.descrip not in ('SHIP', 'CALENDAR', 'BROCHURE') 
-      and A.itemkey2 not in ('_MANUAL_INVOICE') 	  
-      --and A.class in ('RB')
-      --Exclude RB
-     and A.class not in ('RB', 'AA', 'Z') 
-    group by
-	
-	
-      A.descrip	  
-  ) A 
-  
- 
-  WHERE A.qtyshp > 0 and  cost <= price  and  CONVERT(date,start_dte) between Dateadd(year,-50, getDate()) and dateadd(year,-1,getdate())  and descrip='${req.query.descrip}'
-  ORDER BY qtyshp desc
+                WHERE  descrip = A.descrip
+                       AND price > 0)       AS price
+        FROM   artran10c A
+        WHERE  CONVERT(DATE, invdte) >= Dateadd(year, -1, Getdate())
+               AND A.descrip NOT IN ( 'SHIP', 'CALENDAR', 'BROCHURE' )
+               AND A.itemkey2 NOT IN ( '_MANUAL_INVOICE' )
+               --and A.class in ('RB')
+               --Exclude RB
+               AND A.class NOT IN ( 'RB', 'AA', 'Z' )
+        GROUP  BY A.descrip) A
+WHERE  A.qtyshp > 0
+       AND cost <= price
+       AND CONVERT(DATE, start_dte) BETWEEN Dateadd(year, -50, Getdate()) AND
+                                            Dateadd(year, -1, Getdate())
+       AND descrip = '${req.query.descrip}'
+ORDER  BY qtyshp DESC 

@@ -220,7 +220,12 @@ const Row1 = ({
           monthLine={monthLine}
           monthLinePrv={monthLinePrv}
         />
-        <PieGraph pieChart={pieChart} maxVal={maxVal} COLORS={COLORS} />
+        <PieGraph
+          pieChart={pieChart}
+          maxVal={maxVal}
+          COLORS={COLORS}
+          mainData={mainData}
+        />
       </td>
     </tr>
   );

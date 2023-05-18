@@ -1,14 +1,78 @@
-import React from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import {
-  Tooltip,
-  Legend,
+
   ResponsiveContainer,
   PieChart,
   Pie,
-  Cell,
+ 
+  Sector,
 } from 'recharts';
 
-const PieGraph = ({ pieChart, maxVal, COLORS }) => {
+const renderActiveShape = (props, pieChart, COLORS) => {
+
+  const {
+    cx,
+    cy,
+ 
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    percent,
+    value,
+  } = props;
+  const sortedPieChart = pieChart.sort((a, b) => b.qtyshp - a.qtyshp);
+  const maxQtyshpData = sortedPieChart[0];
+  const isMaxQtyshp = maxQtyshpData.quarter === payload.quarter;
+  const activeFill = isMaxQtyshp ? COLORS[0] : fill;
+
+  return (
+    <g>
+      <text x={cx} y={cy} dy={-1} textAnchor="middle" fill={fill}>
+        {`${payload.quarter}Q`}
+        <tspan x={cx} y={cy + 20} fill="#333">{`qtyshp: ${value}`}</tspan>
+        <tspan x={cx} y={cy + 40} fill="#999">{`(Rate ${(percent * 100).toFixed(
+          2
+        )}%)`}</tspan>
+      </text>
+
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={activeFill}
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={activeFill}
+      />
+    </g>
+  );
+};
+
+const PieGraph = ({ pieChart,  COLORS, mainData }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const onPieEnter = useCallback(
+    (_, index) => {
+      setActiveIndex(index);
+    },
+    [setActiveIndex]
+  );
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [mainData]);
+
   return (
     <div
       style={{
@@ -21,60 +85,17 @@ const PieGraph = ({ pieChart, maxVal, COLORS }) => {
       <ResponsiveContainer width="100%" height="100%">
         <PieChart width={400} height={200}>
           <Pie
+            activeShape={(props) => renderActiveShape(props, pieChart, COLORS)}
             data={pieChart}
-            dataKey="qtyshp"
-            nameKey="quarter"
-            cx="50%"
-            cy="50%"
+            cx={100}
+            cy={100}
+            innerRadius={60}
             outerRadius={80}
             fill="#8884d8"
-            labelLine={false}
-            label={({
-              cx,
-              cy,
-              midAngle,
-              innerRadius,
-              outerRadius,
-              value,
-              index,
-              payload,
-            }) => {
-              const RADIAN = Math.PI / 180;
-              const radius = 25 + innerRadius + (outerRadius - innerRadius);
-              const x = cx + radius * Math.cos(-midAngle * RADIAN);
-              const y = cy + radius * Math.sin(-midAngle * RADIAN);
-              const percent = `${(
-                (value / pieChart.reduce((a, b) => a + b.qtyshp, 0)) *
-                100
-              ).toFixed(0)}%`;
-              const quarter = payload.quarter;
-              return (
-                <text
-                  x={x}
-                  y={y}
-                  fill={COLORS[index % COLORS.length]}
-                  textAnchor={x > cx ? 'start' : 'end'}
-                  dominantBaseline="central"
-                >
-                  <tspan dx={x > cx ? -25 : 31} dy={0}>
-                    {quarter}Q({percent})
-                  </tspan>
-                </text>
-              );
-            }}
-          >
-            {pieChart.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={
-                  entry.qtyshp === maxVal
-                    ? '#FF0000'
-                    : COLORS[index % COLORS.length]
-                }
-              />
-            ))}
-          </Pie>
-          <Tooltip formatter={(value) => [value, 'qtyshp']} />
+            dataKey="qtyshp"
+            onMouseEnter={onPieEnter}
+            activeIndex={activeIndex}
+          />
           {/* <Legend /> */}
         </PieChart>
       </ResponsiveContainer>

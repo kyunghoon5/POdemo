@@ -1,21 +1,19 @@
-select *
-
-from(SELECT  A.purno      
-      ,A.itemkey2
-      ,A.descrip 
-      ,A.qtyord
-      ,a.[qtyrec]
-      ,a.[purdate]  
-	  ,a.[shpdate]
-	  ,a.[reqdate]
-      ,a.[recdate]
-      ,a.[invno]
-	  ,DENSE_RANK() OVER (ORDER BY reqdate desc) as portn
-           
-      
-  FROM [BYT_LEG].[dbo].[potran10c] A
-  where  descrip='${req.query.descrip}' 
-  
-  ) b
-  where portn in ('6')
-  order by purdate desc, itemkey2 asc
+SELECT *
+FROM  (SELECT A.purno,
+              A.itemkey2,
+              A.descrip,
+              A.qtyord,
+              a.[qtyrec],
+              a.[purdate],
+              a.[shpdate],
+              a.[reqdate],
+              a.[recdate],
+              a.[invno],
+              Dense_rank()
+                OVER (
+                  ORDER BY reqdate DESC) AS portn
+       FROM  potran10c A
+       WHERE  descrip = '${req.query.descrip}') b
+WHERE  portn IN ( '6' )
+ORDER  BY purdate DESC,
+          itemkey2 ASC 

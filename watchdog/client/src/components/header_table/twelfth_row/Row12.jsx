@@ -34,12 +34,12 @@ const Row12 = ({
         .map(
           (item) => new Date(item.start_dte).toISOString().split('T')[0]
         )[0] < past365c
-        ? 'OLD'
+        ? 'ITEM > 1YR'
         : mainData.some((item) =>
             item.firstOrderItem.some((value) => value !== 0)
           )
         ? 'First Order'
-        : 'NEW';
+        : 'ITEM < 1YR';
     return result;
   };
 

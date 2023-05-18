@@ -356,7 +356,7 @@ const Watchdog = () => {
   const suggestedQtyavg_lead = isOpenM
     ? mainData.map((item) => item.poLeadTimeO.map((item) => Number(inputValue)))
     : mainData.map((item) =>
-        item.poLeadTimeO.map((item) => Number(item.avg_lead_time))
+        item.poLeadTimeO.map((item) => item.avg_lead_time)
       );
 
   const suggestedQty = zipWith(
