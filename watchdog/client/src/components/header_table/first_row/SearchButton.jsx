@@ -35,7 +35,6 @@ const SearchButton = ({
     pieChartF(record);
     reset();
     setGraphDropdownSelectedYear('YEAR');
-  
   };
 
   return (

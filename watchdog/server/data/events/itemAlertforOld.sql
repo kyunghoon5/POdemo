@@ -51,13 +51,13 @@ FROM   (SELECT b.vendno,
                                        AND reqdate >= Getdate() - 120
                                        AND descrip = a.descrip
                                        AND itemkey2 = a.itemkey2) AS qtyord,
-                              -- (SELECT Avg(Datediff(day, purdate, recdate))
-                             --   FROM   potran10c
-                               -- WHERE  reqdate >= Dateadd(year, -2, Getdate())
-                              --         AND recdate IS NOT NULL
-                               --        AND descrip = a.descrip
-                               --        AND itemkey2 = a.itemkey2) AS
-                              -- avg_lead_time,
+                               (SELECT Avg(Datediff(day, purdate, recdate))
+                                FROM   potran10c
+                                WHERE  reqdate >= Dateadd(year, -5, Getdate())
+                                       AND recdate IS NOT NULL
+                                       AND descrip = a.descrip
+                                       AND itemkey2 = a.itemkey2) AS
+                               avg_lead_time,
                                (SELECT Min(recdate)
                                 FROM   potran10c
                                 WHERE  descrip = a.descrip

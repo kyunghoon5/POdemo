@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const BASE_URL = import.meta.env.VITE_DB_URL;
+const MAIN_IMG = import.meta.env.VITE_DB_IMG;
 
 const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
   const [record, setRecord] = useState('');
@@ -38,7 +39,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
 
   //image
   const imageAPI = (record) => {
-    setMainImg(`http://img.vanessahair.com/sales/${record}.jpg`);
+    setMainImg(`${MAIN_IMG}${record}.jpg`);
   };
 
   //select & option dropdown soldPercentage
@@ -228,7 +229,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
   };
   const [itemoldOrder, setItemOldOrder] = useState([]);
   const [loadingOldOrder, setLoadingOldOrder] = useState(false);
-   const [loadedOldOrder, setLoadedOldOrder] = useState(false);
+  const [loadedOldOrder, setLoadedOldOrder] = useState(false);
 
   const itemoldOrderAPI = async () => {
     setLoadingOldOrder(true);
@@ -237,14 +238,14 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
       .then((response) => {
         setItemOldOrder(response.data);
         setLoadingOldOrder(false);
-        setLoadedOldOrder(true)
+        setLoadedOldOrder(true);
       })
 
       .catch((err) => console.log(err));
   };
   const [itemNewOrder, setItemNewOrder] = useState([]);
   const [loadingNewOrder, setLoadingNewOrder] = useState(false);
-    const [loadedNewOrder, setLoadedNewOrder] = useState(false);
+  const [loadedNewOrder, setLoadedNewOrder] = useState(false);
   const itemNewOrderAPI = async () => {
     setLoadingNewOrder(true);
     return await axios
@@ -252,7 +253,7 @@ const API = (startDatePicker, endDatePicker, forecastDatePicker) => {
       .then((response) => {
         setItemNewOrder(response.data);
         setLoadingNewOrder(false);
-        setLoadedNewOrder(true)
+        setLoadedNewOrder(true);
       })
 
       .catch((err) => console.log(err));

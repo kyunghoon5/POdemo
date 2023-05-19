@@ -57,18 +57,20 @@ const Alert_Table = ({
     var style = document.createElement('style');
     style.innerHTML =
       '@media print {\
-    body {\
-      visibility: hidden;\
-      -webkit-print-color-adjust: exact;\
-      zoom: 75%;\
-    }\
-    #section-to-print {\
-      visibility: visible;\
-      position: absolute;\
-      left: 0;\
-      top: 0;\
-    }\
-  }';
+      body {\
+        visibility: hidden;\
+        -webkit-print-color-adjust: exact;\
+        zoom: 75%;\
+      }\
+      #section-to-print {\
+        visibility: visible;\
+        position: absolute;\
+        left: 0;\
+        top: 0;\
+      }\
+      @page {\
+        size: A4;          }\
+    }';
     document.head.appendChild(style);
 
     // 프린트 대상 선택
@@ -493,6 +495,7 @@ const Alert_Table = ({
                   columns={columns}
                   rowHeight={25}
                   paginationModel={paginationModel}
+                  disableRowSelectionOnClick
                   onPaginationModelChange={setPaginationModel}
                   slots={{
                     toolbar: CustomToolbar,
