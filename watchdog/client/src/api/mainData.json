@@ -1,0 +1,1562 @@
+[
+  {
+    "itemkey2": "12              ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 763,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 120 }],
+    "sold90": [{ "qtyshp": 372 }],
+    "sold60": [{ "qtyshp": 252 }],
+    "sold365": [{ "qtyshp": 1387 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "1             ",
+        "vendno": "KP    ",
+        "qtyshp": 1387,
+        "avg_qtyshp": 3.8,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "1              ", "pending": 225 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "1              ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "1B             ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 748,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 211 }],
+    "sold90": [{ "qtyshp": 627 }],
+    "sold60": [{ "qtyshp": 413 }],
+    "sold365": [{ "qtyshp": 2150 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "1B             ",
+        "vendno": "KP    ",
+        "qtyshp": 2150,
+        "avg_qtyshp": 5.89041,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "1B             ", "pending": 350 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "1B             ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "2              ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 373,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 87 }],
+    "sold90": [{ "qtyshp": 225 }],
+    "sold60": [{ "qtyshp": 142 }],
+    "sold365": [{ "qtyshp": 819 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "2              ",
+        "vendno": "KP    ",
+        "qtyshp": 819,
+        "avg_qtyshp": 2.243835,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "2              ", "pending": 150 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "2              ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "3T280       ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 57 }],
+    "sold90": [{ "qtyshp": 158 }],
+    "sold60": [{ "qtyshp": 118 }],
+    "sold365": [{ "qtyshp": 587 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "3T280       ",
+        "vendno": "KP    ",
+        "qtyshp": 587,
+        "avg_qtyshp": 12.624657,
+        "qtybo": 6
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "3T280       ", "pending": 350 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "3T280       ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "3T34        ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 6,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 76 }],
+    "sold90": [{ "qtyshp": 185 }],
+    "sold60": [{ "qtyshp": 133 }],
+    "sold365": [{ "qtyshp": 621 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "3T34        ",
+        "vendno": "KP    ",
+        "qtyshp": 621,
+        "avg_qtyshp": 12.701369,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "1224B        ", "pending": 350 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "3T34        ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "3T44           ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 107 }],
+    "sold90": [{ "qtyshp": 280 }],
+    "sold60": [{ "qtyshp": 202 }],
+    "sold365": [{ "qtyshp": 964 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "3T44           ",
+        "vendno": "KP    ",
+        "qtyshp": 964,
+        "avg_qtyshp": 2.641095,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "3T44           ", "pending": 475 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "3T44           ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "3T51           ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 82 }],
+    "sold90": [{ "qtyshp": 246 }],
+    "sold60": [{ "qtyshp": 175 }],
+    "sold365": [{ "qtyshp": 969 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "3T51           ",
+        "vendno": "KP    ",
+        "qtyshp": 969,
+        "avg_qtyshp": 2.758904,
+        "qtybo": 38
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "3T51           ", "pending": 475 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "3T51           ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "4              ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 93,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 54 }],
+    "sold90": [{ "qtyshp": 166 }],
+    "sold60": [{ "qtyshp": 121 }],
+    "sold365": [{ "qtyshp": 586 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "4              ",
+        "vendno": "KP    ",
+        "qtyshp": 586,
+        "avg_qtyshp": 12.605479,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "4              ", "pending": 175 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "4              ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "4N274          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 13,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 42 }],
+    "sold90": [{ "qtyshp": 133 }],
+    "sold60": [{ "qtyshp": 98 }],
+    "sold365": [{ "qtyshp": 430 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "4N274          ",
+        "vendno": "KP    ",
+        "qtyshp": 430,
+        "avg_qtyshp": 12.178082,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "4N274          ", "pending": 225 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "4N274          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "56             ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 60,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 49 }],
+    "sold90": [{ "qtyshp": 85 }],
+    "sold60": [{ "qtyshp": 71 }],
+    "sold365": [{ "qtyshp": 275 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "56             ",
+        "vendno": "KP    ",
+        "qtyshp": 275,
+        "avg_qtyshp": 0.753424,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "56             ", "pending": 75 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "56             ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "613            ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 157,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 51 }],
+    "sold90": [{ "qtyshp": 118 }],
+    "sold60": [{ "qtyshp": 85 }],
+    "sold365": [{ "qtyshp": 463 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "613            ",
+        "vendno": "KP    ",
+        "qtyshp": 463,
+        "avg_qtyshp": 12.268493,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "613            ", "pending": 100 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "613            ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "BT4007         ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 386,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 144 }],
+    "sold90": [{ "qtyshp": 418 }],
+    "sold60": [{ "qtyshp": 277 }],
+    "sold365": [{ "qtyshp": 1551 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "BT4007         ",
+        "vendno": "KP    ",
+        "qtyshp": 1551,
+        "avg_qtyshp": 4.249315,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "BT4007         ", "pending": 250 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "BT4007         ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "DBURG          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 0 }],
+    "sold90": [{ "qtyshp": 12 }],
+    "sold60": [{ "qtyshp": 4 }],
+    "sold365": [{ "qtyshp": 50 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "DBURG          ",
+        "vendno": "KP    ",
+        "qtyshp": 50,
+        "avg_qtyshp": 0.164383,
+        "qtybo": 10
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "DBURG          ", "pending": 0 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "DBURG          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 172
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "F1010          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 26 }],
+    "sold90": [{ "qtyshp": 172 }],
+    "sold60": [{ "qtyshp": 97 }],
+    "sold365": [{ "qtyshp": 798 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "F1010          ",
+        "vendno": "KP    ",
+        "qtyshp": 798,
+        "avg_qtyshp": 2.317808,
+        "qtybo": 48
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "F1010          ", "pending": 375 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "F1010          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "F2315          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 9,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 88 }],
+    "sold90": [{ "qtyshp": 263 }],
+    "sold60": [{ "qtyshp": 192 }],
+    "sold365": [{ "qtyshp": 814 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "F2315          ",
+        "vendno": "KP    ",
+        "qtyshp": 814,
+        "avg_qtyshp": 2.230136,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "F2315          ", "pending": 250 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "F2315          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "GRAPH          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 0 }],
+    "sold90": [{ "qtyshp": 0 }],
+    "sold60": [{ "qtyshp": 0 }],
+    "sold365": [{ "qtyshp": 24 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "GRAPH          ",
+        "vendno": "KP    ",
+        "qtyshp": 24,
+        "avg_qtyshp": 0.101369,
+        "qtybo": 13
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "GRAPH          ", "pending": 0 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "GRAPH          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 211
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "MOCHA          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 97,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 51 }],
+    "sold90": [{ "qtyshp": 102 }],
+    "sold60": [{ "qtyshp": 75 }],
+    "sold365": [{ "qtyshp": 355 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "MOCHA          ",
+        "vendno": "KP    ",
+        "qtyshp": 355,
+        "avg_qtyshp": 0.972602,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "MOCHA          ", "pending": 100 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "MOCHA          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "RPEP           ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 0 }],
+    "sold90": [{ "qtyshp": 0 }],
+    "sold60": [{ "qtyshp": 0 }],
+    "sold365": [{ "qtyshp": 55 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "RPEP           ",
+        "vendno": "KP    ",
+        "qtyshp": 55,
+        "avg_qtyshp": 0.224657,
+        "qtybo": 27
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "RPEP           ", "pending": 0 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "RPEP           ",
+        "avg_lead_time": 120,
+        "max_lead_time": 154
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SADDLE         ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 256,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 48 }],
+    "sold90": [{ "qtyshp": 91 }],
+    "sold60": [{ "qtyshp": 65 }],
+    "sold365": [{ "qtyshp": 337 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SADDLE         ",
+        "vendno": "KP    ",
+        "qtyshp": 337,
+        "avg_qtyshp": 0.923287,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SADDLE         ", "pending": 0 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SADDLE         ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SAFARI         ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 171,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 43 }],
+    "sold90": [{ "qtyshp": 109 }],
+    "sold60": [{ "qtyshp": 83 }],
+    "sold365": [{ "qtyshp": 428 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SAFARI         ",
+        "vendno": "KP    ",
+        "qtyshp": 428,
+        "avg_qtyshp": 12.172602,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SAFARI         ", "pending": 75 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SAFARI         ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SALMON         ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 125,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 85 }],
+    "sold90": [{ "qtyshp": 216 }],
+    "sold60": [{ "qtyshp": 162 }],
+    "sold365": [{ "qtyshp": 902 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SALMON         ",
+        "vendno": "KP    ",
+        "qtyshp": 902,
+        "avg_qtyshp": 2.471232,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SALMON         ", "pending": 125 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SALMON         ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SAND           ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 134,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 166 }],
+    "sold90": [{ "qtyshp": 481 }],
+    "sold60": [{ "qtyshp": 335 }],
+    "sold365": [{ "qtyshp": 1675 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SAND           ",
+        "vendno": "KP    ",
+        "qtyshp": 1675,
+        "avg_qtyshp": 4.589041,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SAND           ", "pending": 550 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SAND           ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SANTA          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 240,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 61 }],
+    "sold90": [{ "qtyshp": 192 }],
+    "sold60": [{ "qtyshp": 142 }],
+    "sold365": [{ "qtyshp": 644 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SANTA          ",
+        "vendno": "KP    ",
+        "qtyshp": 644,
+        "avg_qtyshp": 12.764383,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SANTA          ", "pending": 100 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SANTA          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SEPIA          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 118,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 83 }],
+    "sold90": [{ "qtyshp": 192 }],
+    "sold60": [{ "qtyshp": 150 }],
+    "sold365": [{ "qtyshp": 803 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SEPIA          ",
+        "vendno": "KP    ",
+        "qtyshp": 803,
+        "avg_qtyshp": 2.2,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SEPIA          ", "pending": 150 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SEPIA          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SIENNA         ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 57,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 119 }],
+    "sold90": [{ "qtyshp": 379 }],
+    "sold60": [{ "qtyshp": 269 }],
+    "sold365": [{ "qtyshp": 1211 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SIENNA         ",
+        "vendno": "KP    ",
+        "qtyshp": 1211,
+        "avg_qtyshp": 3.317808,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SIENNA         ", "pending": 275 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SIENNA         ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SNOW           ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 103 }],
+    "sold90": [{ "qtyshp": 490 }],
+    "sold60": [{ "qtyshp": 351 }],
+    "sold365": [{ "qtyshp": 1933 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SNOW           ",
+        "vendno": "KP    ",
+        "qtyshp": 1933,
+        "avg_qtyshp": 5.621917,
+        "qtybo": 119
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SNOW           ", "pending": 900 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SNOW           ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SP1B/27        ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 299,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 38 }],
+    "sold90": [{ "qtyshp": 108 }],
+    "sold60": [{ "qtyshp": 87 }],
+    "sold365": [{ "qtyshp": 339 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SP1B/27        ",
+        "vendno": "KP    ",
+        "qtyshp": 339,
+        "avg_qtyshp": 0.928767,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SP1B/27        ", "pending": 25 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SP1B/27        ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SP1B/30        ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 155,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 151 }],
+    "sold90": [{ "qtyshp": 400 }],
+    "sold60": [{ "qtyshp": 296 }],
+    "sold365": [{ "qtyshp": 1341 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SP1B/30        ",
+        "vendno": "KP    ",
+        "qtyshp": 1341,
+        "avg_qtyshp": 3.673972,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SP1B/30        ", "pending": 350 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SP1B/30        ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SP1B/33        ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 125,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 32 }],
+    "sold90": [{ "qtyshp": 73 }],
+    "sold60": [{ "qtyshp": 58 }],
+    "sold365": [{ "qtyshp": 268 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SP1B/33        ",
+        "vendno": "KP    ",
+        "qtyshp": 268,
+        "avg_qtyshp": 0.734246,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SP1B/33        ", "pending": 25 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SP1B/33        ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SP1B/350       ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 10,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 31 }],
+    "sold90": [{ "qtyshp": 85 }],
+    "sold60": [{ "qtyshp": 59 }],
+    "sold365": [{ "qtyshp": 287 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SP1B/350       ",
+        "vendno": "KP    ",
+        "qtyshp": 287,
+        "avg_qtyshp": 0.786301,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SP1B/350       ", "pending": 125 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SP1B/350       ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SP1B/530       ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 151,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 37 }],
+    "sold90": [{ "qtyshp": 102 }],
+    "sold60": [{ "qtyshp": 75 }],
+    "sold365": [{ "qtyshp": 369 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SP1B/530       ",
+        "vendno": "KP    ",
+        "qtyshp": 369,
+        "avg_qtyshp": 12.010958,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SP1B/530       ", "pending": 25 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SP1B/530       ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SP427          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 19,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 77 }],
+    "sold90": [{ "qtyshp": 200 }],
+    "sold60": [{ "qtyshp": 149 }],
+    "sold365": [{ "qtyshp": 695 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SP427          ",
+        "vendno": "KP    ",
+        "qtyshp": 695,
+        "avg_qtyshp": 12.917808,
+        "qtybo": 5
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SP427          ", "pending": 325 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SP427          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "BKR2         ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 112,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 106 }],
+    "sold90": [{ "qtyshp": 289 }],
+    "sold60": [{ "qtyshp": 218 }],
+    "sold365": [{ "qtyshp": 1074 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "BKR2         ",
+        "vendno": "KP    ",
+        "qtyshp": 1074,
+        "avg_qtyshp": 2.942465,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "BKR2         ", "pending": 350 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "BKR2         ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SPOTLTE        ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 36,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 23 }],
+    "sold90": [{ "qtyshp": 62 }],
+    "sold60": [{ "qtyshp": 51 }],
+    "sold365": [{ "qtyshp": 238 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SPOTLTE        ",
+        "vendno": "KP    ",
+        "qtyshp": 238,
+        "avg_qtyshp": 0.652054,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SPOTLTE        ", "pending": 50 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SPOTLTE        ",
+        "avg_lead_time": 120,
+        "max_lead_time": 231
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SUGAR          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 8.2,
+    "maxcost": 8.2,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 13 }],
+    "sold90": [{ "qtyshp": 58 }],
+    "sold60": [{ "qtyshp": 32 }],
+    "sold365": [{ "qtyshp": 260 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SUGAR          ",
+        "vendno": "KP    ",
+        "qtyshp": 260,
+        "avg_qtyshp": 0.742465,
+        "qtybo": 11
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SUGAR          ", "pending": 200 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SUGAR          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 249
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SUN            ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 90,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 119 }],
+    "sold90": [{ "qtyshp": 293 }],
+    "sold60": [{ "qtyshp": 208 }],
+    "sold365": [{ "qtyshp": 1008 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SUN            ",
+        "vendno": "KP    ",
+        "qtyshp": 1008,
+        "avg_qtyshp": 2.761643,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SUN            ", "pending": 250 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SUN            ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SUNSET         ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 133,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 56 }],
+    "sold90": [{ "qtyshp": 135 }],
+    "sold60": [{ "qtyshp": 106 }],
+    "sold365": [{ "qtyshp": 521 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SUNSET         ",
+        "vendno": "KP    ",
+        "qtyshp": 521,
+        "avg_qtyshp": 12.427397,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SUNSET         ", "pending": 175 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SUNSET         ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SWISS          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 3,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 48 }],
+    "sold90": [{ "qtyshp": 143 }],
+    "sold60": [{ "qtyshp": 108 }],
+    "sold365": [{ "qtyshp": 470 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SWISS          ",
+        "vendno": "KP    ",
+        "qtyshp": 470,
+        "avg_qtyshp": 12.29315,
+        "qtybo": 2
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SWISS          ", "pending": 175 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SWISS          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "SYRUP          ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 146,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 39 }],
+    "sold90": [{ "qtyshp": 108 }],
+    "sold60": [{ "qtyshp": 69 }],
+    "sold365": [{ "qtyshp": 401 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "SYRUP          ",
+        "vendno": "KP    ",
+        "qtyshp": 401,
+        "avg_qtyshp": 12.09863,
+        "qtybo": 0
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "SYRUP          ", "pending": 75 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "SYRUP          ",
+        "avg_lead_time": 120,
+        "max_lead_time": 253
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  },
+  {
+    "itemkey2": "TF60           ",
+    "descrip": "ITEM1                                                                            ",
+    "onhand": 0,
+    "mincost": 10.4,
+    "maxcost": 10.4,
+    "price": 18.81,
+    "start_dte": "2010-03-31T00:00:00.000Z",
+    "length_cat": "XSHORT",
+    "sold30": [{ "qtyshp": 0 }],
+    "sold90": [{ "qtyshp": 0 }],
+    "sold60": [{ "qtyshp": 0 }],
+    "sold365": [{ "qtyshp": 125 }],
+    "reorderPointO": [
+      {
+        "itemkey2": "TF60           ",
+        "vendno": "KP    ",
+        "qtyshp": 125,
+        "avg_qtyshp": 0.454794,
+        "qtybo": 41
+      }
+    ],
+    "pendingDataO": [{ "itemkey2": "TF60           ", "pending": 50 }],
+    "poLeadTimeO": [
+      {
+        "itemkey2": "TF60           ",
+        "avg_lead_time": 120,
+        "max_lead_time": 221
+      }
+    ],
+    "itemClass": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "class": "LQ",
+        "vendno": "KP    "
+      }
+    ],
+    "firstOrderItem": []
+  }
+]

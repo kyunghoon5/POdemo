@@ -1,0 +1,39 @@
+[
+  {
+    "Product": "ITEM1",
+  
+    "Cost": 9.65,
+    "MaxCost": 10.4,
+    "Price": 18.95,
+    "MinPrice": 18.95,
+    "Pcs_ctn": 25,
+    "Onhand": 5085,
+    "Qtyrec": 455700,
+    "Sold30": 2797,
+    "Sold60": 5673,
+    "Sold90": 8008,
+    "Totalsold": 449643,
+    "CustSold": 2520,
+    "RecDate": "03/31/2023",
+    "AssignedStatus": "RELEASED",
+    "AssignedDate": "08/12/2022",
+    "OpendDate": "01/01/1900",
+    "SampleShp": 67206,
+    "ReordShp": 48602,
+    "Sample": "C6-1",
+    "Original": "95B3",
+    "Weight": "84g",
+    "Length": "1¾\" ~ 3½\"",
+    "Fiber": "FST , TYT",
+    "RndCost": "9.6500",
+  
+    "ProdCheck": "",
+    "ProdDate": "          ",
+ 
+    "Front_lc_leng_w": 0,
+    "Front_lc_leng_l": 0,
+    "Part_lc_leng_w": 0,
+    "Part_lc_leng_l": 0,
+    "sample_type": "STY"
+  }
+]

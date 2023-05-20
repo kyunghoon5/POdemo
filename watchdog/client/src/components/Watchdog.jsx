@@ -572,7 +572,7 @@ const Watchdog = () => {
   };
 
   return (
-    <div className="search flex w-full p-4">
+    <div className="flex w-full p-4 overflow-scroll" >
       <Total {...Props} />
 
       <div id={'section-to-print'}>

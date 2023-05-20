@@ -46,7 +46,7 @@ const Row1 = ({
       setfilteredData([]);
       searchMainData(record);
       newitemkey2ForecastAPI(record);
-      imageAPI(record);
+      imageAPI('./item1');
       itemRecords(record);
       soldPercentageAPI(record);
       graphAllYearDataAPI(record);
@@ -144,7 +144,7 @@ const Row1 = ({
           id="search"
           placeholder="Search item name here"
           type="text"
-          value={record}
+          value={'item1'}
           onChange={handleInput}
           onKeyDown={handleKeyDown}
           autoComplete="off"

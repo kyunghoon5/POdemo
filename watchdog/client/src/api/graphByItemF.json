@@ -1,0 +1,3516 @@
+[
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2010,
+    "qtyshp": 2968,
+    "qtyrec": 3275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2010,
+    "qtyshp": 2909,
+    "qtyrec": 3275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2010,
+    "qtyshp": 1069,
+    "qtyrec": 1100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2010,
+    "qtyshp": 301,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2010,
+    "qtyshp": 222,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2010,
+    "qtyshp": 595,
+    "qtyrec": 600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2010,
+    "qtyshp": 1277,
+    "qtyrec": 1325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2010,
+    "qtyshp": 281,
+    "qtyrec": 275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2010,
+    "qtyshp": 1144,
+    "qtyrec": 1150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2010,
+    "qtyshp": 1566,
+    "qtyrec": 1575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2010,
+    "qtyshp": 1428,
+    "qtyrec": 1475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2010,
+    "qtyshp": 1618,
+    "qtyrec": 1625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2010,
+    "qtyshp": 1570,
+    "qtyrec": 1575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2010,
+    "qtyshp": 1575,
+    "qtyrec": 1575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2010,
+    "qtyshp": 1551,
+    "qtyrec": 1550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2010,
+    "qtyshp": 553,
+    "qtyrec": 550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2010,
+    "qtyshp": 1382,
+    "qtyrec": 1425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2010,
+    "qtyshp": 500,
+    "qtyrec": 525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2010,
+    "qtyshp": 121,
+    "qtyrec": 125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2010,
+    "qtyshp": 121,
+    "qtyrec": 125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2010,
+    "qtyshp": 629,
+    "qtyrec": 650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2010,
+    "qtyshp": 812,
+    "qtyrec": 850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2010,
+    "qtyshp": 1648,
+    "qtyrec": 1650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2010,
+    "qtyshp": 1467,
+    "qtyrec": 1475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2010,
+    "qtyshp": 796,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2011,
+    "qtyshp": 4433,
+    "qtyrec": 5825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2011,
+    "qtyshp": 4677,
+    "qtyrec": 5825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2011,
+    "qtyshp": 1751,
+    "qtyrec": 2325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2011,
+    "qtyshp": 919,
+    "qtyrec": 1125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2011,
+    "qtyshp": 381,
+    "qtyrec": 450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2011,
+    "qtyshp": 902,
+    "qtyrec": 975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2011,
+    "qtyshp": 374,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2011,
+    "qtyshp": 1202,
+    "qtyrec": 1350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2011,
+    "qtyshp": 434,
+    "qtyrec": 700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2011,
+    "qtyshp": 2146,
+    "qtyrec": 2725
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2011,
+    "qtyshp": 771,
+    "qtyrec": 1025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2011,
+    "qtyshp": 1476,
+    "qtyrec": 1775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2011,
+    "qtyshp": 2073,
+    "qtyrec": 2425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2011,
+    "qtyshp": 2133,
+    "qtyrec": 2400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2011,
+    "qtyshp": 2734,
+    "qtyrec": 3400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2011,
+    "qtyshp": 2325,
+    "qtyrec": 2675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2011,
+    "qtyshp": 2695,
+    "qtyrec": 3350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2011,
+    "qtyshp": 2526,
+    "qtyrec": 3375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2011,
+    "qtyshp": 746,
+    "qtyrec": 975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2011,
+    "qtyshp": 2979,
+    "qtyrec": 4050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2011,
+    "qtyshp": 1109,
+    "qtyrec": 1275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2011,
+    "qtyshp": 100,
+    "qtyrec": 150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2011,
+    "qtyshp": 112,
+    "qtyrec": 150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2011,
+    "qtyshp": 1418,
+    "qtyrec": 1525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2011,
+    "qtyshp": 1899,
+    "qtyrec": 2200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2011,
+    "qtyshp": 2196,
+    "qtyrec": 2575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2011,
+    "qtyshp": 2261,
+    "qtyrec": 2725
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2011,
+    "qtyshp": 2230,
+    "qtyrec": 2425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2012,
+    "qtyshp": 2794,
+    "qtyrec": 1425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2012,
+    "qtyshp": 3249,
+    "qtyrec": 2000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2012,
+    "qtyshp": 1651,
+    "qtyrec": 1225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2012,
+    "qtyshp": 965,
+    "qtyrec": 875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2012,
+    "qtyshp": 591,
+    "qtyrec": 600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2012,
+    "qtyshp": 896,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2012,
+    "qtyshp": 680,
+    "qtyrec": 625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2012,
+    "qtyshp": 1142,
+    "qtyrec": 1050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2012,
+    "qtyshp": 315,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2012,
+    "qtyshp": 2069,
+    "qtyrec": 1725
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2012,
+    "qtyshp": 671,
+    "qtyrec": 475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2012,
+    "qtyshp": 1227,
+    "qtyrec": 1025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2012,
+    "qtyshp": 1143,
+    "qtyrec": 1000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2012,
+    "qtyshp": 1262,
+    "qtyrec": 1150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2012,
+    "qtyshp": 2194,
+    "qtyrec": 1700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2012,
+    "qtyshp": 1407,
+    "qtyrec": 1100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2012,
+    "qtyshp": 2194,
+    "qtyrec": 1675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2012,
+    "qtyshp": 1610,
+    "qtyrec": 925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2012,
+    "qtyshp": 501,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2012,
+    "qtyshp": 2675,
+    "qtyrec": 1900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2012,
+    "qtyshp": 903,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2012,
+    "qtyshp": 194,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2012,
+    "qtyshp": 197,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2012,
+    "qtyshp": 1317,
+    "qtyrec": 1300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2012,
+    "qtyshp": 1711,
+    "qtyrec": 1425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2012,
+    "qtyshp": 1234,
+    "qtyrec": 950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2012,
+    "qtyshp": 1213,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2012,
+    "qtyshp": 148,
+    "qtyrec": 150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2012,
+    "qtyshp": 1005,
+    "qtyrec": 850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2013,
+    "qtyshp": 2741,
+    "qtyrec": 3175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2013,
+    "qtyshp": 3347,
+    "qtyrec": 3525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2013,
+    "qtyshp": 1645,
+    "qtyrec": 1675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2013,
+    "qtyshp": 988,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2013,
+    "qtyshp": 683,
+    "qtyrec": 625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2013,
+    "qtyshp": 981,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2013,
+    "qtyshp": 738,
+    "qtyrec": 750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2013,
+    "qtyshp": 1093,
+    "qtyrec": 1075
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2013,
+    "qtyshp": 347,
+    "qtyrec": 350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2013,
+    "qtyshp": 2229,
+    "qtyrec": 2100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2013,
+    "qtyshp": 777,
+    "qtyrec": 800
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2013,
+    "qtyshp": 1029,
+    "qtyrec": 950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2013,
+    "qtyshp": 1015,
+    "qtyrec": 850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2013,
+    "qtyshp": 461,
+    "qtyrec": 325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2013,
+    "qtyshp": 492,
+    "qtyrec": 550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2013,
+    "qtyshp": 2054,
+    "qtyrec": 1950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2013,
+    "qtyshp": 1329,
+    "qtyrec": 1300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2013,
+    "qtyshp": 1955,
+    "qtyrec": 1950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2013,
+    "qtyshp": 1339,
+    "qtyrec": 1175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2013,
+    "qtyshp": 349,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2013,
+    "qtyshp": 2610,
+    "qtyrec": 2450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2013,
+    "qtyshp": 858,
+    "qtyrec": 875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2013,
+    "qtyshp": 163,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2013,
+    "qtyshp": 201,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2013,
+    "qtyshp": 1393,
+    "qtyrec": 1425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2013,
+    "qtyshp": 1831,
+    "qtyrec": 1850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2013,
+    "qtyshp": 95,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2013,
+    "qtyshp": 866,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNGLO         ",
+    "year": 2013,
+    "qtyshp": 84,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2013,
+    "qtyshp": 834,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2013,
+    "qtyshp": 559,
+    "qtyrec": 625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2013,
+    "qtyshp": 1210,
+    "qtyrec": 1225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2014,
+    "qtyshp": 2276,
+    "qtyrec": 2250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2014,
+    "qtyshp": 2923,
+    "qtyrec": 2925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2014,
+    "qtyshp": 1492,
+    "qtyrec": 1400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2014,
+    "qtyshp": 1018,
+    "qtyrec": 1000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2014,
+    "qtyshp": 631,
+    "qtyrec": 625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2014,
+    "qtyshp": 893,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2014,
+    "qtyshp": 735,
+    "qtyrec": 725
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2014,
+    "qtyshp": 1170,
+    "qtyrec": 1225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2014,
+    "qtyshp": 368,
+    "qtyrec": 400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2014,
+    "qtyshp": 2198,
+    "qtyrec": 2275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2014,
+    "qtyshp": 705,
+    "qtyrec": 625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2014,
+    "qtyshp": 952,
+    "qtyrec": 975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2014,
+    "qtyshp": 99,
+    "qtyrec": 100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2014,
+    "qtyshp": 912,
+    "qtyrec": 1050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2014,
+    "qtyshp": 892,
+    "qtyrec": 1050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2014,
+    "qtyshp": 629,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2014,
+    "qtyshp": 2119,
+    "qtyrec": 2075
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2014,
+    "qtyshp": 1140,
+    "qtyrec": 1200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2014,
+    "qtyshp": 1658,
+    "qtyrec": 1550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2014,
+    "qtyshp": 1409,
+    "qtyrec": 1400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2014,
+    "qtyshp": 377,
+    "qtyrec": 350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2014,
+    "qtyshp": 2274,
+    "qtyrec": 2350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2014,
+    "qtyshp": 675,
+    "qtyrec": 575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2014,
+    "qtyshp": 245,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2014,
+    "qtyshp": 278,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2014,
+    "qtyshp": 1131,
+    "qtyrec": 1100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2014,
+    "qtyshp": 1471,
+    "qtyrec": 1475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2014,
+    "qtyshp": 102,
+    "qtyrec": 100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2014,
+    "qtyshp": 255,
+    "qtyrec": 150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2014,
+    "qtyshp": 899,
+    "qtyrec": 925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNGLO         ",
+    "year": 2014,
+    "qtyshp": 143,
+    "qtyrec": 25
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2014,
+    "qtyshp": 684,
+    "qtyrec": 725
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2014,
+    "qtyshp": 601,
+    "qtyrec": 700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2014,
+    "qtyshp": 882,
+    "qtyrec": 975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2015,
+    "qtyshp": 2165,
+    "qtyrec": 2100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2015,
+    "qtyshp": 2656,
+    "qtyrec": 2600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2015,
+    "qtyshp": 1423,
+    "qtyrec": 1625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2015,
+    "qtyshp": 1125,
+    "qtyrec": 1150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2015,
+    "qtyshp": 727,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2015,
+    "qtyshp": 1095,
+    "qtyrec": 1125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2015,
+    "qtyshp": 952,
+    "qtyrec": 1000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2015,
+    "qtyshp": 1147,
+    "qtyrec": 1300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2015,
+    "qtyshp": 530,
+    "qtyrec": 650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2015,
+    "qtyshp": 2245,
+    "qtyrec": 2275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2015,
+    "qtyshp": 801,
+    "qtyrec": 975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2015,
+    "qtyshp": 1021,
+    "qtyrec": 1125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2015,
+    "qtyshp": 44,
+    "qtyrec": 100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2015,
+    "qtyshp": 785,
+    "qtyrec": 700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2015,
+    "qtyshp": 905,
+    "qtyrec": 925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2015,
+    "qtyshp": 631,
+    "qtyrec": 700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2015,
+    "qtyshp": 1827,
+    "qtyrec": 2125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2015,
+    "qtyshp": 1093,
+    "qtyrec": 1175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/BLUE        ",
+    "year": 2015,
+    "qtyshp": 1,
+    "qtyrec": 75
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/PUR         ",
+    "year": 2015,
+    "qtyshp": 2,
+    "qtyrec": 75
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/SKY         ",
+    "year": 2015,
+    "qtyshp": 1,
+    "qtyrec": 75
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2015,
+    "qtyshp": 1534,
+    "qtyrec": 1825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2015,
+    "qtyshp": 1658,
+    "qtyrec": 1900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2015,
+    "qtyshp": 340,
+    "qtyrec": 400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2015,
+    "qtyshp": 2261,
+    "qtyrec": 2350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2015,
+    "qtyshp": 631,
+    "qtyrec": 725
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2015,
+    "qtyshp": 228,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2015,
+    "qtyshp": 448,
+    "qtyrec": 475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2015,
+    "qtyshp": 1213,
+    "qtyrec": 1325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2015,
+    "qtyshp": 1480,
+    "qtyrec": 1700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2015,
+    "qtyshp": 18,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2015,
+    "qtyshp": 112,
+    "qtyrec": 275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2015,
+    "qtyshp": 999,
+    "qtyrec": 1200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2015,
+    "qtyshp": 752,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2015,
+    "qtyshp": 634,
+    "qtyrec": 475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2015,
+    "qtyshp": 749,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2016,
+    "qtyshp": 2040,
+    "qtyrec": 2000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2016,
+    "qtyshp": 2742,
+    "qtyrec": 2950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2016,
+    "qtyshp": 1262,
+    "qtyrec": 1225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2016,
+    "qtyshp": 1020,
+    "qtyrec": 1100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2016,
+    "qtyshp": 757,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2016,
+    "qtyshp": 1168,
+    "qtyrec": 1125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2016,
+    "qtyshp": 1125,
+    "qtyrec": 1125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2016,
+    "qtyshp": 960,
+    "qtyrec": 875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2016,
+    "qtyshp": 568,
+    "qtyrec": 525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2016,
+    "qtyshp": 2011,
+    "qtyrec": 2050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2016,
+    "qtyshp": 833,
+    "qtyrec": 725
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2016,
+    "qtyshp": 941,
+    "qtyrec": 950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2016,
+    "qtyshp": 328,
+    "qtyrec": 350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2016,
+    "qtyshp": 621,
+    "qtyrec": 675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2016,
+    "qtyshp": 640,
+    "qtyrec": 550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2016,
+    "qtyshp": 804,
+    "qtyrec": 650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2016,
+    "qtyshp": 2009,
+    "qtyrec": 1825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2016,
+    "qtyshp": 1032,
+    "qtyrec": 1025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/BLUE        ",
+    "year": 2016,
+    "qtyshp": 91,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/PINK        ",
+    "year": 2016,
+    "qtyshp": 66,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/PUR         ",
+    "year": 2016,
+    "qtyshp": 79,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/SKY         ",
+    "year": 2016,
+    "qtyshp": 54,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2016,
+    "qtyshp": 1605,
+    "qtyrec": 1525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2016,
+    "qtyshp": 1805,
+    "qtyrec": 1800
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2016,
+    "qtyshp": 287,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2016,
+    "qtyshp": 1978,
+    "qtyrec": 2025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2016,
+    "qtyshp": 558,
+    "qtyrec": 475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2016,
+    "qtyshp": 301,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2016,
+    "qtyshp": 471,
+    "qtyrec": 400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2016,
+    "qtyshp": 1100,
+    "qtyrec": 1100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2016,
+    "qtyshp": 1619,
+    "qtyrec": 1525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2016,
+    "qtyshp": 205,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2016,
+    "qtyshp": 242,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2016,
+    "qtyshp": 1026,
+    "qtyrec": 1075
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2016,
+    "qtyshp": 635,
+    "qtyrec": 500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2016,
+    "qtyshp": 499,
+    "qtyrec": 575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2016,
+    "qtyshp": 828,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2017,
+    "qtyshp": 1995,
+    "qtyrec": 2500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2017,
+    "qtyshp": 2678,
+    "qtyrec": 3275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2017,
+    "qtyshp": 1364,
+    "qtyrec": 1675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2017,
+    "qtyshp": 965,
+    "qtyrec": 1075
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2017,
+    "qtyshp": 867,
+    "qtyrec": 1025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2017,
+    "qtyshp": 1061,
+    "qtyrec": 1225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2017,
+    "qtyshp": 1093,
+    "qtyrec": 1250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2017,
+    "qtyshp": 959,
+    "qtyrec": 1125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2017,
+    "qtyshp": 797,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2017,
+    "qtyshp": 1961,
+    "qtyrec": 1975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2017,
+    "qtyshp": 841,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2017,
+    "qtyshp": 980,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2017,
+    "qtyshp": 319,
+    "qtyrec": 400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2017,
+    "qtyshp": 693,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2017,
+    "qtyshp": 610,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2017,
+    "qtyshp": 944,
+    "qtyrec": 950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2017,
+    "qtyshp": 2005,
+    "qtyrec": 2150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SANTA          ",
+    "year": 2017,
+    "qtyshp": 132,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2017,
+    "qtyshp": 1150,
+    "qtyrec": 1175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/BLUE        ",
+    "year": 2017,
+    "qtyshp": 31,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/PINK        ",
+    "year": 2017,
+    "qtyshp": 32,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/PUR         ",
+    "year": 2017,
+    "qtyshp": 21,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/SKY         ",
+    "year": 2017,
+    "qtyshp": 26,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2017,
+    "qtyshp": 1642,
+    "qtyrec": 1650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2017,
+    "qtyshp": 1864,
+    "qtyrec": 1750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2017,
+    "qtyshp": 362,
+    "qtyrec": 550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2017,
+    "qtyshp": 1984,
+    "qtyrec": 2100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2017,
+    "qtyshp": 536,
+    "qtyrec": 650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2017,
+    "qtyshp": 219,
+    "qtyrec": 350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2017,
+    "qtyshp": 547,
+    "qtyrec": 750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2017,
+    "qtyshp": 1117,
+    "qtyrec": 1200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2017,
+    "qtyshp": 1590,
+    "qtyrec": 1650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2017,
+    "qtyshp": 243,
+    "qtyrec": 325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2017,
+    "qtyshp": 284,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2017,
+    "qtyshp": 1016,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2017,
+    "qtyshp": 674,
+    "qtyrec": 750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2017,
+    "qtyshp": 555,
+    "qtyrec": 550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2017,
+    "qtyshp": 762,
+    "qtyrec": 750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2018,
+    "qtyshp": 2022,
+    "qtyrec": 1575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2018,
+    "qtyshp": 2761,
+    "qtyrec": 2025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2018,
+    "qtyshp": 1258,
+    "qtyrec": 950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2018,
+    "qtyshp": 882,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2018,
+    "qtyshp": 815,
+    "qtyrec": 700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2018,
+    "qtyshp": 1359,
+    "qtyrec": 1225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2018,
+    "qtyshp": 1369,
+    "qtyrec": 1175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2018,
+    "qtyshp": 888,
+    "qtyrec": 750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2018,
+    "qtyshp": 1091,
+    "qtyrec": 1250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2018,
+    "qtyshp": 1855,
+    "qtyrec": 2175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "COAL           ",
+    "year": 2018,
+    "qtyshp": 47,
+    "qtyrec": 125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "DBURG          ",
+    "year": 2018,
+    "qtyshp": 125,
+    "qtyrec": 125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2018,
+    "qtyshp": 1034,
+    "qtyrec": 1325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2018,
+    "qtyshp": 1007,
+    "qtyrec": 1025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "GRAPH          ",
+    "year": 2018,
+    "qtyshp": 58,
+    "qtyrec": 125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2018,
+    "qtyshp": 433,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "RPEP           ",
+    "year": 2018,
+    "qtyshp": 69,
+    "qtyrec": 125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2018,
+    "qtyshp": 478,
+    "qtyrec": 275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2018,
+    "qtyshp": 606,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2018,
+    "qtyshp": 1118,
+    "qtyrec": 1000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2018,
+    "qtyshp": 2387,
+    "qtyrec": 2550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SANTA          ",
+    "year": 2018,
+    "qtyshp": 588,
+    "qtyrec": 525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2018,
+    "qtyshp": 1065,
+    "qtyrec": 850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/PINK        ",
+    "year": 2018,
+    "qtyshp": 11,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/PUR         ",
+    "year": 2018,
+    "qtyshp": 7,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/SKY         ",
+    "year": 2018,
+    "qtyshp": 26,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2018,
+    "qtyshp": 1736,
+    "qtyrec": 1650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2018,
+    "qtyshp": 2059,
+    "qtyrec": 2425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2018,
+    "qtyshp": 358,
+    "qtyrec": 275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2018,
+    "qtyshp": 1932,
+    "qtyrec": 1750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2018,
+    "qtyshp": 442,
+    "qtyrec": 400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2018,
+    "qtyshp": 274,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2018,
+    "qtyshp": 471,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2018,
+    "qtyshp": 930,
+    "qtyrec": 1025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2018,
+    "qtyshp": 1478,
+    "qtyrec": 1500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2018,
+    "qtyshp": 319,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2018,
+    "qtyshp": 321,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2018,
+    "qtyshp": 1137,
+    "qtyrec": 1175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2018,
+    "qtyshp": 670,
+    "qtyrec": 700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2018,
+    "qtyshp": 339,
+    "qtyrec": 450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2018,
+    "qtyshp": 659,
+    "qtyrec": 625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2019,
+    "qtyshp": 1802,
+    "qtyrec": 2500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2019,
+    "qtyshp": 2611,
+    "qtyrec": 3525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2019,
+    "qtyshp": 1120,
+    "qtyrec": 1300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2019,
+    "qtyshp": 881,
+    "qtyrec": 1200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2019,
+    "qtyshp": 768,
+    "qtyrec": 1100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2019,
+    "qtyshp": 1207,
+    "qtyrec": 1625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2019,
+    "qtyshp": 1312,
+    "qtyrec": 1725
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2019,
+    "qtyshp": 829,
+    "qtyrec": 925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "56             ",
+    "year": 2019,
+    "qtyshp": 152,
+    "qtyrec": 150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2019,
+    "qtyshp": 692,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2019,
+    "qtyshp": 2063,
+    "qtyrec": 2325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "COAL           ",
+    "year": 2019,
+    "qtyshp": 77,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "DBURG          ",
+    "year": 2019,
+    "qtyshp": 0,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2019,
+    "qtyshp": 1092,
+    "qtyrec": 1150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2019,
+    "qtyshp": 997,
+    "qtyrec": 1100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "GRAPH          ",
+    "year": 2019,
+    "qtyshp": 65,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2019,
+    "qtyshp": 368,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "RPEP           ",
+    "year": 2019,
+    "qtyshp": 101,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2019,
+    "qtyshp": 446,
+    "qtyrec": 400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2019,
+    "qtyshp": 570,
+    "qtyrec": 975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2019,
+    "qtyshp": 1075,
+    "qtyrec": 1475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2019,
+    "qtyshp": 2294,
+    "qtyrec": 2675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SANTA          ",
+    "year": 2019,
+    "qtyshp": 626,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2019,
+    "qtyshp": 1028,
+    "qtyrec": 1375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/BLUE        ",
+    "year": 2019,
+    "qtyshp": 1,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/PINK        ",
+    "year": 2019,
+    "qtyshp": 3,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/PUR         ",
+    "year": 2019,
+    "qtyshp": 10,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SF/SKY         ",
+    "year": 2019,
+    "qtyshp": 3,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2019,
+    "qtyshp": 1480,
+    "qtyrec": 1825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2019,
+    "qtyshp": 2219,
+    "qtyrec": 2475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2019,
+    "qtyshp": 419,
+    "qtyrec": 500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2019,
+    "qtyshp": 1787,
+    "qtyrec": 2350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2019,
+    "qtyshp": 443,
+    "qtyrec": 600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2019,
+    "qtyshp": 241,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2019,
+    "qtyshp": 482,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2019,
+    "qtyshp": 978,
+    "qtyrec": 1025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2019,
+    "qtyshp": 1438,
+    "qtyrec": 1575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2019,
+    "qtyshp": 295,
+    "qtyrec": 325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2019,
+    "qtyshp": 278,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2019,
+    "qtyshp": 1064,
+    "qtyrec": 1300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2019,
+    "qtyshp": 749,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2019,
+    "qtyshp": 594,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2019,
+    "qtyshp": 538,
+    "qtyrec": 600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "TF60           ",
+    "year": 2019,
+    "qtyshp": 24,
+    "qtyrec": 25
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2020,
+    "qtyshp": 1244,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2020,
+    "qtyshp": 1648,
+    "qtyrec": 700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2020,
+    "qtyshp": 677,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2020,
+    "qtyshp": 434,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2020,
+    "qtyshp": 429,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2020,
+    "qtyshp": 703,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2020,
+    "qtyshp": 718,
+    "qtyrec": 325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2020,
+    "qtyshp": 475,
+    "qtyrec": 400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4N274          ",
+    "year": 2020,
+    "qtyshp": 131,
+    "qtyrec": 325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "56             ",
+    "year": 2020,
+    "qtyshp": 74,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2020,
+    "qtyshp": 403,
+    "qtyrec": 475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2020,
+    "qtyshp": 1310,
+    "qtyrec": 650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "COAL           ",
+    "year": 2020,
+    "qtyshp": 0,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2020,
+    "qtyshp": 695,
+    "qtyrec": 500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2020,
+    "qtyshp": 610,
+    "qtyrec": 450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2020,
+    "qtyshp": 134,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "RPEP           ",
+    "year": 2020,
+    "qtyshp": 6,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2020,
+    "qtyshp": 297,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2020,
+    "qtyshp": 323,
+    "qtyrec": 125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2020,
+    "qtyshp": 674,
+    "qtyrec": 350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2020,
+    "qtyshp": 1436,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SANTA          ",
+    "year": 2020,
+    "qtyshp": 474,
+    "qtyrec": 100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2020,
+    "qtyshp": 692,
+    "qtyrec": 525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2020,
+    "qtyshp": 1016,
+    "qtyrec": 550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2020,
+    "qtyshp": 1510,
+    "qtyrec": 925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2020,
+    "qtyshp": 231,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2020,
+    "qtyshp": 1104,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2020,
+    "qtyshp": 215,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2020,
+    "qtyshp": 131,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2020,
+    "qtyshp": 297,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2020,
+    "qtyshp": 619,
+    "qtyrec": 475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2020,
+    "qtyshp": 906,
+    "qtyrec": 600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2020,
+    "qtyshp": 187,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2020,
+    "qtyshp": 215,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2020,
+    "qtyshp": 844,
+    "qtyrec": 475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2020,
+    "qtyshp": 436,
+    "qtyrec": 275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2020,
+    "qtyshp": 200,
+    "qtyrec": 275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2020,
+    "qtyshp": 341,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "TF60           ",
+    "year": 2020,
+    "qtyshp": 25,
+    "qtyrec": 25
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2021,
+    "qtyshp": 1584,
+    "qtyrec": 1400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2021,
+    "qtyshp": 2199,
+    "qtyrec": 2375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2021,
+    "qtyshp": 840,
+    "qtyrec": 850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2021,
+    "qtyshp": 504,
+    "qtyrec": 325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2021,
+    "qtyshp": 506,
+    "qtyrec": 450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2021,
+    "qtyshp": 902,
+    "qtyrec": 975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2021,
+    "qtyshp": 886,
+    "qtyrec": 950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2021,
+    "qtyshp": 549,
+    "qtyrec": 400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4N274          ",
+    "year": 2021,
+    "qtyshp": 444,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "56             ",
+    "year": 2021,
+    "qtyshp": 212,
+    "qtyrec": 150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2021,
+    "qtyshp": 583,
+    "qtyrec": 500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2021,
+    "qtyshp": 1552,
+    "qtyrec": 1575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2021,
+    "qtyshp": 704,
+    "qtyrec": 600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2021,
+    "qtyshp": 785,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "GRAPH          ",
+    "year": 2021,
+    "qtyshp": 4,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2021,
+    "qtyshp": 392,
+    "qtyrec": 450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "RPEP           ",
+    "year": 2021,
+    "qtyshp": 149,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2021,
+    "qtyshp": 319,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2021,
+    "qtyshp": 407,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2021,
+    "qtyshp": 932,
+    "qtyrec": 850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2021,
+    "qtyshp": 2033,
+    "qtyrec": 2100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SANTA          ",
+    "year": 2021,
+    "qtyshp": 670,
+    "qtyrec": 750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2021,
+    "qtyshp": 826,
+    "qtyrec": 650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2021,
+    "qtyshp": 1315,
+    "qtyrec": 1550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2021,
+    "qtyshp": 2120,
+    "qtyrec": 2000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2021,
+    "qtyshp": 324,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2021,
+    "qtyshp": 1344,
+    "qtyrec": 1525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2021,
+    "qtyshp": 246,
+    "qtyrec": 325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2021,
+    "qtyshp": 222,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2021,
+    "qtyshp": 428,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2021,
+    "qtyshp": 753,
+    "qtyrec": 800
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2021,
+    "qtyshp": 1083,
+    "qtyrec": 1150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2021,
+    "qtyshp": 258,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2021,
+    "qtyshp": 292,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2021,
+    "qtyshp": 988,
+    "qtyrec": 975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2021,
+    "qtyshp": 553,
+    "qtyrec": 500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2021,
+    "qtyshp": 447,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2021,
+    "qtyshp": 411,
+    "qtyrec": 450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "TF60           ",
+    "year": 2021,
+    "qtyshp": 221,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2022,
+    "qtyshp": 1395,
+    "qtyrec": 1800
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2022,
+    "qtyshp": 2064,
+    "qtyrec": 2325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2022,
+    "qtyshp": 837,
+    "qtyrec": 1000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2022,
+    "qtyshp": 642,
+    "qtyrec": 600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2022,
+    "qtyshp": 568,
+    "qtyrec": 575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2022,
+    "qtyshp": 927,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2022,
+    "qtyshp": 974,
+    "qtyrec": 925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2022,
+    "qtyshp": 503,
+    "qtyrec": 625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4N274          ",
+    "year": 2022,
+    "qtyshp": 370,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "56             ",
+    "year": 2022,
+    "qtyshp": 192,
+    "qtyrec": 275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2022,
+    "qtyshp": 485,
+    "qtyrec": 575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2022,
+    "qtyshp": 1561,
+    "qtyrec": 1675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "DBURG          ",
+    "year": 2022,
+    "qtyshp": 23,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2022,
+    "qtyshp": 844,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2022,
+    "qtyshp": 761,
+    "qtyrec": 900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "GRAPH          ",
+    "year": 2022,
+    "qtyshp": 24,
+    "qtyrec": 25
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2022,
+    "qtyshp": 375,
+    "qtyrec": 350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "RPEP           ",
+    "year": 2022,
+    "qtyshp": 101,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2022,
+    "qtyshp": 337,
+    "qtyrec": 475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2022,
+    "qtyshp": 414,
+    "qtyrec": 500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2022,
+    "qtyshp": 840,
+    "qtyrec": 975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2022,
+    "qtyshp": 1658,
+    "qtyrec": 1650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SANTA          ",
+    "year": 2022,
+    "qtyshp": 635,
+    "qtyrec": 800
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2022,
+    "qtyshp": 688,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2022,
+    "qtyshp": 1145,
+    "qtyrec": 1100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2022,
+    "qtyshp": 1754,
+    "qtyrec": 1850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2022,
+    "qtyshp": 306,
+    "qtyrec": 450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2022,
+    "qtyshp": 1304,
+    "qtyrec": 1250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2022,
+    "qtyshp": 272,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2022,
+    "qtyshp": 260,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2022,
+    "qtyshp": 365,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2022,
+    "qtyshp": 721,
+    "qtyrec": 675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2022,
+    "qtyshp": 1011,
+    "qtyrec": 1050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2022,
+    "qtyshp": 248,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2022,
+    "qtyshp": 290,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2022,
+    "qtyshp": 934,
+    "qtyrec": 1000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2022,
+    "qtyshp": 557,
+    "qtyrec": 600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2022,
+    "qtyshp": 366,
+    "qtyrec": 350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2022,
+    "qtyshp": 420,
+    "qtyrec": 450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "TF60           ",
+    "year": 2022,
+    "qtyshp": 144,
+    "qtyrec": 125
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1              ",
+    "year": 2023,
+    "qtyshp": 539,
+    "qtyrec": 600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "1B             ",
+    "year": 2023,
+    "qtyshp": 903,
+    "qtyrec": 875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "2              ",
+    "year": 2023,
+    "qtyshp": 321,
+    "qtyrec": 425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T280          ",
+    "year": 2023,
+    "qtyshp": 212,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T34           ",
+    "year": 2023,
+    "qtyshp": 258,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T44           ",
+    "year": 2023,
+    "qtyshp": 404,
+    "qtyrec": 325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "3T51           ",
+    "year": 2023,
+    "qtyshp": 370,
+    "qtyrec": 300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4              ",
+    "year": 2023,
+    "qtyshp": 262,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "4N274          ",
+    "year": 2023,
+    "qtyshp": 185,
+    "qtyrec": 150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "56             ",
+    "year": 2023,
+    "qtyshp": 122,
+    "qtyrec": 75
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "613            ",
+    "year": 2023,
+    "qtyshp": 188,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "BT4007         ",
+    "year": 2023,
+    "qtyshp": 594,
+    "qtyrec": 650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "DBURG          ",
+    "year": 2023,
+    "qtyshp": 27,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F1010          ",
+    "year": 2023,
+    "qtyshp": 280,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "F2315          ",
+    "year": 2023,
+    "qtyshp": 386,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "GRAPH          ",
+    "year": 2023,
+    "qtyshp": 0,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "MOCHA          ",
+    "year": 2023,
+    "qtyshp": 140,
+    "qtyrec": 100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "RPEP           ",
+    "year": 2023,
+    "qtyshp": 0,
+    "qtyrec": null
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SADDLE         ",
+    "year": 2023,
+    "qtyshp": 133,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAFARI         ",
+    "year": 2023,
+    "qtyshp": 161,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SALMON         ",
+    "year": 2023,
+    "qtyshp": 345,
+    "qtyrec": 275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SAND           ",
+    "year": 2023,
+    "qtyshp": 719,
+    "qtyrec": 575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SANTA          ",
+    "year": 2023,
+    "qtyshp": 280,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SEPIA          ",
+    "year": 2023,
+    "qtyshp": 313,
+    "qtyrec": 275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SIENNA         ",
+    "year": 2023,
+    "qtyshp": 549,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SNOW           ",
+    "year": 2023,
+    "qtyshp": 765,
+    "qtyrec": 550
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/27        ",
+    "year": 2023,
+    "qtyshp": 149,
+    "qtyrec": 200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/30        ",
+    "year": 2023,
+    "qtyshp": 548,
+    "qtyrec": 525
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/33        ",
+    "year": 2023,
+    "qtyshp": 102,
+    "qtyrec": 100
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/350       ",
+    "year": 2023,
+    "qtyshp": 120,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP1B/530       ",
+    "year": 2023,
+    "qtyshp": 145,
+    "qtyrec": 150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP427          ",
+    "year": 2023,
+    "qtyshp": 270,
+    "qtyrec": 250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SP430          ",
+    "year": 2023,
+    "qtyshp": 414,
+    "qtyrec": 400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SPOTLTE        ",
+    "year": 2023,
+    "qtyshp": 89,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUGAR          ",
+    "year": 2023,
+    "qtyshp": 86,
+    "qtyrec": 50
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUN            ",
+    "year": 2023,
+    "qtyshp": 403,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SUNSET         ",
+    "year": 2023,
+    "qtyshp": 219,
+    "qtyrec": 225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SWISS          ",
+    "year": 2023,
+    "qtyshp": 179,
+    "qtyrec": 150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "SYRUP          ",
+    "year": 2023,
+    "qtyshp": 160,
+    "qtyrec": 175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "itemkey2": "TF60           ",
+    "year": 2023,
+    "qtyshp": 10,
+    "qtyrec": null
+  }
+]

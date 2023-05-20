@@ -23,7 +23,7 @@ const SearchButton = ({
     setfilteredData([]);
     searchMainData(record);
     newitemkey2ForecastAPI(record);
-    imageAPI(record);
+    imageAPI('./item1');
     itemRecords(record);
     soldPercentageAPI(record);
     graphAllYearDataAPI(record);

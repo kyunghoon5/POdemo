@@ -1,0 +1,1115 @@
+[
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2023,
+    "month": 1,
+    "qtyshp": 2280,
+    "qtyrec": 1600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2023,
+    "month": 2,
+    "qtyshp": 2109,
+    "qtyrec": 5000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2023,
+    "month": 3,
+    "qtyshp": 2731,
+    "qtyrec": 3450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2023,
+    "month": 4,
+    "qtyshp": 2438,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2023,
+    "month": 5,
+    "qtyshp": 1792,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 1,
+    "qtyshp": 1781,
+    "qtyrec": 650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 2,
+    "qtyshp": 1556,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 3,
+    "qtyshp": 2607,
+    "qtyrec": 4675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 4,
+    "qtyshp": 2419,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 5,
+    "qtyshp": 2705,
+    "qtyrec": 2475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 6,
+    "qtyshp": 1408,
+    "qtyrec": 325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 7,
+    "qtyshp": 1245,
+    "qtyrec": 1200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 8,
+    "qtyshp": 2214,
+    "qtyrec": 2175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 9,
+    "qtyshp": 2847,
+    "qtyrec": 3000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 10,
+    "qtyshp": 3618,
+    "qtyrec": 6850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 11,
+    "qtyshp": 2763,
+    "qtyrec": 4950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2022,
+    "month": 12,
+    "qtyshp": 2152,
+    "qtyrec": 3075
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 1,
+    "qtyshp": 2132,
+    "qtyrec": 1700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 2,
+    "qtyshp": 1616,
+    "qtyrec": 3300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 3,
+    "qtyshp": 2728,
+    "qtyrec": 2275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 4,
+    "qtyshp": 3434,
+    "qtyrec": 8400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 5,
+    "qtyshp": 2779,
+    "qtyrec": 1150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 6,
+    "qtyshp": 2860,
+    "qtyrec": 2625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 7,
+    "qtyshp": 3448,
+    "qtyrec": 875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 8,
+    "qtyshp": 2126,
+    "qtyrec": 950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 9,
+    "qtyshp": 1953,
+    "qtyrec": 2575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 10,
+    "qtyshp": 1998,
+    "qtyrec": 700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 11,
+    "qtyshp": 2151,
+    "qtyrec": 2025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2021,
+    "month": 12,
+    "qtyshp": 1762,
+    "qtyrec": 2025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 1,
+    "qtyshp": 2967,
+    "qtyrec": 3475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 2,
+    "qtyshp": 2749,
+    "qtyrec": 350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 3,
+    "qtyshp": 2066,
+    "qtyrec": 375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 4,
+    "qtyshp": 345,
+    "qtyrec": 675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 5,
+    "qtyshp": 1426,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 6,
+    "qtyshp": 1801,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 7,
+    "qtyshp": 1740,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 8,
+    "qtyshp": 1744,
+    "qtyrec": 1875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 9,
+    "qtyshp": 1632,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 10,
+    "qtyshp": 2256,
+    "qtyrec": 2175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 11,
+    "qtyshp": 1490,
+    "qtyrec": 1400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2020,
+    "month": 12,
+    "qtyshp": 1645,
+    "qtyrec": 2875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 1,
+    "qtyshp": 3218,
+    "qtyrec": 2750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 2,
+    "qtyshp": 2761,
+    "qtyrec": 3450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 3,
+    "qtyshp": 3202,
+    "qtyrec": 4475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 4,
+    "qtyshp": 3803,
+    "qtyrec": 2075
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 5,
+    "qtyshp": 3333,
+    "qtyrec": 2075
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 6,
+    "qtyshp": 2093,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 7,
+    "qtyshp": 2165,
+    "qtyrec": 1075
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 8,
+    "qtyshp": 3462,
+    "qtyrec": 4775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 9,
+    "qtyshp": 2665,
+    "qtyrec": 3050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 10,
+    "qtyshp": 3533,
+    "qtyrec": 8825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 11,
+    "qtyshp": 2126,
+    "qtyrec": 4700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2019,
+    "month": 12,
+    "qtyshp": 2861,
+    "qtyrec": 5175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 1,
+    "qtyshp": 3052,
+    "qtyrec": 4000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 2,
+    "qtyshp": 2959,
+    "qtyrec": 2650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 3,
+    "qtyshp": 3275,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 4,
+    "qtyshp": 3749,
+    "qtyrec": 4375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 5,
+    "qtyshp": 3377,
+    "qtyrec": 4425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 6,
+    "qtyshp": 2985,
+    "qtyrec": 2425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 7,
+    "qtyshp": 2740,
+    "qtyrec": 2700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 8,
+    "qtyshp": 2429,
+    "qtyrec": 625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 9,
+    "qtyshp": 2985,
+    "qtyrec": 2275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 10,
+    "qtyshp": 3086,
+    "qtyrec": 2225
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 11,
+    "qtyshp": 3428,
+    "qtyrec": 4775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2018,
+    "month": 12,
+    "qtyshp": 2416,
+    "qtyrec": 3650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 1,
+    "qtyshp": 3068,
+    "qtyrec": 5375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 2,
+    "qtyshp": 2628,
+    "qtyrec": 3875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 3,
+    "qtyshp": 3689,
+    "qtyrec": 2200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 4,
+    "qtyshp": 2834,
+    "qtyrec": 1925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 5,
+    "qtyshp": 3601,
+    "qtyrec": 1975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 6,
+    "qtyshp": 2911,
+    "qtyrec": 1300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 7,
+    "qtyshp": 2131,
+    "qtyrec": 1600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 8,
+    "qtyshp": 3209,
+    "qtyrec": 3400
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 9,
+    "qtyshp": 2730,
+    "qtyrec": 2925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 10,
+    "qtyshp": 2289,
+    "qtyrec": 1575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 11,
+    "qtyshp": 3209,
+    "qtyrec": 8725
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2017,
+    "month": 12,
+    "qtyshp": 2620,
+    "qtyrec": 3750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 1,
+    "qtyshp": 2599,
+    "qtyrec": 3275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 2,
+    "qtyshp": 3233,
+    "qtyrec": 1825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 3,
+    "qtyshp": 3523,
+    "qtyrec": 4475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 4,
+    "qtyshp": 3494,
+    "qtyrec": 2475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 5,
+    "qtyshp": 3434,
+    "qtyrec": 4625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 6,
+    "qtyshp": 2922,
+    "qtyrec": 4675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 7,
+    "qtyshp": 2599,
+    "qtyrec": 925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 8,
+    "qtyshp": 2741,
+    "qtyrec": 3925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 9,
+    "qtyshp": 2493,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 10,
+    "qtyshp": 1974,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 11,
+    "qtyshp": 2116,
+    "qtyrec": 1500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2016,
+    "month": 12,
+    "qtyshp": 3182,
+    "qtyrec": 5750
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 1,
+    "qtyshp": 2171,
+    "qtyrec": 1275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 2,
+    "qtyshp": 2810,
+    "qtyrec": 3275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 3,
+    "qtyshp": 3152,
+    "qtyrec": 1875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 4,
+    "qtyshp": 3499,
+    "qtyrec": 4625
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 5,
+    "qtyshp": 3536,
+    "qtyrec": 4250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 6,
+    "qtyshp": 3019,
+    "qtyrec": 1475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 7,
+    "qtyshp": 2874,
+    "qtyrec": 4375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 8,
+    "qtyshp": 2335,
+    "qtyrec": 1200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 9,
+    "qtyshp": 2674,
+    "qtyrec": 3450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 10,
+    "qtyshp": 2534,
+    "qtyrec": 2900
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 11,
+    "qtyshp": 2694,
+    "qtyrec": 3050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2015,
+    "month": 12,
+    "qtyshp": 2933,
+    "qtyrec": 5600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 1,
+    "qtyshp": 3151,
+    "qtyrec": 4475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 2,
+    "qtyshp": 2914,
+    "qtyrec": 1075
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 3,
+    "qtyshp": 3813,
+    "qtyrec": 3200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 4,
+    "qtyshp": 2939,
+    "qtyrec": 2475
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 5,
+    "qtyshp": 2237,
+    "qtyrec": 2150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 6,
+    "qtyshp": 3573,
+    "qtyrec": 4500
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 7,
+    "qtyshp": 2984,
+    "qtyrec": 4925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 8,
+    "qtyshp": 2352,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 9,
+    "qtyshp": 2614,
+    "qtyrec": 3325
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 10,
+    "qtyshp": 2370,
+    "qtyrec": 4375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 11,
+    "qtyshp": 2497,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2014,
+    "month": 12,
+    "qtyshp": 2792,
+    "qtyrec": 3300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 1,
+    "qtyshp": 3373,
+    "qtyrec": 2975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 2,
+    "qtyshp": 2500,
+    "qtyrec": 825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 3,
+    "qtyshp": 2387,
+    "qtyrec": 2450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 4,
+    "qtyshp": 2945,
+    "qtyrec": 3925
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 5,
+    "qtyshp": 4169,
+    "qtyrec": 7800
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 6,
+    "qtyshp": 3613,
+    "qtyrec": 5050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 7,
+    "qtyshp": 3299,
+    "qtyrec": 3575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 8,
+    "qtyshp": 3090,
+    "qtyrec": 2650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 9,
+    "qtyshp": 2424,
+    "qtyrec": 1000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 10,
+    "qtyshp": 2925,
+    "qtyrec": 2250
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 11,
+    "qtyshp": 2368,
+    "qtyrec": 700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2013,
+    "month": 12,
+    "qtyshp": 3205,
+    "qtyrec": 2825
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 1,
+    "qtyshp": 3595,
+    "qtyrec": 775
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 2,
+    "qtyshp": 3282,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 3,
+    "qtyshp": 3510,
+    "qtyrec": 1575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 4,
+    "qtyshp": 3253,
+    "qtyrec": 2175
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 5,
+    "qtyshp": 4301,
+    "qtyrec": 6850
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 6,
+    "qtyshp": 3315,
+    "qtyrec": 5150
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 7,
+    "qtyshp": 2813,
+    "qtyrec": 3575
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 8,
+    "qtyshp": 3231,
+    "qtyrec": 3200
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 9,
+    "qtyshp": 2070,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 10,
+    "qtyshp": 2550,
+    "qtyrec": 1275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 11,
+    "qtyshp": 2595,
+    "qtyrec": 2350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2012,
+    "month": 12,
+    "qtyshp": 2643,
+    "qtyrec": 1675
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 1,
+    "qtyshp": 2714,
+    "qtyrec": 2450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 2,
+    "qtyshp": 4291,
+    "qtyrec": 4300
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 3,
+    "qtyshp": 7408,
+    "qtyrec": 7450
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 4,
+    "qtyshp": 2100,
+    "qtyrec": 1950
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 5,
+    "qtyshp": 5459,
+    "qtyrec": 5600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 6,
+    "qtyshp": 4409,
+    "qtyrec": 5025
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 7,
+    "qtyshp": 4132,
+    "qtyrec": 4000
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 8,
+    "qtyshp": 4610,
+    "qtyrec": 5975
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 9,
+    "qtyshp": 3845,
+    "qtyrec": 13700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 10,
+    "qtyshp": 3875,
+    "qtyrec": 4275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 11,
+    "qtyshp": 3460,
+    "qtyrec": 4050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2011,
+    "month": 12,
+    "qtyshp": 2699,
+    "qtyrec": 1425
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 3,
+    "qtyshp": 165,
+    "qtyrec": 3350
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 4,
+    "qtyshp": 4388,
+    "qtyrec": 1600
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 5,
+    "qtyshp": 59,
+    "qtyrec": 0
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 6,
+    "qtyshp": 1211,
+    "qtyrec": 1375
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 7,
+    "qtyshp": 1862,
+    "qtyrec": 1700
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 8,
+    "qtyshp": 2839,
+    "qtyrec": 2875
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 9,
+    "qtyshp": 2439,
+    "qtyrec": 3050
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 10,
+    "qtyshp": 3230,
+    "qtyrec": 2650
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 11,
+    "qtyshp": 5256,
+    "qtyrec": 6275
+  },
+  {
+    "descrip": "ITEM1                                                                            ",
+    "year": 2010,
+    "month": 12,
+    "qtyshp": 6679,
+    "qtyrec": 6225
+  }
+]

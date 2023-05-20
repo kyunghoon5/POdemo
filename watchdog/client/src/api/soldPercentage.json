@@ -1,0 +1,17 @@
+[
+  {
+    "descrip": "ITEM1                                                                            ",
+    "soldPercentage": [
+      {
+        "descrip": "ITEM1                                                                            ",
+        "sold7_percentage": 9.12,
+        "sold30_percentage": 35.28,
+        "sold60_percentage": 52.09,
+        "sold90_percentage": 60.44,
+        "sold6M_percentage": 73.64,
+        "sold365_percentage": 84.77,
+        "soldtotal_percentage": 89.88
+      }
+    ]
+  }
+]
